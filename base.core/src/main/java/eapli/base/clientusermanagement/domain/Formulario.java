@@ -10,12 +10,10 @@ public class Formulario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private Atributo atributo;
     @ManyToOne
     private Servico servico;
 
-    public Formulario(String nome, Atributo atributo, Servico servico){
-        this.atributo = atributo;
+    public Formulario(String nome, Servico servico){
         this.nome = nome;
         this.servico = servico;
     }

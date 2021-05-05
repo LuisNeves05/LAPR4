@@ -5,10 +5,6 @@ import eapli.framework.domain.model.ValueObject;
 public class TipoDados implements ValueObject {
 
     private String tipo;
-    private static final String string = "STRING";
-    private static final String inteiro = "INT";
-    private static final String data = "DATA";
-    private static final String booleano = "BOOLEANO";
 
     public TipoDados(String tipo){
         if(validaTipo(tipo))
@@ -22,6 +18,13 @@ public class TipoDados implements ValueObject {
     }
 
     private boolean validaTipo(String tipo){
-        return tipo.equals(string) || tipo.equals(inteiro) || tipo.equals(data) || tipo.equals(booleano);
+        return tipo.equals(Tipo.STRING.name()) || tipo.equals(Tipo.INT.name()) || tipo.equals(Tipo.DATA.name()) || tipo.equals(Tipo.BOOLEANO.name());
+    }
+
+    enum Tipo {
+        STRING,
+        INT,
+        DATA,
+        BOOLEANO
     }
 }
