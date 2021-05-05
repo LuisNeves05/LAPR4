@@ -1,0 +1,25 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class EspecificarColaboradorUI{
+  
+  }
+
+class EspecificarColaboradorController{
+  +novoColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  +registaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  }
+
+class RepositorioColaborador{
+  +novoColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  +registaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  }
+
+
+EspecificarColaboradorUI ..> EspecificarColaboradorController
+EspecificarColaboradorController ..> RepositorioColaborador
+
+
+
+
+@enduml

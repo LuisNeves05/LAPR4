@@ -1,0 +1,71 @@
+@startuml
+
+autonumber
+actor "Responsável de Recursos Humanos" as rrh
+
+participant ":EspecificarColaboradorUI" as ui
+participant ":EspecificarColaboradorController" as ctrl
+participant ":RepositorioColaborador" as repo
+participant "Colaborador: colaborador" as colab
+
+activate rrh
+
+rrh -> ui : solicita a especificação de um novo colaborador
+
+activate ui
+
+ui --> rrh : solicita os dados(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+
+deactivate ui
+
+rrh -> ui : introduz os dados solicitados 
+
+activate ui
+
+ui -> ctrl : novoColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+
+activate ctrl
+
+ctrl -> repo : novoColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+
+deactivate ctrl
+
+activate repo
+
+repo -> colab ** :criar(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  
+deactivate repo
+
+
+ui --> rrh : demonstra os dados e pede confirmação
+
+deactivate ui
+
+rrh -> ui : confirma os dados
+
+activate ui
+
+ui -> ctrl : registaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  
+activate ctrl
+  
+ctrl -> repo:registaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+  
+activate repo
+  
+repo -> repo : validaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+activate repo
+deactivate repo
+
+repo-> repo : criaColaborador(nomeCurto, nomeCompleto, numMecanografico, password, funcao, dataNascimento, colabResponsavel)
+activate repo
+deactivate repo
+deactivate repo
+
+deactivate ctrl
+
+ui --> rrh : informa o sucesso da operação
+
+deactivate ui
+
+@enduml
