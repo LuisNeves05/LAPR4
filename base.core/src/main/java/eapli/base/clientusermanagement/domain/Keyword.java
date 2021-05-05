@@ -2,14 +2,14 @@ package eapli.base.clientusermanagement.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table
+@Entity
 public class Keyword implements ValueObject {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String keyword;

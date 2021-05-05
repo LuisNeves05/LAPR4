@@ -7,7 +7,7 @@ public class ServicoRepositorioJPAImpl extends JpaRepositorio<Servico, Long> imp
 
     @Override
     protected String persistenceUnitName() {
-        return "ServicoRepositorio";
+        return "eapli.base";
     }
 }
 
