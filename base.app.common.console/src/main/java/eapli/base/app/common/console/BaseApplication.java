@@ -5,8 +5,8 @@
  */
 package eapli.base.app.common.console;
 
-import eapli.base.especificarservico.application.EspecificarServicoController;
-import eapli.base.especificarservico.domain.Keyword;
+import eapli.base.clientusermanagement.application.EspecificarServicoController;
+import eapli.base.clientusermanagement.domain.Keyword;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,9 +15,7 @@ import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -42,7 +40,7 @@ public abstract class BaseApplication {
         printHeader();
 
         EspecificarServicoController es = new EspecificarServicoController();
-        Set<Keyword> key = new HashSet<>();
+        List<Keyword> key = new ArrayList<>();
         key.add(new Keyword());
         es.especificarServico("Titulo", "cona","conaaaaa", 2, key, "Sim", "manual", "incompleto");
 

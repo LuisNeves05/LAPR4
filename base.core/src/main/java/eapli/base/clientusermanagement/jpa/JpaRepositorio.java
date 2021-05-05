@@ -1,9 +1,19 @@
-package eapli.base.especificarservico.jpa;
+package eapli.base.clientusermanagement.jpa;
+
+import eapli.base.Application;
+import eapli.base.clientusermanagement.domain.ClientUser;
+import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -13,7 +23,7 @@ import java.util.List;
  * @param <T> the entity type that we want to build a repository for
  * @param <ID> the key type of the entity
  */
-public abstract class JpaRepositorioServico<T, ID extends Serializable> {
+public abstract class JpaRepositorio<T, ID extends Serializable> {
 
     @PersistenceUnit
     private static EntityManagerFactory emFactory;
@@ -29,7 +39,7 @@ public abstract class JpaRepositorioServico<T, ID extends Serializable> {
     }
 
     @SuppressWarnings("unchecked")
-    public JpaRepositorioServico() {
+    public JpaRepositorio() {
         ParameterizedType genericSuperclass
                 = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass

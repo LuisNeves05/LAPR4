@@ -1,7 +1,6 @@
-package eapli.base.especificarservico.domain;
+package eapli.base.clientusermanagement.domain;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Classe da Entidade Serviço
@@ -45,12 +44,6 @@ public class Servico {
      */
     @Column(name = "Estado de Conclusão")
     private String estado;
-
-    /**
-     * Conjunto de palavras chave de um serviço
-     */
-    @ElementCollection
-    private Set<Keyword> keywords;
     /**
      * Identificador único do Serviço
      */
@@ -68,7 +61,7 @@ public class Servico {
      * @param atReal atividade de realização, podendo ser automática ou manual
      * @param estado estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    public Servico(String titulo, String descBreve, String descComp, int icon, String atAprov, String atReal, String estado, Set<Keyword> keywords){
+    public Servico(String titulo, String descBreve, String descComp, int icon, String atAprov, String atReal, String estado){
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
@@ -76,7 +69,6 @@ public class Servico {
         this.atAprov = atAprov;
         this.atReal = atReal;
         this.estado = estado;
-        this.keywords = keywords;
     }
 /**
  * Construtor vazio requerido da entidade Servico

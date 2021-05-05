@@ -1,6 +1,6 @@
-package eapli.base.especificarservico.repositories;
+package eapli.base.clientusermanagement.repositories;
 
-import eapli.base.especificarservico.domain.Servico;
+import eapli.base.clientusermanagement.domain.Servico;
 
 import java.util.List;
 
