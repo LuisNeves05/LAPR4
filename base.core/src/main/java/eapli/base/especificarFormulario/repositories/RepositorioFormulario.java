@@ -1,7 +1,6 @@
-package eapli.base.clientusermanagement.repositories;
+package eapli.base.especificarFormulario.repositories;
 
-import eapli.base.clientusermanagement.domain.Formulario;
-import eapli.base.clientusermanagement.domain.Servico;
+import eapli.base.especificarFormulario.domain.Formulario;
 
 import java.util.List;
 
