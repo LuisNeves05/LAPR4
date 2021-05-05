@@ -42,7 +42,7 @@ public abstract class BaseApplication {
         EspecificarServicoController es = new EspecificarServicoController();
         List<Keyword> key = new ArrayList<>();
         key.add(new Keyword());
-        es.especificarServico("Titulo", "cona","conaaaaa", 2, key, "Sim", "manual", "incompleto");
+        es.especificarServico("Titulo", "cona","conaaaaa", 2, key);
 
         try {
             setupEventHandlers();
