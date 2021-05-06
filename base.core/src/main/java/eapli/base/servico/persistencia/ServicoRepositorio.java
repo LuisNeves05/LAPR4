@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface ServicoRepositorio extends DomainRepository<Servico, Servico > {
 
-
     Servico findByKeyword(String keyword);
 
 }

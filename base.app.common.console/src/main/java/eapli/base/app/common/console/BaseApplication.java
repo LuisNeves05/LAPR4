@@ -45,6 +45,7 @@ public abstract class BaseApplication {
         es.especificarServico("Ola","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
         es.especificarServico("Ola2","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
         es.especificarServico("Ola3","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
+        es.especificarServico("Ola4","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
 
         try {
             setupEventHandlers();

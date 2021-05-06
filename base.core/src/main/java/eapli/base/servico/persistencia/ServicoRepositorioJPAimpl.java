@@ -12,13 +12,8 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
         implements ServicoRepositorio {
 
     public ServicoRepositorioJPAimpl(String puname) {
-        super(puname, Application.settings().getExtendedPersistenceProperties(), "username");
+        super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
     }
-
-    protected String persistenceUnitName() {
-        return "eapli.base";
-    }
-
 
     @Override
     public Servico findByKeyword(String keyword) {

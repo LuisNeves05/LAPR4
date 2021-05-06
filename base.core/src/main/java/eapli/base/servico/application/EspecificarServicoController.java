@@ -12,14 +12,10 @@ public class EspecificarServicoController {
 
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
 
-
-
     public Servico especificarServico(String titulo, String descBreve, String descCompleta, int icon, String atAprov, String atReal, String estado) {
        Servico servico = new Servico(titulo, descBreve, descCompleta, icon, atAprov, atReal, estado);
 
-       this.repoServ.save(servico);
-
-       return null;
+       return this.repoServ.save(servico);
     }
 
 }
