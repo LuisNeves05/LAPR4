@@ -25,7 +25,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 				Application.settings().getExtendedPersistenceProperties());
 	}
 
-
 	@Override
 	public JpaClientUserRepository clientUsers(final TransactionalContext autoTx) {
 		return new JpaClientUserRepository(autoTx);
@@ -52,6 +51,4 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 		return JpaAutoTxRepository.buildTransactionalContext(Application.settings().getPersistenceUnitName(),
 				Application.settings().getExtendedPersistenceProperties());
 	}
-
-
 }
