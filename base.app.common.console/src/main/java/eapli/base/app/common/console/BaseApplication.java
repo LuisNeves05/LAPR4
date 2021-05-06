@@ -5,12 +5,19 @@
  */
 package eapli.base.app.common.console;
 
+import eapli.base.servico.application.EspecificarServicoController;
+import eapli.base.servico.domain.Keyword;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -33,6 +40,11 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
         printHeader();
+        EspecificarServicoController es = new EspecificarServicoController();
+        Set<Keyword> lista = new HashSet<>();
+        es.especificarServico("Ola","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
+        es.especificarServico("Ola2","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
+        es.especificarServico("Ola3","DescBreve","DesCompleta", 1, "Ola","Teste2","Estado");
 
         try {
             setupEventHandlers();

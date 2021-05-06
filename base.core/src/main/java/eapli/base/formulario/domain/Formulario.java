@@ -1,7 +1,7 @@
-package eapli.base.clientusermanagement.domain.formulario;
+package eapli.base.formulario.domain;
 
-import eapli.base.clientusermanagement.domain.servico.Servico;
-import eapli.base.clientusermanagement.domain.formulario.Atributo;
+import eapli.base.servico.domain.Servico;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

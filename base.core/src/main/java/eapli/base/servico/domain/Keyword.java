@@ -1,4 +1,4 @@
-package eapli.base.clientusermanagement.domain.servico;
+package eapli.base.servico.domain;
 
 import eapli.framework.domain.model.ValueObject;
 

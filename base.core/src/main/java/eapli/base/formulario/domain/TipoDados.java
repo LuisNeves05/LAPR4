@@ -1,4 +1,4 @@
-package eapli.base.clientusermanagement.domain.formulario;
+package eapli.base.formulario.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
@@ -16,10 +16,6 @@ public class TipoDados implements ValueObject {
     }
 
     public TipoDados(){}
-
-    public String getTipo(){
-        return this.tipo;
-    }
 
     private boolean validaTipo(String tipo){
         return tipo.equals(string) || tipo.equals(inteiro) || tipo.equals(data) || tipo.equals(booleano);

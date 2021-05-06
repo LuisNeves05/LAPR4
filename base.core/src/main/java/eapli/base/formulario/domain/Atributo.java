@@ -1,4 +1,4 @@
-package eapli.base.clientusermanagement.domain.formulario;
+package eapli.base.formulario.domain;
 
 //import eapli.base.clientusermanagement.domain.TipoDados;
 import eapli.framework.domain.model.ValueObject;
