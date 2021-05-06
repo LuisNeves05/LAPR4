@@ -21,7 +21,6 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
     /**
      * Titulo do Servico
      */
-
     private String titulo;
     /**
      * Descrição brece do serviço
@@ -38,20 +37,21 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
-    private String atAprov;
+    private boolean atAprov;
     /**
      * Atividade de realização, podendo ser automática ou manual
      */
-    private String atReal;
+    private boolean atReal;
+    /**
+     * Conjunto de palavras chave de um serviço
+     */
+    @ElementCollection
+    private Set<Keyword> keywords;
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     private String estado;
 
-    /**
-     * Conjunto de palavras chave de um serviço
-     */
-    //private Set<Keyword> keywords;
 
     /**
      * Construtor da entidade Servico
@@ -61,9 +61,10 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
      * @param icon ícone associado
      * @param atAprov atividade de aprovação, podendo ser requerida ou não
      * @param atReal atividade de realização, podendo ser automática ou manual
+     * @param keywords conjunto de palavras chave
      * @param estado estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    public Servico(String titulo, String descBreve, String descComp, int icon, String atAprov, String atReal, String estado){
+    public Servico(String titulo, String descBreve, String descComp, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado){
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
@@ -71,7 +72,7 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
         this.atAprov = atAprov;
         this.atReal = atReal;
         this.estado = estado;
-        //this.keywords = keywords;
+        this.keywords = keywords;
     }
 /**
  * Construtor vazio requerido da entidade Servico

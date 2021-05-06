@@ -12,5 +12,9 @@ public class Keyword implements ValueObject {
 
     private String keyword;
 
+    public Keyword(String keyword){
+        this.keyword = keyword;
+    }
+
     public Keyword(){}
 }

@@ -2,6 +2,7 @@ package eapli.base.persistence.impl.inmemory;
 
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
@@ -49,6 +50,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public ServicoRepositorio servicoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public FormularioRepositorio formularioRepositorio() {
 		return null;
 	}
 

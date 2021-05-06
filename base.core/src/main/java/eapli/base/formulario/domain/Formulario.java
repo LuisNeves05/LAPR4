@@ -1,6 +1,7 @@
 package eapli.base.formulario.domain;
 
 import eapli.base.servico.domain.Servico;
+import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class Formulario {
+public class Formulario implements Comparable<Formulario>, AggregateRoot<Formulario> {
 
     /**
      * Identificador único do formulário
@@ -32,7 +33,7 @@ public class Formulario {
      * Nome do formulário
      */
     @ElementCollection
-    private Set<Atributo> conjAtrib = new HashSet<>();
+    private Set<Atributo> conjuntoAtributos = new HashSet<>();
 
     /**
      * Construtor da entidade Formulário
@@ -43,7 +44,7 @@ public class Formulario {
     public Formulario(String nome, Servico servico, Set<Atributo> conjAtrib){
         this.nome = nome;
         this.servico = servico;
-        this.conjAtrib = conjAtrib;
+        this.conjuntoAtributos = conjAtrib;
     }
 
     /**
@@ -51,4 +52,23 @@ public class Formulario {
      */
     public Formulario(){}
 
+    @Override
+    public boolean sameAs(Object other) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(Formulario other) {
+        return 0;
+    }
+
+    @Override
+    public Formulario identity() {
+        return null;
+    }
+
+    @Override
+    public boolean hasIdentity(Formulario otherId) {
+        return false;
+    }
 }

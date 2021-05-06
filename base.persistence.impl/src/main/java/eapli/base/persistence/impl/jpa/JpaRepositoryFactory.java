@@ -2,6 +2,8 @@ package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.formulario.persistence.FormularioRepositorio;
+import eapli.base.formulario.persistence.FormularioRepositorioJPAimpl;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
@@ -51,6 +53,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public ServicoRepositorio servicoRepositorio() {
 		return new ServicoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FormularioRepositorio formularioRepositorio(){
+		return new FormularioRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
