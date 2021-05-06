@@ -19,7 +19,7 @@ public class EspecificarServicoController {
     public Servico especificarServico(String titulo, String descBreve, String descCompleta, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado) {
 
        ServiceBuilder serviceBuilder = new ServiceBuilder();
-        serviceBuilder.comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
+       serviceBuilder.comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
                       .comIcon(icon).comAtAprov(atAprov)
                       .comAtReal(atReal).comKeywords(keywords).comEstado(estado);
 
