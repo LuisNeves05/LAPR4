@@ -1,5 +1,6 @@
 package eapli.base.colaborador.domain;
 
+import com.sun.nio.sctp.PeerAddressChangeNotification;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -10,24 +11,33 @@ import java.util.Date;
 @Table
 public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colaborador> {
 
+    @Column(name = "NOME_CURTO")
     private String nomeCurto;
 
+    @Column(name = "NOME_COMPLETO")
     private String nomeCompleto;
 
     @Id
+    @Column(name = "NUM_MECANOGRAFICO")
     private MecanographicNumber numMecanografico;
 
-    private String localResidencia;
+    @Column(name = "LOCAL_RESIDENCIA")
+    private String localResidencia; //TODO CRIAR CLASSE ADDRESS
 
+    @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "CONTACTO")
     private int nrContacto;
 
+    @Column(name = "DATA_NASCIMENTO")
     private Date dataNascimento;
 
+    @Column(name = "PASSWORD")
     private String password;
 
-    private String funcao;
+    @Column(name = "FUNCAO")
+    private String funcao;  //TODO CRIAR CLASSE FUNCAO @ONETOMANY
 
     @OneToOne
     private Colaborador colaboradorResponsavel;

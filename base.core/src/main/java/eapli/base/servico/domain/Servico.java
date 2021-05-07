@@ -15,41 +15,49 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
      * Identificador único do Serviço
      */
     @EmbeddedId
+    @Column(name="ID")
     private ServicoIdentificador servicoIdent;
     /**
      * Titulo do Servico
      */
+    @Column(name="TITULO")
     private String titulo;
     /**
      * Descrição brece do serviço
      */
+    @Column(name="DESCRICAO_BREVE")
     private String descBreve;
     /**
      * Descrição completa do serviço
      */
+    @Column(name="DESCRICAO_COMPLETA")
     private String descComp;
     /**
      * Ícone do serviço
      */
+    @Column(name="ICONE")
     private int icon; //TODO alterar para imagem
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
+    @Column(name="ATIVIDADE_APROVACAO")
     private boolean atAprov;
     /**
      * Atividade de realização, podendo ser automática ou manual
      */
+    @Column(name="ATIVIDADE_REALIZACAO")
     private boolean atReal;
     /**
      * Conjunto de palavras chave de um serviço
      */
+    @Column(name="PALAVRAS_CHAVE")
     @ElementCollection
     private Set<Keyword> keywords;
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
+    @Column(name="ESTADO")
     private String estado;
-
 
     /**
      * Construtor da entidade Servico
