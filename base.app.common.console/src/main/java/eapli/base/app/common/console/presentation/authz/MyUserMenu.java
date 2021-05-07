@@ -23,6 +23,7 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -40,6 +41,7 @@ public class MyUserMenu extends Menu {
     private static final int CHANGE_PASSWORD_OPTION = 1;
     private static final int LOGIN_OPTION = 2;
     private static final int LOGOUT_OPTION = 3;
+    private static final int ESPECIFICAR_SERVICO_OPTION = 4;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -58,10 +60,11 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
+            //REMOVER DEPOIS
+            addItem(MenuItem.of(ESPECIFICAR_SERVICO_OPTION, "Especificar Serviço", new EspecificarServicoUI()::show));
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));
         }
-
         addItem(MenuItem.of(EXIT_OPTION, "Return ", Actions.SUCCESS));
     }
 }
