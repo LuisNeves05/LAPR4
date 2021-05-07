@@ -6,6 +6,7 @@ import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -55,6 +56,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public FormularioRepositorio formularioRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TipoEquipaRepositorio tipoEquipaRepositorio(){
 		return null;
 	}
 

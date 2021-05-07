@@ -8,6 +8,8 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
 import eapli.base.servico.persistencia.ServicoRepositorioJPAimpl;
+import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
+import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorioJPAimpl;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -58,6 +60,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormularioRepositorio formularioRepositorio(){
 		return new FormularioRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TipoEquipaRepositorio tipoEquipaRepositorio(){
+		return new TipoEquipaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
