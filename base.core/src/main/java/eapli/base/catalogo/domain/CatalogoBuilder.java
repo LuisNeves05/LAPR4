@@ -1,14 +1,12 @@
 package eapli.base.catalogo.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.equipa.domain.Equipa;
+import eapli.base.servico.domain.Servico;
+import eapli.framework.domain.model.DomainFactory;
 
 import javax.persistence.*;
-import java.util.Set;
 
-@Entity
-@Table
-public class Catalogo{
+public class CatalogoBuilder implements DomainFactory<Servico> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,19 +32,12 @@ public class Catalogo{
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
-    //TODO ONE TO MANY, UM CATALOGO DA ACESSO A MUITAS EQUIPAS
-
-    @OneToMany
-    private Set<Equipa> equipa;
-
-    protected Catalogo(){}
-
-    public Catalogo(Long id, String titulo, String descBreve, String descComp, int icon, Colaborador colaboradorResponsavel) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descBreve = descBreve;
-        this.descComp = descComp;
-        this.icon = icon;
-        this.colaboradorResponsavel = colaboradorResponsavel;
+    @Override
+    public Servico build() {
+        return null;
     }
+
+    //TODO ONE TO MANY, UM CATALOGO DA ACESSO A MUITAS EQUIPAS
+    //private Equipa equipa;
+
 }

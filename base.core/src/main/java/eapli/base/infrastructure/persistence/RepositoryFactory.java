@@ -1,5 +1,6 @@
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.formulario.persistence.FormularioRepositorio;
@@ -68,6 +69,12 @@ public interface RepositoryFactory {
 	 *
 	 */
 	ServicoRepositorio servicoRepositorio();
+
+	/**
+	 * Repositorio vai ser criado em modo auto transacional
+	 *
+	 */
+	CatalogoRepositorio catalogoRepositorio();
 
 	/**
 	 * Repositorio vai ser criado em modo auto transacional

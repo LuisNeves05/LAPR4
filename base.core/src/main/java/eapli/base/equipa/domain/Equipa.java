@@ -1,8 +1,6 @@
 package eapli.base.equipa.domain;
 
-import eapli.base.catalogo.domain.Catalogo;
 import eapli.framework.domain.model.AggregateRoot;
-
 import javax.persistence.*;
 import javax.persistence.Id;
 
