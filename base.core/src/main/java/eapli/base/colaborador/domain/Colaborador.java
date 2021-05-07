@@ -4,6 +4,7 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
@@ -14,26 +15,25 @@ public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colab
     private String nomeCompleto;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private MecanographicNumber numMecanografico;
 
     private String localResidencia;
 
     private String email;
 
-    int nrContacto;
+    private int nrContacto;
 
-    private String dataNascimento;
+    private Date dataNascimento;
 
     private String password;
 
-    String funcao;
+    private String funcao;
 
-    String colaboradorResponsavel;
-
+    @OneToOne
+    private Colaborador colaboradorResponsavel;
 
     public Colaborador(String nomeCurto,String nomeCompleto, MecanographicNumber numMecanografico, String localResidencia, String email, int nrContacto,
-                       String dataNascimento, String password, String funcao, String colaboradorResponsavel){
+                       Date dataNascimento, String password, String funcao, Colaborador colaboradorResponsavel){
         this.nomeCurto = nomeCurto;
         this.nomeCompleto = nomeCompleto;
         this.numMecanografico = numMecanografico;
@@ -56,7 +56,12 @@ public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colab
     }
 
     @Override
-    public Colaborador identity() {
-        return null;
-    }
+    public int compareTo(Colaborador o){return 0;}
+
+    @Override
+    public Colaborador identity() {return null;}
+
+    @Override
+    public boolean hasIdentity(Colaborador otherNumMecanografico){return false;}
+
 }
