@@ -1,5 +1,6 @@
 package eapli.base.servico.domain;
 
+import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -60,6 +61,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     @Column(name="ESTADO")
     private String estado;
+
 
     /**
      * Construtor da entidade Servico

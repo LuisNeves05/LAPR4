@@ -1,12 +1,12 @@
 package eapli.base.equipa.domain;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import javax.persistence.Id;
 
 @Entity
-@Table
 public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     /**
@@ -16,6 +16,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     @Id
     private Long codigoEquipa;
 
+    @Column(name = "ACRONIMO")
     private Acronimo acr;
 
     private String designacao;

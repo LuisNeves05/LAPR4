@@ -8,6 +8,7 @@ public class TipoDados implements ValueObject {
     private static final String string = "STRING";
     private static final String inteiro = "INT";
     private static final String data = "DATA";
+    private static final String fracional = "FLOAT";
     private static final String booleano = "BOOLEANO";
 
     public TipoDados(String tipo){
@@ -18,6 +19,6 @@ public class TipoDados implements ValueObject {
     public TipoDados(){}
 
     private boolean validaTipo(String tipo){
-        return tipo.equals(string) || tipo.equals(inteiro) || tipo.equals(data) || tipo.equals(booleano);
+        return tipo.equals(string) || tipo.equals(inteiro) || tipo.equals(data) || tipo.equals(booleano) || tipo.equals(fracional);
     }
 }

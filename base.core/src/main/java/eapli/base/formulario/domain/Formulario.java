@@ -23,7 +23,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     /**
      * Nome do formulário
      */
-    private String nome;
+    private NomeFormulario nome;
     /**
      * Formulário de um respetivo serviço
      */
@@ -41,7 +41,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      * @param servico Formulário de um respetivo serviço
      * @param conjAtrib Conjunto de atributos associados ao Formulário
      */
-    public Formulario(String nome, Servico servico, Set<Atributo> conjAtrib){
+    public Formulario(NomeFormulario nome, Servico servico, Set<Atributo> conjAtrib){
         this.nome = nome;
         this.servico = servico;
         this.conjuntoAtributos = conjAtrib;

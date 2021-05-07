@@ -7,6 +7,7 @@ package eapli.base.app.common.console;
 
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Atributo;
+import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
@@ -45,21 +46,6 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
         printHeader();
-        EspecificarServicoController es = new EspecificarServicoController();
-        EspecificarFormularioController ef = new EspecificarFormularioController();
-        Keyword kw = new Keyword("HEY");
-        Set<Keyword> lista = new HashSet<>();
-
-        Servico s = es.especificarServico("SERVICO 1","Ola","DescBreve","DesCompleta", 1, false,true, lista,"Estado");
-        es.especificarServico("SERVICO 2", "SFAFA","Ola2","DescBreve",21321, false, true, lista,"Estado");
-        lista.add(kw);
-        es.especificarServico("SERVICO 3","Ola3","DescBreve","DesCompleta", 1, false,true,lista,"Estado");
-        es.especificarServico("SERVICO 4","Ola4","DescBreve","DesCompleta", 1, true,false,lista,"Estado");
-
-        Set<Atributo> ca = new HashSet<>();
-        TipoDados tdad = new TipoDados();
-        ca.add(new Atributo("sad", "safsa", "saf", tdad, "fsa"));
-        ef.especificarFormulario("FORMULARIO 1", s, ca);
 
         try {
             setupEventHandlers();
