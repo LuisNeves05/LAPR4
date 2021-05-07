@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="eapli.base">
       <!--
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
@@ -16,13 +18,13 @@
     <class>eapli.base.formulario.domain.Formulario</class>
     <class>eapli.base.servico.domain.Keyword</class>
     <class>eapli.base.formulario.domain.Atributo</class>
+    <class>eapli.base.equipa.domain.Equipa</class>
+    <class>eapli.base.colaborador.domain.Colaborador</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
-
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
-
-      <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
+      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
       <property name="javax.persistence.jdbc.password" value="lapr4"/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

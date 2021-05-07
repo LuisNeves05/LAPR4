@@ -33,7 +33,7 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
     /**
      * Ícone do serviço
      */
-    int icon; //TODO alterar para imagem
+    private int icon; //TODO alterar para imagem
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
@@ -96,6 +96,6 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
 
     @Override
     public String toString(){
-        return this.titulo +" "+ this.id + "#######################CONAAAAAAAAAAAAAAA";
+        return this.titulo +" "+ this.id;
     }
 }

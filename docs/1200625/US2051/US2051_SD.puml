@@ -1,0 +1,92 @@
+@startuml
+
+autonumber
+actor "Responsável de Recursos Humanos" as rrh
+
+participant ":EspecificarColaboradorUI" as ui
+participant ":EspecificarColaboradorController" as ctrl
+participant ":RepositorioColaborador" as repo
+participant ":RepositorioEquipa" as equipas
+participant "Colaborador: colaborador" as colab
+
+activate rrh
+
+rrh -> ui : solicita a especificação de um novo colaborador
+
+activate ui
+
+ui --> rrh : solicita os dados(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+
+deactivate ui
+
+rrh -> ui : introduz os dados solicitados 
+
+activate ui
+
+ui -> ctrl : novoColaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+
+activate ctrl
+
+ctrl -> repo : novoColaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+
+deactivate ctrl
+
+activate repo
+
+repo -> colab ** :colab = criar(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+  
+deactivate repo
+
+
+ui --> rrh : demonstra os dados e pede confirmação
+
+deactivate ui
+
+rrh -> ui : confirma os dados
+
+activate ui
+
+ui -> ctrl : obterListaEquipas()
+
+activate ctrl
+
+ctrl -> equipas : obterListaEquipas()
+
+activate equipas
+
+deactivate equipas
+
+deactivate ctrl
+
+ui --> rrh : demonstra a lista de equipas e solicita para escolher uma ou mais para associar o colaborador
+
+deactivate ui
+
+rrh -> ui : escolhe as equipas a que quer associar o colaborador
+
+activate ui
+
+ui -> ctrl : registaColaborador()
+  
+activate ctrl
+  
+ctrl -> repo : registaColaborador(colab)
+  
+activate repo
+  
+repo -> repo : validaColaborador(colab)
+activate repo
+deactivate repo
+
+repo-> repo : criaColaborador(colab)
+activate repo
+deactivate repo
+deactivate repo
+
+deactivate ctrl
+
+ui --> rrh : informa o sucesso da operação
+
+deactivate ui
+
+@enduml
