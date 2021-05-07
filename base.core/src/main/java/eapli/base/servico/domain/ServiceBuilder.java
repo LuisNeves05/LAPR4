@@ -98,6 +98,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
 
-        return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), titulo, descBreve, descComp, icon, atAprov, atReal, keywords, estado);
+        return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
+                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado);
     }
 }

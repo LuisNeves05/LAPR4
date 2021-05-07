@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
+public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<ServicoIdentificador> {
     /**
      * Identificador único do Serviço
      */
@@ -21,17 +21,19 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
      * Titulo do Servico
      */
     @Column(name="TITULO")
-    private String titulo;
+    private Titulo titulo;
     /**
      * Descrição brece do serviço
      */
     @Column(name="DESCRICAO_BREVE")
-    private String descBreve;
+    @Embedded
+    private DescricaoBreve descBreve;
     /**
      * Descrição completa do serviço
      */
     @Column(name="DESCRICAO_COMPLETA")
-    private String descComp;
+    @Embedded
+    private DescricaoCompleta descComp;
     /**
      * Ícone do serviço
      */
@@ -70,7 +72,7 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
      * @param keywords conjunto de palavras chave
      * @param estado estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    public Servico(ServicoIdentificador idServ, String titulo, String descBreve, String descComp, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado){
+    public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado){
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
@@ -88,17 +90,20 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
 
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof Servico)) {
+            return false;
+        }
+
+        final Servico that = (Servico) other;
+        return this.servicoIdent.equals(that.servicoIdent);
     }
 
     @Override
-    public int compareTo(Servico o) {
-        return 0;
-    }
-
-    @Override
-    public Servico identity() {
-        return null;
+    public ServicoIdentificador identity() {
+        return this.servicoIdent;
     }
 
     @Override
