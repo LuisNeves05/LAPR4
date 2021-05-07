@@ -20,6 +20,7 @@
     <class>eapli.base.formulario.domain.Atributo</class>
     <class>eapli.base.equipa.domain.Equipa</class>
     <class>eapli.base.colaborador.domain.Colaborador</class>
+    <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->

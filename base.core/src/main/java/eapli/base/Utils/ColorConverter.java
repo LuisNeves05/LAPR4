@@ -5,7 +5,7 @@ package eapli.base.Utils;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-    @Converter
+@Converter(autoApply = true)
     public class ColorConverter implements AttributeConverter<Color, String> {
 
         private static final String SEPARATOR = "\\|";
