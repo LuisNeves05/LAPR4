@@ -1,4 +1,5 @@
 package eapli.base.tipoEquipa.domain;
+import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.framework.domain.model.ValueObject;
 import javax.persistence.Embeddable;
 import java.util.regex.Matcher;
@@ -34,5 +35,17 @@ import java.util.regex.Pattern;
         public int compareTo(final CodigoInterno o) {
             return this.identificador.compareTo(o.identificador);
         }
-    }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (!(o instanceof CodigoInterno)) {
+                return false;
+            }
+
+            final CodigoInterno that = (CodigoInterno) o;
+            return this.identificador.equals(that.identificador);
+    }}
 
