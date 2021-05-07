@@ -6,6 +6,10 @@ import java.util.Set;
 public class ServiceBuilder implements DomainFactory<Servico> {
 
     /**
+     * Identificador único do Serviço
+     */
+    private String servicoIdentificador;
+    /**
      * Titulo do Servico
      */
     private String titulo;
@@ -39,6 +43,11 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     private String estado;
 
     public ServiceBuilder(){
+    }
+
+    public ServiceBuilder comIdentificador(final String identificador) {
+        this.servicoIdentificador = identificador;
+        return this;
     }
 
     public ServiceBuilder comTitulo(final String titulo) {
@@ -81,11 +90,14 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
+    /**
+     * Criação da instância Serviço
+     */
     @Override
     public Servico build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
 
-        return new Servico(titulo, descBreve, descComp, icon, atAprov, atReal, keywords, estado);
+        return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), titulo, descBreve, descComp, icon, atAprov, atReal, keywords, estado);
     }
 }
