@@ -14,10 +14,8 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
     /**
      * Identificador único do Serviço
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @EmbeddedId
+    private ServicoIdentificador servicoIdent;
     /**
      * Titulo do Servico
      */
@@ -64,7 +62,8 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
      * @param keywords conjunto de palavras chave
      * @param estado estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    public Servico(String titulo, String descBreve, String descComp, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado){
+    public Servico(ServicoIdentificador idServ, String titulo, String descBreve, String descComp, int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado){
+        this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
@@ -96,6 +95,6 @@ public class Servico implements Comparable<Servico>, AggregateRoot<Servico> {
 
     @Override
     public String toString(){
-        return this.titulo +" "+ this.id;
+        return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
     }
 }

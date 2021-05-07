@@ -11,6 +11,7 @@ import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.Servico;
+import eapli.base.servico.domain.ServicoIdentificador;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,11 +49,12 @@ public abstract class BaseApplication {
         EspecificarFormularioController ef = new EspecificarFormularioController();
         Keyword kw = new Keyword("HEY");
         Set<Keyword> lista = new HashSet<>();
-        Servico s = es.especificarServico("Ola","DescBreve","DesCompleta", 1, false,true, lista,"Estado");
-        es.especificarServico("Ola2","DescBreve","DesCompleta", 1, true,false, lista,"Estado");
+
+        Servico s = es.especificarServico("SERVICO 1","Ola","DescBreve","DesCompleta", 1, false,true, lista,"Estado");
+        es.especificarServico("SERVICO 2", "SFAFA","Ola2","DescBreve",21321, false, true, lista,"Estado");
         lista.add(kw);
-        es.especificarServico("Ola3","DescBreve","DesCompleta", 1, false,true,lista,"Estado");
-        es.especificarServico("Ola4","DescBreve","DesCompleta", 1, true,false,lista,"Estado");
+        es.especificarServico("SERVICO 3","Ola3","DescBreve","DesCompleta", 1, false,true,lista,"Estado");
+        es.especificarServico("SERVICO 4","Ola4","DescBreve","DesCompleta", 1, true,false,lista,"Estado");
 
         Set<Atributo> ca = new HashSet<>();
         TipoDados tdad = new TipoDados();
