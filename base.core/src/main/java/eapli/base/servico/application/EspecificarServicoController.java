@@ -24,12 +24,12 @@ public class EspecificarServicoController {
      * Especificação de um novo Serviço
      */
     public Servico especificarServico(String identificador, String titulo, String descBreve, String descCompleta,
-                                      int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo) {
+                                      int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo, boolean requerFeed) {
 
         ServiceBuilder serviceBuilder = new ServiceBuilder();
         serviceBuilder.comIdentificador(identificador).comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
                       .comIcon(icon).comAtAprov(atAprov)
-                      .comAtReal(atReal).comKeywords(keywords).comEstado(estado);
+                      .comAtReal(atReal).comKeywords(keywords).comEstado(estado).comCatalogo(catalogo).comRequerFeedback(requerFeed);
 
        return this.repoServ.save(serviceBuilder.build());
     }

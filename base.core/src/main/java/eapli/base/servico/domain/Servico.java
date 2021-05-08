@@ -69,6 +69,12 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     private Catalogo catalogo;
 
     /**
+     * Feedback do colaborador que requisitou o serviço
+     */
+    @Column(name="REQUER_FEEDBACK")
+    private boolean requerFeedback;
+
+    /**
      * Construtor da entidade Servico
      *
      * @param titulo    do Servico
@@ -81,7 +87,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, int icon,
-                   boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo) {
+                   boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo, boolean requerFeedback) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
@@ -92,6 +98,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         this.estado = estado;
         this.keywords = keywords;
         this.catalogo = catalogo;
+        this.requerFeedback = requerFeedback;
     }
 
     /**

@@ -12,6 +12,8 @@ public interface ServicoRepositorio extends DomainRepository<ServicoIdentificado
 
     Iterable<Servico> servicoPorTitulo(final String titulo);
 
+    public Iterable<Servico> findByEstado(final String estado);
+
     Iterable<Servico> servicoPorDescBreve(final String descBreve);
 
     Iterable<Servico> servicoPorKeyword(final String keyword);

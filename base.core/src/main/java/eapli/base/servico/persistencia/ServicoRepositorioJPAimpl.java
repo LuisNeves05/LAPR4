@@ -7,6 +7,11 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long, ServicoIdentificador>
         implements ServicoRepositorio {
 
@@ -40,5 +45,15 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
         final Map<String, Object> params = new HashMap<>();
         params.put("descBreve", keyword);
         return match("e.servico.keyword=:keyword", params);
+    }
+
+
+    @Override
+    public Iterable<Servico> findByEstado(final String estado) {
+        final Map<String, Object> params = new HashMap<>();
+
+        params.put("estado", estado);
+
+        return match("e.servico.estado = :estado ", params);
     }
 }

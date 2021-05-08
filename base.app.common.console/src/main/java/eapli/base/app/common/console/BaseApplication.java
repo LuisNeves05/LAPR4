@@ -5,6 +5,8 @@
  */
 package eapli.base.app.common.console;
 
+import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
@@ -12,15 +14,14 @@ import eapli.base.colaborador.domain.*;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
-import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
+import eapli.base.servico.application.EspecificarServicoController;
+import eapli.base.servico.domain.Servico;
+import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
+import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import eapli.base.Application;
-import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
-import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
-
-import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -40,14 +41,20 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
 
-
-
-
         EspecificarEquipaController controller = new EspecificarEquipaController();
         EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
         EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
         ListarEquipaController controllerList = new ListarEquipaController();
+        EspecificarServicoController especificarServicoController = new EspecificarServicoController();
 
+        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO",null,true);
+
+        //QueryMaker q = new QueryMaker();
+        //List<Servico> list = q.queryToDB();
+        //Servico s =  list.get(0);
+
+
+        //System.out.println(s.toString() + " #########################################################|||||||||||||||||||||||||||||||");
 
         Morada morada = new Morada("asaffa", "afsfas");
         Funcao funcao = new Funcao("funcao");

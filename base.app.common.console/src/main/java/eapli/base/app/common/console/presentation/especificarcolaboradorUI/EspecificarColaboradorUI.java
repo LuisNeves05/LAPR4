@@ -1,4 +1,5 @@
 package eapli.base.app.common.console.presentation.especificarcolaboradorUI;
+
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.application.ListarColaboradoresController;
@@ -8,8 +9,6 @@ import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import org.springframework.cglib.transform.impl.AddDelegateTransformer;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +20,6 @@ public class EspecificarColaboradorUI extends AbstractUI {
     private final EspecificarColaboradorController controller = new EspecificarColaboradorController();
     private final ListarColaboradoresController listarColabsController = new ListarColaboradoresController();
     private final AddUserController addUserController = new AddUserController();
-
 
     @Override
     protected boolean doShow(){

@@ -24,9 +24,10 @@
 package eapli.base.app.common.console.presentation.authz;
 
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
-import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
+import eapli.base.app.common.console.presentation.servicoUI.EspecificarServicoUI;
 
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
+import eapli.base.app.common.console.presentation.servicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -47,6 +48,7 @@ public class MyUserMenu extends Menu {
     private static final int ESPECIFICAR_SERVICO_OPTION = 4;
     private static final int ESPECIFICAR_COLABORADOR_OPTION = 5;
     private static final int CRIAR_EQUIPA_OPTION = 6;
+    private static final int TERMINAR_ESPECIFICAR_SERVICO_OPTION = 7;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -69,6 +71,7 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(ESPECIFICAR_SERVICO_OPTION, "Especificar Serviço", new EspecificarServicoUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_COLABORADOR_OPTION, "Especificar Colaborador", new EspecificarColaboradorUI()::show));
             addItem(MenuItem.of(CRIAR_EQUIPA_OPTION, "Criar nova Equipa", new EspecificarEquipaUI()::show));
+            addItem(MenuItem.of(TERMINAR_ESPECIFICAR_SERVICO_OPTION, "Terminar especificação de servicos", new TerminarEspecificacaoServicoPendenteUI()::show));
 
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));

@@ -45,11 +45,18 @@ public class ServiceBuilder implements DomainFactory<Servico> {
 
     private Catalogo catalogo;
 
+    private boolean requerFeedback;
+
     public ServiceBuilder(){
     }
 
     public ServiceBuilder comIdentificador(final String identificador) {
         this.servicoIdentificador = identificador;
+        return this;
+    }
+
+    public ServiceBuilder comRequerFeedback(final boolean requerFeedback) {
+        this.requerFeedback = requerFeedback;
         return this;
     }
 
@@ -107,6 +114,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // an exception. however, we will leave that to the constructor
 
         return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
-                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado, catalogo);
+                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado, catalogo, requerFeedback);
     }
 }

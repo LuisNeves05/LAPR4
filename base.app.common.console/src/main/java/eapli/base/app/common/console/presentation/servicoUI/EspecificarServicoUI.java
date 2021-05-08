@@ -1,11 +1,8 @@
-package eapli.base.app.common.console.presentation.EspecificarServicoUI;
+package eapli.base.app.common.console.presentation.servicoUI;
 
-import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.application.EspecificarFormularioController;
-import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.NomeFormulario;
-import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.Servico;
@@ -18,7 +15,7 @@ import java.util.*;
 public class EspecificarServicoUI extends AbstractUI {
 
     private final EspecificarServicoController controller = new EspecificarServicoController();
-    private final EspecificarFormularioController fc = new EspecificarFormularioController();
+    private final FormularioHelper fh = new FormularioHelper();
 
 
     @Override
@@ -90,7 +87,6 @@ public class EspecificarServicoUI extends AbstractUI {
 
         }
 
-
         Set<Keyword> listaKeywords = new HashSet<>();
 
         flag = true;
@@ -103,58 +99,23 @@ public class EspecificarServicoUI extends AbstractUI {
                 listaKeywords.add(new Keyword(keyword));
         }
 
+        boolean requerFeed = false;
+        String strFeed = Console.readLine("Este serviço requer feedback por parte do colaborador? (sim|nao)");
+        if (strFeed.equalsIgnoreCase("sim")) {
+            requerFeed = true;
+        }
+
         String estado = "COMPLETO"; //TODO MUDAR PARA FICAR implementado
-        flag = true;
-        String continuar;
-        NomeFormulario nf;
         String strContinuar;
         do {
-            strContinuar = Console.readLine("Deseja continuar com a especificação do formulário? (sim/nao):");
+            strContinuar = Console.readLine("Deseja continuar com a especificação, passando agora ao formulário? (sim/nao):");
         } while (!validaSimNao(strContinuar));
-
         if (strContinuar.equalsIgnoreCase("nao")) {
             estado = "INCOMPLETO";
-            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo);
+            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo, requerFeed);
         } else if (strContinuar.equalsIgnoreCase("sim")) {
-            String nomeForm = Console.readLine("Nome do Formulario: ");
-            nf = new NomeFormulario(nomeForm);
-            while (flag) {
-                String nomeVar = Console.readLine("Nome de variável do atributo \n");
-                String lable = Console.readLine("Nome da lable \n");
-                String descAjuda = Console.readLine("Curta descrição do atributo \n");
-                String tipoDados;
-                do {
-                    tipoDados = Console.readLine("Tipo de dados do atributo (Numero inteiro - 1 | Frase - 2 | Numero fracional - 3 | Data - 4");
-                    switch (tipoDados) {
-                        case "1":
-                            tipoDados = "INT";
-                            break;
-                        case "2":
-                            tipoDados = "STRING";
-                            break;
-                        case "3":
-                            tipoDados = "FLOAT";
-                            break;
-                        case "4":
-                            tipoDados = "DATA";
-                            break;
-                    }
-                } while (!validaDadosEscolha(tipoDados));
-
-                fc.addAtributo(nomeVar, lable, descAjuda, tipoDados, "Teste");
-                continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
-                if (continuar.equalsIgnoreCase("nao")) {
-                    flag = false;
-                }
-            }
-            try {
-                Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo);
-                fc.especificarFormulario(nf, servico);
-            } catch (ConcurrencyException e) {
-                System.out.println("Ocorreu um erro > " + e.getLocalizedMessage());
-                return false;
-            }
-
+            Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo, requerFeed);
+            fh.form(servico);
         }
         return true;
     }
@@ -164,11 +125,9 @@ public class EspecificarServicoUI extends AbstractUI {
         return "Especificar Serviço";
     }
 
-    private boolean validaDadosEscolha(String a) {
-        return a.equals("1") || a.equals("2") || a.equals("3") || a.equals("4");
-    }
-
     private boolean validaSimNao(String a) {
         return a.equalsIgnoreCase("sim") || a.equalsIgnoreCase("nao");
     }
+
+
 }
