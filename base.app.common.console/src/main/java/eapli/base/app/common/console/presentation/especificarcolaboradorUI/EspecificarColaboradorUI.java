@@ -1,11 +1,14 @@
-package eapli.base.app.common.console.presentation.EspecificarColaboradorUI;
-
+package eapli.base.app.common.console.presentation.especificarcolaboradorUI;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.application.ListarColaboradoresController;
 import eapli.base.colaborador.domain.*;
+import eapli.base.usermanagement.application.AddUserController;
+import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import org.springframework.cglib.transform.impl.AddDelegateTransformer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +20,8 @@ import java.util.Set;
 public class EspecificarColaboradorUI extends AbstractUI {
     private final EspecificarColaboradorController controller = new EspecificarColaboradorController();
     private final ListarColaboradoresController listarColabsController = new ListarColaboradoresController();
+    private final AddUserController addUserController = new AddUserController();
+
 
     @Override
     protected boolean doShow(){
@@ -48,16 +53,15 @@ public class EspecificarColaboradorUI extends AbstractUI {
             e.printStackTrace();
         }
 
-        final String listaFuncao = Console.readLine("Função do colaborador:");
-        Funcao funcao = new Funcao(listaFuncao);
-        Set<Funcao> listaFunc = new HashSet<>();
-        listaFunc.add(funcao);
+        final String username = Console.readLine("Username do colaborador: (Deve ser apenas uma palavra)");
+        final String password = Console.readLine("Password do colaborador: (Deve conter uma letra maiuscula, um numero, e pelo menos 6 caracteres)");
+        final String email = Console.readLine("Email do colaborador:");
 
         List<Colaborador> listaColabsResponsaveis = listarColabsController.listaColaboradores();
 
         if(listaColabsResponsaveis.isEmpty()){
-            Colaborador colaborador = controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
-                    , data, listaFunc, null);
+
+            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null);
             System.out.println("Não existem outros colaboradores disponíveis para selecionar como responsáveis neste momento");
         }else {
 
@@ -71,15 +75,37 @@ public class EspecificarColaboradorUI extends AbstractUI {
             int escolha = Integer.parseInt(escolhaColabResponsavel);
             Colaborador colabResponsavel = listaColabsResponsaveis.get(escolha);
 
-            Colaborador colaborador = controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
-                    , data, listaFunc, colabResponsavel);
+            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
+            , data, colabResponsavel);
         }
+
+        String role;
+        Set<Role> roleSet = new HashSet<>();
+        do{
+            System.out.println("\n"+1 + " " +BaseRoles.COLABORADOR);
+            System.out.println(2 + " " +BaseRoles.RRH);
+            System.out.println(3 + " " +BaseRoles.ADMIN +"\n");
+            role = Console.readLine("Escolha uma funcao para o Colaborador (index) (0 para sair)");
+            atribuiRole(role,roleSet);
+        }while(!role.equals("0"));
+
+        addUserController.addUser(username,password,nomeCurtostr,nomeCompletostr,email,roleSet);
         return true;
     }
 
     @Override
     public String headline() {
         return "Especificar um novo Colaborador";
+    }
+
+    private void atribuiRole(String role, Set<Role> roleSet){
+        if(role.equalsIgnoreCase("1")){
+            roleSet.add(BaseRoles.COLABORADOR);
+        }else if(role.equalsIgnoreCase("2")){
+            roleSet.add(BaseRoles.RRH);
+        }else if(role.equalsIgnoreCase("3")){
+            roleSet.add(BaseRoles.ADMIN);
+        }
     }
 
 }
