@@ -18,6 +18,16 @@ public class QueryMaker {
         return query.getResultList();
     }
 
+    public < E > List<E> queryToDB(E outputClass, String queryJPQL){
+        List<E> query = criarEntityManager("eapli.base").createQuery(queryJPQL).getResultList();
+        return query;
+    }
+
+    /*
+    public < E > Query updateValueInDB(E outputClass, String queryJPQL){
+        Query query = criarEntityManager("eapli.base").createQuery("UPDATE Colaborador SET Colaborador.equipa = 325");
+        return query;
+    }*/
 
     public EntityManager criarEntityManager(String persistenceUnit) {
         EntityManagerFactory factory = Persistence.

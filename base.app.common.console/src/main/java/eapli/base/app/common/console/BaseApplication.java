@@ -14,6 +14,7 @@ import eapli.base.colaborador.domain.*;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
+import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
@@ -47,7 +48,7 @@ public abstract class BaseApplication {
         ListarEquipaController controllerList = new ListarEquipaController();
         EspecificarServicoController especificarServicoController = new EspecificarServicoController();
 
-        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO",false,null);
+        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO", true, null);
 
         //QueryMaker q = new QueryMaker();
         //List<Servico> list = q.queryToDB();
@@ -64,10 +65,15 @@ public abstract class BaseApplication {
                 new NrContacto(911196272), null, null);
 
 
-        controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", c2);
+        Equipa equipa = controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", c2);
 
         System.out.println(controller.listarAcronimos("TXT"));
         System.out.println(controllerList.listarEquipa());
+
+        QueryMaker qm = new QueryMaker();
+        List<Colaborador> colaboradors = qm.queryToDB(new Colaborador(), "SELECT e FROM Colaborador e");
+        colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
+
 
         System.out.println("###################");
 

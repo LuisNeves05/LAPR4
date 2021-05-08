@@ -1,12 +1,14 @@
 package eapli.base.colaborador.domain;
 
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,6 +44,9 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @OneToOne
     private SystemUser systemUser;
 
+    @ManyToOne
+    private Equipa equipa;
+
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
                        Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
         this.nomeCurto = nomeCurto;
@@ -53,8 +58,11 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         this.colaboradorResponsavel = colaboradorResponsavel;
     }
 
-    protected Colaborador(){}
+    public void setEquipa(Equipa equipa) {
+        this.equipa = equipa;
+    }
 
+    public Colaborador(){}
 
     @Override
     public boolean sameAs(Object other) {

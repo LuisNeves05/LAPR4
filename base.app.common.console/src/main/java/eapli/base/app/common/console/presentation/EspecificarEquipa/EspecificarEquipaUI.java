@@ -36,9 +36,6 @@ public class EspecificarEquipaUI extends AbstractUI {
         }while (option < 0 || option > colabList.size());
 
         espEquipa.especificarEquipa(codigoEquipa, new Acronimo(acr), designacao, colabList.get(option-1));
-        //espEquipa.especificarEquipa()
-
-
 
 
 

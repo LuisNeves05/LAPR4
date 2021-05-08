@@ -1,8 +1,6 @@
 package eapli.base.equipa.domain;
 
-import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.domain.ColaboradorBuilder;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -35,8 +33,6 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     @OneToOne
     private Colaborador colabResponsavel;
 
-    @OneToMany
-    private Set<Colaborador> colaboradores;
 
     /**
      *
@@ -44,6 +40,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      * @param acr acrónimo da equipa obrigatório no construtor
      * @param designacao designação da equipa obrigatório no construtor
      */
+
     public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Colaborador colabR) {
         this.codigoEquipa = codigoEquipa;
         this.acr = acr;
@@ -54,7 +51,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     /**
      * Contrutor vazio obrigatório pela framework de JPA
      */
-    protected Equipa() {}
+    public Equipa() {}
 
     @Override
     public boolean sameAs(Object other) {
