@@ -16,18 +16,18 @@ public class DescricaoBreve implements Comparable<DescricaoBreve> {
     public DescricaoBreve(String descBreve){
         if (StringPredicates.isNullOrEmpty(descBreve) || !validaDescricaoBreve(descBreve)) {
             throw new IllegalArgumentException(
-                    "A descrição breve de um serviço deve ser alfanumérico entre 1 a 40 caracteres");
+                    "A descrição breve de um serviço entre 1 a 40 caracteres");
         }
         this.descBreve = descBreve;
     }
 
-    private boolean validaDescricaoBreve(final String descCompleta) {
-        String regex = ".{1,40}";
+    private boolean validaDescricaoBreve(final String descBreve) {
+        String regex = "(.|[ \\n\\t]){1,40}";
 
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcherAlphaNumericCheck = pattern.matcher(descCompleta);
+        Matcher matcher = pattern.matcher(descBreve);
 
-        return matcherAlphaNumericCheck.find();
+        return matcher.find();
     }
 
     /**

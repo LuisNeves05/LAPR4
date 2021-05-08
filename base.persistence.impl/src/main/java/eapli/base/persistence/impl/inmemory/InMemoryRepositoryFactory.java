@@ -20,7 +20,6 @@ import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserReposi
 public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	static {
-		// only needed because of the in memory persistence
 		new BaseBootstrapper().execute();
 	}
 
@@ -37,7 +36,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public ClientUserRepository clientUsers(final TransactionalContext tx) {
-
 		return new InMemoryClientUserRepository();
 	}
 

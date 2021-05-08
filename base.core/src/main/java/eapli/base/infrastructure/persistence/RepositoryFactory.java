@@ -73,6 +73,12 @@ public interface RepositoryFactory {
 
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
+	 *
+	 */
+	CatalogoRepositorio catalogoRepositorio();
+
+	/**
+	 * Repositorio vai ser criado em modo auto transacional
 	 * @return
 	 */
 	FormularioRepositorio formularioRepositorio();

@@ -23,7 +23,7 @@ public class DescricaoCompleta implements ValueObject, Comparable<DescricaoCompl
     }
 
     private boolean validaDescCompleta(final String descCompleta) {
-        String regex = ".{1,500}";
+        String regex = "(.|[ \\n\\t]){1,500}";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcherAlphaNumericCheck = pattern.matcher(descCompleta);
