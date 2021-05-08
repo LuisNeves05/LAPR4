@@ -9,18 +9,45 @@ import java.awt.*;
 @Entity
 @Table
 public class TipoEquipa implements Comparable<TipoEquipa>, AggregateRoot<TipoEquipa> {
+
+    /**
+     * Código que identifica um tipo de equipa.
+     * É composto por até 15 carateres alfanuméricos.
+     */
     @EmbeddedId
+    @Column(name="ID")
     private CodigoInterno codigoInterno;
 
-
+    /**
+     * Cor que identifica um TipoEquipa
+     */
     @Convert ( converter = ColorConverter.class)
-    private Color color;
+    @Column(name="COR")
+    private Color  color;
 
+    /**
+     *Descreve um TipoEquipa, utilizando para tal no máximo 50 carateres.
+     */
     @Embedded
+    @Column(name="DESCRICAO")
     private DescricaoTipoEquipa descricaoTipoEquipa;
 
+    /**
+     * Construtor vazio requerido da entidade TipoEquipa
+     */
+    protected TipoEquipa() {
+    }
 
-    public TipoEquipa() {
+    /**
+     *Construtor TipoEquipa
+     * @param codigoInterno Código que identifica um tipo de equipa.É composto por até 15 carateres alfanuméricos.
+     * @param color Cor que identifica um TipoEquipa
+     * @param descricaoTipoEquipa Descreve um TipoEquipa, utilizando para tal no máximo 50 carateres.
+     */
+    public TipoEquipa(CodigoInterno codigoInterno, Color color, DescricaoTipoEquipa descricaoTipoEquipa) {
+        this.codigoInterno = codigoInterno;
+        this.color = color;
+        this.descricaoTipoEquipa = descricaoTipoEquipa;
     }
 
     @Override

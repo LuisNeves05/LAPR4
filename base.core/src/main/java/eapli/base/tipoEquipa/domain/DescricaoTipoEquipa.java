@@ -19,6 +19,8 @@ public class DescricaoTipoEquipa implements ValueObject,Comparable<DescricaoTipo
 
     protected DescricaoTipoEquipa(){}
 
+
+
     private boolean validaIdentificador(final String descricao) {
         String regex = "[a-zA-Z0-9]{1,50}";
 
