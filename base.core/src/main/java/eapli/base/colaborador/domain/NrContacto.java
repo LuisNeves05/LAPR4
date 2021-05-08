@@ -4,11 +4,12 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 
 import javax.persistence.Embeddable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Embeddable
-public class NrContacto implements ValueObject {
+public class NrContacto implements ValueObject, Comparable<NrContacto> {
 
     private int nrContacto;
 
@@ -31,5 +32,20 @@ public class NrContacto implements ValueObject {
         return matcherNumberCheck.find();
     }
 
+    /**
+     * Validação do nr de contacto 9 números
+     * @return true se for válido / false se for inválido
+     */
+    public static NrContacto valueOf(final int nrContacto) {
+        return new NrContacto(nrContacto);
+    }
 
-}
+    @Override
+    public int compareTo(NrContacto o) {
+        return this.nrContacto;
+    }
+
+
+
+
+  }

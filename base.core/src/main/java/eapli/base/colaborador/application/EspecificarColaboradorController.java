@@ -14,11 +14,11 @@ public class EspecificarColaboradorController {
 
     public Colaborador especificarColaborador(NomeCurto nomeCurto, NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
                                               Morada localResidencia, NrContacto nrContacto, Date dataNascimento,
-                                              Set<Funcao> funcao, Colaborador colaboradorResponsavel){
+                                              Set<Funcao> listaFuncao, Colaborador colaboradorResponsavel){
 
         ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
         Colaborador c = colaboradorBuilder.comNomeCurto(nomeCurto).comNomeCompleto(nomeCompleto).comNumMecanografico(numMecanografico)
-                .comLocalResidencia(localResidencia).comNrContacto(nrContacto).comDataNascimento(dataNascimento).comFuncao(funcao).comColaboradorResponsavel(colaboradorResponsavel).build();
+                .comLocalResidencia(localResidencia).comNrContacto(nrContacto).comDataNascimento(dataNascimento).comFuncao(listaFuncao).comColaboradorResponsavel(colaboradorResponsavel).build();
 
         return repoColaborador.save(c);
     }
