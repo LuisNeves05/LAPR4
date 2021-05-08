@@ -3,6 +3,7 @@ package eapli.base.persistence.impl.inmemory;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -69,6 +70,9 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public TipoEquipaRepositorio tipoEquipaRepositorio(){
 		return null;
 	}
+
+	@Override
+	public EquipaRepositorio equipaRepositorio() {return null;}
 
 
 	@Override

@@ -12,4 +12,9 @@ public class Acronimo implements ValueObject {
 
     public Acronimo() {
     }
+
+    @Override
+    public String toString() {
+        return acronimo;
+    }
 }

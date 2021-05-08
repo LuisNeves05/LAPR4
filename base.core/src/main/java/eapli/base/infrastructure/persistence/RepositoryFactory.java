@@ -1,7 +1,9 @@
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
@@ -14,7 +16,7 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
  */
 public interface RepositoryFactory {
 
-	/**
+	/**catalogoRepositorio
 	 * factory method to create a transactional context to use in the repositories
 	 *
 	 * @return
@@ -80,4 +82,8 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	TipoEquipaRepositorio tipoEquipaRepositorio();
+
+	EquipaRepositorio equipaRepositorio();
+
+	CatalogoRepositorio catalogoRepositorio();
 }

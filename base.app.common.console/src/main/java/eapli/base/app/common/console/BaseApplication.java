@@ -5,25 +5,15 @@
  */
 package eapli.base.app.common.console;
 
-import eapli.base.formulario.application.EspecificarFormularioController;
-import eapli.base.formulario.domain.Atributo;
-import eapli.base.formulario.domain.NomeFormulario;
-import eapli.base.formulario.domain.TipoDados;
-import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Keyword;
-import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.ServicoIdentificador;
+import eapli.base.equipa.application.EspecificarEquipaController;
+import eapli.base.equipa.application.ListarEquipaController;
+import eapli.base.equipa.domain.Acronimo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -45,6 +35,16 @@ public abstract class BaseApplication {
      *            the command line arguments
      */
     public void run(final String[] args) {
+
+        System.out.println("EQUIPAS:");
+        EspecificarEquipaController controller = new EspecificarEquipaController();
+        ListarEquipaController controllerList = new ListarEquipaController();
+        controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE");
+        controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
+
+        System.out.println(controllerList.listarEquipa());
+
+
         printHeader();
 
         try {
