@@ -6,12 +6,13 @@
 package eapli.base.app.common.console;
 
 import eapli.base.catalogo.application.EspecificarCatalogoController;
+import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
-import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
+import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +20,7 @@ import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 
-import java.awt.*;
+import java.util.Date;
 
 /**
  *
@@ -39,24 +40,29 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
 
-        /*System.out.println("EQUIPAS:");
+
+
+
         EspecificarEquipaController controller = new EspecificarEquipaController();
         EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
         EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
         ListarEquipaController controllerList = new ListarEquipaController();
+
+
         Morada morada = new Morada("asaffa", "afsfas");
         Funcao funcao = new Funcao("funcao");
-        Colaborador c = new Colaborador(new NomeCurto("asdasdasdas"), new NomeCompleto("jkdashdjkashjash"), null, morada, null, null, null, null);
 
-        Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("asdasdasdad"), new NomeCompleto("asdasdasd"), null, morada, null, null, null, null);
-        //catalogoController.especificarCatalogo("Titulo Catalogo","Breve","Completa",2);
-        catalogoController.especificarCatalogo("ola", "fsafsa", "fasfas", 10, c2, null);
-        controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE");
-        controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
+        Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("tiago"), new NomeCompleto("tiago marante"),
+                new MecanographicNumber("1200627"), new Morada("porto", "valongo"),
+                new NrContacto(911196272), null, null);
 
-        System.out.println(controllerList.listarEquipa());*/
-        RegistarTipoEquipaController registarTipoEquipaController  = new RegistarTipoEquipaController();
-        registarTipoEquipaController.tipoEquipaServico("ola","ola", Color.white);
+
+        controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", c2);
+
+        System.out.println(controller.listarAcronimos("TXT"));
+        System.out.println(controllerList.listarEquipa());
+
+        System.out.println("###################");
 
         printHeader();
 

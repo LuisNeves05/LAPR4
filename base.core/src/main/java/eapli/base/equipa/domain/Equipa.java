@@ -2,6 +2,7 @@ package eapli.base.equipa.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.domain.ColaboradorBuilder;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -20,18 +21,34 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     @Column(unique = true)
     private Long codigoEquipa;
 
+    /**
+     * Acrónimo Único da Equipa
+     */
     @Column(unique = true)
     private Acronimo acr;
 
+    /**
+     * Designação da Equipa
+     */
     private String designacao;
 
-    //@OneToMany
-    //private Set<Colaborador> colaboradores;
+    @OneToOne
+    private Colaborador colabResponsavel;
 
-    public Equipa(Long codigoEquipa, Acronimo acr, String designacao) {
+    @OneToMany
+    private Set<Colaborador> colaboradores;
+
+    /**
+     *
+     * @param codigoEquipa codigo da equipa obrigatório no construtor
+     * @param acr acrónimo da equipa obrigatório no construtor
+     * @param designacao designação da equipa obrigatório no construtor
+     */
+    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Colaborador colabR) {
         this.codigoEquipa = codigoEquipa;
         this.acr = acr;
         this.designacao = designacao;
+        this.colabResponsavel = colabR;
     }
 
     /**

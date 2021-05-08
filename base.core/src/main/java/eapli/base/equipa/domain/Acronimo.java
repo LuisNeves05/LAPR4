@@ -10,8 +10,7 @@ public class Acronimo implements ValueObject {
         this.acronimo = acronimo;
     }
 
-    public Acronimo() {
-    }
+    public Acronimo() {}
 
     @Override
     public String toString() {
