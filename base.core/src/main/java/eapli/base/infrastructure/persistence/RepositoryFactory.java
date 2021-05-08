@@ -91,5 +91,4 @@ public interface RepositoryFactory {
 
 	EquipaRepositorio equipaRepositorio();
 
-	CatalogoRepositorio catalogoRepositorio();
 }
