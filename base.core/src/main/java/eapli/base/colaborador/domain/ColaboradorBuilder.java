@@ -74,6 +74,6 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         // an exception. however, we will leave that to the constructor
 
         return new Colaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, nrContacto,
-                dataNascimento, funcao, colaboradorResponsavel);
+                dataNascimento, colaboradorResponsavel);
     }
 }

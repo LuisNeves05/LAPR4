@@ -23,8 +23,9 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
-import eapli.base.app.common.console.presentation.EspecificarColaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
+
+import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

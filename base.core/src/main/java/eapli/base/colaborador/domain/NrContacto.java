@@ -45,7 +45,8 @@ public class NrContacto implements ValueObject, Comparable<NrContacto> {
         return this.nrContacto;
     }
 
-
-
-
-  }
+    @Override
+    public String toString() {
+        return nrContacto + " ";
+    }
+}

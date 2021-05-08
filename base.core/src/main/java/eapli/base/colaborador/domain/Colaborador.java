@@ -36,10 +36,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @Column(name = "DATA_NASCIMENTO")
     private Date dataNascimento;
 
-    @Column(name = "FUNCAO") //nao obrigatoria
-    @ElementCollection
-    private Set<Funcao> funcao = null;  //TODO CRIAR CLASSE FUNCAO @ONETOMANY
-
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
@@ -47,15 +43,13 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     private SystemUser systemUser;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
-                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento,
-                       Set<Funcao> funcao, Colaborador colaboradorResponsavel){
+                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
         this.nomeCurto = nomeCurto;
         this.nomeCompleto = nomeCompleto;
         this.numMecanografico = numMecanografico;
         this.localResidencia = localResidencia;
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
-        this.funcao = funcao;
         this.colaboradorResponsavel = colaboradorResponsavel;
     }
 
@@ -79,7 +73,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
                 "nomeCurto=" + nomeCurto +
                 ", numMecanografico=" + numMecanografico +
                 ", nrContacto=" + nrContacto +
-                ", funcao=" + funcao +
                 '}';
     }
 }
