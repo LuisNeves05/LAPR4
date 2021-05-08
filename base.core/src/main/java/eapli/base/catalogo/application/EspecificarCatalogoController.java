@@ -6,8 +6,6 @@ import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-
-import java.util.Optional;
 import java.util.Set;
 
 public class EspecificarCatalogoController {

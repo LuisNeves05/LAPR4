@@ -17,8 +17,10 @@ public class EspecificarColaboradorController {
                                               Set<Funcao> funcao, Colaborador colaboradorResponsavel){
 
         ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
+        Colaborador c = colaboradorBuilder.comNomeCurto(nomeCurto).comNomeCompleto(nomeCompleto).comNumMecanografico(numMecanografico)
+                .comLocalResidencia(localResidencia).comNrContacto(nrContacto).comDataNascimento(dataNascimento).comFuncao(funcao).comColaboradorResponsavel(colaboradorResponsavel).build();
 
-        return repoColaborador.save(colaboradorBuilder.build());
+        return repoColaborador.save(c);
     }
 
 

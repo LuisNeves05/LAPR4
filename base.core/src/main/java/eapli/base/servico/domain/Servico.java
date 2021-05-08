@@ -130,4 +130,5 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     public String toString() {
         return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
     }
+
 }
