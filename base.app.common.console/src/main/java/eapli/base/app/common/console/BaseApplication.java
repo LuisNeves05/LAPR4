@@ -6,7 +6,8 @@
 package eapli.base.app.common.console;
 
 import eapli.base.catalogo.application.EspecificarCatalogoController;
-import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.application.EspecificarColaboradorController;
+import eapli.base.colaborador.domain.*;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
@@ -35,15 +36,22 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
 
-        System.out.println("EQUIPAS:");
+        /*System.out.println("EQUIPAS:");
         EspecificarEquipaController controller = new EspecificarEquipaController();
         EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
+        EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
         ListarEquipaController controllerList = new ListarEquipaController();
+        Morada morada = new Morada("asaffa", "afsfas");
+        Funcao funcao = new Funcao("funcao");
+        Colaborador c = new Colaborador(new NomeCurto("asdasdasdas"), new NomeCompleto("jkdashdjkashjash"), null, morada, null, null, null, null);
+
+        Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("asdasdasdad"), new NomeCompleto("asdasdasd"), null, morada, null, null, null, null);
         //catalogoController.especificarCatalogo("Titulo Catalogo","Breve","Completa",2);
+        catalogoController.especificarCatalogo("ola", "fsafsa", "fasfas", 10, c2, null);
         controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE");
         controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
 
-        System.out.println(controllerList.listarEquipa());
+        System.out.println(controllerList.listarEquipa());*/
 
         printHeader();
 

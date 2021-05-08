@@ -7,6 +7,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class EspecificarCatalogoController {
@@ -15,7 +16,6 @@ public class EspecificarCatalogoController {
      * Repositório do Serviço
      */
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
-
 
     /**
      * Especificação de um novo Catalogo
@@ -30,4 +30,10 @@ public class EspecificarCatalogoController {
         return this.repoCat.save(catalogoBuilder.build());
     }
 
+    /**
+     * Listar todas os Catalogos da base de dados
+     */
+    public Iterable<Catalogo> listaCatalogos() {
+        return repoCat.findAll();
+    }
 }
