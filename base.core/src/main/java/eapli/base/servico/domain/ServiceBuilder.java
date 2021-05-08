@@ -25,7 +25,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     /**
      * Ícone do serviço
      */
-    private int icon; //TODO alterar para imagem
+    private byte[] icon;
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
@@ -75,7 +75,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public ServiceBuilder comIcon(final int icon) {
+    public ServiceBuilder comIcon(final byte[] icon) {
         this.icon = icon;
         return this;
     }

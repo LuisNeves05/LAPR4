@@ -1,13 +1,14 @@
 package eapli.base.catalogo.persistencia;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import javax.management.Query;
+import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,16 +22,16 @@ public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Lo
     }
 
     @Override
-    public Iterable<Catalogo> catalogoPorTitulo(final String titulo) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("titulo", titulo);
-        return match("e.catalogo.titulo=:titulo", params);
+    public List<Catalogo> catalogoPorTitulo(final String titulo) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where titulo = ' " + titulo + "' ", Catalogo.class);
+        return query.getResultList();
     }
 
     @Override
-    public Iterable<Catalogo> catalogoPorDescBreve(final String descBreve) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("descBreve", descBreve);
-        return match("e.catalogo.descBreve=:descBreve", params);
+    public List<Catalogo> catalogoPorDescBreve(final String descBreve) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where descBreve = ' " + descBreve + "' ", Catalogo.class);
+        return query.getResultList();
     }
 }

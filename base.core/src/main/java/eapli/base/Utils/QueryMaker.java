@@ -18,7 +18,8 @@ public class QueryMaker {
         return query.getResultList();
     }
 
-    private EntityManager criarEntityManager(String persistenceUnit) {
+
+    public EntityManager criarEntityManager(String persistenceUnit) {
         EntityManagerFactory factory = Persistence.
                 createEntityManagerFactory(persistenceUnit);
         EntityManager manager = factory.createEntityManager();

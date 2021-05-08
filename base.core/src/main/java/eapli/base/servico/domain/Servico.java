@@ -40,7 +40,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * Ícone do serviço
      */
     @Column(name = "ICONE")
-    private int icon; //TODO alterar para imagem
+    @Lob
+    private byte[] icon;
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
@@ -86,7 +87,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param keywords  conjunto de palavras chave
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, int icon,
+    public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
                    boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo, boolean requerFeedback) {
         this.servicoIdent = idServ;
         this.titulo = titulo;

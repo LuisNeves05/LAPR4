@@ -47,7 +47,7 @@ public abstract class BaseApplication {
         ListarEquipaController controllerList = new ListarEquipaController();
         EspecificarServicoController especificarServicoController = new EspecificarServicoController();
 
-        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO",null,true);
+        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO",false,null);
 
         //QueryMaker q = new QueryMaker();
         //List<Servico> list = q.queryToDB();

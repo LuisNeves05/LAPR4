@@ -112,9 +112,9 @@ public class EspecificarServicoUI extends AbstractUI {
         } while (!validaSimNao(strContinuar));
         if (strContinuar.equalsIgnoreCase("nao")) {
             estado = "INCOMPLETO";
-            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo, requerFeed);
+            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
         } else if (strContinuar.equalsIgnoreCase("sim")) {
-            Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo, requerFeed);
+            Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
             fh.form(servico);
         }
         return true;

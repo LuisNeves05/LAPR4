@@ -1,13 +1,14 @@
 package eapli.base.servico.persistencia;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-import java.util.HashMap;
-import java.util.Map;
 
-import java.util.Calendar;
+import javax.persistence.Query;
+import java.util.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,40 +21,37 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
     }
 
     @Override
-    public Iterable<Servico> servicoPorIdentificador(final String servicoIdent){
-        final Map<String, Object> params = new HashMap<>();
-        params.put("servicoIdent", servicoIdent);
-        return match("e.servico.servicoIdent=:servicoIdent", params);
+    public List<Servico> servicoPorIdentificador(final String ident){
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where servicoIdent = ' " + ident + "' ", Servico.class);
+        return query.getResultList();
     }
 
     @Override
-    public Iterable<Servico> servicoPorTitulo(final String titulo) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("titulo", titulo);
-        return match("e.servico.titulo=:titulo", params);
+    public List<Servico> servicoPorTitulo(final String titulo) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where titulo = ' " + titulo + "' ", Servico.class);
+        return query.getResultList();
     }
 
     @Override
-    public Iterable<Servico> servicoPorDescBreve(final String descBreve) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("descBreve", descBreve);
-        return match("e.servico.descBreve=:descBreve", params);
+    public List<Servico> servicoPorDescBreve(final String descBreve) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where descBreve = ' " + descBreve + "' ", Servico.class);
+        return query.getResultList();
     }
 
     @Override
-    public Iterable<Servico> servicoPorKeyword(final String keyword) {
-        final Map<String, Object> params = new HashMap<>();
-        params.put("descBreve", keyword);
-        return match("e.servico.keyword=:keyword", params);
+    public List<Servico> servicoPorKeyword(final String keyword) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where keywords = ' " + keyword + "' ", Servico.class);
+        return query.getResultList();
     }
 
-
     @Override
-    public Iterable<Servico> findByEstado(final String estado) {
-        final Map<String, Object> params = new HashMap<>();
-
-        params.put("estado", estado);
-
-        return match("e.servico.estado = :estado ", params);
+    public List<Servico> findByEstado(final String estado) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where estado = ' " + estado + "' ", Servico.class);
+        return query.getResultList();
     }
 }
