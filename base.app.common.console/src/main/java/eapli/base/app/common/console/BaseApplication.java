@@ -11,12 +11,15 @@ import eapli.base.colaborador.domain.*;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
+import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
+
+import java.awt.*;
 
 /**
  *
@@ -52,6 +55,8 @@ public abstract class BaseApplication {
         controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
 
         System.out.println(controllerList.listarEquipa());*/
+        RegistarTipoEquipaController registarTipoEquipaController  = new RegistarTipoEquipaController();
+        registarTipoEquipaController.tipoEquipaServico("ola","ola", Color.white);
 
         printHeader();
 

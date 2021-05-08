@@ -21,6 +21,7 @@ public class TipoEquipa implements Comparable<TipoEquipa>, AggregateRoot<TipoEqu
     /**
      * Cor que identifica um TipoEquipa
      */
+
     @Convert ( converter = ColorConverter.class)
     @Column(name="COR")
     private Color  color;

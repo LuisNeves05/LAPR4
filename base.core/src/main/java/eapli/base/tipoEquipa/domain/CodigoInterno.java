@@ -6,7 +6,6 @@ import javax.persistence.Embeddable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
     @Embeddable
     public  class CodigoInterno implements ValueObject, Comparable<CodigoInterno> {
         /**
