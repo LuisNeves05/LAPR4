@@ -12,7 +12,7 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class Formulario implements Comparable<Formulario>, AggregateRoot<Formulario> {
+public class    Formulario implements Comparable<Formulario>, AggregateRoot<Formulario> {
 
     /**
      * Identificador único do formulário
