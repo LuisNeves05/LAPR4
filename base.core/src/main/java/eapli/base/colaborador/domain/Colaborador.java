@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Colaborador implements Comparable<Colaborador>, AggregateRoot<MecanographicNumber> {
+public class Colaborador implements Comparable<MecanographicNumber>, AggregateRoot<MecanographicNumber> {
 
     @Column(name = "NOME_CURTO")
     @Embedded
@@ -69,13 +69,10 @@ public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Mecan
     }
 
     @Override
-    public int compareTo(Colaborador o){return 0;}
+    public int compareTo(MecanographicNumber o){return this.numMecanografico.compareTo(o);}
 
     @Override
-    public Colaborador identity() {return null;}
-
-    @Override
-    public boolean hasIdentity(Colaborador otherNumMecanografico){return false;}
+    public MecanographicNumber identity() {return null;}
 
     @Override
     public String toString() {
