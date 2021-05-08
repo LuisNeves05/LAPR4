@@ -19,13 +19,12 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private final EspecificarServicoController controller = new EspecificarServicoController();
     private final EspecificarFormularioController fc = new EspecificarFormularioController();
-    private final EspecificarCatalogoController espCatal = new EspecificarCatalogoController();
 
 
     @Override
     protected boolean doShow() {
 
-        List<Catalogo> listaCatalogos = (List<Catalogo>) espCatal.listaCatalogos();
+        List<Catalogo> listaCatalogos = (List<Catalogo>) controller.listaCatalogos();
 
         if(listaCatalogos.isEmpty()){
             System.out.println("Não existem Catálogos. Crie um Catálogo primeiro.");
@@ -105,7 +104,6 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         String estado = "COMPLETO"; //TODO MUDAR PARA FICAR implementado
-        Set<Atributo> listaAtributo = new HashSet<>();
         flag = true;
         String continuar;
         NomeFormulario nf;
@@ -125,27 +123,25 @@ public class EspecificarServicoUI extends AbstractUI {
                 String lable = Console.readLine("Nome da lable \n");
                 String descAjuda = Console.readLine("Curta descrição do atributo \n");
                 String tipoDados;
-                TipoDados a = new TipoDados();
                 do {
                     tipoDados = Console.readLine("Tipo de dados do atributo (Numero inteiro - 1 | Frase - 2 | Numero fracional - 3 | Data - 4");
                     switch (tipoDados) {
                         case "1":
-                            a = new TipoDados("INT");
+                            tipoDados = "INT";
                             break;
                         case "2":
-                            a = new TipoDados("STRING");
+                            tipoDados = "STRING";
                             break;
                         case "3":
-                            a = new TipoDados("FLOAT");
+                            tipoDados = "FLOAT";
                             break;
                         case "4":
-                            a = new TipoDados("DATA");
+                            tipoDados = "DATA";
                             break;
                     }
                 } while (!validaDadosEscolha(tipoDados));
 
-                Atributo at = new Atributo(nomeVar, lable, descAjuda, a, "Teste");
-                listaAtributo.add(at);
+                fc.addAtributo(nomeVar, lable, descAjuda, tipoDados, "Teste");
                 continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
                 if (continuar.equalsIgnoreCase("nao")) {
                     flag = false;
@@ -153,7 +149,7 @@ public class EspecificarServicoUI extends AbstractUI {
             }
             try {
                 Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo);
-                fc.especificarFormulario(nf, servico, listaAtributo);
+                fc.especificarFormulario(nf, servico);
             } catch (ConcurrencyException e) {
                 System.out.println("Ocorreu um erro > " + e.getLocalizedMessage());
                 return false;

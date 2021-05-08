@@ -11,7 +11,7 @@ import java.util.Set;
 public class EspecificarCatalogoController {
 
     /**
-     * Repositório do Serviço
+     * Repositório do Catalogo
      */
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
 
@@ -28,10 +28,4 @@ public class EspecificarCatalogoController {
         return this.repoCat.save(catalogoBuilder.build());
     }
 
-    /**
-     * Listar todas os Catalogos da base de dados
-     */
-    public Iterable<Catalogo> listaCatalogos() {
-        return repoCat.findAll();
-    }
 }

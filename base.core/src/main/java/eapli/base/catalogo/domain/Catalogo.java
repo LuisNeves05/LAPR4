@@ -19,22 +19,22 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(name = "TITULO")
     private Titulo titulo;
     /**
      * Descrição brece do serviço
      */
-    @Column
+    @Column(name = "DESCRICAO BREVE")
     private DescricaoBreve descBreve;
     /**
      * Descrição completa do serviço
      */
-    @Column
+    @Column(name = "DESCRICAO COMPLETA")
     private DescricaoCompleta descComp;
     /**
      * Ícone do serviço
      */
-    @Column
+    @Column(name = "ICONE")
     private int icon; //TODO alterar para imagem
 
     @OneToOne
