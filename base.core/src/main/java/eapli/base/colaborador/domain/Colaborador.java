@@ -77,14 +77,9 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     public String toString() {
         return "Colaborador{" +
                 "nomeCurto=" + nomeCurto +
-                ", nomeCompleto=" + nomeCompleto +
                 ", numMecanografico=" + numMecanografico +
-                ", localResidencia=" + localResidencia +
                 ", nrContacto=" + nrContacto +
-                ", dataNascimento=" + dataNascimento +
                 ", funcao=" + funcao +
-                ", colaboradorResponsavel=" + colaboradorResponsavel +
-                ", systemUser=" + systemUser +
                 '}';
     }
 }
