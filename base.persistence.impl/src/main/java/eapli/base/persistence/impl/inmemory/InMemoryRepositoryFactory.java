@@ -1,7 +1,10 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -18,7 +21,6 @@ import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserReposi
 public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	static {
-		// only needed because of the in memory persistence
 		new BaseBootstrapper().execute();
 	}
 
@@ -35,7 +37,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public ClientUserRepository clientUsers(final TransactionalContext tx) {
-
 		return new InMemoryClientUserRepository();
 	}
 
@@ -55,12 +56,25 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public CatalogoRepositorio catalogoRepositorio() {
+		return null;
+	}
+
+	@Override
 	public FormularioRepositorio formularioRepositorio() {
 		return null;
 	}
 
 	@Override
 	public TipoEquipaRepositorio tipoEquipaRepositorio(){
+		return null;
+	}
+
+	@Override
+	public EquipaRepositorio equipaRepositorio() {return null;}
+
+	@Override
+	public ColaboradorRepositorio colaboradorRepositorio() {
 		return null;
 	}
 

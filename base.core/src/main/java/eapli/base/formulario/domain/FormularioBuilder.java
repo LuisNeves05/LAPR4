@@ -9,7 +9,7 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
     /**
      * Nome do formulário
      */
-    private String nome;
+    private NomeFormulario nome;
     /**
      * Formulário de um respetivo serviço
      */
@@ -21,7 +21,7 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
 
     public FormularioBuilder(){}
 
-    public FormularioBuilder comNome(final String nome) {
+    public FormularioBuilder comNome(final NomeFormulario nome) {
         this.nome = nome;
         return this;
     }

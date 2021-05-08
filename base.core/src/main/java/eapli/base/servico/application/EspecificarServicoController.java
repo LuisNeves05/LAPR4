@@ -1,5 +1,6 @@
 package eapli.base.servico.application;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.ServiceBuilder;
@@ -21,7 +22,7 @@ public class EspecificarServicoController {
      * Especificação de um novo Serviço
      */
     public Servico especificarServico(String identificador, String titulo, String descBreve, String descCompleta,
-                                      int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado) {
+                                      int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo) {
 
        ServiceBuilder serviceBuilder = new ServiceBuilder();
         serviceBuilder.comIdentificador(identificador).comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)

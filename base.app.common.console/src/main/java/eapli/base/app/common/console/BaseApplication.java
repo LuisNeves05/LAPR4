@@ -5,24 +5,18 @@
  */
 package eapli.base.app.common.console;
 
-import eapli.base.formulario.application.EspecificarFormularioController;
-import eapli.base.formulario.domain.Atributo;
-import eapli.base.formulario.domain.TipoDados;
-import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Keyword;
-import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.ServicoIdentificador;
+import eapli.base.catalogo.application.EspecificarCatalogoController;
+import eapli.base.colaborador.application.EspecificarColaboradorController;
+import eapli.base.colaborador.domain.*;
+import eapli.base.equipa.application.EspecificarEquipaController;
+import eapli.base.equipa.application.ListarEquipaController;
+import eapli.base.equipa.domain.Acronimo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eapli.base.Application;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -31,9 +25,6 @@ import java.util.Set;
 @SuppressWarnings("squid:S106")
 public abstract class BaseApplication {
 
-    // we are assuming we will always use the in process event
-    // dispatcher. check the Spring version of the Base project
-    // for an alternative
     final EventDispatcher dispatcher = InProcessPubSub.dispatcher();
 
     protected static final String SEPARATOR_HR = "=====================================";
@@ -44,22 +35,25 @@ public abstract class BaseApplication {
      *            the command line arguments
      */
     public void run(final String[] args) {
+
+        /*System.out.println("EQUIPAS:");
+        EspecificarEquipaController controller = new EspecificarEquipaController();
+        EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
+        EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
+        ListarEquipaController controllerList = new ListarEquipaController();
+        Morada morada = new Morada("asaffa", "afsfas");
+        Funcao funcao = new Funcao("funcao");
+        Colaborador c = new Colaborador(new NomeCurto("asdasdasdas"), new NomeCompleto("jkdashdjkashjash"), null, morada, null, null, null, null);
+
+        Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("asdasdasdad"), new NomeCompleto("asdasdasd"), null, morada, null, null, null, null);
+        //catalogoController.especificarCatalogo("Titulo Catalogo","Breve","Completa",2);
+        catalogoController.especificarCatalogo("ola", "fsafsa", "fasfas", 10, c2, null);
+        controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE");
+        controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
+
+        System.out.println(controllerList.listarEquipa());*/
+
         printHeader();
-        EspecificarServicoController es = new EspecificarServicoController();
-        EspecificarFormularioController ef = new EspecificarFormularioController();
-        Keyword kw = new Keyword("HEY");
-        Set<Keyword> lista = new HashSet<>();
-
-        Servico s = es.especificarServico("SERVICO 1","Ola","DescBreve","DesCompleta", 1, false,true, lista,"Estado");
-        es.especificarServico("SERVICO 2", "SFAFA","Ola2","DescBreve",21321, false, true, lista,"Estado");
-        lista.add(kw);
-        es.especificarServico("SERVICO 3","Ola3","DescBreve","DesCompleta", 1, false,true,lista,"Estado");
-        es.especificarServico("SERVICO 4","Ola4","DescBreve","DesCompleta", 1, true,false,lista,"Estado");
-
-        Set<Atributo> ca = new HashSet<>();
-        TipoDados tdad = new TipoDados();
-        ca.add(new Atributo("sad", "safsa", "saf", tdad, "fsa"));
-        ef.especificarFormulario("FORMULARIO 1", s, ca);
 
         try {
             setupEventHandlers();

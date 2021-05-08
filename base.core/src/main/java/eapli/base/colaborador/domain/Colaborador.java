@@ -1,60 +1,62 @@
 package eapli.base.colaborador.domain;
 
-import com.sun.nio.sctp.PeerAddressChangeNotification;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
-public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colaborador> {
+public class Colaborador implements Comparable<MecanographicNumber>, AggregateRoot<MecanographicNumber> {
 
     @Column(name = "NOME_CURTO")
-    private String nomeCurto;
+    @Embedded
+    private NomeCurto nomeCurto;
 
     @Column(name = "NOME_COMPLETO")
-    private String nomeCompleto;
+    @Embedded
+    private NomeCompleto nomeCompleto;
 
-    @Id
+    @EmbeddedId
     @Column(name = "NUM_MECANOGRAFICO")
     private MecanographicNumber numMecanografico;
 
-    @Column(name = "LOCAL_RESIDENCIA")
-    private String localResidencia; //TODO CRIAR CLASSE ADDRESS
-
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "LOCAL_RESIDENCIA") //nao obrigatoria
+    @Embedded
+    private Morada localResidencia;
 
     @Column(name = "CONTACTO")
-    private int nrContacto;
+    @Embedded
+    private NrContacto nrContacto;
 
     @Column(name = "DATA_NASCIMENTO")
     private Date dataNascimento;
 
-    @Column(name = "PASSWORD")
-    private String password;
-
-    @Column(name = "FUNCAO")
-    private String funcao;  //TODO CRIAR CLASSE FUNCAO @ONETOMANY
+    @Column(name = "FUNCAO") //nao obrigatoria
+    @ElementCollection
+    private Set<Funcao> funcao;  //TODO CRIAR CLASSE FUNCAO @ONETOMANY
 
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
-    public Colaborador(String nomeCurto,String nomeCompleto, MecanographicNumber numMecanografico, String localResidencia, String email, int nrContacto,
-                       Date dataNascimento, String password, String funcao, Colaborador colaboradorResponsavel){
+    @OneToOne
+    private SystemUser systemUser;
+
+    public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
+                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento,
+                       Set<Funcao> funcao, Colaborador colaboradorResponsavel){
         this.nomeCurto = nomeCurto;
         this.nomeCompleto = nomeCompleto;
         this.numMecanografico = numMecanografico;
         this.localResidencia = localResidencia;
-        this.email = email;
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
-        this.password = password;
         this.funcao = funcao;
         this.colaboradorResponsavel = colaboradorResponsavel;
-
     }
 
     protected Colaborador(){}
@@ -66,12 +68,23 @@ public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colab
     }
 
     @Override
-    public int compareTo(Colaborador o){return 0;}
+    public int compareTo(MecanographicNumber o){return this.numMecanografico.compareTo(o);}
 
     @Override
-    public Colaborador identity() {return null;}
+    public MecanographicNumber identity() {return null;}
 
     @Override
-    public boolean hasIdentity(Colaborador otherNumMecanografico){return false;}
-
+    public String toString() {
+        return "Colaborador{" +
+                "nomeCurto=" + nomeCurto +
+                ", nomeCompleto=" + nomeCompleto +
+                ", numMecanografico=" + numMecanografico +
+                ", localResidencia=" + localResidencia +
+                ", nrContacto=" + nrContacto +
+                ", dataNascimento=" + dataNascimento +
+                ", funcao=" + funcao +
+                ", colaboradorResponsavel=" + colaboradorResponsavel +
+                ", systemUser=" + systemUser +
+                '}';
+    }
 }

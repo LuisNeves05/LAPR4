@@ -4,38 +4,35 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.Date;
+import java.util.Set;
 
 
 public class ColaboradorBuilder implements DomainFactory<Colaborador> {
 
-    private String nomeCurto;
+    private NomeCurto nomeCurto;
 
-    private String nomeCompleto;
+    private NomeCompleto nomeCompleto;
 
     private MecanographicNumber numMecanografico;
 
-    private String localResidencia;
+    private Morada localResidencia;
 
-    private String email;
-
-    private int nrContacto;
+    private NrContacto nrContacto;
 
     private Date dataNascimento;
 
-    private String password;
-
-    private String funcao;
+    private Set<Funcao> funcao;
 
     private Colaborador colaboradorResponsavel;
 
-    private ColaboradorBuilder(){}
+    public ColaboradorBuilder(){}
 
-    public ColaboradorBuilder comNomeCurto(final String nomeCurto){
+    public ColaboradorBuilder comNomeCurto(final NomeCurto nomeCurto){
         this.nomeCurto = nomeCurto;
         return this;
     }
 
-    public ColaboradorBuilder comNomeCompleto(final String nomeCompleto){
+    public ColaboradorBuilder comNomeCompleto(final NomeCompleto nomeCompleto){
         this.nomeCompleto = nomeCompleto;
         return this;
     }
@@ -45,17 +42,12 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         return this;
     }
 
-    public ColaboradorBuilder comLocalResidencia(final String localResidencia){
+    public ColaboradorBuilder comLocalResidencia(final Morada localResidencia){
         this.localResidencia = localResidencia;
         return this;
     }
 
-    public ColaboradorBuilder comEmail(final String email){
-        this.email = email;
-        return this;
-    }
-
-    public ColaboradorBuilder comNrContacto(final int nrContacto){
+    public ColaboradorBuilder comNrContacto(final NrContacto nrContacto){
         this.nrContacto = nrContacto;
         return this;
     }
@@ -65,12 +57,7 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         return this;
     }
 
-    public ColaboradorBuilder comPassword(final String password) {
-        this.password = password;
-        return this;
-    }
-
-    public ColaboradorBuilder comFuncao(final String funcao){
+    public ColaboradorBuilder comFuncao(final Set<Funcao> funcao){
         this.funcao = funcao;
         return this;
     }
@@ -86,7 +73,7 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
 
-        return new Colaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto,
-                dataNascimento, password, funcao, colaboradorResponsavel);
+        return new Colaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, nrContacto,
+                dataNascimento, funcao, colaboradorResponsavel);
     }
 }

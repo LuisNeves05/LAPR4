@@ -1,7 +1,11 @@
 package eapli.base.infrastructure.persistence;
 
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
@@ -71,6 +75,12 @@ public interface RepositoryFactory {
 
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
+	 *
+	 */
+	CatalogoRepositorio catalogoRepositorio();
+
+	/**
+	 * Repositorio vai ser criado em modo auto transacional
 	 * @return
 	 */
 	FormularioRepositorio formularioRepositorio();
@@ -80,4 +90,9 @@ public interface RepositoryFactory {
 	 * @return
 	 */
 	TipoEquipaRepositorio tipoEquipaRepositorio();
+
+	ColaboradorRepositorio colaboradorRepositorio();
+
+	EquipaRepositorio equipaRepositorio();
+
 }

@@ -3,6 +3,7 @@ package eapli.base.formulario.application;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.FormularioBuilder;
+import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
@@ -20,7 +21,7 @@ public class EspecificarFormularioController {
     /**
      * Especificação de um novo Formulario
      */
-    public Formulario especificarFormulario(String nome, Servico servico, Set<Atributo> conjAtrib){
+    public Formulario especificarFormulario(NomeFormulario nome, Servico servico, Set<Atributo> conjAtrib){
 
         FormularioBuilder formularioBuilder = new FormularioBuilder();
         formularioBuilder.comNome(nome).comServico(servico).comConjAtributos(conjAtrib);

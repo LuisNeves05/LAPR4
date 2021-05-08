@@ -1,7 +1,14 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.catalogo.persistencia.CatalogoRepositorioJPAimpl;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorioJPAImpl;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
+import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorioJPAimpl;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
@@ -58,6 +65,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public CatalogoRepositorio catalogoRepositorio() {
+		return new CatalogoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
 	public FormularioRepositorio formularioRepositorio(){
 		return new FormularioRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
@@ -65,6 +77,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public TipoEquipaRepositorio tipoEquipaRepositorio(){
 		return new TipoEquipaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public EquipaRepositorio equipaRepositorio() {
+		return new EquipaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public ColaboradorRepositorio colaboradorRepositorio(){
+		return new ColaboradorRepositorioJPAImpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

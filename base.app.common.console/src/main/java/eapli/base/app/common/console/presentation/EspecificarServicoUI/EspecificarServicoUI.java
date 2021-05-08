@@ -1,20 +1,36 @@
 package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
+import eapli.base.catalogo.application.EspecificarCatalogoController;
+import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.formulario.application.EspecificarFormularioController;
+import eapli.base.formulario.domain.Atributo;
+import eapli.base.formulario.domain.NomeFormulario;
+import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
+import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class EspecificarServicoUI extends AbstractUI {
 
     private final EspecificarServicoController controller = new EspecificarServicoController();
+    private final EspecificarFormularioController fc = new EspecificarFormularioController();
+    private final EspecificarCatalogoController espCatal = new EspecificarCatalogoController();
+
 
     @Override
     protected boolean doShow() {
+
+        List<Catalogo> listaCatalogos = (List<Catalogo>) espCatal.listaCatalogos();
+
+        if(listaCatalogos.isEmpty()){
+            System.out.println("Não existem Catálogos. Crie um Catálogo primeiro.");
+            return false;
+        }
 
         final String identificador = Console.readLine("Identificador do Serviço:");
         final String titulo = Console.readLine("Título:");
@@ -23,6 +39,28 @@ public class EspecificarServicoUI extends AbstractUI {
         final String descComp = Console.readLine("Descrição Completa:");
 
         final int icon = Console.readInteger("Ícone:");
+
+        boolean findCatalogo = true;
+
+        for (Catalogo catalogo : listaCatalogos)
+            System.out.println(catalogo.toString());
+
+        Catalogo catalogo = null;
+        int index;
+
+        while (findCatalogo) {
+            index = Console.readInteger("Indique o catálogo");
+
+            for(Catalogo cat : listaCatalogos){
+                if (cat.identity() == index){
+                    catalogo = cat;
+                    findCatalogo = false;
+                }
+            }
+            if(findCatalogo){
+                System.out.println("Não existe um catálogo com esse identificador");
+            }
+        }
 
         boolean flag = true;
         boolean booleanAprov = true;
@@ -63,21 +101,65 @@ public class EspecificarServicoUI extends AbstractUI {
             if (keyword.equals("0"))
                 flag = false;
             else
-                //CRIAR KEYWORD NO BUILDER
                 listaKeywords.add(new Keyword(keyword));
-
         }
 
-        //REMOVER DEPOIS
-        final String estado = Console.readLine("Estado do serviço:");
+        String estado = "COMPLETO"; //TODO MUDAR PARA FICAR implementado
+        Set<Atributo> listaAtributo = new HashSet<>();
+        flag = true;
+        String continuar;
+        NomeFormulario nf;
+        String strContinuar;
+        do {
+            strContinuar = Console.readLine("Deseja continuar com a especificação do formulário? (sim/nao):");
+        } while (!validaSimNao(strContinuar));
 
-        try {
-            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado);
-        } catch (ConcurrencyException e) {
-            System.out.println("Ocorreu um erro> " + e.getLocalizedMessage());
-            return false;
+        if (strContinuar.equalsIgnoreCase("nao")) {
+            estado = "INCOMPLETO";
+            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo);
+        } else if (strContinuar.equalsIgnoreCase("sim")) {
+            String nomeForm = Console.readLine("Nome do Formulario: ");
+            nf = new NomeFormulario(nomeForm);
+            while (flag) {
+                String nomeVar = Console.readLine("Nome de variável do atributo \n");
+                String lable = Console.readLine("Nome da lable \n");
+                String descAjuda = Console.readLine("Curta descrição do atributo \n");
+                String tipoDados;
+                TipoDados a = new TipoDados();
+                do {
+                    tipoDados = Console.readLine("Tipo de dados do atributo (Numero inteiro - 1 | Frase - 2 | Numero fracional - 3 | Data - 4");
+                    switch (tipoDados) {
+                        case "1":
+                            a = new TipoDados("INT");
+                            break;
+                        case "2":
+                            a = new TipoDados("STRING");
+                            break;
+                        case "3":
+                            a = new TipoDados("FLOAT");
+                            break;
+                        case "4":
+                            a = new TipoDados("DATA");
+                            break;
+                    }
+                } while (!validaDadosEscolha(tipoDados));
+
+                Atributo at = new Atributo(nomeVar, lable, descAjuda, a, "Teste");
+                listaAtributo.add(at);
+                continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
+                if (continuar.equalsIgnoreCase("nao")) {
+                    flag = false;
+                }
+            }
+            try {
+                Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, catalogo);
+                fc.especificarFormulario(nf, servico, listaAtributo);
+            } catch (ConcurrencyException e) {
+                System.out.println("Ocorreu um erro > " + e.getLocalizedMessage());
+                return false;
+            }
+
         }
-
         return true;
     }
 
@@ -86,4 +168,11 @@ public class EspecificarServicoUI extends AbstractUI {
         return "Especificar Serviço";
     }
 
+    private boolean validaDadosEscolha(String a) {
+        return a.equals("1") || a.equals("2") || a.equals("3") || a.equals("4");
+    }
+
+    private boolean validaSimNao(String a) {
+        return a.equalsIgnoreCase("sim") || a.equalsIgnoreCase("nao");
+    }
 }
