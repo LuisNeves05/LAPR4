@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table
-public class Colaborador implements Comparable<Colaborador>, AggregateRoot<Colaborador> {
+public class Colaborador implements Comparable<Colaborador>, AggregateRoot<MecanographicNumber> {
 
     @Column(name = "NOME_CURTO")
     @Embedded
