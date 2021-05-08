@@ -4,8 +4,15 @@ import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.framework.domain.repositories.DomainRepository;
 
+import java.util.Optional;
+
 public interface ServicoRepositorio extends DomainRepository<ServicoIdentificador, Servico > {
 
-    Servico findByKeyword(String keyword);
+    Iterable<Servico> servicoPorIdentificador(final String identificador);
 
+    Iterable<Servico> servicoPorTitulo(final String titulo);
+
+    Iterable<Servico> servicoPorDescBreve(final String descBreve);
+
+    Iterable<Servico> servicoPorKeyword(final String keyword);
 }

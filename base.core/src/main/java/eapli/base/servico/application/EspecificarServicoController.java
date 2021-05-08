@@ -1,6 +1,7 @@
 package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.ServiceBuilder;
@@ -17,6 +18,7 @@ public class EspecificarServicoController {
      * Repositório do Serviço
      */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
+    private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
 
     /**
      * Especificação de um novo Serviço
@@ -24,7 +26,7 @@ public class EspecificarServicoController {
     public Servico especificarServico(String identificador, String titulo, String descBreve, String descCompleta,
                                       int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo) {
 
-       ServiceBuilder serviceBuilder = new ServiceBuilder();
+        ServiceBuilder serviceBuilder = new ServiceBuilder();
         serviceBuilder.comIdentificador(identificador).comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
                       .comIcon(icon).comAtAprov(atAprov)
                       .comAtReal(atReal).comKeywords(keywords).comEstado(estado);
@@ -32,4 +34,10 @@ public class EspecificarServicoController {
        return this.repoServ.save(serviceBuilder.build());
     }
 
+    /**
+     * Listar todas os Catalogos da base de dados
+     */
+    public Iterable<Catalogo> listaCatalogos() {
+        return repoCat.findAll();
+    }
 }

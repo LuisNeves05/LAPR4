@@ -4,7 +4,8 @@ import eapli.base.Application;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long, ServicoIdentificador>
         implements ServicoRepositorio {
@@ -14,7 +15,30 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
     }
 
     @Override
-    public Servico findByKeyword(String keyword) {
-        return null;
+    public Iterable<Servico> servicoPorIdentificador(final String servicoIdent){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("servicoIdent", servicoIdent);
+        return match("e.servico.servicoIdent=:servicoIdent", params);
+    }
+
+    @Override
+    public Iterable<Servico> servicoPorTitulo(final String titulo) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("titulo", titulo);
+        return match("e.servico.titulo=:titulo", params);
+    }
+
+    @Override
+    public Iterable<Servico> servicoPorDescBreve(final String descBreve) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("descBreve", descBreve);
+        return match("e.servico.descBreve=:descBreve", params);
+    }
+
+    @Override
+    public Iterable<Servico> servicoPorKeyword(final String keyword) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("descBreve", keyword);
+        return match("e.servico.keyword=:keyword", params);
     }
 }
