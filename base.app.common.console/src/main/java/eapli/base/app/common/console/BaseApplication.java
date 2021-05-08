@@ -5,6 +5,8 @@
  */
 package eapli.base.app.common.console;
 
+import eapli.base.catalogo.application.EspecificarCatalogoController;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
@@ -22,9 +24,6 @@ import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub
 @SuppressWarnings("squid:S106")
 public abstract class BaseApplication {
 
-    // we are assuming we will always use the in process event
-    // dispatcher. check the Spring version of the Base project
-    // for an alternative
     final EventDispatcher dispatcher = InProcessPubSub.dispatcher();
 
     protected static final String SEPARATOR_HR = "=====================================";
@@ -38,12 +37,13 @@ public abstract class BaseApplication {
 
         System.out.println("EQUIPAS:");
         EspecificarEquipaController controller = new EspecificarEquipaController();
+        EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
         ListarEquipaController controllerList = new ListarEquipaController();
+        //catalogoController.especificarCatalogo("Titulo Catalogo","Breve","Completa",2);
         controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE");
         controller.especificarEquipa(323L, new Acronimo("TXT"), "324");
 
         System.out.println(controllerList.listarEquipa());
-
 
         printHeader();
 

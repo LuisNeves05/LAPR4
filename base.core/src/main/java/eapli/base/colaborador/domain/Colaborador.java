@@ -57,7 +57,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         this.dataNascimento = dataNascimento;
         this.funcao = funcao;
         this.colaboradorResponsavel = colaboradorResponsavel;
-
     }
 
     protected Colaborador(){}
