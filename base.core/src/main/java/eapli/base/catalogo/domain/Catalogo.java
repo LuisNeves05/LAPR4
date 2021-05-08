@@ -65,4 +65,9 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     public Long identity() {
         return id;
     }
+
+    @Override
+    public String toString(){
+        return id + " " + titulo;
+    }
 }

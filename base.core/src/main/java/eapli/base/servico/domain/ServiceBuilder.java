@@ -1,5 +1,6 @@
 package eapli.base.servico.domain;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.framework.domain.model.DomainFactory;
 import java.util.Set;
 
@@ -41,6 +42,8 @@ public class ServiceBuilder implements DomainFactory<Servico> {
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     private String estado;
+
+    private Catalogo catalogo;
 
     public ServiceBuilder(){
     }
@@ -90,6 +93,11 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
+    public ServiceBuilder comCatalogo(final Catalogo catalogo){
+        this.catalogo = catalogo;
+        return this;
+    }
+
     /**
      * Criação da instância Serviço
      */
@@ -99,6 +107,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // an exception. however, we will leave that to the constructor
 
         return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
-                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado);
+                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado, catalogo);
     }
 }
