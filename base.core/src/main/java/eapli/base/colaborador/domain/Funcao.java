@@ -3,20 +3,21 @@ package eapli.base.colaborador.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
 
 @Embeddable
 public class Funcao {
 
-    private String funcao;
+    private String listaFuncao;
     protected Funcao(){}
 
+    @Override
+    public String toString() {
+        return listaFuncao + " ";
+    }
 
-
-   public Funcao(String funcao){
-         this.funcao = funcao;
+    public Funcao(String funcao){
+         this.listaFuncao = funcao;
     }
 
 }

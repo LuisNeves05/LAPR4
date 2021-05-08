@@ -6,7 +6,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 import java.util.Set;
 
 @Entity
@@ -27,7 +27,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
 
     @Column(name = "LOCAL_RESIDENCIA") //nao obrigatoria
     @Embedded
-    private Morada localResidencia;
+    private Morada localResidencia = null;
 
     @Column(name = "CONTACTO")
     @Embedded
@@ -36,10 +36,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @Column(name = "DATA_NASCIMENTO")
     private Date dataNascimento;
 
-    @Column(name = "FUNCAO") //nao obrigatoria
-    @ElementCollection
-    private Set<Funcao> funcao;  //TODO CRIAR CLASSE FUNCAO @ONETOMANY
-
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
@@ -47,15 +43,13 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     private SystemUser systemUser;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
-                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento,
-                       Set<Funcao> funcao, Colaborador colaboradorResponsavel){
+                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
         this.nomeCurto = nomeCurto;
         this.nomeCompleto = nomeCompleto;
         this.numMecanografico = numMecanografico;
         this.localResidencia = localResidencia;
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
-        this.funcao = funcao;
         this.colaboradorResponsavel = colaboradorResponsavel;
     }
 
@@ -77,14 +71,8 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     public String toString() {
         return "Colaborador{" +
                 "nomeCurto=" + nomeCurto +
-                ", nomeCompleto=" + nomeCompleto +
                 ", numMecanografico=" + numMecanografico +
-                ", localResidencia=" + localResidencia +
                 ", nrContacto=" + nrContacto +
-                ", dataNascimento=" + dataNascimento +
-                ", funcao=" + funcao +
-                ", colaboradorResponsavel=" + colaboradorResponsavel +
-                ", systemUser=" + systemUser +
                 '}';
     }
 }
