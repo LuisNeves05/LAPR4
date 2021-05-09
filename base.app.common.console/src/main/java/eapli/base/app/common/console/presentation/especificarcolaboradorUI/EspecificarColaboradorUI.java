@@ -77,7 +77,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
         }
 
         if(listaColabsResponsaveis.isEmpty()){
-            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null, listaEquipasColab);
+            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null);
             System.out.println("Não existem outros colaboradores disponíveis para selecionar como responsáveis neste momento");
         }else {
             System.out.println("Por favor escolha um colaborador para ser o responsável pelo novo Colaborador: ");
@@ -89,7 +89,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
             Colaborador colabResponsavel = listaColabsResponsaveis.get(escolha);
 
             controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
-            , data, colabResponsavel, listaEquipasColab);
+            , data, colabResponsavel);
         }
 
         String role;

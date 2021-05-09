@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
 public class CodigoEquipa implements ValueObject {
     private String codigoEquipa;
 
+    @Override
+    public String toString() {
+        return  codigoEquipa;
+    }
 
     public CodigoEquipa(String codigoEquipa) {
 

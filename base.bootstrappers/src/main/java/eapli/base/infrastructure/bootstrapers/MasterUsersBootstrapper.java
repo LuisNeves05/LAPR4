@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+import eapli.base.Application;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
@@ -18,9 +19,11 @@ import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
 import eapli.base.criticidade.domain.Objetivo;
+import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
@@ -55,9 +58,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         return true;
     }
 
-    /**
-     *
-     */
     private void registerAdmin(final String username, final String password, final String firstName,
             final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
@@ -84,19 +84,17 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         }
         Colaborador c = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
                 new MecanographicNumber("1191421"), new Morada("Porto", "Penafiel"),
-                new NrContacto(910900398), date, null, null);
+                new NrContacto(910900398), date, null);
         Set<Role> roless = new HashSet<>();
         roless.add(BaseRoles.ADMIN);
         roless.add(BaseRoles.COLABORADOR);
 
         acd.addUser("Luis","Password1","Luis","Neves","luismanuelneves@gmail.com",roless);
 
-        colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
+        Colaborador rui = colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
                 new MecanographicNumber("1181597"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206840), date, c, null);
+                new NrContacto(927206840), date, c);
         acd.addUser("Rui","Password1","Rui","Alves","ruialves@gmail.com",roless);
-
-
 
 
         /**
@@ -115,12 +113,23 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Equipa> equipasSet = new HashSet<>();
         equipasList.add(equipa);
         equipasSet.add(equipa);
-
-        colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
+        Colaborador colab = colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
                 new MecanographicNumber("1181596"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206841), date, c, equipasList);
-        acd.addUser("joao","Password1","Rui","Alves","ruialves@gmail.com",roless);
+                new NrContacto(927206841), date, c);
+        acd.addUser("joao","Password1","Rui","Alves","asddasd@gmail.com",roless);
 
+        Colaborador tiago = colaboradorController.especificarColaborador(new NomeCurto("Tiago"), new NomeCompleto("Tiago Alves"),
+                new MecanographicNumber("1181212"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(921587569), date, c);
+        acd.addUser("tiago","Password1","Tiago","Alves","rtiagoasd@gmail.com",roless);
+
+
+        AddOrDeleteEquipaController adod = new AddOrDeleteEquipaController(equipa);
+        Set<Colaborador> lista = new HashSet<>();
+        lista.add(colab);
+        lista.add(tiago);
+        lista.add(rui);
+        adod.adicionarColaboradores(lista);
 
         /**
          * CRIAR CATALOGO

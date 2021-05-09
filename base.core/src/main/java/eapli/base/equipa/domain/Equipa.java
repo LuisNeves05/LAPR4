@@ -4,11 +4,14 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table( name = "Equipa",uniqueConstraints = { @UniqueConstraint(columnNames = {"acronimo"}) })
 public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     /**
@@ -25,7 +28,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     /**
      * Acrónimo Único da Equipa
      */
-    @Column(unique = true)
+    @Column(name = "acronimo",unique = true)
     private Acronimo acr;
 
     /**
@@ -35,7 +38,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_RESPONSAVEL")
-    private Set<Colaborador> listaColabsResponsaveis;
+    private Set<Colaborador> listaColabsResponsaveis = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogoId")
@@ -43,7 +46,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_COLABORADOR")
-    private Set<Colaborador> listaColabs;
+    private Set<Colaborador> listaColabs = new HashSet<>();
 
     /**
      *
@@ -58,6 +61,31 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
         this.designacao = designacao;
         this.listaColabsResponsaveis = colabR;
         this.tipoEquipa = tipoEquipa;
+    }
+
+
+    public boolean adicionarColaboradorResponsavel(Colaborador colab) {
+        listaColabs.add(colab);
+        return listaColabsResponsaveis.add(colab);
+    }
+
+    public boolean adicionarColaborador(Colaborador colab) {
+        if(colab.pertenceTipoEquipa(tipoEquipa))
+            throw new IntegrityViolationException("ERRO! Colaborador ja pertence a uma equipa deste tipo!");
+        if (temColab(colab))
+            throw new IntegrityViolationException("ERRO! Colaborador já pertence a esta equipa!!");
+        return listaColabs.add(colab);
+    }
+
+    public boolean removerColab(Colaborador colab){
+        if (temResponsavel(colab))
+            return listaColabsResponsaveis.remove(colab) && listaColabs.remove(colab);
+
+        return listaColabs.remove(colab);
+    }
+
+    public boolean temTipoEquipa(TipoEquipa tipoEquipa) {
+        return this.tipoEquipa.equals(tipoEquipa);
     }
 
     /**
@@ -82,8 +110,15 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     @Override
     public String toString() {
-        return String.format("Código Equipa: %d Acrónimo: %s Designação: %s",
-                this.codigoEquipa, this.acr, this.designacao);
+        return this.codigoEquipa.toString();
+    }
+
+    public boolean temColab(Colaborador colab) {
+        return this.listaColabs.contains(colab);
+    }
+
+    public boolean temResponsavel(Colaborador colab) {
+        return this.listaColabsResponsaveis.contains(colab);
     }
 
 }

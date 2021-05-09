@@ -14,11 +14,11 @@ public class EspecificarColaboradorController {
     private final ColaboradorRepositorio repoColaborador = PersistenceContext.repositories().colaboradorRepositorio();
 
     public Colaborador especificarColaborador(NomeCurto nomeCurto, NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
-                                              Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel, List<Equipa> equipaSet){
+                                              Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
 
         ColaboradorBuilder colaboradorBuilder = new ColaboradorBuilder();
         Colaborador c = colaboradorBuilder.comNomeCurto(nomeCurto).comNomeCompleto(nomeCompleto).comNumMecanografico(numMecanografico)
-                .comLocalResidencia(localResidencia).comNrContacto(nrContacto).comDataNascimento(dataNascimento).comColaboradorResponsavel(colaboradorResponsavel).comEquipas(equipaSet).build();
+                .comLocalResidencia(localResidencia).comNrContacto(nrContacto).comDataNascimento(dataNascimento).comColaboradorResponsavel(colaboradorResponsavel).build();
 
         return repoColaborador.save(c);
     }
