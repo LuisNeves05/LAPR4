@@ -46,31 +46,69 @@ Na especificação de um novo serviço, o sistema pede os dados necessários e a
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+* DDD - Domain Driven Design.
+  >A elaboração do projeto começou logo com DDD em mente. O modelo de domínio foi elaborado com as regras de negócio e o overlay do DDD para representação de agregados, entities e roots seguindo as regras necessárias.
+
+* GRASP
+  >Com cada representação de um ator ou user story, o GRASP era sempre tido em consideração, visto ser uma base fundamental para o bom desenvolvimento do projeto.
+  > Quer seja o Information Expert, Low coupling/High cohesion ou o conceito de controller, todos estes princípios estão bastante presentes na mente dos elementos do grupo.
+
+* SOLID
+  > O SOLID esteve present principalmente com o Single Responsability Principle, sendo que foi sempre tido em atenção as responsabilidades que uma classe deve ter.
+  >Já implementado com o projeto base de EAPLI, a Interface Seggregation Principle veio-se provar útil e esclarecedora, tendo em conta os diversos repositórios que tiveram que ser criados.
 
 ## 3.4. Testes 
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+**testMesmoIdentificadorServicoEquals:** Verificar se dois Serviços são iguais
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+    public void testMesmoIdentificadorServicoEquals(){
+
+        final Servico servico1 = new ServiceBuilder().comIdentificador("identificador").comTitulo("teste").comDescBreve("teste").comDescComp("teste").build();
+
+        final Servico servico2 = new ServiceBuilder().comIdentificador("identificador").comTitulo("teste").comDescBreve("teste").comDescComp("teste").build();
+
+        final boolean expected = servico1.identity().equals(servico2.identity());
+
+        assertTrue(expected);
+    }
+
+**testMesmoIdentificadorServicoEquals:** Verificar se dois Serviços são diferentes
+
+    public void testDiferentesIdentificadorServicoEquals() {
+
+        final Servico servico1 = new ServiceBuilder().comIdentificador("falso").comTitulo("teste").comDescBreve("teste").comDescComp("teste").build();
+
+        final Servico servico2 = new ServiceBuilder().comIdentificador("verdadeiro").comTitulo("teste").comDescBreve("teste").comDescComp("teste").build();
+
+        final boolean expected = servico1.equals(servico2);
+
+        assertFalse(expected);
+    }
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+**especificarServico:** Especifica um novo Serviço
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    public Servico especificarServico(String identificador, String titulo, String descBreve, String descCompleta,
+                                      int icon, boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, boolean requerFeed, Catalogo catalogo) {
 
-# 5. Integração/Demonstração
+        ServiceBuilder serviceBuilder = new ServiceBuilder();
+        serviceBuilder.comIdentificador(identificador).comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
+                      .comIcon(new byte[icon]).comAtAprov(atAprov)
+                      .comAtReal(atReal).comKeywords(keywords).comEstado(estado).comCatalogo(catalogo).comRequerFeedback(requerFeed);
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
+       return this.repoServ.save(serviceBuilder.build());
+    }
 
-# 6. Observações
+**especificarFormulario:** Especifica um novo Formulário
 
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
+    public Formulario especificarFormulario(NomeFormulario nome, Servico servico){
 
+        FormularioBuilder formularioBuilder = new FormularioBuilder();
+        formularioBuilder.comNome(nome).comServico(servico).comConjAtributos(this.conjAtrib);
+
+        return repoForm.save(formularioBuilder.build());
+    }
 
 
