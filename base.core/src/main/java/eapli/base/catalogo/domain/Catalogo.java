@@ -42,7 +42,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     private Colaborador colaboradorResponsavel;
 
     //TODO ONE TO MANY, UM CATALOGO DA ACESSO A MUITAS EQUIPAS
-    @OneToMany
+    @OneToMany(mappedBy = "catalogo")
     private Set<Equipa> equipas;
 
     protected Catalogo(){}

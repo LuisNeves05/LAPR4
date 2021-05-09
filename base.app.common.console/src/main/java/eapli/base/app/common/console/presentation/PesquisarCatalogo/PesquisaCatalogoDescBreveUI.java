@@ -1,6 +1,8 @@
 package eapli.base.app.common.console.presentation.PesquisarCatalogo;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
@@ -25,6 +27,8 @@ public class PesquisaCatalogoDescBreveUI extends AbstractUI {
 
     private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
 
+    private final CatalogoRepositorio catalogoRep = PersistenceContext.repositories().catalogoRepositorio();
+
     private UserSession userSession;
 
     public PesquisaCatalogoDescBreveUI(){
@@ -41,9 +45,11 @@ public class PesquisaCatalogoDescBreveUI extends AbstractUI {
 
         SystemUser systemUser = userSession.authenticatedUser();
 
+        System.out.println(systemUser.username().toString() + "#######################################\n");
+
         List<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
 
-        Set<Catalogo> listaCatalogo = new HashSet<>();
+        List<Catalogo> listaCatalogo = new ArrayList<>();
 
         for(Equipa eq : equipasColaborador){
             listaCatalogo.addAll(equipaRepositorio.catalogosPorEquipaPorDescBreve(eq, descBreve));
@@ -62,6 +68,6 @@ public class PesquisaCatalogoDescBreveUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Pesquisar pelo Título do Catálogo";
+        return "Pesquisar pela Descrição Breve do Catálogo";
     }
 }

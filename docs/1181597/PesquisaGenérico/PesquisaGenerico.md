@@ -1,22 +1,19 @@
-Especificar Serviço
+Pesquisar Genérico
 =======================================
-
 
 # 1. Requisitos
 
-**Especificar Serviço** Como Gestor de Serviços de Help Desk (GSH), eu pretendo proceder à especificação de um novo serviço.
+**Pesquisar Genérico** Como utilizador, eu pretendo consultar/pesquisar os catálogos de serviços e respetivos serviços que me estão/são disponibilizados.
 
-- Especificar Serviço 1.1. Como Gestor de Serviços de Help Desk (GSH), pretendo ter a possibilidade de retomar a um serviço que esteja incompleto. 
-
-A interpretação feita deste requisito foi no sentido de viabilizar a especificação de serviços com vista a resolver o problema especificado pelo Gestor de Serviços do Help Desk (GSH).
+A interpretação feita deste requisito foi no sentido de viabilizar a pesquisa de serviços e/ou catálogos de modo a que o utilizador possa conhecer os seus serviços/catálogos existentes.
 
 # 2. Análise
 
-- A especificação do serviço requer não só a informação base nele contida, tal como outros dados/informação a recolher relativamente ao formulário. Cada formulário será associado a um serviço.
-- A atividade de aprovação do serviço especificado, podendo ser requerida ou não. 
-- A atividade de realização também é referente ao serviço, podendo esta ser manual ou automática. 
-- Uma atividade manual terá um formulário associado, enquanto que uma tarefa automática tem associado um script.
-- Tendo em conta a extensão e complexidade na especificação de um serviço, esta pode ser feita em diferentes momentos espaçados no tempo, de modo a permitir que este fique incompleto para ser, posteriormente, continuada/completada.
+- A consulta/pesquisa dos catálogos de serviços e respetivos serviços. Apenas devem ser apresentados os que estão/são disponibilizados ao utilizador em causa, isto é, as equipas em que o utilizador se insere .
+- A pesquisa deve ser orientada pelas palavras-chave dos serviços e/ou pelos respetivos títulos e os resultados agrupados pelos respetivos catálogos.
+- Deve permitir consultar detalhes de cada um dos resultados da pesquisa;
+- Os serviços cuja especificação esteja incompleta podem aparecer sinalizados com a informação "brevemente disponível".
+- Deve permitir pesquisar por vários campos/informações.
 
 # 3. Design
 
@@ -24,29 +21,27 @@ A interpretação feita deste requisito foi no sentido de viabilizar a especific
 
 ## Diagrama de Sequência ##
 
-Temos, como diagrama de sequência para a especificação do serviço, onde o ator, como Gestor de Serviços de Help Desk (GSH), dá início a uma especificação de serviço, o sistema solicita os dados necessários sobre o serviço(título, descBreve, descCompleta, icone, conjKWs, feedback), tal como a sua atividade de aprovação e atividade de realização, o sistema apresenta todos os catálogos e o GSH introduz os dados solicitados escolhe um Catálogo. Por fim, de forma opcional, dados sobre o formulário (nome) com a respetiva lista de atributos a solicitar(nomeVar, label, descAjuda, tipoDBas, expRegular). O GSH introduz os dados solicitados, o sistema valida os dados e informa do sucesso da operação.
-
+Temos, como diagrama de sequência para a pesquisa genérica de um serviço/catálogo por vários campos, onde o ator, como Utilizador, dá início a uma pesquisa de um servico ou catálogo por determinado campo, o sistema solicita o campo que deseja pesquisar, o utilizador introduz os dados solicitados e o sistema apresenta a lista de serviços/catálogos e informa o sucesso da operação.
 
 ### Especificar Serviço ###
-![SD_EspecificarServico.png](SD_EspecificarServico.png)
-
-### Especificar Formulário ###
-![SD_EspecificarFormulario.png](SD_EspecificarFormulario.png)
-
-Na especificação de um novo serviço, o sistema pede os dados necessários e apresenta todos os Catálogos onde o Serviço se pode inserir. Após o GSH introduzir todos os dados e selecionar o Catálogo, o sistema pede os dados do Formulário, onde o GSH pode:
-
-- Especificar um formulário (nome) e um conjunto de atributos associados(nomeVar, label, descAjuda, tipoDBas, expRegular), promovendo o Serviço a um estado "completo".
-- Pode não querer criar um formulário, resultando na especificação de um Serviço no estado "incompleto".
+![SD_PesquisaGenerico.png](SD_PesquisaGenerico.png)
 
 ## 3.2. Diagrama de Classes
 
-![CD_Generico.png](CD_Generico.png)
-//TODO
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
+![CD_PesquisaGenerico.png](CD_PesquisaGenerico.png)
 
 ## 3.3. Padrões Aplicados
 
-*Nesta secção deve apresentar e explicar quais e como foram os padrões de design aplicados e as melhores práticas.*
+* DDD - Domain Driven Design.
+  >A elaboração do projeto começou logo com DDD em mente. O modelo de domínio foi elaborado com as regras de negócio e o overlay do DDD para representação de agregados, entities e roots seguindo as regras necessárias.
+
+* GRASP
+  >Com cada representação de um ator ou user story, o GRASP era sempre tido em consideração, visto ser uma base fundamental para o bom desenvolvimento do projeto.
+  > Quer seja o Information Expert, Low coupling/High cohesion ou o conceito de controller, todos estes princípios estão bastante presentes na mente dos elementos do grupo.
+
+* SOLID
+  > O SOLID esteve present principalmente com o Single Responsability Principle, sendo que foi sempre tido em atenção as responsabilidades que uma classe deve ter.
+  >Já implementado com o projeto base de EAPLI, a Interface Seggregation Principle veio-se provar útil e esclarecedora, tendo em conta os diversos repositórios que tiveram que ser criados.
 
 ## 3.4. Testes 
 *Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*

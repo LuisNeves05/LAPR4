@@ -20,7 +20,7 @@ public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborad
 
     public List<Equipa> equipasColaboradorPorUsername(Username username){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT equipas FROM Colaborador c where SYSTEMUSER_USERNAME = ' "
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT equipas FROM Colaborador c where c.systemUser.username = ' "
                 + username + "' ");
         return query.getResultList();
     }

@@ -49,7 +49,7 @@ public abstract class BaseApplication {
         ListarEquipaController controllerList = new ListarEquipaController();
         EspecificarServicoController especificarServicoController = new EspecificarServicoController();
 
-        especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO", true, null);
+        //especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO", true, null);
 
         //QueryMaker q = new QueryMaker();
         //List<Servico> list = q.queryToDB();
@@ -58,7 +58,7 @@ public abstract class BaseApplication {
 
         //System.out.println(s.toString() + " #########################################################|||||||||||||||||||||||||||||||");
 
-        Morada morada = new Morada("asaffa", "afsfas");
+       /* Morada morada = new Morada("asaffa", "afsfas");
         Funcao funcao = new Funcao("funcao");
 
         Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("tiago"), new NomeCompleto("tiago marante"),
@@ -77,7 +77,7 @@ public abstract class BaseApplication {
         //colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
 
 
-        System.out.println("###################");
+        System.out.println("###################");*/
 
         printHeader();
 

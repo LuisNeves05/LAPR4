@@ -3,6 +3,7 @@ package eapli.base.catalogo.persistencia;
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.servico.domain.DescricaoBreve;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.base.servico.persistencia.ServicoRepositorio;
@@ -27,11 +28,10 @@ public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Lo
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where titulo = ' " + titulo + "' ");
         return query.getResultList();
     }
-
     @Override
     public List<Catalogo> catalogoPorDescBreve(final String descBreve) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where descBreve = ' " + descBreve + "' ");
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where descBreve = ' " + new DescricaoBreve(descBreve) + "' ");
         return query.getResultList();
     }
 }
