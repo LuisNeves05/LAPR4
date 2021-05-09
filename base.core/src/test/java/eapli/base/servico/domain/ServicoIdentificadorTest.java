@@ -10,7 +10,7 @@ public class ServicoIdentificadorTest extends TestCase {
         return servicoIdentificador;
     }
 
-    public void testValueOf() {
+    public void testValueOfServico() {
         ServicoIdentificador servicoIdentificador = getDummyServicoIdentificador();
         ServicoIdentificador valueOf = ServicoIdentificador.valueOf("teste");
 

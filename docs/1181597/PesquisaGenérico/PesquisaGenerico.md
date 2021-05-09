@@ -44,28 +44,30 @@ Temos, como diagrama de sequência para a pesquisa genérica de um serviço/cat�
   >Já implementado com o projeto base de EAPLI, a Interface Seggregation Principle veio-se provar útil e esclarecedora, tendo em conta os diversos repositórios que tiveram que ser criados.
 
 ## 3.4. Testes 
-*Nesta secção deve sistematizar como os testes foram concebidos para permitir uma correta aferição da satisfação dos requisitos.*
 
-**Teste 1:** Verificar que não é possível criar uma instância da classe Exemplo com valores nulos.
+**testValueOfServico** Verifica se o identificador de dois Serviços são iguais.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Exemplo instance = new Exemplo(null, null);
-	}
+    public void testValueOf() {
+        ServicoIdentificador servicoIdentificador = getDummyServicoIdentificador();
+        ServicoIdentificador valueOf = ServicoIdentificador.valueOf("teste");
+
+        final boolean expected = servicoIdentificador.equals(valueOf);
+
+        assertTrue(expected);
+    }
+
 
 # 4. Implementação
 
-*Nesta secção a equipa deve providenciar, se necessário, algumas evidências de que a implementação está em conformidade com o design efetuado. Para além disso, deve mencionar/descrever a existência de outros ficheiros (e.g. de configuração) relevantes e destacar commits relevantes;*
+**pesquisarCatalogoPorTitulo** Pesquisar um Catálogo acessível pelo utilizador através do seu título.
 
-*Recomenda-se que organize este conteúdo por subsecções.*
+    public Iterable<Catalogo> pesquisarCatalogoPorTitulo(final String titulo){
+        return repoCat.catalogoPorTitulo(titulo);
+    }
 
-# 5. Integração/Demonstração
+**pesquisarCatalogoPorTitulo** Pesquisar um Serviço acessível pelo utilizador através do seu identificador único.
 
-*Nesta secção a equipa deve descrever os esforços realizados no sentido de integrar a funcionalidade desenvolvida com as restantes funcionalidades do sistema.*
-
-# 6. Observações
-
-*Nesta secção sugere-se que a equipa apresente uma perspetiva critica sobre o trabalho desenvolvido apontando, por exemplo, outras alternativas e ou trabalhos futuros relacionados.*
-
-
+    public List<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
+        return repoServ.servicoPorIdentificador(identificador, catalogo);
+    }
 
