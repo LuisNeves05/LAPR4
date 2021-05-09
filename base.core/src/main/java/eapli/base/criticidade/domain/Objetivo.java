@@ -19,10 +19,6 @@ public class Objetivo implements ValueObject, Comparable<Objetivo>{
         this.resolucaoMedia = resolucaoMedia;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     public Objetivo(){}
 
 

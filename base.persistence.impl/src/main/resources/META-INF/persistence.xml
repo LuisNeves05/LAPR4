@@ -22,6 +22,7 @@
     <class>eapli.base.catalogo.domain.Catalogo</class>
     <class>eapli.base.colaborador.domain.Colaborador</class>
     <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
+    <class>eapli.base.criticidade.domain.NivelCriticidade</class>
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->

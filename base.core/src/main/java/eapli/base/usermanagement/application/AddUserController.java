@@ -3,6 +3,7 @@ package eapli.base.usermanagement.application;
 import java.util.Calendar;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -33,7 +34,7 @@ public class AddUserController {
 
     public SystemUser addUser(String username, String password, String firstName, String lastName,
             String email, Set<Role> roles, Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN, BaseRoles.COLABORADOR, BaseRoles.RRH);
 
         return userSvc.registerNewUser(username, password, firstName, lastName, email, roles,
                 createdOn);

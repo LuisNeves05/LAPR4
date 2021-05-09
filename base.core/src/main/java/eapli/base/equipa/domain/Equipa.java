@@ -38,7 +38,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     private Set<Colaborador> listaColabsResponsaveis;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalogoId", nullable = false)
+    @JoinColumn(name = "catalogoId")
     private Catalogo catalogo;
 
     @ManyToMany(cascade = CascadeType.ALL)
