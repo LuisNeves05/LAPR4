@@ -1,8 +1,11 @@
 package eapli.base.servico.application;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+
+import java.util.List;
 
 public class PesquisarServicoController {
 
@@ -11,19 +14,19 @@ public class PesquisarServicoController {
      */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
 
-    public Iterable<Servico> pesquisarServicoPorIdentificador(final String identificador){
-        return repoServ.servicoPorIdentificador(identificador);
+    public List<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
+        return repoServ.servicoPorIdentificador(identificador, catalogo);
     }
 
-    public Iterable<Servico> pesquisarServicoPorTitulo(final String titulo){
-        return repoServ.servicoPorTitulo(titulo);
+    public List<Servico> pesquisarServicoPorTitulo(final String titulo, final Catalogo catalogo){
+        return repoServ.servicoPorTitulo(titulo, catalogo);
     }
 
-    public Iterable<Servico> pesquisarServicoPorDescBreve(final String descBreve){
-        return repoServ.servicoPorDescBreve(descBreve);
+    public List<Servico> pesquisarServicoPorDescBreve(final String descBreve, final Catalogo catalogo){
+        return repoServ.servicoPorDescBreve(descBreve, catalogo);
     }
 
-    public Iterable<Servico> pesquisarServicoPorKeyword(final String keyword){
-        return repoServ.servicoPorKeyword(keyword);
+    public List<Servico> pesquisarServicoPorKeyword(final String keyword, final Catalogo catalogo){
+        return repoServ.servicoPorKeyword(keyword, catalogo);
     }
 }

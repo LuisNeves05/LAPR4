@@ -24,14 +24,14 @@ public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Lo
     @Override
     public List<Catalogo> catalogoPorTitulo(final String titulo) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where titulo = ' " + titulo + "' ", Catalogo.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where titulo = ' " + titulo + "' ");
         return query.getResultList();
     }
 
     @Override
     public List<Catalogo> catalogoPorDescBreve(final String descBreve) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where descBreve = ' " + descBreve + "' ", Catalogo.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where descBreve = ' " + descBreve + "' ");
         return query.getResultList();
     }
 }
