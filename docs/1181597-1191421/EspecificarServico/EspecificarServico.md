@@ -26,7 +26,6 @@ A interpretação feita deste requisito foi no sentido de viabilizar a especific
 
 Temos, como diagrama de sequência para a especificação do serviço, onde o ator, como Gestor de Serviços de Help Desk (GSH), dá início a uma especificação de serviço, o sistema solicita os dados necessários sobre o serviço(título, descBreve, descCompleta, icone, conjKWs, feedback), tal como a sua atividade de aprovação e atividade de realização, o sistema apresenta todos os catálogos e o GSH introduz os dados solicitados escolhe um Catálogo. Por fim, de forma opcional, dados sobre o formulário (nome) com a respetiva lista de atributos a solicitar(nomeVar, label, descAjuda, tipoDBas, expRegular). O GSH introduz os dados solicitados, o sistema valida os dados e informa do sucesso da operação.
 
-
 ### Especificar Serviço ###
 ![SD_EspecificarServico.png](SD_EspecificarServico.png)
 
@@ -40,9 +39,7 @@ Na especificação de um novo serviço, o sistema pede os dados necessários e a
 
 ## 3.2. Diagrama de Classes
 
-![CD_Generico.png](CD_Generico.png)
-//TODO
-*Nesta secção deve apresentar e descrever as principais classes envolvidas na realização da funcionalidade.*
+![CD_EspecificarServico.png](CD_EspecificarServico.png)
 
 ## 3.3. Padrões Aplicados
 
