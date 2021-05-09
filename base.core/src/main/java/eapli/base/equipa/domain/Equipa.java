@@ -2,6 +2,7 @@ package eapli.base.equipa.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     @Column(unique = true)
     private Long codigoEquipa;
 
+    @OneToOne
+    private TipoEquipa tipoEquipa;
+
     /**
      * Acrónimo Único da Equipa
      */
@@ -31,7 +35,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_RESPONSAVEL")
-    private Set<Colaborador> colabResponsavel;
+    private Set<Colaborador> listaColabsResponsaveis;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogoId", nullable = false)
@@ -48,11 +52,12 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      * @param designacao designação da equipa obrigatório no construtor
      */
 
-    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colabR) {
+    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colabR, TipoEquipa tipoEquipa) {
         this.codigoEquipa = codigoEquipa;
         this.acr = acr;
         this.designacao = designacao;
-        this.colabResponsavel = colabR;
+        this.listaColabsResponsaveis = colabR;
+        this.tipoEquipa = tipoEquipa;
     }
 
     /**

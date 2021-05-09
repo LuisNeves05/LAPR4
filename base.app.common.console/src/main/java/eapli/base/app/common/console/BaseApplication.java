@@ -7,23 +7,36 @@ package eapli.base.app.common.console;
 
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
+import eapli.base.app.common.console.presentation.RegistarTipoEquipaUI.RegistarTipoEquipaUI;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
+import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
+import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.application.EspecificarFormularioController;
+import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
+import eapli.base.servico.domain.Keyword;
+import eapli.base.servico.domain.Servico;
+import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
+import eapli.base.tipoEquipa.domain.TipoEquipa;
+import eapli.base.usermanagement.application.AddUserController;
+import eapli.base.usermanagement.domain.BaseRoles;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -43,41 +56,72 @@ public abstract class BaseApplication {
      */
     public void run(final String[] args) {
 
-        EspecificarEquipaController controller = new EspecificarEquipaController();
+        EspecificarEquipaController controllerEquipa = new EspecificarEquipaController();
         EspecificarCatalogoController catalogoController = new EspecificarCatalogoController();
         EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
-        ListarEquipaController controllerList = new ListarEquipaController();
         EspecificarServicoController especificarServicoController = new EspecificarServicoController();
+        RegistarTipoEquipaController registarTipoEquipaController = new RegistarTipoEquipaController();
+        AddUserController acd = new AddUserController();
+        EspecificarFormularioController efc = new EspecificarFormularioController();
+        EspecificarNivelCriticidadeController enc = new EspecificarNivelCriticidadeController();
 
-        //especificarServicoController.especificarServico("luis","Titulo","Breve","Completa",1,true,false,null,"INCOMPLETO", true, null);
+        /**
+         * CRIAR TIPO EQUIPA
+         */
+        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", Color.BLACK);
 
-        //QueryMaker q = new QueryMaker();
-        //List<Servico> list = q.queryToDB();
-        //Servico s =  list.get(0);
+        /**
+         * CRIAR EQUIPA
+         */
+        Acronimo acr = new Acronimo("LAPR");
+        Equipa equipa = controllerEquipa.especificarEquipa(123L,acr,"Designação Equipa",null,te);
 
+        /**
+         * CRIAR COLABORADOR
+         */
+        List<Equipa> equipasList = new ArrayList<>();
+        Set<Equipa> equipasSet = new HashSet<>();
+        equipasList.add(equipa);
+        equipasSet.add(equipa);
+        Date date = new Date("05-12-2000");
+        Colaborador c = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
+                new MecanographicNumber("1191421"), new Morada("Porto", "Penafiel"),
+                new NrContacto(910900398), date, null, equipasList);
+        Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.ADMIN);
+        roles.add(BaseRoles.COLABORADOR);
+        acd.addUser("Luis","Password1","Luis","Neves","luismanuelneves@gmail.com",roles);
+        colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
+                new MecanographicNumber("1181597"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(927206840), date, c, equipasList);
 
-        //System.out.println(s.toString() + " #########################################################|||||||||||||||||||||||||||||||");
+        /**
+         * CRIAR CATALOGO
+         */
+        Catalogo catalogo = catalogoController.especificarCatalogo("Titulo Catalogo","Catalogo RH", "Catalogo de recursos humanos",12,c, equipasSet);
 
-       /* Morada morada = new Morada("asaffa", "afsfas");
-        Funcao funcao = new Funcao("funcao");
+        /**
+         * CRIAR Servico
+         */
+        Keyword k = new Keyword("Software");
+        Keyword k2 = new Keyword("JAVA");
+        Set<Keyword> keywords = new HashSet<>();
+        keywords.add(k);
+        keywords.add(k2);
+        Servico servico = especificarServicoController.especificarServico("123IDSERV","Titulo Servico","Desc breve Serv","Desc comp Servico",2,true,true,keywords,"COMPLETO",false,catalogo);
 
-        Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("tiago"), new NomeCompleto("tiago marante"),
-                new MecanographicNumber("1200627"), new Morada("porto", "valongo"),
-                new NrContacto(911196272), null, null, null);
+        /**
+         * CRIAR FORMULARIO
+         */
+        efc.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        efc.especificarFormulario(new NomeFormulario("Nome Formulario"),servico);
 
-        Set<Colaborador> set = new HashSet<>();
-        set.add(c2);
-        Equipa equipa = controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", set);
+        /**
+         * CRIAR NIVEL CRITICIDADE
+         */
+        Objetivo obj = new Objetivo(12,50,0,0);
+        enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj);
 
-        System.out.println(controller.listarAcronimos("TXT"));
-        System.out.println(controllerList.listarEquipa());
-
-        QueryMaker qm = new QueryMaker();
-        List<Colaborador> colaboradors = qm.queryServicoIncompleto(new Colaborador(), "SELECT e FROM Colaborador e");
-        //colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
-
-
-        System.out.println("###################");*/
 
         printHeader();
 
