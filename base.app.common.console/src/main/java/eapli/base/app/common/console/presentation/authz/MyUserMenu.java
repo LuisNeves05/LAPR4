@@ -41,7 +41,6 @@ public class MyUserMenu extends Menu {
 
     private static final int EXIT_OPTION = 0;
 
-    // MY USER
     private static final int CHANGE_PASSWORD_OPTION = 1;
     private static final int LOGIN_OPTION = 2;
     private static final int LOGOUT_OPTION = 3;

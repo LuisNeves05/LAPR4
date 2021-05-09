@@ -7,7 +7,6 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import javax.persistence.*;
 import java.util.Date;
-
 import java.util.List;
 import java.util.Set;
 
@@ -44,11 +43,11 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @OneToOne
     private SystemUser systemUser;
 
-    @ManyToOne
-    private Equipa equipa;
+    @OneToMany
+    private List<Equipa> equipas;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
-                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
+                       Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel, List<Equipa> equipaSet){
         this.nomeCurto = nomeCurto;
         this.nomeCompleto = nomeCompleto;
         this.numMecanografico = numMecanografico;
@@ -56,10 +55,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
         this.colaboradorResponsavel = colaboradorResponsavel;
-    }
-
-    public void setEquipa(Equipa equipa) {
-        this.equipa = equipa;
+        this.equipas = equipaSet;
     }
 
     public Colaborador(){}

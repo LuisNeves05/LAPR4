@@ -7,7 +7,10 @@ import eapli.base.equipa.domain.Acronimo;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EspecificarEquipaUI extends AbstractUI {
 
@@ -24,21 +27,20 @@ public class EspecificarEquipaUI extends AbstractUI {
 
         //TODO LISTAR COLABS
         List<Colaborador> colabList = colabCntrl.listaColaboradores();
+        Set<Colaborador> colabListReponsaveis = new HashSet<>();
 
         int option;
-        do {
+        do { //TODO alterar de forma a que possa adicionar mais que um
             System.out.println("COLABORADORES:");
             for(int i = 0; i < colabList.size(); i++){
                 System.out.printf("%s - %s", i+1, colabList.get(i));
             }
             option = Console.readInteger("Escreva a opção:");
+            colabListReponsaveis.add(colabList.get(option-1));
 
         }while (option < 0 || option > colabList.size());
 
-        espEquipa.especificarEquipa(codigoEquipa, new Acronimo(acr), designacao, colabList.get(option-1));
-
-
-
+        espEquipa.especificarEquipa(codigoEquipa, new Acronimo(acr), designacao, colabListReponsaveis);
 
         return false;
     }

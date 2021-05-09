@@ -16,13 +16,14 @@ import eapli.base.equipa.application.ListarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Servico;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -62,17 +63,18 @@ public abstract class BaseApplication {
 
         Colaborador c2 = colaboradorController.especificarColaborador(new NomeCurto("tiago"), new NomeCompleto("tiago marante"),
                 new MecanographicNumber("1200627"), new Morada("porto", "valongo"),
-                new NrContacto(911196272), null, null);
+                new NrContacto(911196272), null, null, null);
 
-
-        Equipa equipa = controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", c2);
+        Set<Colaborador> set = new HashSet<>();
+        set.add(c2);
+        Equipa equipa = controller.especificarEquipa(325L, new Acronimo("TXT"), "ISTO E UM TESTE", set);
 
         System.out.println(controller.listarAcronimos("TXT"));
         System.out.println(controllerList.listarEquipa());
 
         QueryMaker qm = new QueryMaker();
         List<Colaborador> colaboradors = qm.queryToDB(new Colaborador(), "SELECT e FROM Colaborador e");
-        colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
+        //colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
 
 
         System.out.println("###################");

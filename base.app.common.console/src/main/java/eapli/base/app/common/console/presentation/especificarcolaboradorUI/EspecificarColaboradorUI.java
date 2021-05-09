@@ -4,6 +4,8 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.application.ListarColaboradoresController;
 import eapli.base.colaborador.domain.*;
+import eapli.base.equipa.application.ListarEquipaController;
+import eapli.base.equipa.domain.Equipa;
 import eapli.base.usermanagement.application.AddUserController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -11,15 +13,13 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class EspecificarColaboradorUI extends AbstractUI {
     private final EspecificarColaboradorController controller = new EspecificarColaboradorController();
     private final ListarColaboradoresController listarColabsController = new ListarColaboradoresController();
     private final AddUserController addUserController = new AddUserController();
+    private final ListarEquipaController listarEquipaController = new ListarEquipaController();
 
     @Override
     protected boolean doShow(){
@@ -56,25 +56,40 @@ public class EspecificarColaboradorUI extends AbstractUI {
         final String email = Console.readLine("Email do colaborador:");
 
         List<Colaborador> listaColabsResponsaveis = listarColabsController.listaColaboradores();
+        List<Equipa> listaEquipas =listarEquipaController.listarEquipa();
+        List<Equipa> listaEquipasColab = new ArrayList<>();
+
+        if(listaEquipas.isEmpty()){
+            System.out.println("Não existem equipas disponiveis! ");
+        }else{
+            String escolhaEquipa;
+            do {
+                for (int i = 0; i < listaEquipas.size(); i++) {
+                    System.out.println(i + " " + listaEquipas.get(i).toString());
+                }
+                escolhaEquipa = Console.readLine("Escolha uma equipa (index)  | -1 para sair");
+                if (Integer.parseInt(escolhaEquipa) > listaEquipas.size() || escolhaEquipa.equals("-1")) {
+                    break;
+                } else {
+                    listaEquipasColab.add(listaEquipas.get(Integer.parseInt(escolhaEquipa)));
+                }
+            }while(!escolhaEquipa.equals("-1"));
+        }
 
         if(listaColabsResponsaveis.isEmpty()){
-
-            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null);
+            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null, listaEquipasColab);
             System.out.println("Não existem outros colaboradores disponíveis para selecionar como responsáveis neste momento");
         }else {
-
             System.out.println("Por favor escolha um colaborador para ser o responsável pelo novo Colaborador: ");
-
             for (int i = 0; i < listaColabsResponsaveis.size(); i++) {
                 System.out.println(i + " - " + listaColabsResponsaveis.get(i));
             }
-
             String escolhaColabResponsavel = Console.readLine("Escolha (index)");
             int escolha = Integer.parseInt(escolhaColabResponsavel);
             Colaborador colabResponsavel = listaColabsResponsaveis.get(escolha);
 
             controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
-            , data, colabResponsavel);
+            , data, colabResponsavel, listaEquipasColab);
         }
 
         String role;

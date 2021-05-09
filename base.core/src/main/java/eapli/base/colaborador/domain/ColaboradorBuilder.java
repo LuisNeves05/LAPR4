@@ -1,9 +1,11 @@
 package eapli.base.colaborador.domain;
 
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.base.equipa.domain.Equipa;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -21,14 +23,19 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
 
     private Date dataNascimento;
 
-    private Set<Funcao> funcao;
-
     private Colaborador colaboradorResponsavel;
+
+    private List<Equipa> equipaSet;
 
     public ColaboradorBuilder(){}
 
     public ColaboradorBuilder comNomeCurto(final NomeCurto nomeCurto){
         this.nomeCurto = nomeCurto;
+        return this;
+    }
+
+    public ColaboradorBuilder comEquipas(final List<Equipa> equipaSet){
+        this.equipaSet = equipaSet;
         return this;
     }
 
@@ -57,11 +64,6 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         return this;
     }
 
-    public ColaboradorBuilder comFuncao(final Set<Funcao> funcao){
-        this.funcao = funcao;
-        return this;
-    }
-
     public ColaboradorBuilder comColaboradorResponsavel(final Colaborador colaboradorResponsavel){
         this.colaboradorResponsavel = colaboradorResponsavel;
         return this;
@@ -74,6 +76,6 @@ public class ColaboradorBuilder implements DomainFactory<Colaborador> {
         // an exception. however, we will leave that to the constructor
 
         return new Colaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, nrContacto,
-                dataNascimento, colaboradorResponsavel);
+                dataNascimento, colaboradorResponsavel, equipaSet);
     }
 }

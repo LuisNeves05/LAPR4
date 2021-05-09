@@ -30,9 +30,8 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      */
     private String designacao;
 
-    @OneToOne
-    private Colaborador colabResponsavel;
-
+    @OneToMany
+    private Set<Colaborador> colabResponsavel;
 
     /**
      *
@@ -41,7 +40,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      * @param designacao designação da equipa obrigatório no construtor
      */
 
-    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Colaborador colabR) {
+    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colabR) {
         this.codigoEquipa = codigoEquipa;
         this.acr = acr;
         this.designacao = designacao;
@@ -62,7 +61,6 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     public int compareTo(Equipa other) {
         return 0;
     }
-
 
     @Override
     public Equipa identity() {

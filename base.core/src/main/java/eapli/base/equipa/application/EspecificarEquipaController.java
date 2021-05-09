@@ -7,6 +7,8 @@ import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 
+import java.util.Set;
+
 public class EspecificarEquipaController {
 
     private final EquipaRepositorio repoEquipa = PersistenceContext.repositories().equipaRepositorio();
@@ -15,7 +17,7 @@ public class EspecificarEquipaController {
      * Especificação de uma nova Equipa para a base de dados
      */
 
-    public Equipa especificarEquipa(Long codigoEquipa, Acronimo acr, String designacao, Colaborador colab){
+    public Equipa especificarEquipa(Long codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colab){
 
         try {
             return repoEquipa.save(new Equipa(codigoEquipa, acr, designacao, colab));
