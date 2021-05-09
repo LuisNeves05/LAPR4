@@ -71,3 +71,7 @@ Temos, como diagrama de sequência para a pesquisa genérica de um serviço/cat�
         return repoServ.servicoPorIdentificador(identificador, catalogo);
     }
 
+## 4.1 Commits Relevantes
+
+![commit2.png](commit2.png)
+
