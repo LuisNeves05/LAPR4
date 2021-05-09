@@ -43,8 +43,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @OneToOne
     private SystemUser systemUser;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "EQUIPA_COLABORADOR")
+    @ManyToMany(mappedBy = "listaColabs",cascade = CascadeType.ALL)
     private List<Equipa> equipas;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,

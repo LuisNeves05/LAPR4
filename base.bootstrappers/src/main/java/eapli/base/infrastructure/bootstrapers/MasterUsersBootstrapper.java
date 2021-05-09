@@ -98,6 +98,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
 
 
+
         /**
          * CRIAR EQUIPA
          */
@@ -106,6 +107,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Acronimo acr = new Acronimo("LAPR");
         Equipa equipa = controllerEquipa.especificarEquipa("12367",acr,"Designação Equipa",colaboradors,te);
 
+
         /**
          * CRIAR COLABORADOR
          */
@@ -113,6 +115,13 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Equipa> equipasSet = new HashSet<>();
         equipasList.add(equipa);
         equipasSet.add(equipa);
+
+        colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
+                new MecanographicNumber("1181596"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(927206841), date, c, equipasList);
+        acd.addUser("joao","Password1","Rui","Alves","ruialves@gmail.com",roless);
+
+
         /**
          * CRIAR CATALOGO
          */
