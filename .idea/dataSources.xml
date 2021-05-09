@@ -7,12 +7,5 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:~/db/lei20_21_s4_2dl_4</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="Generico" uuid="89193b0f-012e-43bb-8485-58e56e6483e6">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\luism\Desktop\lei20_21_s4_2dl_4\docs\Generico.vpp</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>

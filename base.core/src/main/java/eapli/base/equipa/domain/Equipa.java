@@ -4,10 +4,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -32,12 +29,13 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      */
     private String designacao;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="EQUIPA_RESPONSAVEL")
     private Set<Colaborador> colabResponsavel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalogoId", nullable = false)
-    private Catalogo catalogo;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="EQUIPA_COLABORADOR")
+    private Set<Colaborador> listaColabs;
 
     /**
      *
