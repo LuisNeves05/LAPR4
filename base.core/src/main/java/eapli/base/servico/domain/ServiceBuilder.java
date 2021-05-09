@@ -105,6 +105,20 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof ServiceBuilder)) {
+            return false;
+        }
+
+        final ServiceBuilder that = (ServiceBuilder) other;
+        return this.servicoIdentificador.equals(that.servicoIdentificador);
+    }
+
+
     /**
      * Criação da instância Serviço
      */
