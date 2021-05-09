@@ -41,23 +41,23 @@ public class PesquisaCatalogoTituloUI extends AbstractUI {
 
         SystemUser systemUser = userSession.authenticatedUser();
 
-        List<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
 
         Set<Catalogo> listaCatalogo = new HashSet<>();
 
         for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll(equipaRepositorio.catalogosPorEquipaPorTitulo(eq,titulo));
+            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipaPorTitulo(eq,titulo));
         }
 
 
         if(!listaCatalogo.isEmpty()){
             for (Catalogo ct : listaCatalogo){
-                System.out.println(ct.toString());
+                System.out.println(ct.toString() + "####################\n");
             }
             return true;
         }
 
-        System.out.println("Não conseguimos encontrar esse Serviço");
+        System.out.println("Não conseguimos encontrar esse Catalogo");
         return false;
     }
 

@@ -94,7 +94,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Colaborador rui = colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
                 new MecanographicNumber("1181597"), new Morada("Porto", "Marco de Canaveses"),
                 new NrContacto(927206840), date, c);
-        acd.addUser("Rui","Password1","Rui","Alves","ruialves@gmail.com",roless);
+        rui.becameSystemUser(acd.addUser("Rui","Password1","Rui","Alves","ruialves@gmail.com",roless));
 
 
         /**

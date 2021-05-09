@@ -43,23 +43,26 @@ public class PesquisaServicoTituloUI extends AbstractUI {
 
         SystemUser systemUser = userSession.authenticatedUser();
 
-        List<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
 
         Set<Catalogo> listaCatalogo = new HashSet<>();
 
         for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll(equipaRepositorio.catalogosPorEquipa(eq));
+            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipa(eq));
         }
 
         Set<Servico> servicos = new HashSet<>();
 
         for(Catalogo cs : listaCatalogo){
-            servicos.addAll(psController.pesquisarServicoPorTitulo(titulo, cs));
+            servicos.addAll((List<Servico>) psController.pesquisarServicoPorTitulo(titulo, cs));
         }
 
         if(!servicos.isEmpty()){
             for (Servico sv : servicos){
-                System.out.println(sv.toString());
+                if(sv.estado().equals("INCOMPLETO"))
+                    System.out.println(sv.toString() + "   BREVEMENTE DISPONIVEL");
+                else
+                    System.out.println(sv.toString());
             }
             return true;
         }

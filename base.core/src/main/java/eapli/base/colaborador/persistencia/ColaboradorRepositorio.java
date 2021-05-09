@@ -1,5 +1,6 @@
 package eapli.base.colaborador.persistencia;
 
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
@@ -10,5 +11,5 @@ import java.util.List;
 
 public interface ColaboradorRepositorio extends DomainRepository<MecanographicNumber, Colaborador> {
 
-    List<Equipa> equipasColaboradorPorUsername(Username username);
+    Iterable<Equipa> equipasColaboradorPorUsername(Username username);
 }

@@ -71,6 +71,10 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
 
     public Colaborador(){}
 
+    public void becameSystemUser(SystemUser sysUser){
+        this.systemUser = sysUser;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;

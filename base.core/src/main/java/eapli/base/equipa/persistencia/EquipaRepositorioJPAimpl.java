@@ -6,6 +6,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.equipa.domain.CodigoEquipa;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.Servico;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, CodigoEquipa, Equipa>
+public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Long, CodigoEquipa>
         implements EquipaRepositorio{
 
     public EquipaRepositorioJPAimpl(String puname) {
@@ -39,24 +40,25 @@ public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Codigo
         return null;
     }
 
-    public List<Catalogo> catalogosPorEquipa(Equipa equipa){
+    public Iterable<Catalogo> catalogosPorEquipa(Equipa equipa){
         QueryMaker qm = new QueryMaker();
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where equipas = ' " + equipa + "' ", Servico.class);
         return query.getResultList();
     }
 
-    public List<Catalogo> catalogosPorEquipaPorTitulo(final Equipa equipa, final String titulo){
+    public Iterable<Catalogo> catalogosPorEquipaPorTitulo(final Equipa equipa, final String titulo){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where equipas = ' " + equipa + "' " +
-                "AND titulo = ' " + titulo + "' ");
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT catalogo FROM (SELECT e.catalogo from Equipa e where e.equipa = :equipa) where catalogo.descBreve = :descBreve" , Iterable.class);
+        query.setParameter("equipa", equipa.identity());
+        query.setParameter("titulo", titulo);
         return query.getResultList();
     }
 
-    public List<Catalogo> catalogosPorEquipaPorDescBreve(final Equipa equipa, final String descBreve){
+    public Iterable<Catalogo> catalogosPorEquipaPorDescBreve(Equipa equipa, String descBreve){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Catalogo c where equipas = ' " + equipa + "' " +
-                "AND descBreve = ' " + descBreve + "' ");
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT catalogo FROM (SELECT e.catalogo from Equipa e where e.equipa = :equipa) where catalogo.descBreve = :descBreve" , Iterable.class);
+        query.setParameter("equipa", equipa.identity());
+        query.setParameter("descBreve", descBreve);
         return query.getResultList();
     }
-
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table( name = "Equipa",uniqueConstraints = { @UniqueConstraint(columnNames = {"acronimo"}) })
-public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
+public class Equipa implements Comparable<CodigoEquipa>, AggregateRoot<CodigoEquipa> {
 
     /**
      *
@@ -99,13 +99,13 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
     }
 
     @Override
-    public int compareTo(Equipa other) {
+    public int compareTo(CodigoEquipa other) {
         return 0;
     }
 
     @Override
-    public Equipa identity() {
-        return null;
+    public CodigoEquipa identity() {
+        return this.codigoEquipa;
     }
 
     @Override

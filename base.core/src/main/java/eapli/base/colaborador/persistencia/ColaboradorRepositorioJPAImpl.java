@@ -2,6 +2,7 @@ package eapli.base.colaborador.persistencia;
 
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
+import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
@@ -10,7 +11,7 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
-import java.util.List;
+import java.awt.*;
 
 public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborador, MecanographicNumber, MecanographicNumber> implements ColaboradorRepositorio {
 
@@ -18,10 +19,11 @@ public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborad
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
     }
 
-    public List<Equipa> equipasColaboradorPorUsername(Username username){
+    public Iterable<Equipa> equipasColaboradorPorUsername(Username username){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT equipas FROM Colaborador c where c.systemUser.username = ' "
-                + username + "' ");
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c.equipas FROM Colaborador c where c.systemUser.username = :username",
+                Iterable.class);
+        query.setParameter("username", username);
         return query.getResultList();
     }
 }

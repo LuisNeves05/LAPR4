@@ -16,18 +16,13 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PesquisaCatalogoDescBreveUI extends AbstractUI {
 
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
 
     private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
-
-    private final CatalogoRepositorio catalogoRep = PersistenceContext.repositories().catalogoRepositorio();
 
     private UserSession userSession;
 
@@ -45,24 +40,22 @@ public class PesquisaCatalogoDescBreveUI extends AbstractUI {
 
         SystemUser systemUser = userSession.authenticatedUser();
 
-        System.out.println(systemUser.username().toString() + "#######################################\n");
+        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
 
-        List<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+        Set<Catalogo> listaCatalogo = new HashSet<>();
 
-        List<Catalogo> listaCatalogo = new ArrayList<>();
-
-        for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll(equipaRepositorio.catalogosPorEquipaPorDescBreve(eq, descBreve));
+        for(Equipa eq : equipasColaborador) {
+            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipaPorDescBreve(eq, descBreve));
         }
 
         if(!listaCatalogo.isEmpty()){
             for (Catalogo ct : listaCatalogo){
-                System.out.println(ct.toString());
+                System.out.println(ct.toString() + "    ############################\n");
             }
             return true;
         }
 
-        System.out.println("Não conseguimos encontrar esse Serviço");
+        System.out.println("Não conseguimos encontrar esse Catalogo");
         return false;
     }
 

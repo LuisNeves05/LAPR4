@@ -14,19 +14,19 @@ public class PesquisarServicoController {
      */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
 
-    public List<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
+    public Iterable<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
         return repoServ.servicoPorIdentificador(identificador, catalogo);
     }
 
-    public List<Servico> pesquisarServicoPorTitulo(final String titulo, final Catalogo catalogo){
+    public Iterable<Servico> pesquisarServicoPorTitulo(final String titulo, final Catalogo catalogo){
         return repoServ.servicoPorTitulo(titulo, catalogo);
     }
 
-    public List<Servico> pesquisarServicoPorDescBreve(final String descBreve, final Catalogo catalogo){
+    public Iterable<Servico> pesquisarServicoPorDescBreve(final String descBreve, final Catalogo catalogo){
         return repoServ.servicoPorDescBreve(descBreve, catalogo);
     }
 
-    public List<Servico> pesquisarServicoPorKeyword(final String keyword, final Catalogo catalogo){
+    public Iterable<Servico> pesquisarServicoPorKeyword(final String keyword, final Catalogo catalogo){
         return repoServ.servicoPorKeyword(keyword, catalogo);
     }
 }

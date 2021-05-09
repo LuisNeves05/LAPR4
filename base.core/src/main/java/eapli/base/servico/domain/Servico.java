@@ -108,6 +108,10 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     protected Servico() {}
 
+    public String estado(){
+        return this.estado;
+    }
+
     /**
      * Equals do Servico
      */

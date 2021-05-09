@@ -4,10 +4,12 @@ import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.Embeddable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CodigoEquipa implements ValueObject {
+@Embeddable
+public class CodigoEquipa implements ValueObject, Comparable<CodigoEquipa> {
     private String codigoEquipa;
 
     @Override
@@ -31,4 +33,9 @@ public class CodigoEquipa implements ValueObject {
 
 
     public CodigoEquipa() {}
+
+    @Override
+    public int compareTo(CodigoEquipa o) {
+        return this.codigoEquipa.compareTo(o.codigoEquipa);
+    }
 }
