@@ -1,9 +1,13 @@
 package eapli.base.criticidade.domain;
 
+import eapli.framework.domain.model.ValueObject;
+
+import javax.persistence.Embeddable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Etiqueta {
+@Embeddable
+public class Etiqueta implements ValueObject {
 
     private String etiqueta;
 
@@ -16,7 +20,7 @@ public class Etiqueta {
     private boolean checkEtiqueta(String etiqueta){
         List<String> etiquetas = Arrays.asList(new String[]{"baixa", "média", "elevada"});
 
-        if(!etiquetas.contains(etiquetas)){
+        if(!etiquetas.contains(etiqueta)){
             System.out.println("Etiqueta Inválida!");
             return false;
         }

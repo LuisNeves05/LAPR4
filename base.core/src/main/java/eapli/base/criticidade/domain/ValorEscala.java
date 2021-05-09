@@ -1,5 +1,8 @@
 package eapli.base.criticidade.domain;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class ValorEscala {
 
     private int valor;

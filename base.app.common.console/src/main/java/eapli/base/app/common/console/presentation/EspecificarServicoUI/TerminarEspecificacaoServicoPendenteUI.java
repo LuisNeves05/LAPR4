@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.servicoUI;
+package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
 import eapli.base.Utils.QueryMaker;
 import eapli.base.servico.domain.Servico;
@@ -21,7 +21,7 @@ public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
             System.out.println("Não existem serviços por especificar!");
         }else{
             for(int i=0; i<listServicos.size();i++){
-                System.out.println(i + " TESTETESTS" +listServicos.get(i).toString() + "\n");
+                System.out.println(i + " " +listServicos.get(i).toString() + "\n");
             }
 
             int choice = Console.readInteger("Escolha um dos servicos (index)");

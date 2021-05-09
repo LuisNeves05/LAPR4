@@ -1,12 +1,9 @@
-package eapli.base.app.common.console.presentation.servicoUI;
+package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.formulario.application.EspecificarFormularioController;
-import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.Servico;
-import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 

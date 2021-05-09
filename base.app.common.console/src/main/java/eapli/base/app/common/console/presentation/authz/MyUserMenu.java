@@ -25,10 +25,10 @@ package eapli.base.app.common.console.presentation.authz;
 
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
-import eapli.base.app.common.console.presentation.servicoUI.EspecificarServicoUI;
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
-import eapli.base.app.common.console.presentation.servicoUI.TerminarEspecificacaoServicoPendenteUI;
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

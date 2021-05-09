@@ -7,6 +7,8 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorioJPAImpl;
+import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
+import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorioJPAimpl;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.persistence.FormularioRepositorio;
@@ -82,6 +84,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public EquipaRepositorio equipaRepositorio() {
 		return new EquipaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public NivelCriticidadeRepositorio nivelCriticidadeRepositorio() {
+		return new NivelCriticidadeRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
