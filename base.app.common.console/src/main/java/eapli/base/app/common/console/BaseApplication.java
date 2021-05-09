@@ -73,7 +73,7 @@ public abstract class BaseApplication {
         System.out.println(controllerList.listarEquipa());
 
         QueryMaker qm = new QueryMaker();
-        List<Colaborador> colaboradors = qm.queryToDB(new Colaborador(), "SELECT e FROM Colaborador e");
+        List<Colaborador> colaboradors = qm.queryServicoIncompleto(new Colaborador(), "SELECT e FROM Colaborador e");
         //colaboradorController.addColaboresToEquipa(equipa, colaboradors.get(0));
 
 

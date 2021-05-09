@@ -13,12 +13,12 @@ public class QueryMaker {
     /**
      * @return List of Objects to be cast to whatever the programmer wants
      */
-    public List<Servico> queryToDB() {
+    public List<Servico> queryServicoIncompleto() {
         Query query = criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where estado='INCOMPLETO'", Servico.class);
         return query.getResultList();
     }
 
-    public < E > List<E> queryToDB(E outputClass, String queryJPQL){
+    public < E > List<E> queryServicoIncompleto(E outputClass, String queryJPQL){
         List<E> query = criarEntityManager("eapli.base").createQuery(queryJPQL).getResultList();
         return query;
     }

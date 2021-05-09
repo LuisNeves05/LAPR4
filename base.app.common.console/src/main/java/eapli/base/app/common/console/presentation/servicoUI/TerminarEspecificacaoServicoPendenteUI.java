@@ -1,12 +1,10 @@
 package eapli.base.app.common.console.presentation.servicoUI;
 
 import eapli.base.Utils.QueryMaker;
-import eapli.base.servico.application.ListarServicosController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import javax.management.Query;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
@@ -18,7 +16,7 @@ public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        List<Servico> listServicos = qm.queryToDB();
+        List<Servico> listServicos = qm.queryServicoIncompleto();
         if(listServicos.isEmpty()){
             System.out.println("Não existem serviços por especificar!");
         }else{
