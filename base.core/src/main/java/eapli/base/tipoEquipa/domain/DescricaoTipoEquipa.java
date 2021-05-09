@@ -1,7 +1,6 @@
 package eapli.base.tipoEquipa.domain;
 
 import eapli.framework.domain.model.ValueObject;
-
 import javax.persistence.Embeddable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +19,6 @@ public class DescricaoTipoEquipa implements ValueObject,Comparable<DescricaoTipo
     protected DescricaoTipoEquipa(){}
 
 
-
     private boolean validaIdentificador(final String descricao) {
         String regex = "[a-zA-Z0-9]{1,50}";
 
@@ -37,6 +35,19 @@ public class DescricaoTipoEquipa implements ValueObject,Comparable<DescricaoTipo
     @Override
     public int compareTo(final DescricaoTipoEquipa o) {
         return this.descricao.compareTo(o.descricao);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof DescricaoTipoEquipa)) {
+            return false;
+        }
+
+        final DescricaoTipoEquipa that = (DescricaoTipoEquipa) other;
+        return this.descricao.equals(that.descricao);
     }
 }
 

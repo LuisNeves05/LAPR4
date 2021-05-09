@@ -8,14 +8,14 @@ import java.awt.*;
 
 @Entity
 @Table
-public class TipoEquipa implements Comparable<TipoEquipa>, AggregateRoot<TipoEquipa> {
+public class TipoEquipa implements Comparable<CodigoInterno>, AggregateRoot<CodigoInterno> {
 
     /**
      * Código que identifica um tipo de equipa.
      * É composto por até 15 carateres alfanuméricos.
      */
-    @EmbeddedId
     @Column(name="ID")
+    @EmbeddedId
     private CodigoInterno codigoInterno;
 
     /**
@@ -53,21 +53,24 @@ public class TipoEquipa implements Comparable<TipoEquipa>, AggregateRoot<TipoEqu
 
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TipoEquipa)) {
+            return false;
+        }
+
+        final TipoEquipa that = (TipoEquipa) other;
+        return this.codigoInterno.equals(that.codigoInterno);
     }
 
     @Override
-    public int compareTo(TipoEquipa other) {
-        return AggregateRoot.super.compareTo(other);
+    public int compareTo(CodigoInterno other) {
+        return this.codigoInterno.compareTo(other);
     }
 
     @Override
-    public TipoEquipa identity() {
-        return null;
-    }
-
-    @Override
-    public boolean hasIdentity(TipoEquipa otherId) {
-        return AggregateRoot.super.hasIdentity(otherId);
+    public CodigoInterno identity() {
+        return this.codigoInterno;
     }
 }

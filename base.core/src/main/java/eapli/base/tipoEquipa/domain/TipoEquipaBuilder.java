@@ -1,8 +1,6 @@
 package eapli.base.tipoEquipa.domain;
 
-import eapli.base.servico.domain.ServiceBuilder;
 import eapli.framework.domain.model.DomainFactory;
-
 import java.awt.*;
 
 public class TipoEquipaBuilder implements DomainFactory<TipoEquipa> {
@@ -50,5 +48,16 @@ public class TipoEquipaBuilder implements DomainFactory<TipoEquipa> {
         return new TipoEquipa(CodigoInterno.valueOf(codigoInterno),cor,DescricaoTipoEquipa.valueOf(descricaoTipoEquipa));
     }
 
-    //todo fazer builder
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TipoEquipaBuilder)) {
+            return false;
+        }
+
+        final TipoEquipaBuilder that = (TipoEquipaBuilder) other;
+        return this.codigoInterno.equals(that.codigoInterno);
+    }
 }
