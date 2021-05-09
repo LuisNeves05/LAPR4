@@ -1,6 +1,7 @@
 package eapli.base.tipoEquipa.domain;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Embeddable;
 import java.util.regex.Matcher;
@@ -34,12 +35,7 @@ import java.util.regex.Pattern;
          * @return true se for válido / false se for inválido
          */
         private boolean validaIdentificador(final String identificador) {
-            String regex = "[a-zA-Z0-9]{1,15}";
-
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcherAlphaNumericCheck = pattern.matcher(identificador);
-
-            return matcherAlphaNumericCheck.find();
+            return StringUtils.isAlphanumeric(identificador);
         }
 
         /** Validação do identificador único do serviço que deve ser alfanumérico entre 1 a 15 caracteres
