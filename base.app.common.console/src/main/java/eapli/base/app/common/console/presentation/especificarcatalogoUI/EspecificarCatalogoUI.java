@@ -8,6 +8,9 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +26,17 @@ public class EspecificarCatalogoUI extends AbstractUI {
         String titulo = Console.readLine("Introduza o titulo do catalogo: ");
         String descBreve = Console.readLine("Introduza uma descricao breve: ");
         String descCompleta = Console.readLine("Introduza uma descricao mais completa: ");
-        int icon = Console.readInteger("Introduza o icon do catalogo");
+
+        int imageBin = 0;
+        final String caminho = Console.readLine("Indique o caminho (path) do ícone:");
+
+        File file = new File(caminho);
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            imageBin = fis.available();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         List<Colaborador> list = lc.listaColaboradores();
 
         for(int i=0; i<list.size();i++){
@@ -46,7 +59,7 @@ public class EspecificarCatalogoUI extends AbstractUI {
             listAcesso.add(equipaList.get(choiceE));
         }while(choiceE!=-1);
 
-        esc.especificarCatalogo(titulo,descBreve,descCompleta,icon,c,listAcesso);
+        esc.especificarCatalogo(titulo,descBreve,descCompleta,imageBin,c,listAcesso);
         return false;
     }
 

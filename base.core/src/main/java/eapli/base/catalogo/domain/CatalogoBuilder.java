@@ -22,7 +22,7 @@ public class CatalogoBuilder implements DomainFactory<Catalogo> {
     /**
      * Ícone do serviço
      */
-    private int icon; //TODO alterar para imagem
+    private byte[] icon;
     private Colaborador colaboradorResponsavel;
     private Set<Equipa> equipaSet;
 
@@ -45,7 +45,7 @@ public class CatalogoBuilder implements DomainFactory<Catalogo> {
         return this;
     }
 
-    public CatalogoBuilder comIcon(final int icon) {
+    public CatalogoBuilder comIcon(final byte[] icon) {
         this.icon = icon;
         return this;
     }

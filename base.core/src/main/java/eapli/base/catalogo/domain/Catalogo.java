@@ -35,19 +35,19 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
      * Ícone do serviço
      */
     @Column(name = "ICONE")
-    private int icon; //TODO alterar para imagem
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] icon;
 
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
     //TODO ONE TO MANY, UM CATALOGO DA ACESSO A MUITAS EQUIPAS
-
     @OneToMany
     private Set<Equipa> equipas;
 
     protected Catalogo(){}
 
-    public Catalogo(Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, int icon, Colaborador colaboradorResponsavel, Set<Equipa> equipas) {
+    public Catalogo(Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon, Colaborador colaboradorResponsavel, Set<Equipa> equipas) {
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;

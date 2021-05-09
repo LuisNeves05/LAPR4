@@ -23,7 +23,7 @@ public class EspecificarCatalogoController {
 
         CatalogoBuilder catalogoBuilder = new CatalogoBuilder();
         catalogoBuilder.comTitulo(titulo).comDescBreve(descBreve).comDescComp(descCompleta)
-                .comIcon(icon).comColaboradorResponsavel(colaborador).comListaEquipas(equipaSet);
+                .comIcon(new byte[icon]).comColaboradorResponsavel(colaborador).comListaEquipas(equipaSet);
 
         return this.repoCat.save(catalogoBuilder.build());
     }

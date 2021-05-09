@@ -40,6 +40,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * Ícone do serviço
      */
     @Column(name = "ICONE")
+    @Basic(fetch = FetchType.LAZY)
     @Lob
     private byte[] icon;
     /**

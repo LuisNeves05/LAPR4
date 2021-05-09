@@ -4,6 +4,7 @@ import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
@@ -33,7 +34,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	public UserRepository users() {
 		return users(null);
 	}
-
 
 	@Override
 	public ClientUserRepository clientUsers(final TransactionalContext tx) {
@@ -72,6 +72,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public EquipaRepositorio equipaRepositorio() {return null;}
+
+	@Override
+	public NivelCriticidadeRepositorio nivelCriticidadeRepositorio() {
+		return null;
+	}
 
 	@Override
 	public ColaboradorRepositorio colaboradorRepositorio() {

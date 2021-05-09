@@ -7,6 +7,9 @@ import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 public class EspecificarServicoUI extends AbstractUI {
@@ -30,7 +33,16 @@ public class EspecificarServicoUI extends AbstractUI {
         final String descBreve = Console.readLine("Descrição Breve:");
         final String descComp = Console.readLine("Descrição Completa:");
 
-        final int icon = Console.readInteger("Ícone:");
+        int imageBin = 0;
+        final String caminho = Console.readLine("Indique o caminho (path) do ícone:");
+
+        File file = new File(caminho);
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            imageBin = fis.available();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         boolean findCatalogo = true;
 
@@ -108,9 +120,9 @@ public class EspecificarServicoUI extends AbstractUI {
         } while (!validaSimNao(strContinuar));
         if (strContinuar.equalsIgnoreCase("nao")) {
             estado = "INCOMPLETO";
-            controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
+            controller.especificarServico(identificador, titulo, descBreve, descComp, imageBin, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
         } else if (strContinuar.equalsIgnoreCase("sim")) {
-            Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, icon, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
+            Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, imageBin, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
             fh.form(servico);
         }
         return true;
