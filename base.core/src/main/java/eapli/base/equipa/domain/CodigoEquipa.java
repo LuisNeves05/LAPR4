@@ -21,7 +21,7 @@ public class CodigoEquipa implements ValueObject {
     }
 
 
-    private boolean validaIdentificador(final String identificador) {
+    public boolean validaIdentificador(final String identificador) {
         return  StringUtils.isAlphanumeric(identificador);
     }
 
