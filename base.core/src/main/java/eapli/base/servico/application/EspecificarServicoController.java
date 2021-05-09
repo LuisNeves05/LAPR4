@@ -7,7 +7,6 @@ import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import org.springframework.stereotype.Controller;
 
 import java.util.Set;
 

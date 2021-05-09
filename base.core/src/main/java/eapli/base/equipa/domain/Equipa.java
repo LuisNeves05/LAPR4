@@ -4,9 +4,10 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.framework.domain.model.AggregateRoot;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.LinkedHashSet;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
