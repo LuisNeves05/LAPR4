@@ -21,7 +21,7 @@ public class EspecificarEquipaUI extends AbstractUI {
     protected boolean doShow() {
 
 
-        final long codigoEquipa = Console.readInteger("Escreva o código de equipa:");
+        final String codigoEquipa = Console.readLine("Escreva o código de equipa:");
         final String acr = Console.readLine("Escreva o acrónimo para a equipa:");
         final String designacao = Console.readLine("Escreva a designação para a equipa");
 
@@ -33,7 +33,7 @@ public class EspecificarEquipaUI extends AbstractUI {
         do { //TODO alterar de forma a que possa adicionar mais que um
             System.out.println("COLABORADORES:");
             for(int i = 0; i < colabList.size(); i++){
-                System.out.printf("%s - %s", i+1, colabList.get(i));
+                System.out.printf("%s - %s\n", i+1, colabList.get(i));
             }
             option = Console.readInteger("Escreva a opção:");
             colabListReponsaveis.add(colabList.get(option-1));

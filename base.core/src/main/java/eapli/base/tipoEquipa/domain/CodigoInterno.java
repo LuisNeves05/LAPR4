@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
         public CodigoInterno(String identificador){
             if (StringPredicates.isNullOrEmpty(identificador) || !validaIdentificador(identificador)) {
                 throw new IllegalArgumentException(
-                        "O identificador de um serviço deve ser alfanumérico entre 1 a 15 caracteres");
+                        "O identificador de um tipo de equipa deve ser alfanumérico entre 1 a 15 caracteres");
             }
             this.identificador = identificador;
         }

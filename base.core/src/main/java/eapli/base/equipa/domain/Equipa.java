@@ -16,8 +16,8 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      *  Identificador único da Equipa
      */
     @Id
-    @Column(unique = true)
-    private Long codigoEquipa;
+    @Column(name="ID")
+    private CodigoEquipa codigoEquipa;
 
     @OneToOne
     private TipoEquipa tipoEquipa;
@@ -52,7 +52,7 @@ public class Equipa implements Comparable<Equipa>, AggregateRoot<Equipa> {
      * @param designacao designação da equipa obrigatório no construtor
      */
 
-    public Equipa(Long codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colabR, TipoEquipa tipoEquipa) {
+    public Equipa(CodigoEquipa codigoEquipa, Acronimo acr, String designacao, Set<Colaborador> colabR, TipoEquipa tipoEquipa) {
         this.codigoEquipa = codigoEquipa;
         this.acr = acr;
         this.designacao = designacao;

@@ -104,7 +104,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Colaborador> colaboradors = new HashSet<>();
         colaboradors.add(c);
         Acronimo acr = new Acronimo("LAPR");
-        Equipa equipa = controllerEquipa.especificarEquipa(123L,acr,"Designação Equipa",colaboradors,te);
+        Equipa equipa = controllerEquipa.especificarEquipa("12367",acr,"Designação Equipa",colaboradors,te);
 
         /**
          * CRIAR COLABORADOR
