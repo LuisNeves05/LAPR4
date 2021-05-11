@@ -51,12 +51,12 @@ public class MyUserMenu extends Menu {
     private static final int TERMINAR_ESPECIFICAR_SERVICO_OPTION = 7;
     private static final int ESPECIFICAR_CATALOGO_OPTION = 8;
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
     public MyUserMenu() {
         super(MENU_TITLE);
         buildMyUserMenu(null);
     }
+
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     public MyUserMenu(final Role onlyWithThis) {
         super(MENU_TITLE);

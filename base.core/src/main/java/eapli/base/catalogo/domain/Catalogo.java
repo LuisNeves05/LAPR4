@@ -35,6 +35,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
      * Ícone do serviço
      */
     @Column(name = "ICONE")
+    @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] icon;
 

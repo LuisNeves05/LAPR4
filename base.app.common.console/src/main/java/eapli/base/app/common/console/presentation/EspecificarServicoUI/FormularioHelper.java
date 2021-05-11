@@ -17,6 +17,7 @@ public class FormularioHelper {
     NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
 
     public boolean form(Servico servico){
+        flag = true;
             while(flag)
     {
         String nomeVar = Console.readLine("Nome de variável do atributo ");

@@ -123,8 +123,12 @@ public class EspecificarServicoUI extends AbstractUI {
             controller.especificarServico(identificador, titulo, descBreve, descComp, imageBin, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
         } else if (strContinuar.equalsIgnoreCase("sim")) {
             Servico servico = controller.especificarServico(identificador, titulo, descBreve, descComp, imageBin, booleanAprov, booleanReal, listaKeywords, estado, requerFeed, catalogo);
-            fh.form(servico);
-        }
+            String novoForm;
+            do {
+                fh.form(servico);
+                novoForm = Console.readLine("Deseja especificar outro formulario?  (sim|não)");
+            }while(novoForm.contains("sim"));
+            }
         return true;
     }
 
