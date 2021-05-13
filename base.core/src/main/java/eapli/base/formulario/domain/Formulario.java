@@ -24,11 +24,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      * Nome do formulário
      */
     private NomeFormulario nome;
-    /**
-     * Formulário de um respetivo serviço
-     */
-    @ManyToOne
-    private Servico servico;
+
     /**
      * Nome do formulário
      */
@@ -38,12 +34,10 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     /**
      * Construtor da entidade Formulário
      * @param nome Nome do Formulário
-     * @param servico Formulário de um respetivo serviço
      * @param conjAtrib Conjunto de atributos associados ao Formulário
      */
-    public Formulario(NomeFormulario nome, Servico servico, Set<Atributo> conjAtrib){
+    public Formulario(NomeFormulario nome, Set<Atributo> conjAtrib){
         this.nome = nome;
-        this.servico = servico;
         this.conjuntoAtributos = conjAtrib;
     }
 
@@ -51,6 +45,11 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      * Construtor vazio requerido da entidade Formulario
      */
     public Formulario(){}
+
+    public boolean addAtributo(String nomeVar, String label, String descAjuda, String tpdad, String expRegular){
+        Atributo atributo = new Atributo(nomeVar, label, descAjuda, new TipoDados(tpdad), expRegular);
+        return this.conjuntoAtributos.add(atributo);
+    }
 
     @Override
     public boolean sameAs(Object other) {

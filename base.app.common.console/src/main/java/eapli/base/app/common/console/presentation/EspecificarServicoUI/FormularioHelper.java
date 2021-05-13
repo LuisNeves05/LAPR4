@@ -1,6 +1,7 @@
 package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
 import eapli.base.formulario.application.EspecificarFormularioController;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Servico;
@@ -18,7 +19,8 @@ public class FormularioHelper {
 
     public boolean form(Servico servico){
         flag = true;
-            while(flag)
+        Formulario f = fc.especificarFormulario(nomeFormulario);
+        while(flag)
     {
         String nomeVar = Console.readLine("Nome de variável do atributo ");
         String lable = Console.readLine("Nome da label ");
@@ -42,13 +44,14 @@ public class FormularioHelper {
             }
         } while (validaDadosEscolha(tipoDados));
 
-        fc.addAtributo(nomeVar, lable, descAjuda, tipoDados, "Teste");
+        String expReg = Console.readLine("Expressão regular para validação do atributo: ");
+        f.addAtributo(nomeVar,lable,descAjuda,tipoDados,expReg);
+        fc.saveForm(f);
         continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
         if (continuar.equalsIgnoreCase("nao")) {
             flag = false;
         }
     }
-        fc.especificarFormulario(nomeFormulario,servico);
         return false;
     }
 

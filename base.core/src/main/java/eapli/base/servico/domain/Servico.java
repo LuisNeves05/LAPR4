@@ -5,6 +5,7 @@ import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -70,6 +71,9 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne
     private Catalogo catalogo;
 
+    @OneToMany
+    private Set<Formulario> formularios = new HashSet<>();
+
     /**
      * Feedback do colaborador que requisitou o serviço
      */
@@ -110,6 +114,16 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public String estado(){
         return this.estado;
+    }
+
+    public void adicionaFormulario(Formulario f){
+        if(!this.formularios.contains(f)){
+            formularios.add(f);
+        }
+    }
+
+    public void limpaForms(){
+        this.formularios.clear();
     }
 
     /**

@@ -85,7 +85,7 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
     }
 
     public boolean temTipoEquipa(TipoEquipa tipoEquipa) {
-        return this.tipoEquipa.equals(tipoEquipa);
+        return this.tipoEquipa.sameAs(tipoEquipa);
     }
 
     /**

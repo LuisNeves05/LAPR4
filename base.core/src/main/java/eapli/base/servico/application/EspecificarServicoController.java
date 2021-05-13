@@ -2,6 +2,7 @@ package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.ServiceBuilder;
@@ -40,5 +41,11 @@ public class EspecificarServicoController {
      */
     public Iterable<Catalogo> listaCatalogos() {
         return repoCat.findAll();
+    }
+
+    public void adicionaFormulario(Servico s, Formulario formulario){
+        s.adicionaFormulario(formulario);
+        repoServ.save(s);
+        s.limpaForms();
     }
 }
