@@ -4,8 +4,6 @@ import eapli.base.formulario.domain.*;
 import eapli.base.formulario.persistence.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
-import eapli.base.servico.persistencia.ServicoRepositorio;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,5 +31,4 @@ public class EspecificarFormularioController {
         Atributo atributo = new Atributo(nomeVar, label, descAjuda, new TipoDados(tpdad), expRegular);
         return this.conjAtrib.add(atributo);
     }
-
 }
