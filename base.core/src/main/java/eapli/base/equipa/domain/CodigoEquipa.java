@@ -1,5 +1,6 @@
 package eapli.base.equipa.domain;
 
+import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;
 import org.apache.commons.lang3.StringUtils;
@@ -38,4 +39,24 @@ public class CodigoEquipa implements ValueObject, Comparable<CodigoEquipa> {
     public int compareTo(CodigoEquipa o) {
         return this.codigoEquipa.compareTo(o.codigoEquipa);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CodigoEquipa)) {
+            return false;
+        }
+
+        final CodigoEquipa that = (CodigoEquipa) o;
+        return this.codigoEquipa.equals(that.codigoEquipa);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.codigoEquipa.hashCode();
+    }
+
+
 }
