@@ -13,10 +13,4 @@ public interface EquipaRepositorio extends DomainRepository<CodigoEquipa, Equipa
     Equipa findByKeyword(String keyword);
 
     List<Equipa> listarAcronimosEquipa(String keyword);
-
-    Iterable<Catalogo> catalogosPorEquipa(Equipa equipa);
-
-    Iterable<Catalogo> catalogosPorEquipaPorTitulo(final Equipa eq, final String titulo);
-
-    Iterable<Catalogo> catalogosPorEquipaPorDescBreve(final Equipa eq, final String descBreve);
 }

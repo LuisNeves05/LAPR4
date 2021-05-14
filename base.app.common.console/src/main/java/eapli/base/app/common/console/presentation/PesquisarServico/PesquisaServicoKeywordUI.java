@@ -23,39 +23,14 @@ public class PesquisaServicoKeywordUI extends AbstractUI {
 
     private final PesquisarServicoController psController = new PesquisarServicoController();
 
-    private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
-
-    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
-
-    private UserSession userSession;
-
-    public PesquisaServicoKeywordUI(){
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        if(authorizationService.hasSession()) {
-            this.userSession = authorizationService.session().get();
-        }
-    }
+    public PesquisaServicoKeywordUI(){}
 
     @Override
     protected boolean doShow() {
 
         final String keyword = Console.readLine("Indique a Palavra-Chave (Keyword) que quer pesquisar:");
 
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
-
-        Set<Catalogo> listaCatalogo = new HashSet<>();
-
-        for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipa(eq));
-        }
-
-        Set<Servico> servicos = new HashSet<>();
-
-        for(Catalogo cs : listaCatalogo){
-            servicos.addAll((List<Servico>) psController.pesquisarServicoPorKeyword(keyword, cs));
-        }
+        Set<Servico> servicos = (Set<Servico>) psController.pesquisaKeyword(keyword);
 
         if(!servicos.isEmpty()){
             for (Servico sv : servicos){

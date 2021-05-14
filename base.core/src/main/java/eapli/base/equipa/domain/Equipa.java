@@ -40,10 +40,6 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
     @JoinTable(name="EQUIPA_RESPONSAVEL")
     private Set<Colaborador> listaColabsResponsaveis = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalogoId")
-    private Catalogo catalogo;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_COLABORADOR")
     private Set<Colaborador> listaColabs = new HashSet<>();

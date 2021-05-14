@@ -42,7 +42,6 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
-    //TODO ONE TO MANY, UM CATALOGO DA ACESSO A MUITAS EQUIPAS
     @OneToMany
     private Set<Equipa> equipas;
 
