@@ -72,7 +72,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         /**
          * CRIAR TIPO EQUIPA
          */
-        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", Color.BLACK);
+        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", 5);
 
         String pattern = "05-12-2000";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

@@ -18,9 +18,9 @@ public class TipoEquipaBuilderTest extends TestCase {
 
     public void testBuild() {
         final TipoEquipa tipoEquipa1 = new TipoEquipaBuilder().comIdentificador("falso")
-                .comCor(Color.BLACK).comDescricao("teste").build();
+                .comCor(5).comDescricao("teste").build();
         final TipoEquipa tipoEquipa2 = new TipoEquipaBuilder().comIdentificador("falso")
-                .comCor(Color.BLACK).comDescricao("teste").build();
+                .comCor(5).comDescricao("teste").build();
 
         final boolean expected = tipoEquipa1.sameAs(tipoEquipa2);
 

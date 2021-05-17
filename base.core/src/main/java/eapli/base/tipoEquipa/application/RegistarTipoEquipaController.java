@@ -18,10 +18,10 @@ public class RegistarTipoEquipaController {
     /**
      * Especificação de um novo TipoEquipa
      */
-    public TipoEquipa tipoEquipaServico(String identificador, String descricao, Color cor) {
+    public TipoEquipa tipoEquipaServico(String identificador, String descricao, int number) {
 
         TipoEquipaBuilder tipoEquipaBuilder = new TipoEquipaBuilder();
-        tipoEquipaBuilder.comIdentificador(identificador).comDescricao(descricao).comCor(cor);
+        tipoEquipaBuilder.comIdentificador(identificador).comDescricao(descricao).comCor(number);
         return this.repoServ.save(tipoEquipaBuilder.build());
     }
 

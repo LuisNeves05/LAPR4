@@ -2,6 +2,8 @@ package eapli.base.tipoEquipa.domain;
 
 import eapli.framework.domain.model.DomainFactory;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TipoEquipaBuilder implements DomainFactory<TipoEquipa> {
 
@@ -29,8 +31,25 @@ public class TipoEquipaBuilder implements DomainFactory<TipoEquipa> {
     }
 
 
-    public TipoEquipaBuilder comCor(final Color cor) {
+    public TipoEquipaBuilder comCor(int numeroCor) {
+        Map<Integer, Color> cores = new HashMap<>();
+        cores.put(1, Color.white);
+        cores.put(2, Color.lightGray);
+        cores.put(3, Color.gray);
+        cores.put(4, Color.darkGray);
+        cores.put(5, Color.black);
+        cores.put(6, Color.red);
+        cores.put(7, Color.pink);
+        cores.put(8, Color.orange);
+        cores.put(9, Color.yellow);
+        cores.put(10, Color.green);
+        cores.put(11, Color.magenta);
+        cores.put(12, Color.cyan);
+        cores.put(13, Color.blue);
+
+        final Color cor= cores.get(numeroCor);
         this.cor = cor;
+
         return this;
 
 

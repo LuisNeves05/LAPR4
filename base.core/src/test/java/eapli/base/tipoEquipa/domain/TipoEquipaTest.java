@@ -10,7 +10,7 @@ public class TipoEquipaTest extends TestCase {
 
         final TipoEquipaBuilder tipoEquipaBuilder = new TipoEquipaBuilder();
         return tipoEquipaBuilder.comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
     }
 
     private TipoEquipa getdummyTipoEquipa() {
@@ -21,10 +21,10 @@ public class TipoEquipaTest extends TestCase {
 
 
         final TipoEquipa tipoEquipa1 = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final TipoEquipa tipoEquipa2 = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final boolean expected = tipoEquipa1.identity().equals(tipoEquipa2.identity());
 
@@ -34,10 +34,10 @@ public class TipoEquipaTest extends TestCase {
     public void testDiferentesIdentificadorTipoEquipaEquals() {
 
         final TipoEquipa tipoEquipa1 = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final TipoEquipa tipoEquipa2 = new TipoEquipaBuilder().comIdentificador("falso").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final boolean expected = tipoEquipa1.equals(tipoEquipa2);
 
@@ -55,7 +55,7 @@ public class TipoEquipaTest extends TestCase {
     public void testObjetoDiferenteServico() {
 
         final TipoEquipa tipoEquipa = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("diferente")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final boolean expected = tipoEquipa.equals(getdummyTipoEquipa());
 
@@ -65,7 +65,7 @@ public class TipoEquipaTest extends TestCase {
     public void testMesmaInstanciaTipoEquipa() {
 
         final TipoEquipa tipoEquipa = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final boolean expected = tipoEquipa.sameAs(getdummyTipoEquipa());
 
@@ -75,10 +75,10 @@ public class TipoEquipaTest extends TestCase {
     public void testDoisTipoEquipaIdentificadorDiferentes() {
 
         final TipoEquipa tipoEquipa1 = new TipoEquipaBuilder().comIdentificador("teste").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final TipoEquipa tipoEquipa2 = new TipoEquipaBuilder().comIdentificador("falso").comDescricao("teste")
-                .comDescricao("teste").comCor(Color.BLACK).build();
+                .comDescricao("teste").comCor(5).build();
 
         final boolean expected = tipoEquipa1.sameAs(tipoEquipa2);
 
