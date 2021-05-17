@@ -3,8 +3,7 @@ package eapli.base.servico.persistencia;
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.ServicoIdentificador;
+import eapli.base.servico.domain.*;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
@@ -24,32 +23,36 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
     @Override
     public List<Servico> servicoPorIdentificador(final String ident, final Catalogo catalogo){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where servicoIdent = ' " + ident + "' AND catalogo = " +
-                "' " + catalogo + "' ", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.servicoIdent = :ident and :catalogo = s.catalogo", Servico.class);
+        query.setParameter("ident", new ServicoIdentificador(ident));
+        query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }
 
     @Override
     public List<Servico> servicoPorTitulo(final String titulo, final Catalogo catalogo) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where titulo = ' " + titulo + "' AND catalogo = " +
-                "' " + catalogo + "' ", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.titulo = :titulo and :catalogo = s.catalogo", Servico.class);
+        query.setParameter("titulo", new Titulo(titulo));
+        query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }
 
     @Override
     public List<Servico> servicoPorDescBreve(final String descBreve, final Catalogo catalogo) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where descBreve = ' " + descBreve + "' AND catalogo = " +
-                "' " + catalogo + "' ", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.descBreve = :descBreve and :catalogo = s.catalogo", Servico.class);
+        query.setParameter("descBreve", new DescricaoBreve(descBreve));
+        query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }
 
     @Override
     public List<Servico> servicoPorKeyword(final String keyword, final Catalogo catalogo) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where keywords = ' " + keyword + "' AND catalogo = " +
-                "' " + catalogo + "' ", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where :keyword member of s.keywords and :catalogo = s.catalogo", Servico.class);
+        query.setParameter("keyword", new Keyword(keyword));
+        query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }
 

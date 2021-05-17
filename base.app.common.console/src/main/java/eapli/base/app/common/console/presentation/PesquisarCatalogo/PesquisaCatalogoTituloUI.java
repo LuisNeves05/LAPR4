@@ -1,6 +1,8 @@
 package eapli.base.app.common.console.presentation.PesquisarCatalogo;
 
+import eapli.base.catalogo.application.PesquisarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
@@ -21,38 +23,20 @@ import java.util.Set;
 
 public class PesquisaCatalogoTituloUI extends AbstractUI {
 
-    private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
+    private final PesquisarCatalogoController pcController = new PesquisarCatalogoController();
 
-    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
-
-    private UserSession userSession;
-
-    public PesquisaCatalogoTituloUI(){
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        if(authorizationService.hasSession()) {
-            this.userSession = authorizationService.session().get();
-        }
-    }
+    public PesquisaCatalogoTituloUI(){}
 
     @Override
     protected boolean doShow() {
 
         final String titulo = Console.readLine("Indique o Título que quer pesquisar:");
 
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
-
-        Set<Catalogo> listaCatalogo = new HashSet<>();
-
-        for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipaPorTitulo(eq,titulo));
-        }
-
+        final Set<Catalogo> listaCatalogo = (Set<Catalogo>) pcController.pesquisaTitulo(titulo);
 
         if(!listaCatalogo.isEmpty()){
             for (Catalogo ct : listaCatalogo){
-                System.out.println(ct.toString() + "####################\n");
+                System.out.println("############################    " + ct.toString() + "    ############################\n");
             }
             return true;
         }

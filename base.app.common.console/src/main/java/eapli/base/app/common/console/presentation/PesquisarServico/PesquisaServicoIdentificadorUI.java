@@ -1,6 +1,7 @@
 package eapli.base.app.common.console.presentation.PesquisarServico;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
@@ -23,39 +24,15 @@ public class PesquisaServicoIdentificadorUI extends AbstractUI {
     
     private final PesquisarServicoController psController = new PesquisarServicoController();
 
-    private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
 
-    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
-
-    private UserSession userSession;
-
-    public PesquisaServicoIdentificadorUI(){
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        if(authorizationService.hasSession()) {
-            this.userSession = authorizationService.session().get();
-        }
-    }
+    public PesquisaServicoIdentificadorUI(){}
 
     @Override
     protected boolean doShow() {
 
         final String identificador = Console.readLine("Indique o Identificador que quer pesquisar:");
 
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
-
-        Set<Catalogo> listaCatalogo = new HashSet<>();
-
-        for(Equipa eq : equipasColaborador){
-            listaCatalogo.addAll((List<Catalogo>) equipaRepositorio.catalogosPorEquipa(eq));
-        }
-
-        Set<Servico> servicos = new HashSet<>();
-
-        for(Catalogo cs : listaCatalogo){
-            servicos.addAll((List<Servico>) psController.pesquisarServicoPorIdentificador(identificador, cs));
-        }
+        Set<Servico> servicos = (Set<Servico>) psController.pesquisaIdentificador(identificador);
 
         if(!servicos.isEmpty()){
             for (Servico sv : servicos){

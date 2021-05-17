@@ -4,6 +4,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 
 import javax.persistence.*;
@@ -11,15 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table( name = "Equipa",uniqueConstraints = { @UniqueConstraint(columnNames = {"acronimo"}) })
-public class Equipa implements Comparable<CodigoEquipa>, AggregateRoot<CodigoEquipa> {
+@Table( name = "Equipa")
+public class Equipa implements AggregateRoot<CodigoEquipa> {
 
     /**
      *
      *  Identificador único da Equipa
      */
-    @Id
-    @Column(name="ID")
+    @EmbeddedId
     private CodigoEquipa codigoEquipa;
 
     @OneToOne
@@ -39,10 +39,6 @@ public class Equipa implements Comparable<CodigoEquipa>, AggregateRoot<CodigoEqu
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_RESPONSAVEL")
     private Set<Colaborador> listaColabsResponsaveis = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalogoId")
-    private Catalogo catalogo;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_COLABORADOR")
@@ -85,18 +81,13 @@ public class Equipa implements Comparable<CodigoEquipa>, AggregateRoot<CodigoEqu
     }
 
     public boolean temTipoEquipa(TipoEquipa tipoEquipa) {
-        return this.tipoEquipa.equals(tipoEquipa);
+        return this.tipoEquipa.sameAs(tipoEquipa);
     }
 
     /**
      * Contrutor vazio obrigatório pela framework de JPA
      */
     public Equipa() {}
-
-    @Override
-    public boolean sameAs(Object other) {
-        return false;
-    }
 
     @Override
     public int compareTo(CodigoEquipa other) {
@@ -120,5 +111,21 @@ public class Equipa implements Comparable<CodigoEquipa>, AggregateRoot<CodigoEqu
     public boolean temResponsavel(Colaborador colab) {
         return this.listaColabsResponsaveis.contains(colab);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        return DomainEntities.areEqual(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return DomainEntities.hashCode(this);
+    }
+
+    @Override
+    public boolean sameAs(final Object other) {
+        return DomainEntities.areEqual(this, other);
+    }
+
 
 }

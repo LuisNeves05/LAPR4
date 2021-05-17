@@ -10,10 +10,7 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
      * Nome do formulário
      */
     private NomeFormulario nome;
-    /**
-     * Formulário de um respetivo serviço
-     */
-    private Servico servico;
+
     /**
      * Nome do formulário
      */
@@ -23,11 +20,6 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
 
     public FormularioBuilder comNome(final NomeFormulario nome) {
         this.nome = nome;
-        return this;
-    }
-
-    public FormularioBuilder comServico(final Servico servico) {
-        this.servico = servico;
         return this;
     }
 
@@ -41,6 +33,6 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
 
-        return new Formulario(nome, servico, conjAtrib);
+        return new Formulario(nome, conjAtrib);
     }
 }

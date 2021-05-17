@@ -25,6 +25,7 @@ import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.application.EspecificarFormularioController;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.Keyword;
@@ -149,8 +150,18 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         /**
          * CRIAR FORMULARIO
          */
-        efc.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
-        efc.especificarFormulario(new NomeFormulario("Nome Formulario"),servico);
+        Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
+        f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f.addAtributo("Nome Variavel2","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f.addAtributo("Nome Variavel3","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        efc.saveForm(f);
+        Formulario f2 = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
+        f2.addAtributo("Nome Variavel Teste","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f2.addAtributo("Nome Variavel  Teste2","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f2.addAtributo("Nome Variavel  Teste3","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        efc.saveForm(f2);
+        especificarServicoController.adicionaFormulario(servico,f);
+        especificarServicoController.adicionaFormulario(servico,f2);
 
         /**
          * CRIAR NIVEL CRITICIDADE
