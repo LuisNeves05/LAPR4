@@ -7,10 +7,7 @@ import eapli.base.servico.domain.*;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
-import java.util.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 
 public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long, ServicoIdentificador>
@@ -52,6 +49,14 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
         QueryMaker qm = new QueryMaker();
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where :keyword member of s.keywords and :catalogo = s.catalogo", Servico.class);
         query.setParameter("keyword", new Keyword(keyword));
+        query.setParameter("catalogo", catalogo);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Servico> servicoPorCatalogo(final Catalogo catalogo) {
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where :catalogo = s.catalogo", Servico.class);
         query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }

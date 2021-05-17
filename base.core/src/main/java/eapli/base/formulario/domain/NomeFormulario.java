@@ -16,4 +16,9 @@ public class NomeFormulario implements ValueObject {
     private boolean validaNome(String nome){
         return nome.length() < 50;
     }
+
+    @Override
+    public String toString() {
+        return  nome;
+    }
 }

@@ -5,13 +5,6 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
-
-import eapli.base.Application;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
@@ -23,7 +16,6 @@ import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
@@ -36,6 +28,12 @@ import eapli.base.usermanagement.application.AddUserController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
+
+import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Paulo Gandra Sousa
@@ -170,6 +168,8 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj);
 
 
-        return "#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################";
+        System.out.println("#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
+
+        return "";
     }
 }

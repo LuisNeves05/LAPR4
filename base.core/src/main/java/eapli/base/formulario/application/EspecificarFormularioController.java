@@ -1,11 +1,8 @@
 package eapli.base.formulario.application;
 
 import eapli.base.formulario.domain.*;
-import eapli.base.formulario.persistence.FormularioRepositorio;
+import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.servico.domain.Servico;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Classe Controller da Especificação de um Formulário

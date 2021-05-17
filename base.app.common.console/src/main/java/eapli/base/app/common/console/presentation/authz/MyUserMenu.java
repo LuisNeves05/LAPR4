@@ -29,6 +29,7 @@ import eapli.base.app.common.console.presentation.EspecificarServicoUI.Especific
 
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
+import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -50,6 +51,7 @@ public class MyUserMenu extends Menu {
     private static final int CRIAR_EQUIPA_OPTION = 6;
     private static final int TERMINAR_ESPECIFICAR_SERVICO_OPTION = 7;
     private static final int ESPECIFICAR_CATALOGO_OPTION = 8;
+    private static final int SOLICITAR_SERVICO_OPTION = 9;
 
     public MyUserMenu() {
         super(MENU_TITLE);
@@ -74,6 +76,8 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(CRIAR_EQUIPA_OPTION, "Criar nova Equipa", new EspecificarEquipaUI()::show));
             addItem(MenuItem.of(TERMINAR_ESPECIFICAR_SERVICO_OPTION, "Terminar especificação de servicos", new TerminarEspecificacaoServicoPendenteUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_CATALOGO_OPTION, "Especificar catalogo", new EspecificarCatalogoUI()::show));
+            addItem(MenuItem.of(SOLICITAR_SERVICO_OPTION, "Solicitar Serviço", new SolicitarServicoUI()::show));
+
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));
         }

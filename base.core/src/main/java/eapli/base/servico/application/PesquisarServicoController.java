@@ -41,7 +41,6 @@ public class PesquisarServicoController {
     /**
      * Repositório do Serviço
      */
-
     public Iterable<Servico> pesquisaIdentificador(final String identificador){
 
         Iterable<Catalogo> listaCatalogo = catalogosColaborador();

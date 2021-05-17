@@ -19,4 +19,6 @@ public interface ServicoRepositorio extends DomainRepository<ServicoIdentificado
     List<Servico> servicoPorDescBreve(final String descBreve, final Catalogo catalogo);
 
     List<Servico> servicoPorKeyword(final String keyword, final Catalogo catalogo);
+
+    List<Servico> servicoPorCatalogo(final Catalogo catalogo);
 }

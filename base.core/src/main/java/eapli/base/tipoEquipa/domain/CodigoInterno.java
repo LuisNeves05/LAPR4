@@ -61,5 +61,11 @@ import java.util.regex.Pattern;
 
             final CodigoInterno that = (CodigoInterno) o;
             return this.identificador.equals(that.identificador);
-    }}
+    }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+    }
 
