@@ -1,5 +1,7 @@
 package eapli.base.formularioPreenchido.domain;
 
+import eapli.base.formulario.domain.Formulario;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,5 +12,9 @@ public class FormularioPreenchido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    private Formulario formulario;
+
+    public FormularioPreenchido(){}
 
 }
