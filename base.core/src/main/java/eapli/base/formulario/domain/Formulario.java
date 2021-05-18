@@ -24,6 +24,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     /**
      * Nome do formulário
      */
+    @Embedded
     private NomeFormulario nome;
 
     /**
@@ -77,7 +78,11 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
         return false;
     }
 
-    public String name(){
-        return nome.toString();
+    public Set<Atributo> atributos(){
+        return this.conjuntoAtributos;
+    }
+
+    public NomeFormulario name(){
+        return nome;
     }
 }

@@ -1,4 +1,4 @@
-package eapli.base.servico.application;
+package eapli.base.ticket.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
@@ -17,7 +17,6 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SolicitarServicoController {
 
@@ -56,15 +55,12 @@ public class SolicitarServicoController {
         return repoServ.servicoPorCatalogo(catalogo);
     }
 
-    public Set<Formulario> formulariosServico(Servico servico){
-        return (Set<Formulario>) repoForm.formularioPorServico(servico);
+    public List<Formulario> formulariosServico(Servico servico){
+        return (List<Formulario>) repoForm.formularioPorServico(servico);
     }
 
     public Iterable<Equipa> equipasDoColaborador(){
         return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
     }
 
-    public List<Atributo> atributosFormulario(Formulario formulario){
-        return repoForm.atributosPorFormulario(formulario);
-    }
 }

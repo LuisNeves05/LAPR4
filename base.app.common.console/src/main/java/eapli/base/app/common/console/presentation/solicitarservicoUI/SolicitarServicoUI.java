@@ -3,12 +3,11 @@ package eapli.base.app.common.console.presentation.solicitarservicoUI;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.servico.application.SolicitarServicoController;
+import eapli.base.ticket.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -41,14 +40,14 @@ public class SolicitarServicoUI extends AbstractUI {
 
         System.out.println("\nTendo o serviço sido escolhido, vai agora ter de preencher os respetivos formulários\n");
 
-        Set<Formulario> formularioList = lcp.formulariosServico(s);
+        List<Formulario> formularioList = lcp.formulariosServico(s);
 
         for(Formulario f : formularioList){
-            //System.out.println("Formulario " + f.name() + "\n");
-            List<Atributo> a = lcp.atributosFormulario(f);
+            System.out.println("Formulario " +  f.name() + "\n");
+            Set<Atributo> a =  f.atributos();
 
             for(Atributo atributo : a){
-                System.out.println(atributo);
+
             }
         }
 
