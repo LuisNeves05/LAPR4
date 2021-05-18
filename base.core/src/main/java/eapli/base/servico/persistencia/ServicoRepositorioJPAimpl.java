@@ -67,4 +67,10 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s FROM Servico s where estado = ' " + estado + "' ", Servico.class);
         return query.getResultList();
     }
+
+    public List<Servico> servicosIncompletos(){
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.estado = 'INCOMPLETO'", Servico.class);
+        return query.getResultList();
+    }
 }

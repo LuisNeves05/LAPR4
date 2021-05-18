@@ -2,6 +2,8 @@ package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.framework.domain.model.DomainFactory;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class ServiceBuilder implements DomainFactory<Servico> {
@@ -37,7 +39,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     /**
      * Conjunto de palavras chave de um serviço
      */
-    private Set<Keyword> keywords;
+    private Set<Keyword> keywords = new HashSet<>();
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
