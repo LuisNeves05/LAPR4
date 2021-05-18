@@ -113,22 +113,22 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     protected Servico() {}
 
-    public EstadoServico estado(){
-        return this.estado;
-    }
-
     public void adicionaFormulario(Formulario f){
         if(!this.formularios.contains(f)){
             formularios.add(f);
         }
     }
 
-    public int tamanhoListaKewords(){
-        return this.keywords.size();
-    }
-
     public void limpaForms(){
         this.formularios.clear();
+    }
+
+    /**
+     * Identidade do Servico
+     */
+    @Override
+    public ServicoIdentificador identity() {
+        return this.servicoIdent;
     }
 
     /**
@@ -147,13 +147,31 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         return this.servicoIdent.equals(that.servicoIdent);
     }
 
-    /**
-     * Identidade do Servico
-     */
-    @Override
-    public ServicoIdentificador identity() {
-        return this.servicoIdent;
+    public Titulo tituloDoServico(){
+        return this.titulo;
     }
+
+    public DescricaoBreve descricaoBreveDoServico(){return this.descBreve;}
+
+    public DescricaoCompleta descricaoCompletaDoServico(){return this.descComp;}
+
+    public byte[] iconDoServico(){return this.icon;}
+
+    public boolean atividadeAprovacao(){return this.atAprov;}
+
+    public boolean atividadeRealizacao(){return this.atReal;}
+
+    public Set<Keyword> listaKewordsDoServico(){
+        return this.keywords;
+    }
+
+    public EstadoServico estado(){
+        return this.estado;
+    }
+
+    public Catalogo catalogo(){return this.catalogo;}
+
+    public boolean requerFeedbackDoServico(){return this.requerFeedback;}
 
     /**
      * toString do Servico
@@ -163,4 +181,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
     }
 
+    public boolean estaCompleto() {
+        return this.servicoIdent != null && this.titulo != null && this.descBreve != null && this.descComp != null
+                && (listaKewordsDoServico().size() > 0 || listaKewordsDoServico() != null) && this.catalogo != null;
+    }
 }

@@ -2,13 +2,21 @@ package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
 import eapli.base.servico.domain.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.application.UserSession;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,10 +38,6 @@ public class EspecificarServicoController {
        return this.repoServ.save(servico);
     }
 
-    public Iterable<Servico> servivoExistente(String identificador, Catalogo catalogo){
-        return repoServ.servicoPorIdentificadorCatalogo(identificador, catalogo);
-    }
-
     /**
      * Listar todas os Catalogos da base de dados
      */
@@ -48,6 +52,6 @@ public class EspecificarServicoController {
     }
 
     public List<Servico> servicosIncompletos() {
-        return null;
+        return repoServ.servicosIncompletos();
     }
 }

@@ -21,4 +21,6 @@ public interface ServicoRepositorio extends DomainRepository<ServicoIdentificado
     List<Servico> servicoPorKeyword(final String keyword, final Catalogo catalogo);
 
     List<Servico> servicoPorCatalogo(final Catalogo catalogo);
+
+    List<Servico> servicosIncompletos();
 }

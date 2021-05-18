@@ -26,8 +26,6 @@ public class PesquisarServicoController {
 
     private final CatalogoRepositorio catRep = PersistenceContext.repositories().catalogoRepositorio();
 
-    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
-
     private SystemUser systemUser;
 
     public PesquisarServicoController(){
