@@ -6,42 +6,10 @@
 package eapli.base.app.common.console;
 
 import eapli.base.Application;
-import eapli.base.Utils.QueryMaker;
-import eapli.base.app.common.console.presentation.RegistarTipoEquipaUI.RegistarTipoEquipaUI;
-import eapli.base.app.common.console.presentation.authz.LoginAction;
-import eapli.base.catalogo.application.EspecificarCatalogoController;
-import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.clientusermanagement.domain.MecanographicNumber;
-import eapli.base.colaborador.application.EspecificarColaboradorController;
-import eapli.base.colaborador.domain.*;
-import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
-import eapli.base.criticidade.domain.Objetivo;
-import eapli.base.equipa.application.EspecificarEquipaController;
-import eapli.base.equipa.application.ListarEquipaController;
-import eapli.base.equipa.domain.Acronimo;
-import eapli.base.equipa.domain.Equipa;
-import eapli.base.formulario.application.EspecificarFormularioController;
-import eapli.base.formulario.domain.NomeFormulario;
-import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Keyword;
-import eapli.base.servico.domain.Servico;
-import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
-import eapli.base.tipoEquipa.domain.TipoEquipa;
-import eapli.base.usermanagement.application.AddUserController;
-import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.framework.infrastructure.authz.application.AuthenticationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 import eapli.framework.infrastructure.eventpubsub.impl.inprocess.InProcessPubSub;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
 
 /**
  *

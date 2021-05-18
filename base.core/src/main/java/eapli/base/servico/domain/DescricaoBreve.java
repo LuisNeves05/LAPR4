@@ -14,10 +14,10 @@ public class DescricaoBreve implements Comparable<DescricaoBreve> {
     protected DescricaoBreve(){}
 
     public DescricaoBreve(String descBreve){
-        if (StringPredicates.isNullOrEmpty(descBreve) || !validaDescricaoBreve(descBreve)) {
+        /*if (StringPredicates.isNullOrEmpty(descBreve) || !validaDescricaoBreve(descBreve)) {
             throw new IllegalArgumentException(
                     "A descrição breve de um serviço entre 1 a 40 caracteres");
-        }
+        }*/
         this.descBreve = descBreve;
     }
 

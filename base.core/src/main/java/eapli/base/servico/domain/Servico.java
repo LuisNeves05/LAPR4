@@ -64,7 +64,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     @Column(name = "ESTADO")
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoServico estado;
     /**
      * Servico é pertencente a um Catalogo
      */
@@ -93,7 +94,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   boolean atAprov, boolean atReal, Set<Keyword> keywords, String estado, Catalogo catalogo, boolean requerFeedback) {
+                   boolean atAprov, boolean atReal, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
@@ -112,7 +113,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     protected Servico() {}
 
-    public String estado(){
+    public EstadoServico estado(){
         return this.estado;
     }
 
@@ -120,6 +121,10 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         if(!this.formularios.contains(f)){
             formularios.add(f);
         }
+    }
+
+    public int tamanhoListaKewords(){
+        return this.keywords.size();
     }
 
     public void limpaForms(){

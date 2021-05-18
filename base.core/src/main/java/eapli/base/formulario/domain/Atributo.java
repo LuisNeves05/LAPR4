@@ -44,6 +44,16 @@ public class Atributo implements ValueObject {
         this.expRegular = expRegular;
     }
 
+    @Override
+    public String toString() {
+        return "Atributo{" +
+                "nomeVar='" + nomeVar + '\'' +
+                ", lable='" + lable + '\'' +
+                ", descAjuda='" + descAjuda + '\'' +
+                ", tipoDados=" + tipoDados +
+                ", expRegular='" + expRegular + '\'' +
+                '}';
+    }
 
     /**
      * Construtor vazio requerido do Atributo

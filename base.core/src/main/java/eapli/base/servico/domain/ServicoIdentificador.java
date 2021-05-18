@@ -19,10 +19,10 @@ public class ServicoIdentificador implements ValueObject, Comparable<ServicoIden
      * @param identificador identificador único do Serviço
      */
     public ServicoIdentificador(String identificador){
-        if (StringPredicates.isNullOrEmpty(identificador) || !validaIdentificador(identificador)) {
+       /* if (StringPredicates.isNullOrEmpty(identificador) || !validaIdentificador(identificador)) {
             throw new IllegalArgumentException(
                     "O identificador de um serviço deve ser alfanumérico entre 1 a 15 caracteres");
-        }
+        }*/
         this.identificador = identificador;
     }
 

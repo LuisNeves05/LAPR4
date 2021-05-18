@@ -7,6 +7,7 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.PesquisarServicoController;
+import eapli.base.servico.domain.EstadoServico;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -36,7 +37,7 @@ public class PesquisaServicoIdentificadorUI extends AbstractUI {
 
         if(!servicos.isEmpty()){
             for (Servico sv : servicos){
-                if(sv.estado().equals("INCOMPLETO"))
+                if(sv.estado().equals(EstadoServico.INCOMPLETO))
                     System.out.println(sv.toString() + "   BREVEMENTE DISPONIVEL");
                 else
                     System.out.println(sv.toString());

@@ -18,10 +18,10 @@ public class Titulo implements ValueObject, Comparable<Titulo> {
      * @param titulo Titulo do serviço
      */
     public Titulo(String titulo){
-        if (StringPredicates.isNullOrEmpty(titulo) || !validaTitulo(titulo)) {
+        /*if (!StringPredicates.isNullOrEmpty(titulo) || !validaTitulo(titulo)) {
             throw new IllegalArgumentException(
                     "O Título deve ser alfanumérico entre 1 a 50 caracteres");
-        }
+        }*/
         this.titulo = titulo;
     }
 
@@ -65,6 +65,9 @@ public class Titulo implements ValueObject, Comparable<Titulo> {
         }
 
         final Titulo that = (Titulo) o;
+        if(this.titulo == null){
+            return that.titulo == null;
+        }
         return this.titulo.equals(that.titulo);
     }
 

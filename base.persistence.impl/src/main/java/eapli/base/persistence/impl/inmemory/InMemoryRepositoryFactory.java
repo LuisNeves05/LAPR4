@@ -6,7 +6,7 @@ import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
-import eapli.base.formulario.persistence.FormularioRepositorio;
+import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;

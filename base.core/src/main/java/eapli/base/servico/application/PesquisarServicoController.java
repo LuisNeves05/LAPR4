@@ -41,7 +41,6 @@ public class PesquisarServicoController {
     /**
      * Repositório do Serviço
      */
-
     public Iterable<Servico> pesquisaIdentificador(final String identificador){
 
         Iterable<Catalogo> listaCatalogo = catalogosColaborador();
@@ -95,7 +94,7 @@ public class PesquisarServicoController {
     }
 
     public Iterable<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
-        return repoServ.servicoPorIdentificador(identificador, catalogo);
+        return repoServ.servicoPorIdentificadorCatalogo(identificador, catalogo);
     }
 
     public Iterable<Servico> pesquisarServicoPorTitulo(final String titulo, final Catalogo catalogo){

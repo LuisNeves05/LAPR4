@@ -41,7 +41,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
-    private String estado;
+    private EstadoServico estado;
 
     private Catalogo catalogo;
 
@@ -90,12 +90,7 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public ServiceBuilder comKeywords(final Set<Keyword> keywords) {
-        this.keywords = keywords;
-        return this;
-    }
-
-    public ServiceBuilder comEstado(final String estado) {
+    public ServiceBuilder comEstado(final EstadoServico estado) {
         this.estado = estado;
         return this;
     }
@@ -104,6 +99,12 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         this.catalogo = catalogo;
         return this;
     }
+
+    public void adicionarKeyword(String key){
+        Keyword keyword = new Keyword(key);
+        keywords.add(keyword);
+    }
+
 
     @Override
     public boolean equals(Object other) {
