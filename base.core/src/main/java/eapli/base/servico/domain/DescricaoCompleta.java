@@ -15,10 +15,10 @@ public class DescricaoCompleta implements ValueObject, Comparable<DescricaoCompl
     protected DescricaoCompleta(){}
 
     public DescricaoCompleta(String descCompleta){
-        if (StringPredicates.isNullOrEmpty(descCompleta) || !validaDescCompleta(descCompleta)) {
+        /*if (StringPredicates.isNullOrEmpty(descCompleta) || !validaDescCompleta(descCompleta)) {
             throw new IllegalArgumentException(
                     "A descrição completa de um serviço deve ser alfanumérico entre 1 a 500 caracteres");
-        }
+        }*/
         this.descComp = descCompleta;
     }
 

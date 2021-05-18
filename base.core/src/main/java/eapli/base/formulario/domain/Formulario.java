@@ -4,6 +4,7 @@ import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     /**
      * Nome do formulário
      */
+    @Embedded
     private NomeFormulario nome;
 
     /**
@@ -67,7 +69,20 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
     public boolean hasIdentity(Formulario otherId) {
         return false;
+    }
+
+    public Set<Atributo> atributos(){
+        return this.conjuntoAtributos;
+    }
+
+    public NomeFormulario name(){
+        return nome;
     }
 }

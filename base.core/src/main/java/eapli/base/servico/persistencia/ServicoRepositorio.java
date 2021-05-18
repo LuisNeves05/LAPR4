@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ServicoRepositorio extends DomainRepository<ServicoIdentificador, Servico > {
 
-    List<Servico> servicoPorIdentificador(final String identificador, final Catalogo catalogo);
+    Iterable<Servico> servicoPorIdentificadorCatalogo(final String identificador, final Catalogo catalogo);
 
     List<Servico> servicoPorTitulo(final String titulo, final Catalogo catalogo);
 
@@ -19,4 +19,6 @@ public interface ServicoRepositorio extends DomainRepository<ServicoIdentificado
     List<Servico> servicoPorDescBreve(final String descBreve, final Catalogo catalogo);
 
     List<Servico> servicoPorKeyword(final String keyword, final Catalogo catalogo);
+
+    List<Servico> servicoPorCatalogo(final Catalogo catalogo);
 }

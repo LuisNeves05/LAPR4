@@ -10,6 +10,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -43,7 +44,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     private Colaborador colaboradorResponsavel;
 
     @OneToMany
-    private Set<Equipa> equipas;
+    private Set<Equipa> equipas = new HashSet<>();
 
     protected Catalogo(){}
 

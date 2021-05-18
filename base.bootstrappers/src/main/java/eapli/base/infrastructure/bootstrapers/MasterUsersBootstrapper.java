@@ -5,13 +5,6 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
-import java.awt.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
-
-import eapli.base.Application;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
@@ -23,19 +16,23 @@ import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Keyword;
-import eapli.base.servico.domain.Servico;
+import eapli.base.servico.domain.*;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.base.usermanagement.application.AddUserController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
+
+import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Paulo Gandra Sousa
@@ -145,7 +142,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Keyword> keywords = new HashSet<>();
         keywords.add(k);
         keywords.add(k2);
-        Servico servico = especificarServicoController.especificarServico("123IDSERV","Titulo Servico","Desc breve Serv","Desc comp Servico",2,true,true,keywords,"COMPLETO",false,catalogo);
+
+        Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
+                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, keywords, EstadoServico.COMPLETO, catalogo, false));
 
         /**
          * CRIAR FORMULARIO
@@ -170,6 +169,8 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj);
 
 
-        return "#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################";
+        System.out.println("#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
+
+        return "";
     }
 }

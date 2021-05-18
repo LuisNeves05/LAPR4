@@ -1,2 +1,5 @@
-package eapli.base.servico.domain;public class EstadoServico {
+package eapli.base.servico.domain;
+
+public enum EstadoServico {
+    COMPLETO, INCOMPLETO;
 }
