@@ -239,7 +239,7 @@ public class EspecificarServicoUI extends AbstractUI {
             Servico servico = controller.especificarServico(serviceBuilder.build());
             String novoForm;
             do {
-                fh.form(servico);
+                fh.form();
                 novoForm = Console.readLine("Deseja especificar outro formulario?  (sim|não)");
             } while (novoForm.contains("sim"));
         }

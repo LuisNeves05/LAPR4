@@ -4,6 +4,7 @@ package eapli.base.formulario.domain;
 import eapli.framework.domain.model.ValueObject;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 
 /**
@@ -60,4 +61,13 @@ public class Atributo implements ValueObject {
      */
     public Atributo() {
     }
+
+    public TipoDados tipoDados(){
+        return this.tipoDados;
+    }
+
+    public String nomeVar(){
+        return this.nomeVar;
+    }
+
 }

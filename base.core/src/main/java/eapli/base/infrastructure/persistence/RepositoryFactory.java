@@ -7,6 +7,7 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -21,49 +22,49 @@ public interface RepositoryFactory {
 	/**
 	 * factory method to create a transactional context to use in the repositories
 	 *
-	 * @return
+	 * @return TransactionalContext
 	 */
 	TransactionalContext newTransactionalContext();
 
 	/**
 	 *
 	 * @param autoTx the transactional context to enrol
-	 * @return
+	 * @return UserRepository
 	 */
 	UserRepository users(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
-	 * @return
+	 * @return UserRepository
 	 */
 	UserRepository users();
 
 	/**
 	 *
 	 * @param autoTx the transactional context to enroll
-	 * @return
+	 * @return ClientUserRepository
 	 */
 	ClientUserRepository clientUsers(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
-	 * @return
+	 * @return ClientUserRepository
 	 */
 	ClientUserRepository clientUsers();
 
 	/**
 	 *
 	 * @param autoTx the transactional context to enroll
-	 * @return
+	 * @return SignupRequestRepository
 	 */
 	SignupRequestRepository signupRequests(TransactionalContext autoTx);
 
 	/**
 	 * repository will be created in auto transaction mode
 	 *
-	 * @return
+	 * @return SignupRequestRepository
 	 */
 	SignupRequestRepository signupRequests();
 
@@ -81,13 +82,13 @@ public interface RepositoryFactory {
 
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
-	 * @return
+	 * @return FormularioRepositorio
 	 */
 	FormularioRepositorio formularioRepositorio();
 
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
-	 * @return
+	 * @return TipoEquipaRepositorio
 	 */
 	TipoEquipaRepositorio tipoEquipaRepositorio();
 
@@ -96,6 +97,8 @@ public interface RepositoryFactory {
 	EquipaRepositorio equipaRepositorio();
 
 	NivelCriticidadeRepositorio nivelCriticidadeRepositorio();
+
+	FormularioPreenchidoRepositorio formularioPreenchidoRepositorio();
 
 
 }

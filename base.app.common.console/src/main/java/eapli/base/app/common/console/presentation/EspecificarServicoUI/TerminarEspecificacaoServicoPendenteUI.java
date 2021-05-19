@@ -26,7 +26,7 @@ public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
 
             int choice = Console.readInteger("Escolha um dos servicos (index)");
             Servico servico = listServicos.get(choice);
-            fh.form(servico);
+            fh.form();
         }
         return false;
     }

@@ -3,17 +3,24 @@ package eapli.base.app.common.console.presentation.solicitarservicoUI;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.TipoDados;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.domain.Resposta;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.ticket.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
+    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
 
     @Override
     protected boolean doShow() {
@@ -42,15 +49,26 @@ public class SolicitarServicoUI extends AbstractUI {
 
         List<Formulario> formularioList = lcp.formulariosServico(s);
 
+        String urgencia = Console.readLine("\nQual a urgência deste serviço?  (baixa | moderada | alta)");
+
         for(Formulario f : formularioList){
-            System.out.println("Formulario " +  f.name() + "\n");
+            System.out.println("\nFormulario " +  f.name() + "\n");
+
+            Set<Resposta> respostas = new HashSet<>();
             Set<Atributo> a =  f.atributos();
 
             for(Atributo atributo : a){
-
+                TipoDados td = atributo.tipoDados();
+                String ajudaResposta = tipoDadosStr(td);
+                String resposta = Console.readLine(atributo.nomeVar() + ": " + "    Responda conforme -> " +ajudaResposta);
+                Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+                respostas.add(rAtr);
             }
-        }
 
+            FormularioPreenchido fp = new FormularioPreenchido(f,urgencia,respostas,s);
+
+            fpr.save(fp);
+        }
 
         return false;
     }
@@ -58,5 +76,20 @@ public class SolicitarServicoUI extends AbstractUI {
     @Override
     public String headline() {
         return "Solicitar um Serviço!";
+    }
+
+    private String tipoDadosStr(TipoDados a){
+        if(a == TipoDados.DATA){
+            return "Data";
+        }else if(a == TipoDados.BOOLEANO){
+            return "Sim/Não";
+        }else if(a == TipoDados.STRING){
+            return "Frase";
+        }else if(a == TipoDados.FRACIONAL){
+            return "Numero fracional";
+        }else if(a == TipoDados.INT){
+            return "Numero";
+        }else
+            return "";
     }
 }
