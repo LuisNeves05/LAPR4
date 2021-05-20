@@ -7,6 +7,7 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
@@ -80,6 +81,11 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public ColaboradorRepositorio colaboradorRepositorio() {
+		return null;
+	}
+
+	@Override
+	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio() {
 		return null;
 	}
 

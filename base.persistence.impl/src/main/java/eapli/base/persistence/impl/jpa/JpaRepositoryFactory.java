@@ -12,6 +12,8 @@ import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorioJPAimpl;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorioJPAimpl;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
@@ -93,6 +95,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public ColaboradorRepositorio colaboradorRepositorio(){
 		return new ColaboradorRepositorioJPAImpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio(){
+		return new FormularioPreenchidoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

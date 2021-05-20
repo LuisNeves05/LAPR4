@@ -19,6 +19,7 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
+import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
@@ -67,10 +68,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     private String masterBootStrap(){
 
 
-        /**
-         * CRIAR TIPO EQUIPA
-         */
-        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", 5);
+        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", Color.BLACK);
 
         String pattern = "05-12-2000";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -95,21 +93,13 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         rui.becameSystemUser(acd.addUser("Rui","Password1","Rui","Alves","ruialves@gmail.com",roless));
 
 
-        /**
-         * CRIAR EQUIPA
-         */
         Set<Colaborador> colaboradors = new HashSet<>();
         colaboradors.add(c);
         Acronimo acr = new Acronimo("LAPR");
         Equipa equipa = controllerEquipa.especificarEquipa("12367",acr,"Designação Equipa",colaboradors,te);
 
 
-        /**
-         * CRIAR COLABORADOR
-         */
-        List<Equipa> equipasList = new ArrayList<>();
         Set<Equipa> equipasSet = new HashSet<>();
-        equipasList.add(equipa);
         equipasSet.add(equipa);
         Colaborador colab = colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
                 new MecanographicNumber("1181596"), new Morada("Porto", "Marco de Canaveses"),
@@ -129,14 +119,8 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         lista.add(rui);
         adod.adicionarColaboradores(lista);
 
-        /**
-         * CRIAR CATALOGO
-         */
         Catalogo catalogo = catalogoController.especificarCatalogo("Titulo Catalogo","Catalogo RH", "Catalogo de recursos humanos",12,c, equipasSet);
 
-        /**
-         * CRIAR Servico
-         */
         Keyword k = new Keyword("Software");
         Keyword k2 = new Keyword("JAVA");
         Set<Keyword> keywords = new HashSet<>();
@@ -146,25 +130,19 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
                 new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, keywords, EstadoServico.COMPLETO, catalogo, false));
 
-        /**
-         * CRIAR FORMULARIO
-         */
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
-        f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
-        f.addAtributo("Nome Variavel2","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
-        f.addAtributo("Nome Variavel3","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");
+        f.addAtributo("Nome Variavel2","Label do Form","Descricao Ajuda",TipoDados.STRING,"EXP regular");
+        f.addAtributo("Nome Variavel3","Label do Form","Descricao Ajuda",TipoDados.BOOLEANO,"EXP regular");
         efc.saveForm(f);
         Formulario f2 = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
-        f2.addAtributo("Nome Variavel Teste","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
-        f2.addAtributo("Nome Variavel  Teste2","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
-        f2.addAtributo("Nome Variavel  Teste3","Label do Form","Descricao Ajuda","INTEIRO","EXP regular");
+        f2.addAtributo("Nome Variavel Teste","Label do Form","Descricao Ajuda",TipoDados.INT,"EXP regular");
+        f2.addAtributo("Nome Variavel  Teste2","Label do Form","Descricao Ajuda",TipoDados.FRACIONAL,"EXP regular");
+        f2.addAtributo("Nome Variavel  Teste3","Label do Form","Descricao Ajuda",TipoDados.INT,"EXP regular");
         efc.saveForm(f2);
         especificarServicoController.adicionaFormulario(servico,f);
         especificarServicoController.adicionaFormulario(servico,f2);
 
-        /**
-         * CRIAR NIVEL CRITICIDADE
-         */
         Objetivo obj = new Objetivo(12,50,0,0);
         enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj);
 

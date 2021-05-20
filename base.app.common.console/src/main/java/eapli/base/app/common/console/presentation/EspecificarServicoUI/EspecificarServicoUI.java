@@ -110,6 +110,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 }else{
                     serviceBuilder.comDescBreve(serv.descricaoBreveDoServico().toString());
                 }
+            }else{
+                if(!inserirDescBreve(serviceBuilder))
+                    return false;
             }
         }
 
@@ -125,6 +128,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 }else{
                     serviceBuilder.comDescComp(serv.descricaoCompletaDoServico().toString());
                 }
+            }else{
+                if(!inserirDescComp(serviceBuilder))
+                    return false;
             }
         }
 
@@ -140,6 +146,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 }else{
                     serviceBuilder.comCatalogo(serv.catalogo());
                 }
+            }else{
+                if(!inserirCatalogo(serviceBuilder, listaCatalogos))
+                    return false;
             }
         }
 
@@ -155,6 +164,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 }else{
                     serviceBuilder.comIcon(serv.iconDoServico());
                 }
+            }else{
+                if(!inserirIcone(serviceBuilder))
+                    return false;
             }
         }
 
@@ -199,6 +211,9 @@ public class EspecificarServicoUI extends AbstractUI {
                     for (Keyword k : serv.listaKewordsDoServico())
                     serviceBuilder.adicionarKeyword(k.toString());
                 }
+            }else{
+                if(!inserirKeywords(serviceBuilder))
+                    return false;
             }
         }
 
@@ -224,7 +239,7 @@ public class EspecificarServicoUI extends AbstractUI {
             Servico servico = controller.especificarServico(serviceBuilder.build());
             String novoForm;
             do {
-                fh.form(servico);
+                fh.form();
                 novoForm = Console.readLine("Deseja especificar outro formulario?  (sim|não)");
             } while (novoForm.contains("sim"));
         }
@@ -252,7 +267,7 @@ public class EspecificarServicoUI extends AbstractUI {
         boolean requerFeed = false;
         String strFeed;
         do {
-            strFeed = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n Este serviço requer feedback por parte do colaborador? (sim|nao)");
+            strFeed = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nEste serviço requer feedback por parte do colaborador? (sim|nao)");
             if(strFeed.equalsIgnoreCase("-1")){
                 controller.especificarServico(serviceBuilder.build());
                 return false;
@@ -288,7 +303,7 @@ public class EspecificarServicoUI extends AbstractUI {
         boolean flag = true;
         boolean booleanReal = true;
         while (flag) {
-            final String atReal = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Requer atividade de realização? (sim/nao):");
+            final String atReal = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nRequer atividade de realização? (sim/nao):");
             if(atReal.equalsIgnoreCase("-1")){
                 controller.especificarServico(serviceBuilder.build());
                 return false;
@@ -312,7 +327,7 @@ public class EspecificarServicoUI extends AbstractUI {
         boolean flagAtAprov = true;
         boolean booleanAprov = true;
         while (flagAtAprov) {
-            final String atAprov = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Tem atividade de aprovação? (sim/nao):");
+            final String atAprov = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nTem atividade de aprovação? (sim/nao):");
             if(atAprov.equalsIgnoreCase("-1")){
                 controller.especificarServico(serviceBuilder.build());
                 return false;
@@ -335,7 +350,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private boolean inserirIcone(ServiceBuilder serviceBuilder) {
         int imageBin = 0;
-        final String caminho = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Indique o caminho (path) do ícone:");
+        final String caminho = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nIndique o caminho (path) do ícone:");
         if(caminho.equalsIgnoreCase("-1")){
             controller.especificarServico(serviceBuilder.build());
             return false;
@@ -363,7 +378,7 @@ public class EspecificarServicoUI extends AbstractUI {
         int index;
 
         while (findCatalogo) {
-            index = Console.readInteger("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Indique o catálogo");
+            index = Console.readInteger("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nIndique o catálogo");
             if(index == -1){
                 controller.especificarServico(serviceBuilder.build());
                 return false;
@@ -386,7 +401,7 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     private boolean inserirDescComp(ServiceBuilder serviceBuilder) {
-        final String descComp = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Descrição Completa:");
+        final String descComp = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nDescrição Completa:");
         if(descComp.equalsIgnoreCase("-1")){
             controller.especificarServico(serviceBuilder.build());
             return false;
@@ -399,7 +414,7 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     private boolean inserirDescBreve(ServiceBuilder serviceBuilder) {
-        final String descBreve = Console.readLine("(Se quiser sair da especificação, digite -1) \n (Se quiser avançar, digite 0) \n\n  Descrição Breve:");
+        final String descBreve = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nDescrição Breve:");
         if(descBreve.equalsIgnoreCase("-1")){
             controller.especificarServico(serviceBuilder.build());
             return false;

@@ -48,8 +48,8 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      */
     public Formulario(){}
 
-    public boolean addAtributo(String nomeVar, String label, String descAjuda, String tpdad, String expRegular){
-        Atributo atributo = new Atributo(nomeVar, label, descAjuda, new TipoDados(tpdad), expRegular);
+    public boolean addAtributo(String nomeVar, String label, String descAjuda, TipoDados a , String expRegular){
+        Atributo atributo = new Atributo(nomeVar, label, descAjuda, a , expRegular);
         return this.conjuntoAtributos.add(atributo);
     }
 
