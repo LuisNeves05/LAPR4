@@ -14,5 +14,5 @@ public interface EquipaRepositorio extends DomainRepository<CodigoEquipa, Equipa
 
     List<Equipa> listarAcronimosEquipa(String keyword);
 
-    List<Equipa> equipasDoCatalogo(Catalogo catalogo);
+    Iterable<Equipa> equipasDoCatalogo(Catalogo catalogo);
 }

@@ -65,14 +65,14 @@ public class EspecificarServicoController {
         s.limpaForms();
     }
 
-    public void adicionaColabAprov(Servico s, Colaborador colaborador){
-        s.adicionaColaboradorAprov(colaborador);
+    public void adicionaColabAprov(Servico s, List<Colaborador> colabs){
+        s.adicionaColaboradorAprov(colabs);
         repoServ.save(s);
         s.limpaColabs();
     }
 
-    public void adicionaEquipaExec(Servico s, Equipa equipa){
-        s.adicionaEquipaExec(equipa);
+    public void adicionaEquipaExec(Servico s, List<Equipa> equipas){
+        s.adicionaEquipaExec(equipas);
         repoServ.save(s);
         s.limpaEquipasExec();
     }
@@ -90,10 +90,18 @@ public class EspecificarServicoController {
     }
 
     public List<Equipa> equipasExecDoCatalogo(Catalogo catalogo) {
-        return eqRep.equipasDoCatalogo(catalogo);
+        return (List<Equipa>) eqRep.equipasDoCatalogo(catalogo);
     }
 
     public List<Colaborador> colabsExecCatalogo(Catalogo catalogo) {
-        return (List<Colaborador>) colabRep.colabsDoCatalogo(catalogo);
+        List<Equipa> equipasCatalogo = (List<Equipa>) eqRep.equipasDoCatalogo(catalogo);
+        Set<Colaborador> colabsExec = new HashSet<>();
+        for(Equipa eq : equipasCatalogo){
+            Iterable<Colaborador> colaboradores = colabRep.colabsDoCatalogo(eq);
+            for(Colaborador c : colaboradores){
+                colabsExec.add(c);
+            }
+        }
+        return new ArrayList<>(colabsExec);
     }
 }

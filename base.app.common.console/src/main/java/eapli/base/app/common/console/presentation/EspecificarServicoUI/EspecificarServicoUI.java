@@ -21,6 +21,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private final EspecificarServicoController controller = new EspecificarServicoController();
     private final FormularioHelper fh = new FormularioHelper();
+    private Catalogo catalogo = null;
 
     @Override
     protected boolean doShow() {
@@ -101,7 +102,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 serviceBuilder.comTitulo(serv.tituloDoServico().toString());
             }
         }
-        Catalogo catalogo = null;
+
         List<Colaborador> colabsAprov = new ArrayList<>();
         List<Equipa> equipasExec = new ArrayList<>();
         serviceBuilder.comEstado(EstadoServico.INCOMPLETO);
@@ -152,6 +153,7 @@ public class EspecificarServicoUI extends AbstractUI {
                     if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, catalogo))
                         return false;
                 } else {
+                    catalogo = serv.catalogo();
                     serviceBuilder.comCatalogo(serv.catalogo());
                 }
             } else {
@@ -258,15 +260,14 @@ public class EspecificarServicoUI extends AbstractUI {
             completar = Console.readLine("Deseja dar este Serviço como completo? (sim/nao)");
         } while (validaSimNao(strContinuar));
         if (completar.equalsIgnoreCase("sim")) {
-            if (serv != null) {
-                if (serv.estaCompleto()) {
-                    serviceBuilder.comEstado(EstadoServico.COMPLETO);
-                    especificarServico(serviceBuilder, colabsAprov, equipasExec);
-                } else
-                    System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
+            if(serviceBuilder.estaCompleto()) {
+                serviceBuilder.comEstado(EstadoServico.COMPLETO);
                 especificarServico(serviceBuilder, colabsAprov, equipasExec);
-            } else {
-                System.out.println("Ocorreu um erro.");
+                System.out.println("Serviço Completo especificado\n");
+            }
+            else {
+                System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
+                especificarServico(serviceBuilder, colabsAprov, equipasExec);
             }
         }
         return true;
@@ -530,7 +531,7 @@ public class EspecificarServicoUI extends AbstractUI {
             }
             for (Catalogo cat : listaCatalogos) {
                 if (cat.identity() == index) {
-                    catalogo = cat;
+                    this.catalogo = cat;
                     findCatalogo = false;
                 }
             }
@@ -577,10 +578,8 @@ public class EspecificarServicoUI extends AbstractUI {
 
     public Servico especificarServico(ServiceBuilder serviceBuilder, List<Colaborador> colabsAprov, List<Equipa> equipasExec) {
         Servico serv = controller.especificarServico(serviceBuilder.build());
-        for (Colaborador col : colabsAprov)
-            controller.adicionaColabAprov(serv, col);
-        for (Equipa eq : equipasExec)
-            controller.adicionaEquipaExec(serv, eq);
+            controller.adicionaColabAprov(serv, colabsAprov);
+            controller.adicionaEquipaExec(serv, equipasExec);
         return serv;
     }
 

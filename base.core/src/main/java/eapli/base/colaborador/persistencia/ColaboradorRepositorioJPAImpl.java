@@ -35,11 +35,11 @@ public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborad
         return query.getResultList();
     }
 
-    public Iterable<Colaborador> colabsDoCatalogo(Catalogo catalogo){
+    public Iterable<Colaborador> colabsDoCatalogo(Equipa eq){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c FROM Colaborador c",
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT e.listaColabs FROM Equipa e where e = :equipa",
                 Colaborador.class);
-        //query.setParameter("catalogo", catalogo);
+        query.setParameter("equipa", eq);
         return query.getResultList();
     }
 }

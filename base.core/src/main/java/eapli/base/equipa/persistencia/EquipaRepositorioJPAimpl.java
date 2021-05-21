@@ -39,10 +39,10 @@ public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Long, 
         return null;
     }
 
-    public List<Equipa> equipasDoCatalogo(Catalogo catalogo){
+    public Iterable<Equipa> equipasDoCatalogo(Catalogo catalogo){
         QueryMaker qm = new QueryMaker();
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c.equipas FROM Catalogo c where c = :catalogo",
-                Equipa.class);
+                Iterable.class);
         query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }

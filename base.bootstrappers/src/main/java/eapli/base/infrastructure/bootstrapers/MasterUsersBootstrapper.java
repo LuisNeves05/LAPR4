@@ -78,19 +78,19 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Colaborador c = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
-                new MecanographicNumber("1191421"), new Morada("Porto", "Penafiel"),
-                new NrContacto(910900398), date, null);
+
         Set<Role> roless = new HashSet<>();
         roless.add(BaseRoles.ADMIN);
         roless.add(BaseRoles.COLABORADOR);
 
-        acd.addUser("Luis","Password1","Luis","Neves","luismanuelneves@gmail.com",roless);
+        Colaborador c = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
+                new MecanographicNumber("1191421"), new Morada("Porto", "Penafiel"),
+                new NrContacto(910900398), date, null, roless, "Luis", "Password1", "luismanuelneves@gmail.com");
 
         Colaborador rui = colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
                 new MecanographicNumber("1181597"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206840), date, c);
-        rui.becameSystemUser(acd.addUser("Rui","Password1","Rui","Alves","ruialves@gmail.com",roless));
+                new NrContacto(927206840), date, c, roless, "Rui", "Password1", "rui@gmail.com");
+
 
 
         Set<Colaborador> colaboradors = new HashSet<>();
@@ -103,14 +103,11 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         equipasSet.add(equipa);
         Colaborador colab = colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
                 new MecanographicNumber("1181596"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206841), date, c);
-        acd.addUser("joao","Password1","Rui","Alves","asddasd@gmail.com",roless);
+                new NrContacto(927206841), date, c, roless, "Joao", "Password1", "joao@gmail.com");
 
         Colaborador tiago = colaboradorController.especificarColaborador(new NomeCurto("Tiago"), new NomeCompleto("Tiago Alves"),
                 new MecanographicNumber("1181212"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(921587569), date, c);
-        acd.addUser("tiago","Password1","Tiago","Alves","rtiagoasd@gmail.com",roless);
-
+                new NrContacto(921587569), date, c, roless, "Tiago", "Password1", "tiago@gmail.com");
 
         AddOrDeleteEquipaController adod = new AddOrDeleteEquipaController(equipa);
         Set<Colaborador> lista = new HashSet<>();
@@ -128,7 +125,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         keywords.add(k2);
 
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
-                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, keywords, EstadoServico.COMPLETO, catalogo, false));
+                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, null, keywords, EstadoServico.COMPLETO, catalogo, false));
 
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
         f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");

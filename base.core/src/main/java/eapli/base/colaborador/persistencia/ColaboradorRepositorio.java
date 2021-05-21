@@ -15,5 +15,5 @@ public interface ColaboradorRepositorio extends DomainRepository<MecanographicNu
 
     Iterable<Colaborador> colabPorUsername(Username username);
 
-    Iterable<Colaborador> colabsDoCatalogo(Catalogo catalogo);
+    Iterable<Colaborador> colabsDoCatalogo(Equipa eq);
 }

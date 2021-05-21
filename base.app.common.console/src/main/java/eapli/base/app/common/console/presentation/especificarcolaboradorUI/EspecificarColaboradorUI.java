@@ -75,9 +75,9 @@ public class EspecificarColaboradorUI extends AbstractUI {
                 }
             }while(!escolhaEquipa.equals("-1"));
         }
-
+        Colaborador colabResponsavel = null;
         if(listaColabsResponsaveis.isEmpty()){
-            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, null);
+
             System.out.println("Não existem outros colaboradores disponíveis para selecionar como responsáveis neste momento");
         }else {
             System.out.println("Por favor escolha um colaborador para ser o responsável pelo novo Colaborador: ");
@@ -86,10 +86,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
             }
             String escolhaColabResponsavel = Console.readLine("Escolha (index)");
             int escolha = Integer.parseInt(escolhaColabResponsavel);
-            Colaborador colabResponsavel = listaColabsResponsaveis.get(escolha);
-
-            controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto
-            , data, colabResponsavel);
+            colabResponsavel = listaColabsResponsaveis.get(escolha);
         }
 
         String role;
@@ -101,8 +98,7 @@ public class EspecificarColaboradorUI extends AbstractUI {
             role = Console.readLine("Escolha uma funcao para o Colaborador (index) (0 para sair)");
             atribuiRole(role,roleSet);
         }while(!role.equals("0"));
-
-        addUserController.addUser(username,password,nomeCurtostr,nomeCompletostr,email,roleSet);
+        controller.especificarColaborador(nomeCurto, nomeCompleto, mecanographicNumber, localResidencia, nrContacto, data, colabResponsavel, roleSet, username, password, email);
         return true;
     }
 

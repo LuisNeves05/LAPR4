@@ -8,6 +8,7 @@ import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -136,15 +137,15 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         }
     }
 
-    public void adicionaColaboradorAprov(Colaborador colab){
-        if(!this.colabsAprov.contains(colab)){
-            colabsAprov.add(colab);
+        public void adicionaColaboradorAprov(List<Colaborador> colabs){
+        if(!this.colabsAprov.contains(colabs)){
+            colabsAprov.addAll(colabs);
         }
     }
 
-    public void adicionaEquipaExec(Equipa equipa){
-        if(!this.equipasExec.contains(equipa)){
-            equipasExec.add(equipa);
+    public void adicionaEquipaExec(List<Equipa> equipas){
+        if(!this.equipasExec.contains(equipas)){
+            equipasExec.addAll(equipas);
         }
     }
 
@@ -216,11 +217,4 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     public String toString() {
         return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
     }
-
-    public boolean estaCompleto() {
-        return this.servicoIdent != null && this.titulo != null && this.descBreve != null && this.descComp != null
-                && (listaKewordsDoServico().size() > 0 || listaKewordsDoServico() != null) && this.catalogo != null;
-    }
-
-
 }
