@@ -141,7 +141,6 @@ public class MainMenu extends AbstractUI {
 
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
-
         final Menu myUserMenu = new MyUserMenu();
         final Menu pesquisaServico = new PesquisarServicoUI();
         final Menu pesquisaCatalogo = new PesquisarCatalogoUI();

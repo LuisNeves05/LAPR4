@@ -6,8 +6,6 @@ import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
-import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;

@@ -13,14 +13,16 @@ public class FormularioHelper {
 
     private final EspecificarFormularioController fc = new EspecificarFormularioController();
 
-    boolean flag = true;
-    String continuar;
-    String nomeForm = Console.readLine("Nome do Formulario: ");
-    NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
+
 
     public Formulario form(){
-        flag = true;
+        boolean flag = true;
+        String continuar;
+
+        String nomeForm = Console.readLine("Nome do Formulario: ");
+        NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
         Formulario f = fc.especificarFormulario(nomeFormulario);
+
         while(flag)
     {
         String nomeVar = Console.readLine("Nome de variável do atributo ");
