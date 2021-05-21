@@ -61,7 +61,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne
     private Colaborador colabExec;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="SERVICO_EQUIPASEXEC")
     private Set<Equipa> equipasExec;
     /**
      * Conjunto de palavras chave de um serviço
@@ -72,7 +73,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     /**
      * Conjunto de colaboradores que aprovam um serviço
      */
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="SERVICO_COLABORADOR_APROVACAO")
     private Set<Colaborador> colabsAprov;
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
@@ -210,6 +212,21 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public boolean requerFeedbackDoServico(){return this.requerFeedback;}
 
+    public Colaborador colabExecucao() {
+        return this.colabExec;
+    }
+    public Set<Formulario> formulariosDoServico(){
+        return this.formularios;
+    }
+
+    public Set<Equipa> equipasExecDoServico(){
+        return this.equipasExec;
+    }
+
+    public Set<Colaborador> colabsAprovDoServico(){
+        return this.colabsAprov;
+    }
+
     /**
      * toString do Servico
      */
@@ -217,4 +234,6 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     public String toString() {
         return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
     }
+
+
 }

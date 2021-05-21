@@ -16,7 +16,6 @@ import java.util.Set;
 public class Equipa implements AggregateRoot<CodigoEquipa> {
 
     /**
-     *
      *  Identificador único da Equipa
      */
     @EmbeddedId
@@ -42,7 +41,7 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_COLABORADOR")
-    private Set<Colaborador> listaColabs = new HashSet<>();
+    private Set<Colaborador> listaColabs;
 
     /**
      *
@@ -57,6 +56,7 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
         this.designacao = designacao;
         this.listaColabsResponsaveis = colabR;
         this.tipoEquipa = tipoEquipa;
+        this.listaColabs = new HashSet<>();
     }
 
 
