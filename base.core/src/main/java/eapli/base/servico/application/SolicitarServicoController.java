@@ -1,4 +1,4 @@
-package eapli.base.ticket.application;
+package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
@@ -7,6 +7,8 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
@@ -30,6 +32,8 @@ public class SolicitarServicoController {
 
     private final FormularioRepositorio repoForm = PersistenceContext.repositories().formularioRepositorio();
 
+    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
+
 
     public SolicitarServicoController(){
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -39,7 +43,7 @@ public class SolicitarServicoController {
         }
     }
 
-    public List<Catalogo> ListarCatalogosPorUser(){
+    public List<Catalogo> listarCatalogosPorUser(){
 
         List<Equipa> equipasColaborador = (List<Equipa>) equipasDoColaborador();
         List<Catalogo> catalogosColab = new ArrayList<>();
@@ -51,7 +55,7 @@ public class SolicitarServicoController {
         return catalogosColab;
     }
 
-    public List<Servico> ListarServicosPorCat(Catalogo catalogo){
+    public List<Servico> listarServicosPorCat(Catalogo catalogo){
         return repoServ.servicoPorCatalogo(catalogo);
     }
 
@@ -61,6 +65,10 @@ public class SolicitarServicoController {
 
     public Iterable<Equipa> equipasDoColaborador(){
         return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+    }
+
+    public void saveFormPreenchido(FormularioPreenchido fp){
+        fpr.save(fp);
     }
 
 }

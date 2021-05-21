@@ -8,7 +8,7 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.ticket.application.SolicitarServicoController;
+import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -20,12 +20,12 @@ import java.util.Set;
 public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
-    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
+
 
     @Override
     protected boolean doShow() {
 
-        List<Catalogo>  catalogoList =  lcp.ListarCatalogosPorUser();
+        List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
         for(int i = 0;i<catalogoList.size();i++){
             System.out.println(i + " - " +catalogoList.get(i).toString());
@@ -35,7 +35,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
         Catalogo c = catalogoList.get(indCatalogo);
 
-        List<Servico> servicoList = lcp.ListarServicosPorCat(c);
+        List<Servico> servicoList = lcp.listarServicosPorCat(c);
 
         for(int i = 0;i<servicoList.size();i++){
             System.out.println(i + " - " +servicoList.get(i).toString());
@@ -67,7 +67,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
             FormularioPreenchido fp = new FormularioPreenchido(f,urgencia,respostas,s);
 
-            fpr.save(fp);
+            lcp.saveFormPreenchido(fp);
         }
 
         return false;
