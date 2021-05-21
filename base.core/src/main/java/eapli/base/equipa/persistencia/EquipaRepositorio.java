@@ -13,4 +13,6 @@ public interface EquipaRepositorio extends DomainRepository<CodigoEquipa, Equipa
     Equipa findByKeyword(String keyword);
 
     List<Equipa> listarAcronimosEquipa(String keyword);
+
+    List<Equipa> equipasDoCatalogo(Catalogo catalogo);
 }

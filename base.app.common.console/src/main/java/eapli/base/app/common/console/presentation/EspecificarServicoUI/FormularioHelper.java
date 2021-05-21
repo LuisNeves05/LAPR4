@@ -18,7 +18,7 @@ public class FormularioHelper {
     String nomeForm = Console.readLine("Nome do Formulario: ");
     NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
 
-    public boolean form(){
+    public Formulario form(){
         flag = true;
         Formulario f = fc.especificarFormulario(nomeFormulario);
         while(flag)
@@ -63,7 +63,7 @@ public class FormularioHelper {
             flag = false;
         }
     }
-        return false;
+        return f;
     }
 
     private boolean validaDadosEscolha(String a) {

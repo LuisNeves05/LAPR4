@@ -1,6 +1,8 @@
 package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -54,12 +56,23 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     @Column(name = "ATIVIDADE_REALIZACAO")
     private boolean atReal;
+
+    @OneToOne
+    private Colaborador colabExec;
+
+    @OneToMany
+    private Set<Equipa> equipasExec;
     /**
      * Conjunto de palavras chave de um serviço
      */
     @Column(name = "PALAVRAS_CHAVE")
     @ElementCollection
     private Set<Keyword> keywords;
+    /**
+     * Conjunto de colaboradores que aprovam um serviço
+     */
+    @OneToMany
+    private Set<Colaborador> colabsAprov;
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
@@ -73,7 +86,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     private Catalogo catalogo;
 
     @OneToMany
-    private Set<Formulario> formularios = new HashSet<>();
+    private Set<Formulario> formularios;
 
     /**
      * Feedback do colaborador que requisitou o serviço
@@ -94,7 +107,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   boolean atAprov, boolean atReal, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
+                   boolean atAprov, boolean atReal, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
@@ -102,10 +115,14 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         this.icon = icon;
         this.atAprov = atAprov;
         this.atReal = atReal;
+        this.colabExec = colabExec;
         this.estado = estado;
         this.keywords = keywords;
         this.catalogo = catalogo;
         this.requerFeedback = requerFeedback;
+        this.formularios = new HashSet<>();
+        this.colabsAprov = new HashSet<>();
+        this.equipasExec = new HashSet<>();
     }
 
     /**
@@ -119,10 +136,27 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         }
     }
 
+    public void adicionaColaboradorAprov(Colaborador colab){
+        if(!this.colabsAprov.contains(colab)){
+            colabsAprov.add(colab);
+        }
+    }
+
+    public void adicionaEquipaExec(Equipa equipa){
+        if(!this.equipasExec.contains(equipa)){
+            equipasExec.add(equipa);
+        }
+    }
+
     public void limpaForms(){
         this.formularios.clear();
     }
-
+    public void limpaColabs() {
+        this.colabsAprov.clear();
+    }
+    public void limpaEquipasExec() {
+        this.equipasExec.clear();
+    }
     /**
      * Identidade do Servico
      */
@@ -159,6 +193,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public boolean atividadeAprovacao(){return this.atAprov;}
 
+    public Set<Colaborador> colabsAprov(){return this.colabsAprov;}
+
     public boolean atividadeRealizacao(){return this.atReal;}
 
     public Set<Keyword> listaKewordsDoServico(){
@@ -185,4 +221,6 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         return this.servicoIdent != null && this.titulo != null && this.descBreve != null && this.descComp != null
                 && (listaKewordsDoServico().size() > 0 || listaKewordsDoServico() != null) && this.catalogo != null;
     }
+
+
 }

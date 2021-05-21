@@ -3,6 +3,7 @@ package eapli.base.equipa.persistencia;
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.CodigoEquipa;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.DescricaoBreve;
@@ -36,5 +37,13 @@ public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Long, 
         System.out.println(results);
         return null;*/
         return null;
+    }
+
+    public List<Equipa> equipasDoCatalogo(Catalogo catalogo){
+        QueryMaker qm = new QueryMaker();
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c.equipas FROM Catalogo c where c = :catalogo",
+                Equipa.class);
+        query.setParameter("catalogo", catalogo);
+        return query.getResultList();
     }
 }

@@ -2,8 +2,10 @@ package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
@@ -30,6 +32,18 @@ public class EspecificarServicoController {
      */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
+    private final ColaboradorRepositorio colabRep = PersistenceContext.repositories().colaboradorRepositorio();
+    private final EquipaRepositorio eqRep = PersistenceContext.repositories().equipaRepositorio();
+
+    private SystemUser systemUser;
+
+    public EspecificarServicoController(){
+        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+        if(authorizationService.hasSession() && authorizationService.session().isPresent()) {
+            UserSession userSession = authorizationService.session().get();
+            this.systemUser = userSession.authenticatedUser();
+        }
+    }
 
     /**
      * Especificação de um novo Serviço
@@ -51,7 +65,35 @@ public class EspecificarServicoController {
         s.limpaForms();
     }
 
+    public void adicionaColabAprov(Servico s, Colaborador colaborador){
+        s.adicionaColaboradorAprov(colaborador);
+        repoServ.save(s);
+        s.limpaColabs();
+    }
+
+    public void adicionaEquipaExec(Servico s, Equipa equipa){
+        s.adicionaEquipaExec(equipa);
+        repoServ.save(s);
+        s.limpaEquipasExec();
+    }
+
     public List<Servico> servicosIncompletos() {
         return repoServ.servicosIncompletos();
+    }
+
+    public List<Colaborador> colabsAprov() {
+        Colaborador mainColab = colabRep.colabPorUsername(systemUser.username()).iterator().next();
+        Set<Colaborador> colabs = new HashSet<>();
+        colabs.add(mainColab);
+        colabs.add(mainColab.seuColabResponsavel());
+        return new ArrayList<>(colabs);
+    }
+
+    public List<Equipa> equipasExecDoCatalogo(Catalogo catalogo) {
+        return eqRep.equipasDoCatalogo(catalogo);
+    }
+
+    public List<Colaborador> colabsExecCatalogo(Catalogo catalogo) {
+        return (List<Colaborador>) colabRep.colabsDoCatalogo(catalogo);
     }
 }

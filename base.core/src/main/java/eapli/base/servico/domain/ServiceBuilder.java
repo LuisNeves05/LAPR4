@@ -1,6 +1,7 @@
 package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.HashSet;
@@ -46,6 +47,8 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     private EstadoServico estado;
 
     private Catalogo catalogo;
+
+    private Colaborador colabExec;
 
     private boolean requerFeedback;
 
@@ -102,6 +105,11 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
+    public ServiceBuilder comColabExec(final Colaborador colabExec){
+        this.colabExec = colabExec;
+        return this;
+    }
+
     public void adicionarKeyword(String key){
         Keyword keyword = new Keyword(key);
         keywords.add(keyword);
@@ -131,6 +139,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // an exception. however, we will leave that to the constructor
 
         return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
-                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, keywords, estado, catalogo, requerFeedback);
+                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, colabExec, keywords, estado, catalogo, requerFeedback);
     }
 }
