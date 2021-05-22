@@ -46,4 +46,11 @@ public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Lo
         query.setParameter("descBreve", new DescricaoBreve(descBreve));
         return query.getResultList();
     }
+
+    @Override
+    public Iterable<Catalogo> catalogosSemNivelCriticidade() {
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c from Catalogo c where c.nivelCriticidade = null ", Catalogo.class);
+        return query.getResultList();
+    }
 }

@@ -18,6 +18,12 @@ public class EspecificarNivelCriticidadeController {
         return repoNivel.save(new NivelCriticidade(e,ve,cor,objetivo));
 
     }
+
+    public NivelCriticidade especificarNivelCriticidade(NivelCriticidade nivelCriticidade){
+        return repoNivel.save(nivelCriticidade);
+
+    }
+
     public Iterable<NivelCriticidade> nivelCriticidades(){
         return repoNivel.findAll();
     }

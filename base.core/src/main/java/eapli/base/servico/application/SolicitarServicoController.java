@@ -70,7 +70,7 @@ public class SolicitarServicoController {
     }
 
     public Colaborador colabPorUserName(Username username){
-        return (Colaborador) colaboradorRepositorio.colabPorUsername(username);
+        return colaboradorRepositorio.colabPorUsername(username).iterator().next();
     }
 
     public void saveFormPreenchido(FormularioPreenchido fp){

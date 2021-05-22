@@ -5,11 +5,8 @@ import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.DescricaoBreve;
 import eapli.base.servico.domain.DescricaoCompleta;
-import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.base.servico.domain.Titulo;
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.DomainEntity;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,7 +44,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @OneToMany
     private Set<Equipa> equipas = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(cascade= CascadeType.ALL)
     private NivelCriticidade nivelCriticidade;
 
     protected Catalogo(){}

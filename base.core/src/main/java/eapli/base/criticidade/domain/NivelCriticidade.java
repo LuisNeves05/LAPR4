@@ -45,4 +45,26 @@ public class NivelCriticidade implements Comparable<Long>, AggregateRoot<Long> {
     public Long identity() {
         return null;
     }
+
+
+    public boolean definirObjetivoCustomizado(Objetivo objetivo) {
+        boolean flag = false;
+        if (!(this.objetivo.equals(objetivo))){
+        this.objetivo = objetivo;
+        flag= true;}
+        return flag;
+
+    }
+
+    public Etiqueta getEtiqueta() {
+        return etiqueta;
+    }
+
+    public ValorEscala getValorDeEscala() {
+        return valorDeEscala;
+    }
+
+    public Color getCor() {
+        return cor;
+    }
 }
