@@ -39,6 +39,10 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @Temporal(TemporalType.DATE)
     private Date dataLimResol;
 
+    @Column(name = "ESTADO_TICKET")
+    @Enumerated(EnumType.STRING)
+    private EstadoTicket estadoTicket;
+
     public Ticket(){
         this.createdOn = Calendars.now();
     }
