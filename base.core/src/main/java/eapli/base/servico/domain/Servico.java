@@ -3,6 +3,9 @@ package eapli.base.servico.domain;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxo.domain.AtividadeAprovacao;
+import eapli.base.fluxo.domain.AtividadeRealizacao;
+import eapli.base.fluxo.domain.FluxoAtividade;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -96,6 +99,13 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     @Column(name="REQUER_FEEDBACK")
     private boolean requerFeedback;
+
+    @OneToOne
+    private AtividadeAprovacao atividadeAprovacao;
+
+    @OneToOne
+    private AtividadeRealizacao atividadeRealizacao;
+
 
     /**
      * Construtor da entidade Servico
