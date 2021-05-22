@@ -4,23 +4,22 @@ import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.servico.application.EspecificarServicoController;
-import eapli.base.servico.domain.Servico;
-import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.io.util.Console;
 
 public class FormularioHelper {
 
     private final EspecificarFormularioController fc = new EspecificarFormularioController();
 
-    boolean flag = true;
-    String continuar;
-    String nomeForm = Console.readLine("Nome do Formulario: ");
-    NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
+
 
     public Formulario form(){
-        flag = true;
+        boolean flag = true;
+        String continuar;
+
+        String nomeForm = Console.readLine("Nome do Formulario: ");
+        NomeFormulario nomeFormulario = new NomeFormulario(nomeForm);
         Formulario f = fc.especificarFormulario(nomeFormulario);
+
         while(flag)
     {
         String nomeVar = Console.readLine("Nome de variável do atributo ");

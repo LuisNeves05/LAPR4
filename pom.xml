@@ -26,6 +26,7 @@
         <module>base.bootstrappers</module>
         <module>base.core</module>
         <module>base.persistence.impl</module>
+        <module>base.workflow</module>
     </modules>
 
     <dependencies>
@@ -57,7 +58,8 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
             <scope>runtime</scope>
-        </dependency>	<dependency>
+        </dependency>
+        <dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>

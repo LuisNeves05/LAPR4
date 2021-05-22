@@ -38,7 +38,7 @@ public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborad
     public Iterable<Colaborador> colabsDoCatalogo(Equipa eq){
         QueryMaker qm = new QueryMaker();
         Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT e.listaColabs FROM Equipa e where e = :equipa",
-                Colaborador.class);
+                Iterable.class);
         query.setParameter("equipa", eq);
         return query.getResultList();
     }

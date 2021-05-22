@@ -2,6 +2,7 @@ package eapli.base.colaborador.domain;
 
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.servico.domain.Servico;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -45,8 +46,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     private SystemUser systemUser;
 
     @ManyToMany(mappedBy = "listaColabs",cascade = CascadeType.ALL)
-    private List<Equipa> equipas = new ArrayList<>();
-
+    private List<Equipa> equipas;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
                        Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
@@ -57,6 +57,18 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
         this.colaboradorResponsavel = colaboradorResponsavel;
+        this.equipas = new ArrayList<>();
+    }
+
+
+    public Colaborador(){}
+
+    public void becameSystemUser(SystemUser sysUser){
+        this.systemUser = sysUser;
+    }
+
+    public Colaborador seuColabResponsavel(){
+        return this.colaboradorResponsavel;
     }
 
     public boolean pertenceTipoEquipa(TipoEquipa tipoEquipa) {
@@ -69,15 +81,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         return false;
     }
 
-    public Colaborador(){}
-
-    public void becameSystemUser(SystemUser sysUser){
-        this.systemUser = sysUser;
-    }
-
-    public Colaborador seuColabResponsavel(){
-        return this.colaboradorResponsavel;
-    }
 
     @Override
     public boolean sameAs(Object other) {
