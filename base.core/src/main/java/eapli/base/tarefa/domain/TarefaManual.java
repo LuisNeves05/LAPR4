@@ -1,7 +1,6 @@
 package eapli.base.tarefa.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.servico.domain.Servico;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
