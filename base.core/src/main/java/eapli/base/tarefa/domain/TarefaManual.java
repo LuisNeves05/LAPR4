@@ -8,17 +8,17 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 
 @Entity
-public class Tarefa implements AggregateRoot<Tarefa>, Comparable<Tarefa> {
+public class TarefaManual extends TarefaExecucao implements AggregateRoot<TarefaManual>, Comparable<TarefaManual> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    private Colaborador colabTarefa;
+    private Colaborador colabExecuta;
 
     @OneToOne
-    private Servico servico;
+    private TipoTarefa tipoTarefa;
 
     @OneToOne
     private Ticket ticket;
@@ -27,8 +27,9 @@ public class Tarefa implements AggregateRoot<Tarefa>, Comparable<Tarefa> {
     public boolean sameAs(Object other) {
         return false;
     }
+
     @Override
-    public Tarefa identity() {
+    public TarefaManual identity() {
         return null;
     }
 }

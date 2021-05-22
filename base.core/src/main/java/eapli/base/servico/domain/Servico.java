@@ -5,7 +5,6 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxo.domain.AtividadeAprovacao;
 import eapli.base.fluxo.domain.AtividadeRealizacao;
-import eapli.base.fluxo.domain.FluxoAtividade;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -57,9 +56,11 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     private boolean atAprov;
     /**
      * Atividade de realização, podendo ser automática ou manual
+     *
+     * SE TRUE, é automático, SE FALSE, é manual
      */
     @Column(name = "ATIVIDADE_REALIZACAO")
-    private boolean atReal;
+    private boolean atAuto;
 
     @OneToOne
     private Colaborador colabExec;
@@ -115,19 +116,19 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param descComp  descrição completa do serviço
      * @param icon      ícone associado
      * @param atAprov   atividade de aprovação, podendo ser requerida ou não
-     * @param atReal    atividade de realização, podendo ser automática ou manual
+     * @param atAuto    atividade de realização, podendo ser automática ou manual
      * @param keywords  conjunto de palavras chave
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   boolean atAprov, boolean atReal, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
+                   boolean atAprov, boolean atAuto, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
         this.icon = icon;
         this.atAprov = atAprov;
-        this.atReal = atReal;
+        this.atAuto = atAuto;
         this.colabExec = colabExec;
         this.estado = estado;
         this.keywords = keywords;
@@ -208,7 +209,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public Set<Colaborador> colabsAprov(){return this.colabsAprov;}
 
-    public boolean atividadeRealizacao(){return this.atReal;}
+    public boolean atividadeRealizacao(){return this.atAuto;}
 
     public Set<Keyword> listaKewordsDoServico(){
         return this.keywords;

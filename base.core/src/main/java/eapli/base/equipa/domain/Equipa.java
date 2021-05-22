@@ -1,6 +1,5 @@
 package eapli.base.equipa.domain;
 
-import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;

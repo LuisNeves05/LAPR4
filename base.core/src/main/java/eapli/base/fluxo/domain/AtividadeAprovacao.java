@@ -1,6 +1,7 @@
 package eapli.base.fluxo.domain;
 
-import eapli.base.tarefa.domain.Tarefa;
+import eapli.base.tarefa.domain.TarefaAprovacao;
+import eapli.base.tarefa.domain.TarefaManual;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ public class AtividadeAprovacao extends FluxoAtividade implements AggregateRoot<
     private Long id;
 
     @OneToMany
-    private Set<Tarefa> tarefasAprov;
+    private Set<TarefaAprovacao> tarefasAprov;
 
     protected AtividadeAprovacao(){}
 

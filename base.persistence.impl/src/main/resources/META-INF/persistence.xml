@@ -24,7 +24,10 @@
     <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
     <class>eapli.base.criticidade.domain.NivelCriticidade</class>
     <class>eapli.base.formularioPreenchido.domain.FormularioPreenchido</class>
-    <class>eapli.base.tarefa.domain.Tarefa</class>
+    <class>eapli.base.tarefa.domain.TarefaManual</class>
+    <class>eapli.base.tarefa.domain.TarefaAutomatica</class>
+    <class>eapli.base.tarefa.domain.TipoTarefa</class>
+    <class>eapli.base.tarefa.domain.TarefaAprovacao</class>
     <class>eapli.base.fluxo.domain.FluxoAtividade</class>
     <class>eapli.base.fluxo.domain.AtividadeAprovacao</class>
     <class>eapli.base.fluxo.domain.AtividadeRealizacao</class>

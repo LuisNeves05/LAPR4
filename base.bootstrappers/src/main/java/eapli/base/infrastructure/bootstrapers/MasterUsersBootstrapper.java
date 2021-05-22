@@ -16,12 +16,15 @@ import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxo.domain.AtividadeRealizacao;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
+import eapli.base.tarefa.domain.TarefaExecucao;
+import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.base.usermanagement.application.AddUserController;
@@ -66,6 +69,14 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     }
 
     private String masterBootStrap(){
+
+        TarefaManual tarefaManual = new TarefaManual();
+
+        Set<TarefaExecucao> tarefaExecucaoSet = new HashSet<>();
+
+        tarefaExecucaoSet.add(tarefaManual);
+
+        AtividadeRealizacao at = new AtividadeRealizacao(tarefaExecucaoSet);
 
 
         TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", 5);

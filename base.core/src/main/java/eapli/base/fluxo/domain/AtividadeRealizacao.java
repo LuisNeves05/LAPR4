@@ -1,6 +1,6 @@
 package eapli.base.fluxo.domain;
 
-import eapli.base.tarefa.domain.Tarefa;
+import eapli.base.tarefa.domain.TarefaExecucao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -14,9 +14,13 @@ public class AtividadeRealizacao extends FluxoAtividade implements AggregateRoot
     private Long id;
 
     @OneToMany
-    private Set<Tarefa> tarefasReal;
+    private Set<TarefaExecucao> tarefasExecucao;
 
     protected AtividadeRealizacao(){}
+
+    public AtividadeRealizacao(Set<TarefaExecucao> tarefasExecucao){
+        this.tarefasExecucao = tarefasExecucao;
+    }
 
     @Override
     public boolean sameAs(Object other) {

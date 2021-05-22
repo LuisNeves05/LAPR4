@@ -53,4 +53,5 @@ public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Lo
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c from Catalogo c where c.nivelCriticidade = null ", Catalogo.class);
         return query.getResultList();
     }
+
 }

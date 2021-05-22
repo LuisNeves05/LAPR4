@@ -5,7 +5,6 @@ import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -20,7 +19,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     private Long id;
 
     @OneToOne
-    private Colaborador colab;
+    private Colaborador colabRequisitou;
 
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
@@ -43,9 +42,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @Enumerated(EnumType.STRING)
     private EstadoTicket estadoTicket;
 
-    public Ticket(){
-        this.createdOn = Calendars.now();
-    }
+    public Ticket(){}
 
     @Override
     public boolean sameAs(Object other) {
