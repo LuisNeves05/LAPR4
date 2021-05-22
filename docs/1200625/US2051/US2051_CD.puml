@@ -1,0 +1,46 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class EspecificarColaboradorUI{
+  }
+
+class EspecificarColaboradorController{
+  +novoColaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+  +obterListaEquipas()
+  +registaColaborador()
+  }
+
+class RepositorioColaborador{
+  +novoColaborador(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+  +registaColaborador(colab)
+  +validaColaborador(colab)
+  +criaColaborador(colab)
+  }
+
+class RepositorioEquipa{
+  +obterListaEquipas()
+}
+
+class Colaborador{
+  -String numeCurto
+  -String nomeCompleto
+  -MecanographicNumber numMecanografico
+  -String localResidencia
+  -String email
+  -Date dataNascimento
+  -String password
+  -String Funcao
+  -Colaborador colaboradorResponsavel
+  +colab = criar(nomeCurto, nomeCompleto, numMecanografico, localResidencia, email, nrContacto, password, funcao, dataNascimento, colabResponsavel)
+}
+
+
+EspecificarColaboradorUI ..> EspecificarColaboradorController
+EspecificarColaboradorController ..> RepositorioColaborador
+EspecificarColaboradorController ..> RepositorioEquipa
+RepositorioColaborador ..> Colaborador
+
+
+
+
+@enduml
