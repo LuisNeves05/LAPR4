@@ -1,6 +1,7 @@
 package eapli.base.catalogo.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.DescricaoBreve;
 import eapli.base.servico.domain.DescricaoCompleta;
@@ -46,6 +47,9 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @OneToMany
     private Set<Equipa> equipas = new HashSet<>();
 
+    @OneToOne
+    private NivelCriticidade nivelCriticidade;
+
     protected Catalogo(){}
 
     public Catalogo(Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon, Colaborador colaboradorResponsavel, Set<Equipa> equipas) {
@@ -55,6 +59,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
         this.icon = icon;
         this.colaboradorResponsavel = colaboradorResponsavel;
         this.equipas = equipas;
+        this.nivelCriticidade= null;
     }
 
     @Override
@@ -70,5 +75,10 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @Override
     public String toString(){
         return id + " " + titulo;
+    }
+
+    public  boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){
+        this.nivelCriticidade = nivelCriticidade;
+        return  (this.nivelCriticidade!= null);
     }
 }

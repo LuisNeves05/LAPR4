@@ -17,4 +17,6 @@ public interface CatalogoRepositorio extends DomainRepository<Long, Catalogo> {
     Iterable<Catalogo> catalogosPorEquipaPorTitulo(final Equipa equipa,final String titulo);
 
     Iterable<Catalogo> catalogosPorEquipaPorDescBreve(final Equipa equipa,final String descBreve);
+
+    Iterable<Catalogo> catalogosSemNivelCriticidade();
 }
