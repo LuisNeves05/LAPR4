@@ -3,6 +3,7 @@ package eapli.base.colaborador.domain;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.Servico;
+import eapli.base.tarefa.domain.Tarefa;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -47,6 +49,9 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
 
     @ManyToMany(mappedBy = "listaColabs",cascade = CascadeType.ALL)
     private List<Equipa> equipas;
+
+    @OneToMany
+    private Set<Tarefa> tarefaDoColab;
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
                        Morada localResidencia, NrContacto nrContacto, Date dataNascimento, Colaborador colaboradorResponsavel){
