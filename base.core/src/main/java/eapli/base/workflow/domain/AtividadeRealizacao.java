@@ -1,23 +1,21 @@
-package eapli.base.tarefa.domain;
+package eapli.base.workflow.domain;
 
-
-import eapli.base.servico.domain.ServicoIdentificador;
+import eapli.base.tarefa.domain.Tarefa;
 import eapli.framework.domain.model.AggregateRoot;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
-public class Tarefa implements AggregateRoot<Long>, Comparable<Long> {
+public class AtividadeRealizacao extends FluxoAtividade implements AggregateRoot<Long>, Comparable<Long>{
 
     @Id
     private Long id;
 
+    @OneToMany
+    private Set<Tarefa> tarefas;
 
-    protected Tarefa(){}
+    protected AtividadeRealizacao(){}
 
     @Override
     public boolean sameAs(Object other) {

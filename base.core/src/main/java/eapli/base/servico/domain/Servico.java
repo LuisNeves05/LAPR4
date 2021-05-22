@@ -4,6 +4,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.tarefa.domain.Tarefa;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;

@@ -1,19 +1,17 @@
-package workflow.base.fluxo.domain;
+package eapli.base.workflow.domain;
 
 import eapli.base.tarefa.domain.Tarefa;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
-public class AtividadeRealizacao {
+public class AtividadeAprovacao extends FluxoAtividade {
 
     @Id
     private Long id;
 
-
-    private Set<Tarefa> tarefas;
+    @OneToMany
+    private Set<Tarefa> tarefaSet;
 }

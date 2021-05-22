@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="base.persistence.impl" />
         <module name="base.app.other.console" />
-        <module name="base.workflow" />
         <module name="base.app.user.console" />
         <module name="base.core" />
         <module name="base.app.common.console" />

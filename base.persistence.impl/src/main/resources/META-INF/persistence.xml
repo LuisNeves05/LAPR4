@@ -22,14 +22,18 @@
     <class>eapli.base.catalogo.domain.Catalogo</class>
     <class>eapli.base.colaborador.domain.Colaborador</class>
     <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
+    <class>eapli.base.tarefa.domain.Tarefa</class>
     <class>eapli.base.criticidade.domain.NivelCriticidade</class>
     <class>eapli.base.formularioPreenchido.domain.FormularioPreenchido</class>
+    <class>eapli.base.workflow.domain.FluxoAtividade</class>
+    <class>eapli.base.workflow.domain.AtividadeAprovacao</class>
+    <class>eapli.base.workflow.domain.AtividadeRealizacao</class>
 
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
-      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+      <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
       <property name="javax.persistence.jdbc.password" value="lapr4"/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
