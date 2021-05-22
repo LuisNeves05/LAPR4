@@ -1,6 +1,7 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -8,6 +9,10 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.application.UserSession;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -19,6 +24,11 @@ public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
 
+
+    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+    private final UserSession userSession = authorizationService.session().get();
+    private final SystemUser systemUser = userSession.authenticatedUser();
+    private final Colaborador colabPedido = lcp.colabPorUserName(systemUser.username());
 
     @Override
     protected boolean doShow() {
@@ -63,7 +73,7 @@ public class SolicitarServicoUI extends AbstractUI {
                 respostas.add(rAtr);
             }
 
-            FormularioPreenchido fp = new FormularioPreenchido(f,urgencia,respostas,s);
+            FormularioPreenchido fp = new FormularioPreenchido(f,urgencia,respostas,s,colabPedido);
 
             lcp.saveFormPreenchido(fp);
         }

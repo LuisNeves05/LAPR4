@@ -2,6 +2,7 @@ package eapli.base.servico.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Atributo;
@@ -16,6 +17,7 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,10 @@ public class SolicitarServicoController {
 
     public Iterable<Equipa> equipasDoColaborador(){
         return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+    }
+
+    public Colaborador colabPorUserName(Username username){
+        return (Colaborador) colaboradorRepositorio.colabPorUsername(username);
     }
 
     public void saveFormPreenchido(FormularioPreenchido fp){
