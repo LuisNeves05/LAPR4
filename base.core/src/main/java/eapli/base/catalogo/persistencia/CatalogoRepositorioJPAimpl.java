@@ -5,17 +5,9 @@ import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.DescricaoBreve;
-import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.base.servico.domain.Titulo;
-import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-
 import javax.persistence.Query;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class CatalogoRepositorioJPAimpl extends JpaAutoTxRepository<Catalogo, Long, Long>
         implements CatalogoRepositorio {

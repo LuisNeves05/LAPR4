@@ -3,38 +3,24 @@ package eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI;
 import eapli.base.catalogo.application.AdicionarNivelCriticidadeController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
-import eapli.base.criticidade.domain.Etiqueta;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
-import eapli.base.criticidade.domain.ValorEscala;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-
-import java.awt.*;
 import java.util.List;
 
 public class AdicionarNivelCriticidadeUI extends AbstractUI {
     private final EspecificarNivelCriticidadeController controllerNivelCrit = new EspecificarNivelCriticidadeController();
     private final AdicionarNivelCriticidadeController controllerAddCrit = new AdicionarNivelCriticidadeController();
-
+    List<NivelCriticidade> niveisCriticidade = (List<NivelCriticidade>) controllerNivelCrit.niveisCriticidadeDefault();
+    List<Catalogo> catalogosSemNivelCrit = controllerAddCrit.catalogosSemNivelCrit();
     @Override
     protected boolean doShow() {
-        String opcao;
         Catalogo catalogo = null;
         NivelCriticidade nivelCriticidade = null;
 
-        do {
-            System.out.println("0. Sair");
-            System.out.println("1 .Adicionar um nível de criticidade a um Catálogo");
-            opcao = Console.readLine("2 .Adicionar um nível de criticidade a um Serviço");
 
-            if (opcao.equals("0"))
-                return false;
-        } while (!opcao.equalsIgnoreCase("1"));
 
-        if (opcao.equals("1")) {
-            List<NivelCriticidade> niveisCriticidade = (List<NivelCriticidade>) controllerNivelCrit.nivelCriticidades();
-            List<Catalogo> catalogosSemNivelCrit = controllerAddCrit.catalogosSemNivelCrit();
 
             if (catalogosSemNivelCrit.isEmpty()) {
                 System.out.println("Não existem catálogos sem nível de criticidade");
@@ -63,39 +49,23 @@ public class AdicionarNivelCriticidadeUI extends AbstractUI {
                     System.out.println("Coloque um index válido");
                 }
             }
-            boolean nivelCrit = true;
-            index = 1;
-            for (NivelCriticidade nivel : niveisCriticidade) {
-                System.out.println(index + " " + nivel.toString());
-                index++;
-            }
-            while (nivelCrit) {
-                index = Console.readInteger("Indique o nível de criticidade que pretende associar :  \n");
-                if (index == 0) {
-                    return false;
-                }
-                if (index <= niveisCriticidade.size() && index > 0) {
-                    nivelCrit = false;
-                    nivelCriticidade = niveisCriticidade.get(index - 1);
-                }
-                if (nivelCrit) {
-                    System.out.println("Coloque um index válido");
-                }
-            }
+
+            nivelCriticidade = escolherNivelCrit();
+
             String objetivos;
             do {
                 objetivos = Console.readLine("Pretende mudar os objetivos do nível de criticidade que está a associar ao catálogo:  (Não- 0 / Sim- 1) \n");
                 if (objetivos.equals("0")) {
-                    controllerAddCrit.addNivelCriticidade(catalogo, nivelCriticidade);
+                    controllerAddCrit.addNivelCriticidadeCatalogo(catalogo, nivelCriticidade);
                     System.out.println("O nível de criticidade foi adicionado ao catálogo");
                     return false;
                 }
             } while (!(objetivos.equals("1")));
-            }
+
         Objetivo novoObjetivo =novoObjetivo();
         nivelCriticidade= criarNivelCriticidade(nivelCriticidade,novoObjetivo);
        // controllerNivelCrit.especificarNivelCriticidade(nivelCriticidade);
-         controllerAddCrit.addNivelCriticidade(catalogo,nivelCriticidade);
+         controllerAddCrit.addNivelCriticidadeCatalogo(catalogo,nivelCriticidade);
         System.out.println("O nível de criticidade personalizado foi adicionado ao catálogo");
         return true;
     }
@@ -159,7 +129,26 @@ public class AdicionarNivelCriticidadeUI extends AbstractUI {
     }
 
     private NivelCriticidade criarNivelCriticidade(NivelCriticidade nivelCriticidade,Objetivo objetivo){
-        return new NivelCriticidade(nivelCriticidade.getEtiqueta(),nivelCriticidade.getValorDeEscala(),nivelCriticidade.getCor(),objetivo);
+        return new NivelCriticidade(nivelCriticidade.getEtiqueta(),nivelCriticidade.getValorDeEscala(),nivelCriticidade.getCor(),objetivo,nivelCriticidade.isDefault());
     }
+
+    private NivelCriticidade escolherNivelCrit(){
+        NivelCriticidade nivelCriticidade= null;
+        boolean nivelCrit = true;
+        int index = 1;
+        for (NivelCriticidade nivel : niveisCriticidade) {
+            System.out.println(index + " " + nivel.toString());
+            index++;
+        }
+        while (nivelCrit) {
+            index = Console.readInteger("Indique o nível de criticidade que pretende associar :  \n");
+            if (index <= niveisCriticidade.size() && index > 0) {
+                nivelCrit = false;
+                nivelCriticidade = niveisCriticidade.get(index - 1);
+            }
+            if (nivelCrit) {
+                System.out.println("Coloque um index válido");
+            }
+        }return nivelCriticidade;}
 }
 

@@ -12,10 +12,10 @@ public class EspecificarNivelCriticidadeController {
 
     private final NivelCriticidadeRepositorio repoNivel = PersistenceContext.repositories().nivelCriticidadeRepositorio();
 
-    public NivelCriticidade especificarNivelCriticidade(String etiqueta, int valorEscala, Color cor, Objetivo objetivo){
+    public NivelCriticidade especificarNivelCriticidade(String etiqueta, int valorEscala, Color cor, Objetivo objetivo, boolean isDefault){
         Etiqueta e = new Etiqueta(etiqueta);
         ValorEscala ve = new ValorEscala(valorEscala);
-        return repoNivel.save(new NivelCriticidade(e,ve,cor,objetivo));
+        return repoNivel.save(new NivelCriticidade(e,ve,cor,objetivo,isDefault));
 
     }
 
@@ -26,6 +26,10 @@ public class EspecificarNivelCriticidadeController {
 
     public Iterable<NivelCriticidade> nivelCriticidades(){
         return repoNivel.findAll();
+    }
+
+    public Iterable<NivelCriticidade> niveisCriticidadeDefault(){
+        return repoNivel.niveisCritDefault();
     }
 
 }

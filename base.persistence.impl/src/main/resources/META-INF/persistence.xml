@@ -31,6 +31,7 @@
     <class>eapli.base.fluxo.domain.FluxoAtividade</class>
     <class>eapli.base.fluxo.domain.AtividadeAprovacao</class>
     <class>eapli.base.fluxo.domain.AtividadeRealizacao</class>
+    <class>eapli.base.ticket.domain.Ticket</class>
 
 
     <properties>

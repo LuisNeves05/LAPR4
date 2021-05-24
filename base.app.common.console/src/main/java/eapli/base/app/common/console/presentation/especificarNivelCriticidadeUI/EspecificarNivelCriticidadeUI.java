@@ -48,9 +48,18 @@ public class EspecificarNivelCriticidadeUI extends AbstractUI {
         int resolucaoMax = Console.readInteger("Tempo de resolução máxima (min)");
         int aprovacaomed = 0;
         int resolucaomed = 0;
-        Objetivo obj = new Objetivo(aprovacaoMax,resolucaoMax,aprovacaomed,resolucaomed);
+        Objetivo obj = new Objetivo(aprovacaoMax, resolucaoMax, aprovacaomed, resolucaomed);
+        String defaultBo;
+        boolean isDefault = false;
+        do {
+            defaultBo = Console.readLine("Pretende definir este nível de criticidade como default ?(sim/nao)\n ");
+        }
+        while (validaSimNao(defaultBo));
+        if (defaultBo.equalsIgnoreCase("sim")) {
+            isDefault = true;
 
-        enc.especificarNivelCriticidade(etiqueta,valorEscala,cor,obj);
+        }
+        enc.especificarNivelCriticidade(etiqueta, valorEscala, cor, obj, isDefault);
 
         return true;
     }
@@ -58,5 +67,9 @@ public class EspecificarNivelCriticidadeUI extends AbstractUI {
     @Override
     public String headline() {
         return "Especificação de um Nivel de Criticidade!";
+    }
+
+    private boolean validaSimNao(String a) {
+        return !a.equalsIgnoreCase("sim") && !a.equalsIgnoreCase("nao");
     }
 }

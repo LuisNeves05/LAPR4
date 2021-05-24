@@ -2,6 +2,9 @@ package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
+import eapli.base.criticidade.domain.NivelCriticidade;
+import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.application.EspecificarServicoController;
@@ -20,6 +23,8 @@ import java.util.*;
 public class EspecificarServicoUI extends AbstractUI {
 
     private final EspecificarServicoController controller = new EspecificarServicoController();
+    private final EspecificarNivelCriticidadeController controllerNivelCrit = new EspecificarNivelCriticidadeController();
+    List<NivelCriticidade> niveisCriticidade = (List<NivelCriticidade>) controllerNivelCrit.niveisCriticidadeDefault();
     private final FormularioHelper fh = new FormularioHelper();
     private Catalogo catalogo = null;
 
@@ -72,11 +77,6 @@ public class EspecificarServicoUI extends AbstractUI {
     private boolean especificarServicoUI(Servico serv) {
 
         List<Catalogo> listaCatalogos = (List<Catalogo>) controller.listaCatalogos();
-        if (listaCatalogos.isEmpty()) {
-            System.out.println("Não existem Catálogos. Crie um Catálogo primeiro.");
-            return false;
-        }
-
         ServiceBuilder serviceBuilder = new ServiceBuilder();
 
         if (serv == null) {
@@ -115,7 +115,7 @@ public class EspecificarServicoUI extends AbstractUI {
             serviceBuilder.comDescComp(serv.descricaoCompletaDoServico().toString())
                     .comDescBreve(serv.descricaoBreveDoServico().toString()).comIcon(serv.iconDoServico())
                     .comAtReal(serv.atividadeRealizacao()).comAtAprov(serv.atividadeAprovacao()).comEstado(serv.estado())
-                    .comColabExec(serv.colabExecucao()).comCatalogo(serv.catalogo()).comRequerFeedback(serv.requerFeedbackDoServico());
+                    .comColabExec(serv.colabExecucao()).comCatalogo(serv.catalogo()).comRequerFeedback(serv.requerFeedbackDoServico()).comNivelCrit(serv.nivelCriticidadeServico());
         }
 
         if (serv == null) {
@@ -155,20 +155,20 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         if (serv == null) {
-            if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, catalogo, formularios))
+            if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, formularios))
                 return false;
         } else {
             if (serv.catalogo() != null) {
                 System.out.println("Catalogo atual:   " + serv.catalogo().toString());
                 if (alterar().equalsIgnoreCase("sim")) {
-                    if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, catalogo, formularios))
+                    if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, formularios))
                         return false;
                 } else {
                     catalogo = serv.catalogo();
                     serviceBuilder.comCatalogo(serv.catalogo());
                 }
             } else {
-                if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, catalogo, formularios))
+                if (!inserirCatalogo(serviceBuilder, listaCatalogos, colabsAprov, equipasExec, formularios))
                     return false;
             }
         }
@@ -270,11 +270,13 @@ public class EspecificarServicoUI extends AbstractUI {
         String completar;
         do {
             completar = Console.readLine("Deseja dar este Serviço como completo? (sim/nao)");
-        } while (validaSimNao(strContinuar));
+        } while (validaSimNao(completar));
         if (completar.equalsIgnoreCase("sim")) {
             if(serviceBuilder.estaCompleto()) {
+                associarNivelCrit(serviceBuilder);
                 serviceBuilder.comEstado(EstadoServico.COMPLETO);
                 especificarServico(serviceBuilder, colabsAprov, equipasExec, formularios);
+
                 System.out.println("Serviço Completo especificado\n");
             }
             else {
@@ -282,8 +284,10 @@ public class EspecificarServicoUI extends AbstractUI {
                 especificarServico(serviceBuilder, colabsAprov, equipasExec, formularios);
             }
         }
-        return true;
-    }
+
+
+
+        return true;}
 
     private boolean inserirTitulo(ServiceBuilder serviceBuilder) {
         final String titulo = Console.readLine("(Se quiser sair da especificação, digite -1)\nTítulo:");
@@ -532,7 +536,7 @@ public class EspecificarServicoUI extends AbstractUI {
         return true;
     }
 
-    private boolean inserirCatalogo(ServiceBuilder serviceBuilder, List<Catalogo> listaCatalogos, List<Colaborador> colabsAprov, List<Equipa> equipasExec, Catalogo catalogo, List<Formulario> formularios) {
+    private boolean inserirCatalogo(ServiceBuilder serviceBuilder, List<Catalogo> listaCatalogos, List<Colaborador> colabsAprov, List<Equipa> equipasExec, List<Formulario> formularios) {
         boolean findCatalogo = true;
         for (Catalogo cat : listaCatalogos)
             System.out.println(cat.toString());
@@ -595,7 +599,6 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     public void especificarServico(ServiceBuilder serviceBuilder, List<Colaborador> colabsAprov, List<Equipa> equipasExec, List<Formulario> formularios) {
-
         Servico serv = controller.especificarServico(serviceBuilder.build());
             controller.adicionaColabAprov(serv, colabsAprov);
             controller.adicionaEquipaExec(serv, equipasExec);
@@ -606,6 +609,119 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private boolean validaSimNao(String a) {
         return !a.equalsIgnoreCase("sim") && !a.equalsIgnoreCase("nao");
+    }
+
+    private NivelCriticidade escolherNivelCrit(){
+        NivelCriticidade nivelCriticidade= null;
+        boolean nivelCrit = true;
+        int index = 1;
+        for (NivelCriticidade nivel : niveisCriticidade) {
+            System.out.println(index + " " + nivel.toString());
+            index++;
+        }
+        while (nivelCrit) {
+            index = Console.readInteger("Indique o nível de criticidade que pretende associar :  \n");
+            if (index <= niveisCriticidade.size() && index > 0) {
+                nivelCrit = false;
+                nivelCriticidade = niveisCriticidade.get(index - 1);
+            }
+            if (nivelCrit) {
+                System.out.println("Coloque um index válido");
+            }
+        }return nivelCriticidade;}
+
+    private Objetivo novoObjetivo() {
+        boolean flag = true;
+        int aprovacaoMax = -1;
+        int resolucaoMax = -1;
+        int aprovacaoMedia = -1;
+        int resolucaoMedia = -1;
+
+        while (flag) {
+            aprovacaoMax = Console.readInteger("Defina o período de aprovação máximo deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (aprovacaoMax > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de aprovação válido\n");
+            }
+        }
+        flag = true;
+        while (flag) {
+            resolucaoMax = Console.readInteger("Defina o período de resolução máximo deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (resolucaoMax > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de resolução máximo válido\n");
+            }
+        }
+        flag = true;
+        while (flag) {
+            aprovacaoMedia = Console.readInteger("Defina o período de aprovação médio deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (aprovacaoMedia > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de aprovação média válido\n");
+            }
+        }
+        flag = true;
+        while (flag) {
+            resolucaoMedia = Console.readInteger("Defina o período de resolução médio deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (resolucaoMedia > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de resolução média válido\n");
+            }
+        }
+        return new Objetivo(aprovacaoMax, resolucaoMax, aprovacaoMedia, resolucaoMedia);
+    }
+    private NivelCriticidade criarNivelCriticidade(NivelCriticidade nivelCriticidade,Objetivo objetivo){
+        return new NivelCriticidade(nivelCriticidade.getEtiqueta(),nivelCriticidade.getValorDeEscala(),nivelCriticidade.getCor(),objetivo, nivelCriticidade.isDefault());
+    }
+
+    private boolean associarNivelCrit(ServiceBuilder serviceBuilder) {
+        String nivelCrit;
+        NivelCriticidade novoNivelCriticidade;
+        boolean flag = false;
+
+        if (this.catalogo.nivelCritToService() != null) {
+            do {
+                nivelCrit = Console.readLine("Deseja associar o nível de criticidade associada" +
+                        "ao catalogo deste Serviço? (sim/nao)");
+            } while (validaSimNao(nivelCrit));
+            if (nivelCrit.equalsIgnoreCase("sim")) {
+
+                System.out.println("Nível de criticidade do catálogo associado ao Serviço \n");
+                serviceBuilder.comNivelCrit(catalogo.nivelCritToService());
+                flag = true;
+
+            }
+        }
+            novoNivelCriticidade = escolherNivelCrit();
+            String objetivos;
+            do {
+                objetivos = Console.readLine("Pretende mudar os objetivos do nível de criticidade que está a associar ao Serviço:? (sim/nao)\n");
+            } while (validaSimNao(objetivos));
+            if (objetivos.equals("nao")) {
+                 serviceBuilder.comNivelCrit(novoNivelCriticidade);
+                 flag = true;
+                System.out.println("O nível de criticidade foi adicionado ao serviço");
+            } else {
+                Objetivo novoObjetivo = novoObjetivo();
+                novoNivelCriticidade = criarNivelCriticidade(novoNivelCriticidade, novoObjetivo);
+                serviceBuilder.comNivelCrit(novoNivelCriticidade);
+                System.out.println("O nível de criticidade personalizado foi adicionado ao serviço");
+                flag= true;
+            }
+
+        return flag;
     }
 
     @Override

@@ -4,6 +4,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.domain.Formulario;
@@ -103,5 +104,10 @@ public class EspecificarServicoController {
             }
         }
         return new ArrayList<>(colabsExec);
+    }
+
+    public void adicionarNivelCritServ(Servico s, NivelCriticidade nC){
+        s.adicionarNivelCriticidade(nC);
+        repoServ.save(s);
     }
 }

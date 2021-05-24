@@ -11,6 +11,7 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
+import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
@@ -134,9 +135,10 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Keyword> keywords = new HashSet<>();
         keywords.add(k);
         keywords.add(k2);
-
+        Objetivo obj = new Objetivo(12,50,0,0);
+        NivelCriticidade nc  = enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj,true);
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
-                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, null, keywords, EstadoServico.COMPLETO, catalogo, false));
+                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, null, keywords, EstadoServico.COMPLETO, catalogo, false,nc));
 
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
         f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");
@@ -151,8 +153,8 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         especificarServicoController.adicionaFormulario(servico,f);
         especificarServicoController.adicionaFormulario(servico,f2);
 
-        Objetivo obj = new Objetivo(12,50,0,0);
-        enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj);
+
+
 
 
         System.out.println("#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");

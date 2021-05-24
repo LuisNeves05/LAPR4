@@ -2,6 +2,7 @@ package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxo.domain.AtividadeAprovacao;
 import eapli.base.fluxo.domain.AtividadeRealizacao;
@@ -107,6 +108,12 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne
     private AtividadeRealizacao atividadeRealizacao;
 
+    /**
+     * Nível de Criticidade associada ao serviço
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    private NivelCriticidade nivelCriticidade;
+
 
     /**
      * Construtor da entidade Servico
@@ -121,7 +128,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   boolean atAprov, boolean atAuto, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback) {
+                   boolean atAprov, boolean atAuto, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback, NivelCriticidade nivelCriticidade) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
@@ -137,6 +144,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         this.formularios = new HashSet<>();
         this.colabsAprov = new HashSet<>();
         this.equipasExec = new HashSet<>();
+        this.nivelCriticidade = nivelCriticidade;
+
     }
 
     /**
@@ -160,6 +169,11 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         if(!this.equipasExec.contains(equipas)){
             equipasExec.addAll(equipas);
         }
+    }
+
+    public  boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){
+        this.nivelCriticidade = nivelCriticidade;
+        return  (this.nivelCriticidade!= null);
     }
 
     public void limpaForms(){
@@ -237,6 +251,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     public Set<Colaborador> colabsAprovDoServico(){
         return this.colabsAprov;
     }
+
+    public  NivelCriticidade nivelCriticidadeServico(){return this.nivelCriticidade;};
 
     /**
      * toString do Servico
