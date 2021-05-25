@@ -4,8 +4,8 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.fluxo.domain.AtividadeAprovacao;
-import eapli.base.fluxo.domain.AtividadeRealizacao;
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -53,15 +53,8 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     /**
      * Modo de atividade de aprovação, podendo ser requerida ou não
      */
-    @Column(name = "ATIVIDADE_APROVACAO")
-    private boolean atAprov;
-    /**
-     * Atividade de realização, podendo ser automática ou manual
-     *
-     * SE TRUE, é automático, SE FALSE, é manual
-     */
     @Column(name = "ATIVIDADE_REALIZACAO")
-    private boolean atAuto;
+    private TipoExecucao atExec;
 
     @OneToOne
     private Colaborador colabExec;
@@ -122,20 +115,18 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      * @param descBreve descrição breve do serviço
      * @param descComp  descrição completa do serviço
      * @param icon      ícone associado
-     * @param atAprov   atividade de aprovação, podendo ser requerida ou não
-     * @param atAuto    atividade de realização, podendo ser automática ou manual
+     * @param atExec    atividade de realização, podendo ser automática ou manual
      * @param keywords  conjunto de palavras chave
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   boolean atAprov, boolean atAuto, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback, NivelCriticidade nivelCriticidade) {
+                   TipoExecucao atExec, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback, NivelCriticidade nivelCriticidade) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
         this.icon = icon;
-        this.atAprov = atAprov;
-        this.atAuto = atAuto;
+        this.atExec = atExec;
         this.colabExec = colabExec;
         this.estado = estado;
         this.keywords = keywords;
@@ -219,11 +210,9 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public byte[] iconDoServico(){return this.icon;}
 
-    public boolean atividadeAprovacao(){return this.atAprov;}
-
     public Set<Colaborador> colabsAprov(){return this.colabsAprov;}
 
-    public boolean atividadeRealizacao(){return this.atAuto;}
+    public TipoExecucao atividadeRealizacao(){return this.atExec;}
 
     public Set<Keyword> listaKewordsDoServico(){
         return this.keywords;
@@ -240,6 +229,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     public Colaborador colabExecucao() {
         return this.colabExec;
     }
+
     public Set<Formulario> formulariosDoServico(){
         return this.formularios;
     }

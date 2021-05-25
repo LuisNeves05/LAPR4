@@ -24,20 +24,20 @@
     <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
     <class>eapli.base.criticidade.domain.NivelCriticidade</class>
     <class>eapli.base.formularioPreenchido.domain.FormularioPreenchido</class>
-    <class>eapli.base.tarefa.domain.TarefaManual</class>
-    <class>eapli.base.tarefa.domain.TarefaAutomatica</class>
-    <class>eapli.base.tarefa.domain.TipoTarefa</class>
-    <class>eapli.base.tarefa.domain.TarefaAprovacao</class>
-    <class>eapli.base.fluxo.domain.FluxoAtividade</class>
-    <class>eapli.base.fluxo.domain.AtividadeAprovacao</class>
-    <class>eapli.base.fluxo.domain.AtividadeRealizacao</class>
+    <class>eapli.base.tarefaExecucao.domain.TarefaManual</class>
+    <class>eapli.base.tarefaExecucao.domain.TarefaAutomatica</class>
+    <class>eapli.base.tipoTarefa.domain.TipoTarefa</class>
+    <class>eapli.base.tarefaAprovacao.domain.TarefaAprovacao</class>
+    <class>eapli.base.fluxoAtividade.domain.FluxoAtividade</class>
+    <class>eapli.base.atividadeAprovacao.domain.AtividadeAprovacao</class>
+    <class>eapli.base.atividadeRealizacao.domain.AtividadeRealizacao</class>
     <class>eapli.base.ticket.domain.Ticket</class>
 
 
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
-      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+      <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
       <property name="javax.persistence.jdbc.password" value="lapr4"/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <!-- <property name="eclipselink.logging.level" value="FINE"/> -->

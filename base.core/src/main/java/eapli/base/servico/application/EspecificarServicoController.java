@@ -1,5 +1,9 @@
 package eapli.base.servico.application;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
+import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
@@ -7,6 +11,8 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Keyword;
@@ -35,6 +41,9 @@ public class EspecificarServicoController {
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
     private final ColaboradorRepositorio colabRep = PersistenceContext.repositories().colaboradorRepositorio();
     private final EquipaRepositorio eqRep = PersistenceContext.repositories().equipaRepositorio();
+    private final FluxoAtividadeRepositorio fluxoAtivRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
+    private final AtividadeAprovacaoRepositorio ativAprovRep = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
+    private final AtividadeRealizacaoRepositorio ativRealRep = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
 
     private SystemUser systemUser;
 
@@ -109,5 +118,17 @@ public class EspecificarServicoController {
     public void adicionarNivelCritServ(Servico s, NivelCriticidade nC){
         s.adicionarNivelCriticidade(nC);
         repoServ.save(s);
+    }
+
+    public FluxoAtividade guardarFluxoAtividade(FluxoAtividade fluxoAtiv){
+        return fluxoAtivRepositorio.save(fluxoAtiv);
+    }
+
+    public AtividadeAprovacao guardarAtividadeAprovacao(AtividadeAprovacao ativAprov){
+        return ativAprovRep.save(ativAprov);
+    }
+
+    public AtividadeRealizacao guardarAtividadeRealizacao(AtividadeRealizacao ativReal){
+        return ativRealRep.save(ativReal);
     }
 }

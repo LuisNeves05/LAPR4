@@ -5,10 +5,13 @@ import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -32,8 +35,8 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
 
     private String urgenciaTicket;
 
-    @OneToOne
-    private FormularioPreenchido formularioPreenchido;
+    @OneToMany
+    private Set<FormularioPreenchido> formulariosPreenchidos;
 
     @Temporal(TemporalType.DATE)
     private Date dataLimResol;
@@ -42,7 +45,23 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @Enumerated(EnumType.STRING)
     private EstadoTicket estadoTicket;
 
-    public Ticket(){}
+    protected Ticket(){}
+
+    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
+                  Date dataLimResol, EstadoTicket estadoTicket) {
+        this.colabRequisitou = colabRequisitou;
+        this.createdOn = Calendars.now();
+        this.servico = servico;
+        this.nivelCriticidade = nivelCriticidade;
+        this.urgenciaTicket = urgenciaTicket;
+        this.formulariosPreenchidos = new HashSet<>();
+        this.dataLimResol = dataLimResol;
+        this.estadoTicket = estadoTicket;
+    }
+
+    public void adicionaFormularioResposta(FormularioPreenchido fp){
+        formulariosPreenchidos.add(fp);
+    }
 
     @Override
     public boolean sameAs(Object other) {

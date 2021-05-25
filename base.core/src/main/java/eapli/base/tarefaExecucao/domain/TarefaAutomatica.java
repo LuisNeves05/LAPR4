@@ -1,4 +1,4 @@
-package eapli.base.tarefa.domain;
+package eapli.base.tarefaExecucao.domain;
 
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -8,14 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class TarefaAutomatica extends TarefaExecucao implements AggregateRoot<TarefaAutomatica>, Comparable<TarefaAutomatica>{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TarefaAutomatica extends TarefaExecucao implements Comparable<TarefaExecucao>{
 
     //TODO VER COMO FAZER ISTO OU COMO FUNCIONA OU LA O QUE ISTO É
 
+    public TarefaAutomatica(){}
 
     @Override
     public boolean sameAs(Object other) {
@@ -23,7 +20,7 @@ public class TarefaAutomatica extends TarefaExecucao implements AggregateRoot<Ta
     }
 
     @Override
-    public TarefaAutomatica identity() {
-        return this;
+    public TarefaExecucao identity() {
+        return null;
     }
 }

@@ -31,13 +31,9 @@ public class ServiceBuilder implements DomainFactory<Servico> {
      */
     private byte[] icon;
     /**
-     * Modo de atividade de aprovação, podendo ser requerida ou não
-     */
-    private boolean atAprov;
-    /**
      * Atividade de realização, podendo ser automática ou manual
      */
-    private boolean atReal;
+    private TipoExecucao atExec;
     /**
      * Conjunto de palavras chave de um serviço
      */
@@ -90,13 +86,8 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public ServiceBuilder comAtAprov(final boolean atAprov) {
-        this.atAprov = atAprov;
-        return this;
-    }
-
-    public ServiceBuilder comAtReal(final boolean atReal) {
-        this.atReal = atReal;
+    public ServiceBuilder comAtReal(final TipoExecucao atExec) {
+        this.atExec = atExec;
         return this;
     }
 
@@ -152,6 +143,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // an exception. however, we will leave that to the constructor
 
         return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
-                DescricaoCompleta.valueOf(descComp), icon, atAprov, atReal, colabExec, keywords, estado, catalogo, requerFeedback,nivelCriticidade);
+                DescricaoCompleta.valueOf(descComp), icon, atExec, colabExec, keywords, estado, catalogo, requerFeedback,nivelCriticidade);
     }
 }

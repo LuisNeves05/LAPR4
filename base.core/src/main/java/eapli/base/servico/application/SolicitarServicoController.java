@@ -13,6 +13,14 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+import eapli.base.tarefaAprovacao.domain.TarefaAprovacao;
+import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorio;
+import eapli.base.tarefaExecucao.domain.TarefaExecucao;
+import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorio;
+import eapli.base.ticket.domain.Ticket;
+import eapli.base.ticket.persistence.TicketRepositorio;
+import eapli.base.tipoTarefa.domain.TipoTarefa;
+import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorio;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -35,6 +43,14 @@ public class SolicitarServicoController {
     private final FormularioRepositorio repoForm = PersistenceContext.repositories().formularioRepositorio();
 
     private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
+
+    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
+
+    private final TipoTarefaRepositorio tipoTarefaRep = PersistenceContext.repositories().tipoTarefaRepositorio();
+
+    private final TarefaExecucaoRepositorio tarExecRep = PersistenceContext.repositories().tarefaExecucaoRepositorio();
+
+    private final TarefaAprovacaoRepositorio tarAprovRep = PersistenceContext.repositories().tarefaAprovacaoRepositorio();
 
 
     public SolicitarServicoController(){
@@ -77,4 +93,19 @@ public class SolicitarServicoController {
         fpr.save(fp);
     }
 
+    public Ticket guardarTicket(Ticket ticket){
+        return ticketRepositorio.save(ticket);
+    }
+
+    public TipoTarefa tipoTarefaPeloServico(Servico s){
+        return tipoTarefaRep.tipoTarefaPeloServico(s).iterator().next();
+    }
+
+    public TarefaExecucao guardarTarefaExecucao(TarefaExecucao tarExec){
+        return tarExecRep.save(tarExec);
+    }
+
+    public TarefaAprovacao guardarTarefaAprov(TarefaAprovacao tarAprov){
+        return tarAprovRep.save(tarAprov);
+    }
 }

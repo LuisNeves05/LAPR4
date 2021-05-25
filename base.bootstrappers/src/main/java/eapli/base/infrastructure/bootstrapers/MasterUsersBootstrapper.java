@@ -17,15 +17,12 @@ import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.fluxo.domain.AtividadeRealizacao;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
-import eapli.base.tarefa.domain.TarefaExecucao;
-import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.base.usermanagement.application.AddUserController;
@@ -36,7 +33,6 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.*;
 
 /**
@@ -70,15 +66,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     }
 
     private String masterBootStrap(){
-
-        TarefaManual tarefaManual = new TarefaManual();
-
-        Set<TarefaExecucao> tarefaExecucaoSet = new HashSet<>();
-
-        tarefaExecucaoSet.add(tarefaManual);
-
-        AtividadeRealizacao at = new AtividadeRealizacao(tarefaExecucaoSet);
-
 
         TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", 5);
 
@@ -138,7 +125,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Objetivo obj = new Objetivo(12,50,0,0);
         NivelCriticidade nc  = enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj,true);
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
-                new DescricaoCompleta("Desc comp Servico"), new byte[2], true, true, null, keywords, EstadoServico.COMPLETO, catalogo, false,nc));
+                new DescricaoCompleta("Desc comp Servico"), new byte[2], TipoExecucao.AUTOMATICA, null, keywords, EstadoServico.COMPLETO, catalogo, false,nc));
 
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
         f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");

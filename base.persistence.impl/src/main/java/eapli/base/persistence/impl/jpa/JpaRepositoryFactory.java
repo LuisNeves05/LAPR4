@@ -1,6 +1,10 @@
 package eapli.base.persistence.impl.jpa;
 
 import eapli.base.Application;
+import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
+import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorioJPAimpl;
+import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
+import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorioJPAimpl;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.catalogo.persistencia.CatalogoRepositorioJPAimpl;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
@@ -10,6 +14,8 @@ import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorioJPAimpl;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorioJPAimpl;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorioJPAimpl;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorioJPAimpl;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
@@ -18,8 +24,17 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
 import eapli.base.servico.persistencia.ServicoRepositorioJPAimpl;
+import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorio;
+import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorioJPAimpl;
+import eapli.base.tarefaExecucao.domain.TarefaExecucao;
+import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorioJPAimpl;
+import eapli.base.ticket.persistence.TicketRepositorio;
+import eapli.base.ticket.persistence.TicketRepositorioJPAimpl;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorioJPAimpl;
+import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorio;
+import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorioJPAimpl;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -100,6 +115,41 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio(){
 		return new FormularioPreenchidoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TicketRepositorio ticketRepositorio(){
+		return new TicketRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TipoTarefaRepositorio tipoTarefaRepositorio(){
+		return new TipoTarefaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TarefaExecucaoRepositorio tarefaExecucaoRepositorio(){
+		return new TarefaExecucaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TarefaAprovacaoRepositorio tarefaAprovacaoRepositorio(){
+		return new TarefaAprovacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio(){
+		return new FluxoAtividadeRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio(){
+		return new AtividadeRealizacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio(){
+		return new AtividadeAprovacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
