@@ -1,17 +1,24 @@
 package eapli.base.persistence.impl.inmemory;
 
+import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
+import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.clientusermanagement.repositories.ClientUserRepository;
 import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.persistencia.NivelCriticidadeRepositorio;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorio;
+import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorio;
+import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
+import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -86,6 +93,41 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TicketRepositorio ticketRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TipoTarefaRepositorio tipoTarefaRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TarefaExecucaoRepositorio tarefaExecucaoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TarefaAprovacaoRepositorio tarefaAprovacaoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio() {
+		return null;
+	}
+
+	@Override
+	public AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio() {
 		return null;
 	}
 
