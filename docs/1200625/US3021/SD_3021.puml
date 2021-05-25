@@ -5,7 +5,9 @@ actor "Colaborador" as colab
 
 participant ":ConsultarTarefasUI" as ui
 participant ":ConsultarTarefasController" as ctrl
-participant ":RepositorioTarefas" as repo
+participant ":PersistenceContext" as persistence
+participant "repoTarefas :RepositorioTarefas" as repo
+
 
 activate colab
 
@@ -13,11 +15,23 @@ colab -> ui : solicita consultar as tarefas pendentes ao colaborador
 
 activate ui
 
-ui -> ctrl : obterListaTarefasPendentes()
-
 activate ctrl
 
-ctrl -> repo : obterListaTarefasPendentes()
+ctrl -> persistence : repoColab = colaboradorRepositorio()
+
+group sd if
+
+ctrl -> ctrl : SystemUser sysUser = userSession.authenticatedUser()
+
+end
+
+activate persistence
+
+deactivate persistence
+
+ui -> ctrl : obterListaTarefasPendentes()
+
+ctrl -> repo : listTarefasPend = obterListaTarefasPendentes()
 
 activate repo
 
@@ -31,23 +45,33 @@ deactivate ui
 
 opt
 
-colab -> ui : pesquisa as tarefas pendentes
+colab -> ui : solicita um filtro nas tarefas pendentes
 
 activate ui
 
-ui -> ctrl : pesquisarTarefa()
+ui -> ctrl : filtrarTarefa()
 
 activate ctrl
 
-deactivate ui
+ctrl -> repo : filtrarTarefa()
+
+activate repo
+
+deactivate repo
 
 deactivate ctrl
+
+ui --> colab : apresenta a filtragem das tarefas pendentes
+
+deactivate ui
+
+deactivate ui
 
 end
 
 opt
 
-colab -> ui : ordenar as tarefas pendentes
+colab -> ui : solicita uma ordenação das tarefas pendentes
 
 activate ui
 
@@ -55,9 +79,17 @@ ui -> ctrl : ordenarTarefa()
 
 activate ctrl
 
-deactivate ui
+ctrl -> repo : ordenarTarefa()
+
+activate repo
+
+deactivate repo
 
 deactivate ctrl
+
+ui --> colab : apresenta a lista das tarefas pendentes ordenada
+
+deactivate ui
 
 end
 
