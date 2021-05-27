@@ -17,6 +17,7 @@ import eapli.base.equipa.application.AddOrDeleteEquipaController;
 import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
@@ -125,7 +126,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Objetivo obj = new Objetivo(12,50,0,0);
         NivelCriticidade nc  = enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj,true);
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
-                new DescricaoCompleta("Desc comp Servico"), new byte[2], TipoExecucao.AUTOMATICA, null, keywords, EstadoServico.COMPLETO, catalogo, false,nc));
+                new DescricaoCompleta("Desc comp Servico"), new byte[2], keywords, EstadoServico.INCOMPLETO, null, catalogo, false, nc));
 
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
         f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");

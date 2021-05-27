@@ -11,11 +11,9 @@ import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.TipoExecucao;
-import eapli.base.tarefaAprovacao.domain.TarefaAprovacao;
-import eapli.base.tarefaExecucao.domain.TarefaManual;
+import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
-import eapli.base.tipoTarefa.domain.TipoTarefa;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -102,35 +100,9 @@ public class SolicitarServicoUI extends AbstractUI {
         }
 
         EstadoTicket et = EstadoTicket.APROVADO;
-        if(!s.colabsAprov().isEmpty())
-            et = EstadoTicket.POR_APROVAR;
-
-
-        Ticket ticket = new Ticket(colabPedido,s, s.nivelCriticidadeServico(), urgencia, data, et);
-        for(FormularioPreenchido fp : fps)
-            ticket.adicionaFormularioResposta(fp);
-        lcp.guardarTicket(ticket);
-
-        TipoTarefa tt = lcp.tipoTarefaPeloServico(s);
-
-        if(!s.colabsAprov().isEmpty()){
-            TarefaAprovacao tarefaAprovacao = new TarefaAprovacao();
-            for(Colaborador colabAprov : s.colabsAprov())
-                tarefaAprovacao.adicionaColaboradorAprov(colabAprov);
-            lcp.guardarTarefaAprov(tarefaAprovacao);
-        }
-
-        if(s.atividadeRealizacao() == TipoExecucao.MANUAL) {
-            TarefaManual tarManual;
-            if (s.equipasExecDoServico() != null) {
-                 tarManual = new TarefaManual(tt, ticket);
-                 for(Equipa eq : s.equipasExecDoServico()){
-                     tarManual.adicionaEquipaExecucao(eq);
-                 }
-            }else
-                  tarManual = new TarefaManual(s.colabExecucao(),tt, ticket);
-
-            lcp.guardarTarefaExecucao(tarManual);
+        if(et == null){
+           //TODO
+            System.out.println("TAREFA MANUAL");
         }else{
             //TODO
             System.out.println("TAREFA AUTOMATICA");

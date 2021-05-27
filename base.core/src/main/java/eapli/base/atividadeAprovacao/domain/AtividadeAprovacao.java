@@ -1,6 +1,6 @@
 package eapli.base.atividadeAprovacao.domain;
 
-import eapli.base.tarefaAprovacao.domain.TarefaAprovacao;
+import eapli.base.tarefa.domain.TarefaManualAprovacao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -14,15 +14,29 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "ESTADO")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    private Set<ColaboradoresAprovacao> colabsAprov;
+
     @OneToMany
-    private Set<TarefaAprovacao> tarefasAprov;
+    private Set<TarefaManualAprovacao> tarefasAprov;
 
     public AtividadeAprovacao(){
-        tarefasAprov = new HashSet<>();
+        this.tarefasAprov = new HashSet<>();
+        this.colabsAprov = new HashSet<>();
     }
 
-    public void adicionaTarefaAprov(TarefaAprovacao tarAprov){
+    public void adicionaTarefaAprov(TarefaManualAprovacao tarAprov){
         tarefasAprov.add(tarAprov);
+    }
+
+    public void adicionaColabAprov(ColaboradoresAprovacao colabAprov){
+        colabsAprov.add(colabAprov);
+    }
+
+    public Set<ColaboradoresAprovacao> colabsDeAprovacao(){
+        return this.colabsAprov;
     }
 
     @Override

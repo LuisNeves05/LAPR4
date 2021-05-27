@@ -6,6 +6,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.CodigoEquipa;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.servico.domain.DescricaoBreve;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.Titulo;

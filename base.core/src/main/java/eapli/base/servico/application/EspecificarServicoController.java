@@ -74,29 +74,9 @@ public class EspecificarServicoController {
         repoServ.save(s);
         s.limpaForms();
     }
-
-    public void adicionaColabAprov(Servico s, List<Colaborador> colabs){
-        s.adicionaColaboradorAprov(colabs);
-        repoServ.save(s);
-        s.limpaColabs();
-    }
-
-    public void adicionaEquipaExec(Servico s, List<Equipa> equipas){
-        s.adicionaEquipaExec(equipas);
-        repoServ.save(s);
-        s.limpaEquipasExec();
-    }
-
+    
     public List<Servico> servicosIncompletos() {
         return repoServ.servicosIncompletos();
-    }
-
-    public List<Colaborador> colabsAprov() {
-        Colaborador mainColab = colabRep.colabPorUsername(systemUser.username()).iterator().next();
-        Set<Colaborador> colabs = new HashSet<>();
-        colabs.add(mainColab);
-        colabs.add(mainColab.seuColabResponsavel());
-        return new ArrayList<>(colabs);
     }
 
     public List<Equipa> equipasExecDoCatalogo(Catalogo catalogo) {

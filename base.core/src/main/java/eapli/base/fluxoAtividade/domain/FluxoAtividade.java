@@ -33,6 +33,14 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
         this.atividadeRealizacao = atividadeRealizacao;
     }
 
+    public AtividadeRealizacao ativRealizacaoDoFluxo(){
+        return this.atividadeRealizacao;
+    }
+
+    public AtividadeAprovacao ativAprovacaoDoFluxo(){
+        return this.atividadeAprovacao;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;
