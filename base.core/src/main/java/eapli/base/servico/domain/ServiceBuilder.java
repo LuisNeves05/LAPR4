@@ -3,6 +3,7 @@ package eapli.base.servico.domain;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.NivelCriticidade;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.HashSet;
@@ -31,10 +32,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
      */
     private byte[] icon;
     /**
-     * Atividade de realização, podendo ser automática ou manual
-     */
-    private TipoExecucao atExec;
-    /**
      * Conjunto de palavras chave de um serviço
      */
     private Set<Keyword> keywords = new HashSet<>();
@@ -49,9 +46,9 @@ public class ServiceBuilder implements DomainFactory<Servico> {
     private NivelCriticidade nivelCriticidade;
     private Catalogo catalogo;
 
-    private Colaborador colabExec;
-
     private boolean requerFeedback;
+
+    private FluxoAtividade fluxoAtividade;
 
     public ServiceBuilder(){
     }
@@ -86,11 +83,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public ServiceBuilder comAtReal(final TipoExecucao atExec) {
-        this.atExec = atExec;
-        return this;
-    }
-
     public ServiceBuilder comEstado(final EstadoServico estado) {
         this.estado = estado;
         return this;
@@ -101,22 +93,22 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public ServiceBuilder comColabExec(final Colaborador colabExec){
-        this.colabExec = colabExec;
-        return this;
-    }
-
     public ServiceBuilder comNivelCrit(final NivelCriticidade nivelCriticidade){
         this.nivelCriticidade = nivelCriticidade;
         return this;
     }
+
     public void adicionarKeyword(String key){
         Keyword keyword = new Keyword(key);
         keywords.add(keyword);
     }
 
+    public ServiceBuilder comFluxo(FluxoAtividade fluxoAtividade){
+        this.fluxoAtividade = fluxoAtividade;
+        return this;
+    }
+
     public boolean estaCompleto() {
-        System.out.println(servicoIdentificador  + "cona" +  titulo + "cona" + descBreve  + "cona" + descComp  + "cona" + keywords.size()  + "cona" + catalogo);
         return this.servicoIdentificador != null && this.titulo != null && this.descBreve != null && this.descComp != null && keywords.size() > 0 && this.catalogo != null;
     }
 
@@ -143,6 +135,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         // an exception. however, we will leave that to the constructor
 
         return new Servico(ServicoIdentificador.valueOf(servicoIdentificador), Titulo.valueOf(titulo), DescricaoBreve.valueOf(descBreve),
-                DescricaoCompleta.valueOf(descComp), icon, atExec, colabExec, keywords, estado, catalogo, requerFeedback,nivelCriticidade);
+                DescricaoCompleta.valueOf(descComp), icon, keywords, estado, fluxoAtividade ,catalogo, requerFeedback,nivelCriticidade);
     }
 }

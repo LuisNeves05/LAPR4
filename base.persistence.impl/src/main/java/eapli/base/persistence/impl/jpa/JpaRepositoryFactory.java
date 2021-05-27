@@ -24,17 +24,12 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
 import eapli.base.servico.persistencia.ServicoRepositorioJPAimpl;
-import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorio;
-import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorioJPAimpl;
-import eapli.base.tarefaExecucao.domain.TarefaExecucao;
-import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorio;
-import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorioJPAimpl;
+import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefa.persistance.TarefaExecucaoRepositorioJPAimpl;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorioJPAimpl;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorioJPAimpl;
-import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorio;
-import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorioJPAimpl;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.JpaAutoTxUserRepository;
@@ -122,19 +117,10 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 		return new TicketRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
-	@Override
-	public TipoTarefaRepositorio tipoTarefaRepositorio(){
-		return new TipoTarefaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
-	}
 
 	@Override
 	public TarefaExecucaoRepositorio tarefaExecucaoRepositorio(){
 		return new TarefaExecucaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
-	}
-
-	@Override
-	public TarefaAprovacaoRepositorio tarefaAprovacaoRepositorio(){
-		return new TarefaAprovacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

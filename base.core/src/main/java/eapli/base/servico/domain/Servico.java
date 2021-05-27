@@ -1,11 +1,13 @@
 package eapli.base.servico.domain;
 
+import com.sun.istack.Nullable;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -51,29 +53,11 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @Lob
     private byte[] icon;
     /**
-     * Modo de atividade de aprovação, podendo ser requerida ou não
-     */
-    @Column(name = "ATIVIDADE_REALIZACAO")
-    private TipoExecucao atExec;
-
-    @OneToOne
-    private Colaborador colabExec;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="SERVICO_EQUIPASEXEC")
-    private Set<Equipa> equipasExec;
-    /**
      * Conjunto de palavras chave de um serviço
      */
     @Column(name = "PALAVRAS_CHAVE")
     @ElementCollection
     private Set<Keyword> keywords;
-    /**
-     * Conjunto de colaboradores que aprovam um serviço
-     */
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="SERVICO_COLABORADOR_APROVACAO")
-    private Set<Colaborador> colabsAprov;
     /**
      * Estado de conclusão do serviço, podendo estar completo ou incompleto
      */
@@ -88,18 +72,11 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     @OneToMany
     private Set<Formulario> formularios;
-
     /**
      * Feedback do colaborador que requisitou o serviço
      */
     @Column(name="REQUER_FEEDBACK")
     private boolean requerFeedback;
-
-    @OneToOne
-    private AtividadeAprovacao atividadeAprovacao;
-
-    @OneToOne
-    private AtividadeRealizacao atividadeRealizacao;
 
     /**
      * Nível de Criticidade associada ao serviço
@@ -107,42 +84,40 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne(cascade = CascadeType.ALL)
     private NivelCriticidade nivelCriticidade;
 
+    @OneToOne
+    @Nullable
+    private FluxoAtividade fluxoAtividade;
+
 
     /**
      * Construtor da entidade Servico
-     *
      * @param titulo    do Servico
      * @param descBreve descrição breve do serviço
      * @param descComp  descrição completa do serviço
      * @param icon      ícone associado
-     * @param atExec    atividade de realização, podendo ser automática ou manual
      * @param keywords  conjunto de palavras chave
      * @param estado    estado de conclusão do serviço, podendo estar completo ou incompleto
      */
     public Servico(ServicoIdentificador idServ, Titulo titulo, DescricaoBreve descBreve, DescricaoCompleta descComp, byte[] icon,
-                   TipoExecucao atExec, Colaborador colabExec, Set<Keyword> keywords, EstadoServico estado, Catalogo catalogo, boolean requerFeedback, NivelCriticidade nivelCriticidade) {
+                   Set<Keyword> keywords, EstadoServico estado, FluxoAtividade fluxoAtiv,Catalogo catalogo, boolean requerFeedback, NivelCriticidade nivelCriticidade) {
         this.servicoIdent = idServ;
         this.titulo = titulo;
         this.descBreve = descBreve;
         this.descComp = descComp;
         this.icon = icon;
-        this.atExec = atExec;
-        this.colabExec = colabExec;
         this.estado = estado;
         this.keywords = keywords;
         this.catalogo = catalogo;
         this.requerFeedback = requerFeedback;
         this.formularios = new HashSet<>();
-        this.colabsAprov = new HashSet<>();
-        this.equipasExec = new HashSet<>();
         this.nivelCriticidade = nivelCriticidade;
-
+        this.fluxoAtividade = fluxoAtiv;
     }
 
     /**
      * Construtor vazio requerido da entidade Servico
      */
-    protected Servico() {}
+    protected Servico(){}
 
     public void adicionaFormulario(Formulario f){
         if(!this.formularios.contains(f)){
@@ -150,31 +125,13 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         }
     }
 
-        public void adicionaColaboradorAprov(List<Colaborador> colabs){
-        if(!this.colabsAprov.contains(colabs)){
-            colabsAprov.addAll(colabs);
-        }
-    }
-
-    public void adicionaEquipaExec(List<Equipa> equipas){
-        if(!this.equipasExec.contains(equipas)){
-            equipasExec.addAll(equipas);
-        }
-    }
-
-    public  boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){
+    public boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){
         this.nivelCriticidade = nivelCriticidade;
         return  (this.nivelCriticidade!= null);
     }
 
     public void limpaForms(){
         this.formularios.clear();
-    }
-    public void limpaColabs() {
-        this.colabsAprov.clear();
-    }
-    public void limpaEquipasExec() {
-        this.equipasExec.clear();
     }
     /**
      * Identidade do Servico
@@ -210,10 +167,6 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public byte[] iconDoServico(){return this.icon;}
 
-    public Set<Colaborador> colabsAprov(){return this.colabsAprov;}
-
-    public TipoExecucao atividadeRealizacao(){return this.atExec;}
-
     public Set<Keyword> listaKewordsDoServico(){
         return this.keywords;
     }
@@ -226,30 +179,20 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public boolean requerFeedbackDoServico(){return this.requerFeedback;}
 
-    public Colaborador colabExecucao() {
-        return this.colabExec;
-    }
-
     public Set<Formulario> formulariosDoServico(){
         return this.formularios;
     }
 
-    public Set<Equipa> equipasExecDoServico(){
-        return this.equipasExec;
-    }
+    public  NivelCriticidade nivelCriticidadeServico(){return this.nivelCriticidade;}
 
-    public Set<Colaborador> colabsAprovDoServico(){
-        return this.colabsAprov;
-    }
-
-    public  NivelCriticidade nivelCriticidadeServico(){return this.nivelCriticidade;};
+    public FluxoAtividade fluxoDoServico(){return fluxoAtividade;}
 
     /**
      * toString do Servico
      */
     @Override
     public String toString() {
-        return servicoIdent.toString() + " " + this.titulo + " " + descBreve;
+        return servicoIdent.toString() + " " + this.titulo + " " + descBreve + " " + estado;
     }
 
 

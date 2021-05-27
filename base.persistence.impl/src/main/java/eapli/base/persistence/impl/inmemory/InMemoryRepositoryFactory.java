@@ -14,11 +14,9 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefaAprovacao.persistance.TarefaAprovacaoRepositorio;
-import eapli.base.tarefaExecucao.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
-import eapli.base.tipoTarefa.persistance.TipoTarefaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.InMemoryUserRepository;
@@ -101,20 +99,12 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 		return null;
 	}
 
-	@Override
-	public TipoTarefaRepositorio tipoTarefaRepositorio() {
-		return null;
-	}
 
 	@Override
 	public TarefaExecucaoRepositorio tarefaExecucaoRepositorio() {
 		return null;
 	}
 
-	@Override
-	public TarefaAprovacaoRepositorio tarefaAprovacaoRepositorio() {
-		return null;
-	}
 
 	@Override
 	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio() {
