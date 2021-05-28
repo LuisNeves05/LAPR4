@@ -31,6 +31,7 @@ public class EspecificarServicoUI extends AbstractUI {
     private Catalogo catalogo = null;
     private Colaborador colab = null;
     private TipoExecucao tipoExec;
+    private FluxoAtividadeBuilder fluxoAtividadeBuilder;
 
     @Override
     protected boolean doShow() {
@@ -160,9 +161,19 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         serviceBuilder.comEstado(EstadoServico.INCOMPLETO);
+        List<ColaboradoresAprovacao> colabsAprov = new ArrayList<>();
+        if(serv.fluxoDoServico() != null) {
+            if(serv.fluxoDoServico().ativAprovacaoDoFluxo() != null){
+                colabsAprov = new ArrayList<>(serv.fluxoDoServico().ativAprovacaoDoFluxo().colabsDeAprovacao());
+            }
+        }
+        List<Equipa> equipasExec = new ArrayList<>();
+        if(serv.fluxoDoServico() != null) {
+            if(serv.fluxoDoServico().ativRealizacaoDoFluxo() != null){
+                equipasExec = new ArrayList<>(serv.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
+            }
+        }
 
-        List<ColaboradoresAprovacao> colabsAprov = new ArrayList<>(serv.fluxoDoServico().ativAprovacaoDoFluxo().colabsDeAprovacao());
-        List<Equipa> equipasExec = new ArrayList<>(serv.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
         List<Formulario> formularios = new ArrayList<>(serv.formulariosDoServico());
 
         serviceBuilder.comDescComp(serv.descricaoCompletaDoServico().toString())
@@ -172,8 +183,10 @@ public class EspecificarServicoUI extends AbstractUI {
 
         FluxoAtividadeBuilder fluxoAtivBuilder = new FluxoAtividadeBuilder();
 
-        fluxoAtivBuilder.comAtividadeRealizacao(serv.fluxoDoServico().ativRealizacaoDoFluxo());
-        fluxoAtivBuilder.comAtividadeAprovacao(serv.fluxoDoServico().ativAprovacaoDoFluxo());
+        if(serv.fluxoDoServico() != null) {
+            fluxoAtivBuilder.comAtividadeRealizacao(serv.fluxoDoServico().ativRealizacaoDoFluxo());
+            fluxoAtivBuilder.comAtividadeAprovacao(serv.fluxoDoServico().ativAprovacaoDoFluxo());
+        }
 
         if (serv.descricaoBreveDoServico() != null) {
             System.out.println("Descrição Breve atual:   " + serv.descricaoBreveDoServico().toString());
@@ -239,7 +252,7 @@ public class EspecificarServicoUI extends AbstractUI {
         else
         System.out.println("Não tem atividade de aprovação");
         if (alterar().equalsIgnoreCase("sim")) {
-            if (!inserirAtAprovacao(serviceBuilder, serv, colabsAprov, formularios, fluxoAtivBuilder)) {
+            if (inserirAtAprovacao(serviceBuilder, serv, colabsAprov, formularios, fluxoAtivBuilder)) {
                 if(!colabsAprov.isEmpty())
                     fluxoComAtividadeAprovacao(fluxoAtivBuilder, colabsAprov);
                 else
@@ -247,20 +260,16 @@ public class EspecificarServicoUI extends AbstractUI {
             }
         }
 
-        if(serv.fluxoDoServico().ativRealizacaoDoFluxo() != null)
-        System.out.println("Atividade de Realização atual:   " + serv.fluxoDoServico().ativRealizacaoDoFluxo().toString());
-        else
-        System.out.println("Não tem tipo de atividade de Realização");
-        if (alterar().equalsIgnoreCase("sim")) {
-            if (!inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder))
-                if(colab != null) {
-                    AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec);
-                    fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
-                }else if (!equipasExec.isEmpty()){
-                    fluxoComAtividadeRealizacao(fluxoAtivBuilder, equipasExec);
-                }
-                else
-                    return false;
+        if(serv.fluxoDoServico() != null) {
+            if (serv.fluxoDoServico().ativRealizacaoDoFluxo() != null)
+                System.out.println("Atividade de Realização atual:   " + serv.fluxoDoServico().ativRealizacaoDoFluxo().toString());
+            else
+                System.out.println("Não tem tipo de atividade de Realização");
+            if (alterar().equalsIgnoreCase("sim")) {
+                semAtividadeRealizacao(serviceBuilder, equipasExec, formularios, fluxoAtivBuilder);
+            }
+        }else{
+             semAtividadeRealizacao(serviceBuilder, equipasExec, formularios, fluxoAtivBuilder);
         }
 
 
@@ -312,6 +321,9 @@ public class EspecificarServicoUI extends AbstractUI {
                 System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
                 especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
             }
+        }else{
+            System.out.println("O Serviço Incompleto ficou registado\n");
+            especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
         }
     }
 
@@ -356,6 +368,20 @@ public class EspecificarServicoUI extends AbstractUI {
         return true;
     }
 
+    private boolean semAtividadeRealizacao(ServiceBuilder serviceBuilder, List<Equipa> equipasExec, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder){
+
+            if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder))
+                if (colab != null) {
+                    AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec);
+                    fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
+                } else if (!equipasExec.isEmpty()) {
+                    fluxoComAtividadeRealizacao(fluxoAtivBuilder, equipasExec);
+                } else
+                    return false;
+
+                return true;
+    }
+
     private boolean inserirRequerFeedback(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
         boolean requerFeed = false;
         String strFeed;
@@ -392,18 +418,17 @@ public class EspecificarServicoUI extends AbstractUI {
             }
             if (atReal.equalsIgnoreCase("man")) {
                 tipoExec = TipoExecucao.MANUAL;
-                escolherResponsavelExecucao(serviceBuilder,catalogo, equipasExec, formularios, fluxoAtivBuilder);
-                flag = false;
+                return escolherResponsavelExecucao(serviceBuilder,catalogo, equipasExec, formularios, fluxoAtivBuilder);
             }
         }
 
         return true;
     }
 
-    private void escolherResponsavelExecucao(ServiceBuilder serviceBuilder, Catalogo catalogo, List<Equipa> equipasExec, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
+    private boolean escolherResponsavelExecucao(ServiceBuilder serviceBuilder, Catalogo catalogo, List<Equipa> equipasExec, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
         if(catalogo == null){
             System.out.println("Indique primeiramente um catálogo");
-            return;
+            return false;
         }
         boolean flag = true;
         while (flag) {
@@ -412,14 +437,14 @@ public class EspecificarServicoUI extends AbstractUI {
                 List<Equipa> equipasCatalogo = controller.equipasExecDoCatalogo(catalogo);
                 if(equipasCatalogo.isEmpty()){
                     System.out.println("O Catálogo não tem equipas associadas");
-                    return;
+                    return true;
                 }
                 int size = equipasCatalogo.size();
                 boolean findEquipa = true;
                 while (findEquipa) {
                     if (equipasCatalogo.isEmpty()) {
                         System.out.println("Não há mais Equipas para associar");
-                        return;
+                        return true;
                     }
                     int i = 1;
                     for (Equipa eq : equipasCatalogo) {
@@ -433,7 +458,7 @@ public class EspecificarServicoUI extends AbstractUI {
                             System.out.println("Selecione pelo menos uma Equipa");
                         else
                             especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
-                            return;
+                            return false;
                     } else if (index == 0) {
                         if (equipasCatalogo.size() == size)
                             System.out.println("Selecione pelo menos uma Equipa");
@@ -451,7 +476,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 List<Colaborador> colabsExec = controller.colabsExecCatalogo(catalogo);
                 if(colabsExec.isEmpty()){
                     System.out.println("Não há colaboradores nas equipas do Catálogo");
-                    return;
+                    return true;
                 }
 
                 int i = 1;
@@ -466,7 +491,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 while (findColab) {
                     if (colabsExec.isEmpty()) {
                         System.out.println("Não há Colaboradores para associar");
-                        return;
+                        return false;
                     }
 
                     int index = Console.readInteger("\nIndique o Colaborador");
@@ -481,11 +506,12 @@ public class EspecificarServicoUI extends AbstractUI {
             } else
                 System.out.println("Escolha uma equipa ou um colaborador");
         }
+        return true;
     }
 
     private boolean inserirAtAprovacao(ServiceBuilder serviceBuilder, Servico serv, List<ColaboradoresAprovacao> colabsAprov, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
         if(catalogo == null){
-            System.out.println("Indique primeiramente um catálogo");
+            System.out.println("Indique primeiramente um catálogo para poder escolher Colaboradores de Aprovação");
             return true;
         }
         boolean flagAtAprov = true;
@@ -501,12 +527,12 @@ public class EspecificarServicoUI extends AbstractUI {
                 if (serv == null) {
                     inserirColabs(colabsAprov);
                 } else {
-                    if (serv.fluxoDoServico().ativAprovacaoDoFluxo().colabsDeAprovacao().size() == 0)
+                    if (colabsAprov.size() == 0)
                         System.out.println("Ainda não tem colaboradores para aprovar");
                     else
-                        System.out.println("Lista de colaboradores para Aprovar:" + serv.fluxoDoServico().ativAprovacaoDoFluxo().colabsDeAprovacao().toString());
+                        System.out.println("Lista de colaboradores para Aprovar:" + colabsAprov);
                     if (alterar().equalsIgnoreCase("sim"))
-                        inserirColabs(colabsAprov);
+                        return inserirColabs(colabsAprov);
                 }
                 flagAtAprov = false;
             }
@@ -522,28 +548,33 @@ public class EspecificarServicoUI extends AbstractUI {
         boolean findColab = true;
         int index;
 
+        Set<ColaboradoresAprovacao> aux = new HashSet<>();
+
         colabsAprov.clear();
 
         while (findColab) {
 
-            System.out.println("1) Colaborador Do Serviço \n 2) Responsável hierárquico");
+            System.out.println("1) Colaborador Do Serviço \n2) Responsável hierárquico");
 
-            index = Console.readInteger("Indique o(s) Colaborador(es)");
+            index = Console.readInteger("Indique o(s) Colaborador(es) (0 para sair)");
 
             if (index == 0) {
-                if (colabsAprov.size() == 0)
+                if (aux.size() == 0)
                     System.out.println("Selecione pelo menos um Colaborador");
-                else
+                else {
                     findColab = false;
+                }
             } else if (index == 1) {
-                colabsAprov.add(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO);
+                aux.add(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO);
             } else if (index == 2) {
-                colabsAprov.add(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
+                aux.add(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
             }
             else {
                 System.out.println("Coloque um index válido");
             }
         }
+
+        colabsAprov.addAll(aux);
         return true;
     }
 
@@ -646,8 +677,8 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     public Servico especificarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtividadeBuilder) {
-        FluxoAtividade fluxoAtividade = fluxoAtividadeBuilder.build();
-        serviceBuilder.comFluxo(fluxoAtividade);
+
+        serviceBuilder.comFluxo(fluxoAtividadeBuilder.build());
         Servico serv = controller.especificarServico(serviceBuilder.build());
             for(Formulario formulario : formularios) {
                 controller.adicionaFormulario(serv, formulario);

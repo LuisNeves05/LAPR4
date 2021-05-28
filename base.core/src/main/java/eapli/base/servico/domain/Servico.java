@@ -84,8 +84,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne(cascade = CascadeType.ALL)
     private NivelCriticidade nivelCriticidade;
 
-    @OneToOne
-    @Nullable
+    @OneToOne(cascade = CascadeType.ALL)
     private FluxoAtividade fluxoAtividade;
 
 

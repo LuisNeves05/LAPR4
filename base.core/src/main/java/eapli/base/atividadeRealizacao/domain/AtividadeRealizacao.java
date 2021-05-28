@@ -27,6 +27,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @OneToMany
     private Set<TarefaManualExecucao> tarefasExecucao;
 
+    @Enumerated(EnumType.STRING)
     private TipoExecucao tipoExecucao;
 
     public AtividadeRealizacao(TipoExecucao tipoExecucao){

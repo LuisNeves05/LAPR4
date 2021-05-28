@@ -14,7 +14,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ESTADO")
+    @Column(name = "COLABS_APROVACAO")
     @Enumerated(EnumType.STRING)
     @ElementCollection
     private Set<ColaboradoresAprovacao> colabsAprov;

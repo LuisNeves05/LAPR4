@@ -99,16 +99,4 @@ public class EspecificarServicoController {
         s.adicionarNivelCriticidade(nC);
         repoServ.save(s);
     }
-
-    public FluxoAtividade guardarFluxoAtividade(FluxoAtividade fluxoAtiv){
-        return fluxoAtivRepositorio.save(fluxoAtiv);
-    }
-
-    public AtividadeAprovacao guardarAtividadeAprovacao(AtividadeAprovacao ativAprov){
-        return ativAprovRep.save(ativAprov);
-    }
-
-    public AtividadeRealizacao guardarAtividadeRealizacao(AtividadeRealizacao ativReal){
-        return ativRealRep.save(ativReal);
-    }
 }

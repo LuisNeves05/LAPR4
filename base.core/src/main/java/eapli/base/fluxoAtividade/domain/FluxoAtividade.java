@@ -12,14 +12,13 @@ import javax.persistence.*;
 public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @Nullable
+    @OneToOne(cascade = CascadeType.ALL)
     private AtividadeAprovacao atividadeAprovacao;
 
-    @OneToOne
-    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     private AtividadeRealizacao atividadeRealizacao;
 
     protected FluxoAtividade(){}
