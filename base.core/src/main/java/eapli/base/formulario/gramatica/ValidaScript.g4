@@ -1,6 +1,17 @@
-grammar GramaticaValidaForm;
+grammar ValidaScript;
 
-prog: validaExp* ;
+prog: stat*  | validaExp*;
+stat: expr NEWLINE # printExpr
+| ID '=' expr NEWLINE # assign
+| NEWLINE # blank
+
+;
+expr: expr op=('*'|'/') expr # MulDiv
+| expr op=('+'|'-') expr# AddSub
+| INT # inte
+| ID # id
+| '(' expr ')' # parens
+;
 
 validaExp: validaExp DEFINE exprExp EXPREGULAR     #defineExpRegular
       | SE exprExp VAZIO ENTAO exprExp NAOVAZIO       #validaEntreCampos
@@ -8,28 +19,37 @@ validaExp: validaExp DEFINE exprExp EXPREGULAR     #defineExpRegular
       | SE exprExp MAIOR exprExp ENTAO exprExp VAZIO      #validaEntreCampos
       | SE exprExp MAIOR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
       | SE exprExp MENOR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
-      | SE exprExp IGUAL exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
+      | SE exprExp ATR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
       | DEFINE exprExp NAOVAZIO                    #defineCampoNaoVazio
       | DEFINE exprExp VAZIO                       #defineCampoPodeSerVazio
 ;
 
-exprExp:    INT             #int
+exprExp:    INT          #int
         | NOMEATRIBUTO   #nomeAtributo
         | MAIOR          #maior
         | MENOR          #menor
-        | IGUAL          #igual
+        | ATR          #igual
 ;
 
-DEFINE: 'DEFINE';
 NEWLINE : [\r\n]+ ;
+INT:[0-9]+;
+ID:[a-z]+;
+MUL : '*' ; // assigns token name to '*' used above in grammar
+DIV : '/' ;
+ADD : '+' ;
+SUB : '-' ;
+ATR : '=' ;
+LPR : '(' ;
+RPR : ')' ;
+DEFINE: 'DEFINE';
 SE : 'SE';
 ENTAO : 'ENTAO';
-INT:[0-9]+;
 NAOVAZIO: 'NAOVAZIO';
 VAZIO : 'VAZIO';
-IGUAL : '=';
 MAIOR : '>';
 MENOR : '<';
 NOMEATRIBUTO : [A-Za-z]+;
 ESPACO : [ ] -> skip;
 EXPREGULAR : '@' .+? '@';
+
+
