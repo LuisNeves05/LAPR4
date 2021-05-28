@@ -19,16 +19,19 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     private Set<Equipa> equipasExecuta;
 
     @Column(name = "ESTADO_REALIZACAO")
+    @Enumerated(EnumType.STRING)
     private EstadoRealizacao estadoRealizacao;
 
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
         super(ticket);
         this.equipasExecuta = equipasExecuta;
+        this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
     }
 
     public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta){
         super(ticket);
         this.colabExecuta = colabExecuta;
+        this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
     }
 
     protected TarefaManualExecucao() {}

@@ -13,7 +13,7 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Ticket ticket;
 
     protected TarefaManual(){}
