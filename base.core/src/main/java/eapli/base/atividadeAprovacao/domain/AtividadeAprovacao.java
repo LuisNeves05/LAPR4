@@ -19,7 +19,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @ElementCollection
     private Set<ColaboradoresAprovacao> colabsAprov;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<TarefaManualAprovacao> tarefasAprov;
 
     public AtividadeAprovacao(){

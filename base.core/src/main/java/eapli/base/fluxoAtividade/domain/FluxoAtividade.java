@@ -21,15 +21,20 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
     @OneToOne(cascade = CascadeType.ALL)
     private AtividadeRealizacao atividadeRealizacao;
 
+    @Enumerated(EnumType.STRING)
+    private StatusFluxo statusFluxo;
+
     protected FluxoAtividade(){}
 
     public FluxoAtividade(AtividadeRealizacao atividadeRealizacao){
         this.atividadeRealizacao = atividadeRealizacao;
+        this.statusFluxo = StatusFluxo.INATIVO;
     }
 
     public FluxoAtividade(AtividadeAprovacao atividadeAprovacao, AtividadeRealizacao atividadeRealizacao) {
         this.atividadeAprovacao = atividadeAprovacao;
         this.atividadeRealizacao = atividadeRealizacao;
+        this.statusFluxo = StatusFluxo.INATIVO;
     }
 
     public AtividadeRealizacao ativRealizacaoDoFluxo(){
@@ -38,6 +43,14 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
 
     public AtividadeAprovacao ativAprovacaoDoFluxo(){
         return this.atividadeAprovacao;
+    }
+
+    public void ativar(){
+        this.statusFluxo = StatusFluxo.ATIVO;
+    }
+
+    public void desativar(){
+        this.statusFluxo = StatusFluxo.INATIVO;
     }
 
     @Override

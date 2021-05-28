@@ -1,5 +1,5 @@
 package eapli.base.tarefa.domain.estado;
 
 public enum EstadoRealizacao {
-    EM_EXECUCAO, CONCLUIDA
+    POR_EXECUTAR, EM_EXECUCAO, CONCLUIDA
 }

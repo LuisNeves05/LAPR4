@@ -79,6 +79,10 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
         return  (this.nivelCriticidade!= null);
     }
 
+    public Colaborador colaboradorResponsavelDoCatalogo(){
+        return colaboradorResponsavel;
+    }
+
     public NivelCriticidade nivelCritToService(){
         return this.nivelCriticidade;
     }

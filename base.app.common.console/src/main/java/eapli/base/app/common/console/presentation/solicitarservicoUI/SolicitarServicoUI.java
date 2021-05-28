@@ -1,5 +1,8 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
+import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
@@ -12,6 +15,8 @@ import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.TipoExecucao;
 import eapli.base.tarefa.domain.TarefaManual;
+import eapli.base.tarefa.domain.TarefaManualAprovacao;
+import eapli.base.tarefa.domain.TarefaManualExecucao;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -67,17 +72,6 @@ public class SolicitarServicoUI extends AbstractUI {
 
         String urgencia = Console.readLine("\nQual a urgência deste serviço?  (baixa | moderada | alta)");
 
-        String dataResol = Console.readLine("Indique a data resolução");
-
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String dataR = formatter.format(dataResol);
-        Date data = null;
-        try {
-            data = formatter.parse(dataR);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         Set<FormularioPreenchido> fps = new HashSet<>();
         for(Formulario f : formularioList){
             System.out.println("\nFormulario " +  f.name() + "\n");
@@ -99,15 +93,40 @@ public class SolicitarServicoUI extends AbstractUI {
             lcp.saveFormPreenchido(fp);
         }
 
-        EstadoTicket et = EstadoTicket.APROVADO;
-        if(et == null){
-           //TODO
-            System.out.println("TAREFA MANUAL");
-        }else{
-            //TODO
-            System.out.println("TAREFA AUTOMATICA");
+        Ticket ticket = new Ticket(colabPedido,s,s.nivelCriticidadeServico(),urgencia, EstadoTicket.POR_APROVAR);
+
+        AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
+        AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
+
+        if(at != null){
+            Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
+            TarefaManualAprovacao tarefaManualAprovacao = new TarefaManualAprovacao(ticket);
+            if(colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)){
+                Colaborador respHierarquico = colabPedido.seuColabResponsavel();
+                tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
+            }
+            if(colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)){
+                Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
+                tarefaManualAprovacao.assignaColabAprovacao(respServico);
+            }
+            at.adicionaTarefaAprov(tarefaManualAprovacao);
         }
 
+        if(ar.tipoExecucao() == TipoExecucao.MANUAL){
+            if(ar.equipasExecucao() != null) {
+                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
+                ar.adicionarTarefaExecucao(tme);
+            }else if(ar.colabExec() != null){
+                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().colabExec());
+                ar.adicionarTarefaExecucao(tme);
+            }
+        }else{
+            System.out.println("");
+           //TODO
+        }
+
+        s.fluxoDoServico().ativar();
+        lcp.guardarFluxo(s.fluxoDoServico());
 
         return false;
     }

@@ -1,5 +1,6 @@
 package eapli.base.atividadeRealizacao.domain;
 
+import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.TipoExecucao;
@@ -24,22 +25,29 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @OneToMany
     private Set<Equipa> equipasExecucao;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<TarefaManualExecucao> tarefasExecucao;
 
     @Enumerated(EnumType.STRING)
     private TipoExecucao tipoExecucao;
 
-    public AtividadeRealizacao(TipoExecucao tipoExecucao){
+    @Nullable
+    private String scriptAutomatico;
+
+    public AtividadeRealizacao(TipoExecucao tipoExecucao, String scriptAutomatico){
         this.tarefasExecucao = new HashSet<>();
         this.equipasExecucao = new HashSet<>();
         this.tipoExecucao = tipoExecucao;
+        if(tipoExecucao == TipoExecucao.AUTOMATICA)
+            this.scriptAutomatico = scriptAutomatico;
     }
 
-    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao){
+    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String scriptAutomatico){
         this.tarefasExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
+        if(tipoExecucao == TipoExecucao.AUTOMATICA)
+            this.scriptAutomatico = scriptAutomatico;
     }
 
     protected AtividadeRealizacao() {}
@@ -55,6 +63,10 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     public Set<Equipa> equipasExecucao(){
         return this.equipasExecucao;
     }
+
+    public Colaborador colabExec(){return this.colabExecucao;}
+
+    public TipoExecucao tipoExecucao(){return tipoExecucao;}
 
     @Override
     public boolean sameAs(Object other) {

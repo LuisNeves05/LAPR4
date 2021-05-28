@@ -9,9 +9,9 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
-import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.fluxoAtividade.domain.FluxoAtividadeBuilder;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.gramatica.ValidaScript;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
 import eapli.framework.io.util.Console;
@@ -31,7 +31,7 @@ public class EspecificarServicoUI extends AbstractUI {
     private Catalogo catalogo = null;
     private Colaborador colab = null;
     private TipoExecucao tipoExec;
-    private FluxoAtividadeBuilder fluxoAtividadeBuilder;
+    private String scriptAutomatico;
 
     @Override
     protected boolean doShow() {
@@ -125,7 +125,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
         if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder))
             if(colab != null) {
-                AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec);
+                AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec, scriptAutomatico);
                 fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
             }else if (!equipasExec.isEmpty()){
                 fluxoComAtividadeRealizacao(fluxoAtivBuilder, equipasExec);
@@ -352,7 +352,7 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     private void fluxoComAtividadeRealizacao(FluxoAtividadeBuilder fluxoAtivBuilder, List<Equipa> equipasExec) {
-        AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(tipoExec);
+        AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(tipoExec, scriptAutomatico);
         for(Equipa eq : equipasExec)
             ativRealizacao.adicionarEquipaExecucao(eq);
         fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
@@ -372,7 +372,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
             if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder))
                 if (colab != null) {
-                    AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec);
+                    AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec, scriptAutomatico);
                     fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
                 } else if (!equipasExec.isEmpty()) {
                     fluxoComAtividadeRealizacao(fluxoAtivBuilder, equipasExec);
@@ -403,7 +403,6 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private boolean inserirAtRealizacao(ServiceBuilder serviceBuilder, List<Equipa> equipasExec, Catalogo catalogo, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
         boolean flag = true;
-
         while (flag) {
             final String atReal = Console.readLine("(Se quiser sair da especificação, digite -1) || (Se quiser avançar, digite 0)\nRequer atividade de realização automática ou manual? (aut/man):");
             if (atReal.equalsIgnoreCase("-1")) {
@@ -412,16 +411,38 @@ public class EspecificarServicoUI extends AbstractUI {
             } else if (atReal.equalsIgnoreCase("0")) {
                 return true;
             }
-            if (atReal.equalsIgnoreCase("aut")) {
+            else if (atReal.equalsIgnoreCase("aut")) {
                 tipoExec = TipoExecucao.AUTOMATICA;
+                inserirScriptValidacaoTarefaAutomatica();
+                fluxoAtivBuilder.comAtividadeRealizacao(new AtividadeRealizacao(colab, tipoExec, scriptAutomatico));
                 flag = false;
             }
-            if (atReal.equalsIgnoreCase("man")) {
+            else if (atReal.equalsIgnoreCase("man")) {
                 tipoExec = TipoExecucao.MANUAL;
                 return escolherResponsavelExecucao(serviceBuilder,catalogo, equipasExec, formularios, fluxoAtivBuilder);
+            }else{
+                System.out.println("Dado incorreto \n");
             }
         }
+        return true;
+    }
 
+    private boolean inserirScriptValidacaoTarefaAutomatica() {
+        boolean flag = true;
+
+        while (flag) {
+            scriptAutomatico = Console.readLine("(0 para avançar) Insira o script de validação da Tarefa automática:");
+
+            if(scriptAutomatico.equalsIgnoreCase("0")) {
+                scriptAutomatico = null;
+                return false;
+            }
+
+            if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
+                return ValidaScript.validadeGrammarFromString(scriptAutomatico);
+            else
+                System.out.println("Script inválido");
+        }
         return true;
     }
 

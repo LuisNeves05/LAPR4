@@ -5,6 +5,8 @@ import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
@@ -12,6 +14,8 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
+import eapli.base.tarefa.domain.TarefaManual;
+import eapli.base.tarefa.domain.TarefaManualExecucao;
 import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -39,6 +43,10 @@ public class SolicitarServicoController {
     private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
 
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
+
+    private final TarefaExecucaoRepositorio tarefaExecucaoRepositorio = PersistenceContext.repositories().tarefaExecucaoRepositorio();
+
+    private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
 
 
@@ -85,5 +93,13 @@ public class SolicitarServicoController {
 
     public Ticket guardarTicket(Ticket ticket){
         return ticketRepositorio.save(ticket);
+    }
+
+    public TarefaManual guardarTarefaExec(TarefaManual tme) {
+        return tarefaExecucaoRepositorio.save(tme);
+    }
+
+    public FluxoAtividade guardarFluxo(FluxoAtividade fluxoAtividade){
+        return fluxoAtividadeRepositorio.save(fluxoAtividade);
     }
 }

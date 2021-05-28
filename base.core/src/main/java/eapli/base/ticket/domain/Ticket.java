@@ -38,24 +38,19 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @OneToMany
     private Set<FormularioPreenchido> formulariosPreenchidos;
 
-    @Temporal(TemporalType.DATE)
-    private Date dataLimResol;
-
     @Column(name = "ESTADO_TICKET")
     @Enumerated(EnumType.STRING)
     private EstadoTicket estadoTicket;
 
     protected Ticket(){}
 
-    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
-                  Date dataLimResol, EstadoTicket estadoTicket) {
+    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket, EstadoTicket estadoTicket) {
         this.colabRequisitou = colabRequisitou;
         this.createdOn = Calendars.now();
         this.servico = servico;
         this.nivelCriticidade = nivelCriticidade;
         this.urgenciaTicket = urgenciaTicket;
         this.formulariosPreenchidos = new HashSet<>();
-        this.dataLimResol = dataLimResol;
         this.estadoTicket = estadoTicket;
     }
 
