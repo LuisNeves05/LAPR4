@@ -175,9 +175,7 @@ public class ValidaScriptParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			return null;
 		}
 		finally {
 			exitRule();
@@ -298,9 +296,7 @@ public class ValidaScriptParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			return null;
 		}
 		finally {
 			exitRule();
@@ -477,7 +473,7 @@ public class ValidaScriptParser extends Parser {
 				}
 				break;
 			default:
-				throw new NoViableAltException(this);
+				return null;
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(52);
@@ -543,9 +539,7 @@ public class ValidaScriptParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			return null;
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
@@ -858,9 +852,7 @@ public class ValidaScriptParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			return null;
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
@@ -1013,13 +1005,11 @@ public class ValidaScriptParser extends Parser {
 				}
 				break;
 			default:
-				throw new NoViableAltException(this);
+				return null;
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+			return null;
 		}
 		finally {
 			exitRule();

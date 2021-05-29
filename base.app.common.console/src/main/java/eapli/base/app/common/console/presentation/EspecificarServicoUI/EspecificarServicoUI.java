@@ -88,6 +88,17 @@ public class EspecificarServicoUI extends AbstractUI {
         ServiceBuilder serviceBuilder = new ServiceBuilder();
 
         final String identificador = Console.readLine("(Se quiser sair da especificação, digite -1) \n Identificador do Serviço:");
+
+        Iterable<Servico> listaServicos = controller.listaServicos();
+
+        for(Servico serv : listaServicos){
+            if(serv.identity().toString().equalsIgnoreCase(identificador)){
+                System.out.println("Já existe um Serviço com esse identificador.");
+                return false;
+            }
+        }
+
+
         if (identificador.equalsIgnoreCase("-1")) {
             return false;
         }
@@ -123,13 +134,14 @@ public class EspecificarServicoUI extends AbstractUI {
         else
             return false;
 
-        if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder))
-            if(colab != null) {
+        if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder)) {
+            if (colab != null) {
                 AtividadeRealizacao ativRealizacao = new AtividadeRealizacao(colab, tipoExec, scriptAutomatico);
                 fluxoAtivBuilder.comAtividadeRealizacao(ativRealizacao);
-            }else if (!equipasExec.isEmpty()){
+            } else if (!equipasExec.isEmpty()) {
                 fluxoComAtividadeRealizacao(fluxoAtivBuilder, equipasExec);
             }
+        }
         else
             return false;
 
@@ -413,7 +425,7 @@ public class EspecificarServicoUI extends AbstractUI {
             }
             else if (atReal.equalsIgnoreCase("aut")) {
                 tipoExec = TipoExecucao.AUTOMATICA;
-                inserirScriptValidacaoTarefaAutomatica();
+                if(inserirScriptValidacaoTarefaAutomatica())
                 fluxoAtivBuilder.comAtividadeRealizacao(new AtividadeRealizacao(colab, tipoExec, scriptAutomatico));
                 flag = false;
             }
@@ -439,7 +451,7 @@ public class EspecificarServicoUI extends AbstractUI {
             }
 
             if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
-                return ValidaScript.validadeGrammarFromString(scriptAutomatico);
+                flag = false;
             else
                 System.out.println("Script inválido");
         }
@@ -801,7 +813,6 @@ public class EspecificarServicoUI extends AbstractUI {
 
                 System.out.println("Nível de criticidade do catálogo associado ao Serviço \n");
                 serviceBuilder.comNivelCrit(catalogo.nivelCritToService());
-                flag = true;
 
             }
         }

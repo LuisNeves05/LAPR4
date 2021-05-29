@@ -14,6 +14,9 @@ public class ValidaScript {
             ValidaScriptLexer lexer = new ValidaScriptLexer(new ANTLRInputStream(string));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             ValidaScriptParser parser = new ValidaScriptParser(tokens);
+            if(parser.validaExp() == null){
+                return false;
+            }
             ParseTree tree = parser.prog(); // parse
             EvalVisitor eval = new EvalVisitor();
             eval.visit(tree);

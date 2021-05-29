@@ -99,4 +99,8 @@ public class EspecificarServicoController {
         s.adicionarNivelCriticidade(nC);
         repoServ.save(s);
     }
+
+    public Iterable<Servico> listaServicos() {
+        return repoServ.findAll();
+    }
 }
