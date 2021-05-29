@@ -14,7 +14,7 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;

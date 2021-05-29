@@ -24,8 +24,8 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
 import eapli.base.servico.persistencia.ServicoRepositorioJPAimpl;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorioJPAimpl;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorioJPAimpl;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorioJPAimpl;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;

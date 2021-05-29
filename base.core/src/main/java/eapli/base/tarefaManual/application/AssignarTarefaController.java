@@ -1,12 +1,11 @@
-package eapli.base.tarefa.application;
+package eapli.base.tarefaManual.application;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefa.domain.TarefaManualAprovacao;
-import eapli.base.tarefa.domain.TarefaManualExecucao;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

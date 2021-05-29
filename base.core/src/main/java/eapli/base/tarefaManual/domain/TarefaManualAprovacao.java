@@ -1,8 +1,7 @@
-package eapli.base.tarefa.domain;
+package eapli.base.tarefaManual.domain;
 
-import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.tarefa.domain.estado.EstadoAprovacao;
+import eapli.base.tarefaManual.domain.estado.EstadoAprovacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 

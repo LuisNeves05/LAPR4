@@ -14,10 +14,9 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefa.domain.TarefaManual;
-import eapli.base.tarefa.domain.TarefaManualExecucao;
-import eapli.base.tarefa.domain.TiposDeTarefa;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManual.domain.TarefaManual;
+import eapli.base.Utils.bibliotecaTarefa.TiposDeTarefa;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

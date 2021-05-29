@@ -1,4 +1,4 @@
-package eapli.base.tarefa.domain;
+package eapli.base.tarefaAutomatica.domain;
 
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;

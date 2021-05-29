@@ -1,8 +1,8 @@
 package eapli.base.app.common.console.presentation.assignarTarefa;
 
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefa.application.AssignarTarefaController;
-import eapli.base.tarefa.domain.TarefaManualExecucao;
+import eapli.base.tarefaManual.application.AssignarTarefaController;
+import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import java.util.*;

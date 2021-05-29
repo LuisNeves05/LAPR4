@@ -4,9 +4,8 @@ import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.TipoExecucao;
-import eapli.base.tarefa.domain.TarefaAutomatica;
-import eapli.base.tarefa.domain.TarefaManual;
-import eapli.base.tarefa.domain.TarefaManualExecucao;
+import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
+import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;

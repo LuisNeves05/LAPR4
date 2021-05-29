@@ -12,7 +12,7 @@ import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;

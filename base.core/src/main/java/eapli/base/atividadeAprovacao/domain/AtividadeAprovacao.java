@@ -1,6 +1,6 @@
 package eapli.base.atividadeAprovacao.domain;
 
-import eapli.base.tarefa.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
