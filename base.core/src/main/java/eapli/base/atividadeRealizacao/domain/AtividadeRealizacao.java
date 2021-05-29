@@ -4,6 +4,7 @@ import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.servico.domain.TipoExecucao;
+import eapli.base.tarefa.domain.TarefaAutomatica;
 import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.tarefa.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
@@ -26,7 +27,10 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     private Set<Equipa> equipasExecucao;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<TarefaManualExecucao> tarefasExecucao;
+    private Set<TarefaManualExecucao> tarefasManualExecucao;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<TarefaAutomatica> tarefasAutomaticas;
 
     @Enumerated(EnumType.STRING)
     private TipoExecucao tipoExecucao;
@@ -35,7 +39,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     private String scriptAutomatico;
 
     public AtividadeRealizacao(TipoExecucao tipoExecucao, String scriptAutomatico){
-        this.tarefasExecucao = new HashSet<>();
+        this.tarefasAutomaticas = new HashSet<>();
         this.equipasExecucao = new HashSet<>();
         this.tipoExecucao = tipoExecucao;
         if(tipoExecucao == TipoExecucao.AUTOMATICA)
@@ -43,7 +47,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     }
 
     public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String scriptAutomatico){
-        this.tarefasExecucao = new HashSet<>();
+        this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
         if(tipoExecucao == TipoExecucao.AUTOMATICA)
@@ -53,11 +57,15 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     protected AtividadeRealizacao() {}
 
     public void adicionarTarefaExecucao(TarefaManualExecucao tarExec){
-        tarefasExecucao.add(tarExec);
+        tarefasManualExecucao.add(tarExec);
     }
 
     public void adicionarEquipaExecucao(Equipa eqExec){
         equipasExecucao.add(eqExec);
+    }
+
+    public void adicionarTarefaAutomatica(TarefaAutomatica tarefaAutomatica){
+        tarefasAutomaticas.add(tarefaAutomatica);
     }
 
     public Set<Equipa> equipasExecucao(){

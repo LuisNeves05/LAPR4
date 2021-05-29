@@ -1,7 +1,5 @@
 package eapli.base.fluxoAtividade.domain;
 
-import com.sun.istack.NotNull;
-import com.sun.istack.Nullable;
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.framework.domain.model.AggregateRoot;

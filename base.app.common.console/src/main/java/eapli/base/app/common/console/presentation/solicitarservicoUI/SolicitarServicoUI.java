@@ -14,9 +14,11 @@ import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.TipoExecucao;
+import eapli.base.tarefa.domain.TarefaAutomatica;
 import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.tarefa.domain.TarefaManualAprovacao;
 import eapli.base.tarefa.domain.TarefaManualExecucao;
+import eapli.base.tarefa.domain.estado.EstadoRealizacao;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -115,19 +117,17 @@ public class SolicitarServicoUI extends AbstractUI {
         if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
             if (ar.equipasExecucao() != null) {
                 TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
-                for (Equipa equipa : ar.equipasExecucao()
-                ) {
+                for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);
-
                 }
                 ar.adicionarTarefaExecucao(tme);
             } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().colabExec());
+                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
                 ar.adicionarTarefaExecucao(tme);
             }
         } else {
-            System.out.println("");
-            //TODO
+            TarefaAutomatica tarefaAutomatica = new TarefaAutomatica(ticket);
+            ar.adicionarTarefaAutomatica(tarefaAutomatica);
         }
 
         s.fluxoDoServico().ativar();
