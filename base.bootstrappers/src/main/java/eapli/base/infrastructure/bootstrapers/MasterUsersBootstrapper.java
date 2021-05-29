@@ -11,6 +11,7 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
+import eapli.base.criticidade.domain.Etiqueta;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.application.AddOrDeleteEquipaController;
@@ -124,10 +125,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         keywords.add(k);
         keywords.add(k2);
         Objetivo obj = new Objetivo(12,50,0,0);
-        NivelCriticidade nc  = enc.especificarNivelCriticidade("Etiqueta do nivel", 4, Color.RED,obj,true);
+        NivelCriticidade nc  = enc.especificarNivelCriticidade("elevada", 4, Color.RED,obj,true);
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
                 new DescricaoCompleta("Desc comp Servico"), new byte[2], keywords, EstadoServico.INCOMPLETO, null, catalogo, false, nc));
-
         Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
         f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");
         f.addAtributo("Nome Variavel2","Label do Form","Descricao Ajuda",TipoDados.STRING,"EXP regular");

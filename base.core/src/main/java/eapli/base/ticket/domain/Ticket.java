@@ -67,4 +67,13 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     public Long identity() {
         return null;
     }
+
+
+    @Override
+    public String toString() {
+        return "\n Ticket "+ id +" : \n"+
+                "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
+                "       Criado em : " + createdOn +
+                "       Serviço : " + servico.descricaoBreveDoServico() +
+                "       Urgência : " + urgenciaTicket ;}
 }

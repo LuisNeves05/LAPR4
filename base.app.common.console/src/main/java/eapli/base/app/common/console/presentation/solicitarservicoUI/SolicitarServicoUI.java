@@ -48,18 +48,18 @@ public class SolicitarServicoUI extends AbstractUI {
 
         List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
-        for(int i = 0;i<catalogoList.size();i++){
-            System.out.println(i + " - " +catalogoList.get(i).toString());
+        for (int i = 0; i < catalogoList.size(); i++) {
+            System.out.println(i + " - " + catalogoList.get(i).toString());
         }
 
         int indCatalogo = Console.readInteger("Escolha o catalogo a que pretende aceder (index)");
 
         Catalogo c = catalogoList.get(indCatalogo);
 
-        List<Servico> servicoList = lcp.listarServicosPorCat(c);
+        List<Servico> servicoList = lcp.listarServicosPorCat(c); //TODO METER ISTO A RETORNAR SERVIÇOS COMPLETOS
 
-        for(int i = 0;i<servicoList.size();i++){
-            System.out.println(i + " - " +servicoList.get(i).toString());
+        for (int i = 0; i < servicoList.size(); i++) {
+            System.out.println(i + " - " + servicoList.get(i).toString());
         }
 
         int indServico = Console.readInteger("Escolha o servico que pretende requisitar (index)");
@@ -73,56 +73,61 @@ public class SolicitarServicoUI extends AbstractUI {
         String urgencia = Console.readLine("\nQual a urgência deste serviço?  (baixa | moderada | alta)");
 
         Set<FormularioPreenchido> fps = new HashSet<>();
-        for(Formulario f : formularioList){
-            System.out.println("\nFormulario " +  f.name() + "\n");
+        for (Formulario f : formularioList) {
+            System.out.println("\nFormulario " + f.name() + "\n");
 
             Set<Resposta> respostas = new HashSet<>();
-            Set<Atributo> a =  f.atributos();
+            Set<Atributo> a = f.atributos();
 
-            for(Atributo atributo : a){
+            for (Atributo atributo : a) {
                 TipoDados td = atributo.tipoDados();
                 String ajudaResposta = tipoDadosStr(td);
-                String resposta = Console.readLine(atributo.nomeVar() + ": " + "    Responda conforme -> " +ajudaResposta);
+                String resposta = Console.readLine(atributo.nomeVar() + ": " + "    Responda conforme -> " + ajudaResposta);
                 Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
                 respostas.add(rAtr);
             }
 
-            FormularioPreenchido fp = new FormularioPreenchido(f,urgencia,respostas,s,colabPedido);
+            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, s, colabPedido);
             fps.add(fp);
 
             lcp.saveFormPreenchido(fp);
         }
 
-        Ticket ticket = new Ticket(colabPedido,s,s.nivelCriticidadeServico(),urgencia, EstadoTicket.POR_APROVAR);
+        Ticket ticket = new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
 
         AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
-        if(at != null){
+        if (at != null) {
             Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
             TarefaManualAprovacao tarefaManualAprovacao = new TarefaManualAprovacao(ticket);
-            if(colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)){
+            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)) {
                 Colaborador respHierarquico = colabPedido.seuColabResponsavel();
                 tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
             }
-            if(colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)){
+            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)) {
                 Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
                 tarefaManualAprovacao.assignaColabAprovacao(respServico);
             }
             at.adicionaTarefaAprov(tarefaManualAprovacao);
         }
 
-        if(ar.tipoExecucao() == TipoExecucao.MANUAL){
-            if(ar.equipasExecucao() != null) {
+        if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
+            if (ar.equipasExecucao() != null) {
                 TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
+                for (Equipa equipa : ar.equipasExecucao()
+                ) {
+                    tme.adicionaEquipaExecucao(equipa);
+
+                }
                 ar.adicionarTarefaExecucao(tme);
-            }else if(ar.colabExec() != null){
+            } else if (ar.colabExec() != null) {
                 TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().colabExec());
                 ar.adicionarTarefaExecucao(tme);
             }
-        }else{
+        } else {
             System.out.println("");
-           //TODO
+            //TODO
         }
 
         s.fluxoDoServico().ativar();
@@ -136,18 +141,18 @@ public class SolicitarServicoUI extends AbstractUI {
         return "Solicitar um Serviço!";
     }
 
-    private String tipoDadosStr(TipoDados a){
-        if(a == TipoDados.DATA){
+    private String tipoDadosStr(TipoDados a) {
+        if (a == TipoDados.DATA) {
             return "Data";
-        }else if(a == TipoDados.BOOLEANO){
+        } else if (a == TipoDados.BOOLEANO) {
             return "Sim/Não";
-        }else if(a == TipoDados.STRING){
+        } else if (a == TipoDados.STRING) {
             return "Frase";
-        }else if(a == TipoDados.FRACIONAL){
+        } else if (a == TipoDados.FRACIONAL) {
             return "Numero fracional";
-        }else if(a == TipoDados.INT){
+        } else if (a == TipoDados.INT) {
             return "Numero";
-        }else
+        } else
             return "";
     }
 }

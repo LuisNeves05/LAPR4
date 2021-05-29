@@ -101,4 +101,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
                 ", nrContacto=" + nrContacto +
                 '}';
     }
+    public String nomeToString(){
+        return nomeCurto.toString();
+    }
 }
