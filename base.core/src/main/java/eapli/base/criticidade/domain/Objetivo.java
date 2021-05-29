@@ -27,4 +27,12 @@ public class Objetivo implements ValueObject, Comparable<Objetivo>{
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return " Período aprovação máximo : " + aprovacaoMax +
+                "       Período aprovação médio : " + aprovacaoMedia +
+                "       Período resolução máximo : " +   resolucaoMax+
+                "       Período resolução médio : " + resolucaoMedia + "\n"
+                ;
+    }
 }

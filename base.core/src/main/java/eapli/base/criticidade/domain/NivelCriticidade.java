@@ -79,14 +79,14 @@ public class NivelCriticidade implements Comparable<Long>, AggregateRoot<Long> {
 
     @Override
     public String toString() {
-        return "NivelCriticidade ID :" + id +
-                "       Etiqueta =" +
+        return "NivelCriticidade ID : " + id +
+                "       Etiqueta : " +
                 etiqueta+
-                "       Valor de escala = " +
+                "       Valor de escala : " +
                 valorDeEscala +
-                "       Cor = " + toStringCor(cor)
+                "       Cor : " + toStringCor(cor)
                 +
-                "       Objetivo = " +
+                "       Objetivo : " +
                 objetivo.toString();
     }
 

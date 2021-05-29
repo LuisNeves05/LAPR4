@@ -26,4 +26,9 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
     public Long identity() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return ticket.toString();
+    }
 }

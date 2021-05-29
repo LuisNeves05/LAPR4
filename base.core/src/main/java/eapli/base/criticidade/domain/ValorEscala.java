@@ -14,7 +14,7 @@ public class ValorEscala {
     }
 
     private boolean checkValorEscala(int valor){
-        if(!(valor < 4 && valor >1)){
+        if(!(valor < 5 && valor >0)){
             System.out.println("Escala Inválida!");
             return false;
         }

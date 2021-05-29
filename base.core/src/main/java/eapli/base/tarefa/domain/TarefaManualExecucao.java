@@ -49,4 +49,17 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     public Long identity() {
         return super.identity();
     }
+
+
+    public void retirarEquipa(){
+         this.equipasExecuta.clear();
+    }
+    public void defineColaboradorExecutante(Colaborador colaborador){
+        this.colabExecuta= colaborador;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

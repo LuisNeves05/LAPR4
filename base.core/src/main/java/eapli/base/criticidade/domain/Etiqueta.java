@@ -32,6 +32,6 @@ public class Etiqueta implements ValueObject {
 
     @Override
     public String toString() {
-        return this.etiqueta;
+        return  etiqueta;
     }
 }
