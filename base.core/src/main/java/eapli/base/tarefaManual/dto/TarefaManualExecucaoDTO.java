@@ -1,4 +1,4 @@
-package eapli.base.tarefaManual.domain.dto;
+package eapli.base.tarefaManual.dto;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
@@ -29,5 +29,28 @@ public class TarefaManualExecucaoDTO {
         this.id = id.toString();
         this.estadoRealizacao = estadoRealizacao.toString();
         this.colabExecuta = colabExecuta.identity().toString();
+    }
+
+
+    public static String arrayToString(List<String> array){
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+
+        for(String elem : array){
+            sb.append(elem);
+            sb.append(",");
+        }
+
+        StringBuilder sb1 = new StringBuilder();
+        sb1.append(sb.substring(0,sb.length()-1));
+        sb1.append(")");
+        
+
+        return String.valueOf(sb1);
+    }
+
+    @Override
+    public String toString() {
+        return "[" + id  + "!" + estadoRealizacao + "!"+ colabExecuta + "!" + arrayToString(equipasExecuta) +"]";
     }
 }

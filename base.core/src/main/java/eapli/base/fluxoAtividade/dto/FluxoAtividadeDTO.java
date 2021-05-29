@@ -14,4 +14,9 @@ public class FluxoAtividadeDTO {
         this.id = id.toString();
         this.estado = estado.toString();
     }
+
+    @Override
+    public String toString() {
+        return "[" + id + "!" + estado + "]";
+    }
 }
