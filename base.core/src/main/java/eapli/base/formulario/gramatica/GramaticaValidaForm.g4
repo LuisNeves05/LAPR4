@@ -29,6 +29,7 @@ NAOVAZIO: 'NAOVAZIO';
 VAZIO : 'VAZIO';
 IGUAL : '=';
 MAIOR : '>';
+OU : ('||' | 'OU');
 MENOR : '<';
 NOMEATRIBUTO : [A-Za-z]+;
 ESPACO : [ ] -> skip;

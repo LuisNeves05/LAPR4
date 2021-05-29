@@ -32,6 +32,10 @@ public class Etiqueta implements ValueObject {
 
     @Override
     public String toString() {
-        return  etiqueta;
+
+        if (this.etiqueta== null)
+                return "Não têm";
+
+        return this.etiqueta;
     }
 }
