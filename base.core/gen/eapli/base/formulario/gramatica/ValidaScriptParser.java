@@ -126,7 +126,7 @@ public class ValidaScriptParser extends Parser {
 		}
 	}
 
-	public final ProgContext prog() throws RecognitionException {
+	public final ProgContext prog() throws Exception {
 		ProgContext _localctx = new ProgContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_prog);
 		int _la;
@@ -174,7 +174,7 @@ public class ValidaScriptParser extends Parser {
 				break;
 			}
 		}
-		catch (RecognitionException re) {
+		catch (Exception re) {
 			return null;
 		}
 		finally {
@@ -254,7 +254,7 @@ public class ValidaScriptParser extends Parser {
 		}
 	}
 
-	public final StatContext stat() throws RecognitionException {
+	public final StatContext stat() throws Exception {
 		StatContext _localctx = new StatContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_stat);
 		try {
@@ -295,7 +295,7 @@ public class ValidaScriptParser extends Parser {
 				break;
 			}
 		}
-		catch (RecognitionException re) {
+		catch (Exception re) {
 			return null;
 		}
 		finally {
@@ -421,11 +421,11 @@ public class ValidaScriptParser extends Parser {
 		}
 	}
 
-	public final ExprContext expr() throws RecognitionException {
+	public final ExprContext expr() throws Exception {
 		return expr(0);
 	}
 
-	private ExprContext expr(int _p) throws RecognitionException {
+	private ExprContext expr(int _p) throws Exception {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
 		ExprContext _localctx = new ExprContext(_ctx, _parentState);
@@ -538,7 +538,7 @@ public class ValidaScriptParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
+		catch (Exception re) {
 			return null;
 		}
 		finally {
@@ -654,11 +654,11 @@ public class ValidaScriptParser extends Parser {
 		}
 	}
 
-	public final ValidaExpContext validaExp() throws RecognitionException {
+	public final ValidaExpContext validaExp() throws Exception {
 		return validaExp(0);
 	}
 
-	private ValidaExpContext validaExp(int _p) throws RecognitionException {
+	private ValidaExpContext validaExp(int _p) throws Exception {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
 		ValidaExpContext _localctx = new ValidaExpContext(_ctx, _parentState);
@@ -851,7 +851,7 @@ public class ValidaScriptParser extends Parser {
 			}
 			}
 		}
-		catch (RecognitionException re) {
+		catch (Exception re) {
 			return null;
 		}
 		finally {
@@ -1008,7 +1008,7 @@ public class ValidaScriptParser extends Parser {
 				return null;
 			}
 		}
-		catch (RecognitionException re) {
+		catch (Exception re) {
 			return null;
 		}
 		finally {
