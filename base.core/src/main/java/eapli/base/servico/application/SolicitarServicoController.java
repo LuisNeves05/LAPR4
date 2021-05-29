@@ -16,6 +16,7 @@ import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tarefa.domain.TarefaManual;
 import eapli.base.tarefa.domain.TarefaManualExecucao;
+import eapli.base.tarefa.domain.TiposDeTarefa;
 import eapli.base.tarefa.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -30,7 +31,13 @@ import java.util.List;
 
 public class SolicitarServicoController {
 
+    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+
+    private final UserSession userSession = authorizationService.session().get();
+
     private SystemUser systemUser;
+
+    private final Colaborador colabPedido = colabPorUserName(systemUser.username());
 
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
 
@@ -47,6 +54,9 @@ public class SolicitarServicoController {
     private final TarefaExecucaoRepositorio tarefaExecucaoRepositorio = PersistenceContext.repositories().tarefaExecucaoRepositorio();
 
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
+
+    private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
+
 
 
 
@@ -101,5 +111,13 @@ public class SolicitarServicoController {
 
     public FluxoAtividade guardarFluxo(FluxoAtividade fluxoAtividade){
         return fluxoAtividadeRepositorio.save(fluxoAtividade);
+    }
+
+    public TiposDeTarefa tiposDeTarefa(){
+        return tiposDeTarefa;
+    }
+
+    public Colaborador colaboradorLogado(){
+        return colabPedido;
     }
 }

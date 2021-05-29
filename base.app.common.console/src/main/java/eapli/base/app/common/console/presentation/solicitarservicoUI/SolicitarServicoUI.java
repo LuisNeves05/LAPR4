@@ -40,10 +40,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
 
-    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-    private final UserSession userSession = authorizationService.session().get();
-    private final SystemUser systemUser = userSession.authenticatedUser();
-    private final Colaborador colabPedido = lcp.colabPorUserName(systemUser.username());
+
 
     @Override
     protected boolean doShow() {
@@ -89,22 +86,22 @@ public class SolicitarServicoUI extends AbstractUI {
                 respostas.add(rAtr);
             }
 
-            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, s, colabPedido);
+            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, s, lcp.colaboradorLogado());
             fps.add(fp);
 
             lcp.saveFormPreenchido(fp);
         }
 
-        Ticket ticket = new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
+        Ticket ticket = new Ticket(lcp.colaboradorLogado(), s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
 
         AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
         if (at != null) {
             Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
-            TarefaManualAprovacao tarefaManualAprovacao = new TarefaManualAprovacao(ticket);
+            TarefaManualAprovacao tarefaManualAprovacao = lcp.tiposDeTarefa().novaTarefaManualAprovacao(ticket);
             if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)) {
-                Colaborador respHierarquico = colabPedido.seuColabResponsavel();
+                Colaborador respHierarquico = lcp.colaboradorLogado().seuColabResponsavel();
                 tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
             }
             if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)) {
@@ -116,17 +113,17 @@ public class SolicitarServicoUI extends AbstractUI {
 
         if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
             if (ar.equipasExecucao() != null) {
-                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, s.fluxoDoServico().ativRealizacaoDoFluxo().equipasExecucao());
+                TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
                 for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);
                 }
                 ar.adicionarTarefaExecucao(tme);
             } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tme = new TarefaManualExecucao(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
+                TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
                 ar.adicionarTarefaExecucao(tme);
             }
         } else {
-            TarefaAutomatica tarefaAutomatica = new TarefaAutomatica(ticket);
+            TarefaAutomatica tarefaAutomatica = lcp.tiposDeTarefa().novaTarefaAutomatica(ticket);
             ar.adicionarTarefaAutomatica(tarefaAutomatica);
         }
 
