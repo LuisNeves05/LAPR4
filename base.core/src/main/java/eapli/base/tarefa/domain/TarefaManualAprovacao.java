@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot<Long>, Comparable<Long> {
 
-    @OneToMany
+    @ManyToMany
     private Set<Colaborador> colabsAprova = new HashSet<>();
 
     @Enumerated(EnumType.STRING)

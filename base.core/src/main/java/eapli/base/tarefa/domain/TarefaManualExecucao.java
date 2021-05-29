@@ -15,7 +15,7 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     @OneToOne
     private Colaborador colabExecuta;
 
-    @OneToMany
+    @ManyToMany
     private Set<Equipa> equipasExecuta;
 
     @Column(name = "ESTADO_REALIZACAO")
@@ -28,10 +28,10 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
         this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
     }
 
-    public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta){
+    public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao){
         super(ticket);
         this.colabExecuta = colabExecuta;
-        this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
+        this.estadoRealizacao = estadoRealizacao;
     }
 
     protected TarefaManualExecucao() {}
