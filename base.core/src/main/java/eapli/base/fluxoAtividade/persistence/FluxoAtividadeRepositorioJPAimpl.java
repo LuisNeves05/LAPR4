@@ -1,9 +1,15 @@
 package eapli.base.fluxoAtividade.persistence;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
+import eapli.base.fluxoAtividade.domain.StatusFluxo;
+import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+
+import javax.persistence.Query;
 
 
 public class FluxoAtividadeRepositorioJPAimpl extends JpaAutoTxRepository<FluxoAtividade, Long, Long>
@@ -11,5 +17,13 @@ public class FluxoAtividadeRepositorioJPAimpl extends JpaAutoTxRepository<FluxoA
 
     public FluxoAtividadeRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
+    }
+
+    @Override
+    public Iterable<FluxoAtividade> fluxosAtivos() {
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from FluxoAtividade t where t.statusFluxo = :a", FluxoAtividade.class);
+        query.setParameter("a", StatusFluxo.ATIVO);
+        return query.getResultList();
     }
 }

@@ -40,4 +40,7 @@ public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot
         return super.identity();
     }
 
+    public EstadoAprovacao estadoAprov() {
+        return estadoAprovacao;
+    }
 }

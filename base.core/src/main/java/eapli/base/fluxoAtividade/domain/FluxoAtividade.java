@@ -2,9 +2,15 @@ package eapli.base.fluxoAtividade.domain;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.fluxoAtividade.dto.FluxoAtividadeDTO;
+import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
@@ -59,5 +65,25 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
     @Override
     public Long identity() {
         return this.id;
+    }
+
+    public FluxoAtividadeDTO toDTO(){
+        List<TarefaManualAprovacao> tarAp = new ArrayList<>();
+        
+        if(this.atividadeAprovacao != null){
+            tarAp = new ArrayList<>(this.atividadeAprovacao.tarefasAprovList());
+        }
+        
+        List<TarefaManualExecucao> tarEx = new ArrayList<>(this.atividadeRealizacao.tarefaManualExecucaoList());
+
+        if(tarAp.isEmpty()){
+            return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarEx.get(0).estadoRealizacao().toString());
+        }
+
+        if(tarEx.isEmpty()){
+            return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarAp.get(0).estadoAprov().toString());
+        }
+
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.fluxoAtividade.application.QueriesFluxoAtivo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -15,6 +16,7 @@ import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.TipoExecucao;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
+import eapli.base.tarefaManual.application.QueriesTarefaController;
 import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
@@ -30,11 +32,16 @@ import java.util.Set;
 public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
+    private final QueriesTarefaController cont = new QueriesTarefaController();
 
+    private final QueriesFluxoAtivo fluxoAt = new QueriesFluxoAtivo();
 
 
     @Override
     protected boolean doShow() {
+
+        //System.out.println(cont.tarefasManuaisAprovDTO(lcp.colaboradorLogado()));
+        System.out.println(fluxoAt.fluxosAtivos());
 
         List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
@@ -103,7 +110,7 @@ public class SolicitarServicoUI extends AbstractUI {
         }
 
         if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
-            if (ar.equipasExecucao() != null) {
+            if (!ar.equipasExecucao().isEmpty()) {
                 TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
                 for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);

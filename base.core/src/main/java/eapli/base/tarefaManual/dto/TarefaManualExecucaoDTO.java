@@ -52,7 +52,14 @@ public class TarefaManualExecucaoDTO {
 
     @Override
     public String toString() {
-        return "[" + id  + "!" + estadoRealizacao + "!"+ colabExecuta + "!" + arrayToString(equipasExecuta) +"]";
+        var t = colabExecuta;
+        var t1 = equipasExecuta;
+
+        if(equipasExecuta.isEmpty()){
+            return "[" + id  + "!" + estadoRealizacao + "!"+ colabExecuta +"]";
+        }else{
+            return "[" + id  + "!" + estadoRealizacao + "!" + arrayToString(equipasExecuta) +"]";
+        }
     }
 
 }

@@ -48,4 +48,8 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     public Long identity() {
         return this.id;
     }
+
+    public Set<TarefaManualAprovacao> tarefasAprovList() {
+        return tarefasAprov;
+    }
 }

@@ -46,4 +46,15 @@ public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<Tarefa
         query.setParameter("a", EstadoRealizacao.POR_EXECUTAR);
         return query.getResultList();
     }
+
+    /*
+    @Override
+    public Iterable<TarefaManualExecucao> tarefasManuaisExecucaoColab(Colaborador colab) {
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualExecucao t where t.colabExecuta = :colab", TarefaManualExecucao.class);
+        query.setParameter("colab", colab);
+        return query.getResultList();
+    }
+
+     */
 }

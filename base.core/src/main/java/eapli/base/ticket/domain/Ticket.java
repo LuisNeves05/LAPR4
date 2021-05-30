@@ -8,6 +8,8 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -71,9 +73,19 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
 
     @Override
     public String toString() {
-        return "\n Ticket "+ id +" : \n"+
+        return "Ticket "+ id +" : \n"+
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + createdOn +
+                "       Criado em : " + formatDate(createdOn) +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
                 "       Urgência : " + urgenciaTicket ;}
+
+
+
+    private String formatDate(Calendar calendar){
+
+        Date date =  calendar.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String strDate = dateFormat.format(date);
+        return strDate;
+    }
 }

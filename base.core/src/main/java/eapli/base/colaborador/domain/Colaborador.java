@@ -91,7 +91,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     public int compareTo(MecanographicNumber o){return this.numMecanografico.compareTo(o);}
 
     @Override
-    public MecanographicNumber identity() {return null;}
+    public MecanographicNumber identity() {return this.numMecanografico;}
 
     @Override
     public String toString() {

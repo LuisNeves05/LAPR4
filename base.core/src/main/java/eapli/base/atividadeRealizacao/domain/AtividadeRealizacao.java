@@ -94,4 +94,8 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
         }else
             return "Execução automática";
     }
+
+    public Set<TarefaManualExecucao> tarefaManualExecucaoList() {
+        return tarefasManualExecucao;
+    }
 }

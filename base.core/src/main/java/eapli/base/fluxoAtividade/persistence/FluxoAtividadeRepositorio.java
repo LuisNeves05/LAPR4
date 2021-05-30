@@ -6,4 +6,6 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface FluxoAtividadeRepositorio extends DomainRepository<Long, FluxoAtividade> {
 
+    Iterable<FluxoAtividade> fluxosAtivos();
+
 }

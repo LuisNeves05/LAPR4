@@ -23,6 +23,10 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     @Enumerated(EnumType.STRING)
     private EstadoRealizacao estadoRealizacao;
 
+    public EstadoRealizacao estadoRealizacao() {
+        return estadoRealizacao;
+    }
+
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
         super(ticket);
         this.equipasExecuta = equipasExecuta;
@@ -66,6 +70,6 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
 
 
     public TarefaManualExecucaoDTO toDTO(){
-        return new TarefaManualExecucaoDTO(super.identity(), this.estadoRealizacao, this.equipasExecuta);
+        return new TarefaManualExecucaoDTO(super.identity(), this.estadoRealizacao, this.colabExecuta, "");
     }
 }
