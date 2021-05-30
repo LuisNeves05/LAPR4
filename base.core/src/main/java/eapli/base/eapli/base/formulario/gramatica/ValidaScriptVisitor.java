@@ -1,5 +1,5 @@
 // Generated from C:/Users/luism/Desktop/lei20_21_s4_2dl_4/base.core/src/main/java/eapli/base/formulario/gramatica\ValidaScript.g4 by ANTLR 4.9.1
-package eapli.base.formulario.gramatica;
+package eapli.base.eapli.base.formulario.gramatica;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
