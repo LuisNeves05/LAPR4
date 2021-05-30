@@ -92,7 +92,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
         Ticket ticket = new Ticket(lcp.colaboradorLogado(), s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
 
-        AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
+
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
         if (at != null) {
@@ -109,12 +109,12 @@ public class SolicitarServicoUI extends AbstractUI {
             at.adicionaTarefaAprov(tarefaManualAprovacao);
         }
 
+
+
+        AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
         if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
             if (!ar.equipasExecucao().isEmpty()) {
                 TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
-                for (Equipa equipa : ar.equipasExecucao()) {
-                    tme.adicionaEquipaExecucao(equipa);
-                }
                 ar.adicionarTarefaExecucao(tme);
             } else if (ar.colabExec() != null) {
                 TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
