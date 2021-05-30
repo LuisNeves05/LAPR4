@@ -73,10 +73,10 @@ public class MyUserMenu extends Menu {
 
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
-
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
+            //REMOVER DEPOIS //TODO
             addItem(MenuItem.of(ESPECIFICAR_SERVICO_OPTION, "Especificar Serviço", new EspecificarServicoUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_COLABORADOR_OPTION, "Especificar Colaborador", new EspecificarColaboradorUI()::show));
             addItem(MenuItem.of(CRIAR_EQUIPA_OPTION, "Criar nova Equipa", new EspecificarEquipaUI()::show));
@@ -86,6 +86,7 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of( ADICIONAR_NIVEL_CRITICIDADE , "Adicionar Nível de Criticidade", new AdicionarNivelCriticidadeUI()::show));
             addItem(MenuItem.of( CRIAR_NIVEL_CRITICIDADE , "Criar Nível de Criticidade", new EspecificarNivelCriticidadeUI()::show));
             addItem(MenuItem.of( REIVINDICAR_TAREFA , "Reivindicar Tarefa", new AssignarTarefasUI()::show));
+
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));
         }
