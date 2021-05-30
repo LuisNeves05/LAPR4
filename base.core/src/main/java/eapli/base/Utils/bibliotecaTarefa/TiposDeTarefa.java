@@ -13,8 +13,8 @@ import java.util.Set;
 public class TiposDeTarefa implements TipoTarefa{
 
     @Override
-    public TarefaAutomatica novaTarefaAutomatica(Ticket ticket) {
-        return new TarefaAutomatica(ticket);
+    public TarefaAutomatica novaTarefaAutomatica(Ticket ticket, String sriptExecucao) {
+        return new TarefaAutomatica(ticket, sriptExecucao);
     }
 
     @Override

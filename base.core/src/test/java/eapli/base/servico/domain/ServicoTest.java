@@ -2,6 +2,7 @@ package eapli.base.servico.domain;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.domain.CatalogoBuilder;
+import eapli.base.servico.builder.ServiceBuilder;
 import junit.framework.TestCase;
 
 public class ServicoTest extends TestCase {

@@ -1,6 +1,6 @@
 package eapli.base.fluxoAtividade.dto;
 
-import eapli.base.fluxoAtividade.domain.StatusFluxo;
+import eapli.base.fluxoAtividade.statusFluxo.StatusFluxo;
 import eapli.framework.representations.dto.DTO;
 
 @DTO

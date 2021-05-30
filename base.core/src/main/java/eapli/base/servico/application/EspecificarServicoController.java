@@ -1,8 +1,6 @@
 package eapli.base.servico.application;
 
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
@@ -11,12 +9,9 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
-import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.servico.domain.Keyword;
-import eapli.base.servico.domain.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

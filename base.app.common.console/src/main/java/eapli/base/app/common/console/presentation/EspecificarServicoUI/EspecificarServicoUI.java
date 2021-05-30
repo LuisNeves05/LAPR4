@@ -1,5 +1,6 @@
 package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
+import eapli.base.atividadeRealizacao.domain.TipoExecucao;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
@@ -13,6 +14,7 @@ import eapli.base.fluxoAtividade.domain.FluxoAtividadeBuilder;
 import eapli.base.formulario.domain.Formulario;
 //import eapli.base.formulario.gramatica.ValidaScript;
 import eapli.base.servico.application.EspecificarServicoController;
+import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.*;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;

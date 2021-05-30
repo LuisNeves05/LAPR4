@@ -1,5 +1,6 @@
 package eapli.base.servico.domain;
 
+import eapli.base.servico.builder.ServiceBuilder;
 import junit.framework.TestCase;
 
 public class ServiceBuilderTest extends TestCase {

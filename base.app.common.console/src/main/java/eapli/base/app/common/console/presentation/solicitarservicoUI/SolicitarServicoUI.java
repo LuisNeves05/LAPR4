@@ -1,11 +1,6 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
-import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxoAtividade.application.QueriesFluxoAtivo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
@@ -14,13 +9,7 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.TipoExecucao;
-import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.tarefaManual.application.QueriesTarefaController;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
-import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -90,40 +79,11 @@ public class SolicitarServicoUI extends AbstractUI {
             lcp.saveFormPreenchido(fp);
         }
 
-        Ticket ticket = new Ticket(lcp.colaboradorLogado(), s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
+        Ticket ticket = lcp.criarTicket(s, urgencia);
 
-        AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
-        AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
+        lcp.criarTarefaAprovacao(s, ticket);
 
-        if (at != null) {
-            Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
-            TarefaManualAprovacao tarefaManualAprovacao = lcp.tiposDeTarefa().novaTarefaManualAprovacao(ticket);
-            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)) {
-                Colaborador respHierarquico = lcp.colaboradorLogado().seuColabResponsavel();
-                tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
-            }
-            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)) {
-                Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
-                tarefaManualAprovacao.assignaColabAprovacao(respServico);
-            }
-            at.adicionaTarefaAprov(tarefaManualAprovacao);
-        }
-
-        if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
-            if (!ar.equipasExecucao().isEmpty()) {
-                TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
-                for (Equipa equipa : ar.equipasExecucao()) {
-                    tme.adicionaEquipaExecucao(equipa);
-                }
-                ar.adicionarTarefaExecucao(tme);
-            } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tme = lcp.tiposDeTarefa().novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
-                ar.adicionarTarefaExecucao(tme);
-            }
-        } else {
-            TarefaAutomatica tarefaAutomatica = lcp.tiposDeTarefa().novaTarefaAutomatica(ticket);
-            ar.adicionarTarefaAutomatica(tarefaAutomatica);
-        }
+        lcp.criarTarefaExecucao(s, ticket);
 
         s.fluxoDoServico().ativar();
         lcp.guardarFluxo(s.fluxoDoServico());

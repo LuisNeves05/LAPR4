@@ -3,10 +3,7 @@ package eapli.base.fluxoAtividade.persistence;
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
-import eapli.base.fluxoAtividade.domain.StatusFluxo;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
-import eapli.base.ticket.domain.Ticket;
+import eapli.base.fluxoAtividade.statusFluxo.StatusFluxo;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;

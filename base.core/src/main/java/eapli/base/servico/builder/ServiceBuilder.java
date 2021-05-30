@@ -1,9 +1,9 @@
-package eapli.base.servico.domain;
+package eapli.base.servico.builder;
 
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
+import eapli.base.servico.domain.*;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.HashSet;

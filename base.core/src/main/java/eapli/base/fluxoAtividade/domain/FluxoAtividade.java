@@ -2,6 +2,7 @@ package eapli.base.fluxoAtividade.domain;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.fluxoAtividade.statusFluxo.StatusFluxo;
 import eapli.base.fluxoAtividade.dto.FluxoAtividadeDTO;
 import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
@@ -10,7 +11,6 @@ import eapli.framework.domain.model.AggregateRoot;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {

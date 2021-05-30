@@ -1,6 +1,8 @@
-package eapli.base.formulario.domain;
+package eapli.base.formulario.builder;
 
-import eapli.base.servico.domain.Servico;
+import eapli.base.formulario.domain.Atributo;
+import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.NomeFormulario;
 import eapli.framework.domain.model.DomainFactory;
 import java.util.HashSet;
 import java.util.Set;

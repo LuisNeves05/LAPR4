@@ -1,5 +1,6 @@
 package eapli.base.formulario.application;
 
+import eapli.base.formulario.builder.FormularioBuilder;
 import eapli.base.formulario.domain.*;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;

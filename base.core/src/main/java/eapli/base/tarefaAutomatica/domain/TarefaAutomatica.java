@@ -15,8 +15,11 @@ public class TarefaAutomatica implements Comparable<Long>, AggregateRoot<Long> {
     @OneToOne(cascade = CascadeType.ALL)
     private Ticket ticket;
 
-    public TarefaAutomatica(Ticket ticket){
+    private String scriptExecucao;
+
+    public TarefaAutomatica(Ticket ticket, String scriptExecucao){
         this.ticket = ticket;
+        this.scriptExecucao = scriptExecucao;
     }
 
     protected TarefaAutomatica(){}

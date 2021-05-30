@@ -3,7 +3,6 @@ package eapli.base.atividadeRealizacao.domain;
 import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.servico.domain.TipoExecucao;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
@@ -74,6 +73,8 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     public Colaborador colabExec(){return this.colabExecucao;}
 
     public TipoExecucao tipoExecucao(){return tipoExecucao;}
+
+    public String scriptAutomatico(){return scriptAutomatico;}
 
     @Override
     public boolean sameAs(Object other) {

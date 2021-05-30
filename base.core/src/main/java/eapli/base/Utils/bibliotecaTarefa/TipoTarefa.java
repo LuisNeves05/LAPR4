@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface TipoTarefa {
 
-    TarefaAutomatica novaTarefaAutomatica(Ticket ticket);
+    TarefaAutomatica novaTarefaAutomatica(Ticket ticket, String sriptExecucao);
 
     TarefaManualExecucao novaTarefaManualExecucaoEquipa(Ticket ticket, Set<Equipa> equipasExecuta);
 
