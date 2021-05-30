@@ -25,7 +25,7 @@ public class TarefaManualExecucaoDTO {
             this.equipasExecuta.add(eq.identity().toString());
     }
 
-    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao, Colaborador colabExecuta){
+    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao, Colaborador colabExecuta, String ignore){
         this.id = id.toString();
         this.estadoRealizacao = estadoRealizacao.toString();
         this.colabExecuta = colabExecuta.identity().toString();

@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -13,10 +14,9 @@ public class ServerMain {
 
     static InetAddress serverIP;
     static Socket sockCli, sockServ;
+    static ServerSocket socket;
 
     public static void main(String args[]) throws Exception {
-        String nick = "", frase;
-        byte[] data = new byte[300];
 
         if(args.length!=1) {
             System.out.println(
@@ -28,28 +28,26 @@ public class ServerMain {
             System.out.println("Invalid server: " + args[0]);
             System.exit(1); }
 
-        try { sockCli = new Socket(serverIP, 5898); }
+        try { socket = new ServerSocket(3698); }
         catch(IOException ex) {
             System.out.println("Failed to connect.");
             System.exit(1); }
 
-            try { sockServ = new Socket(serverIP, 4678); }
-        catch(IOException ex) {
-            System.out.println("Failed to connect.");
-            System.exit(1); }
+        socket.setSoTimeout(100);
 
         /*
           Threads criadas no inicio para permitir que motor de fluxos seja servidor e cliente
          */
         //MotorFluxoClienteThread motorClienteThread = new MotorFluxoClienteThread(sockCli);
         //motorClienteThread.start();
+        sockServ = socket.accept();
         MotorFluxoServidorThread motorFluxoServidorThread = new MotorFluxoServidorThread(sockServ);
         motorFluxoServidorThread.start();
 
 
         while(true) { // read messages from the console and send them to the server
-            System.out.println("Ola, este é o servidor principal!\n\n");
-
+            //System.out.println("Ola, este é o servidor principal!\n\n");
+            //sleep(2);
             //frase="(" + nick + ") " + frase;
             //data = frase.getBytes();
             //sOutCli.write((byte)frase.length());
