@@ -20,24 +20,33 @@ public class ServerMain extends Thread{
 
     public void run() {
 
-        String ip = "127.0.0.1";
+        String ip = "10.8.0.81";
+
+        System.out.println("ENTROU NO SERVIDOR");
 
         try { serverIP = InetAddress.getByName(ip); }
         catch(UnknownHostException ex) {
             System.out.println("Invalid server: " + ip);
             System.exit(1); }
 
-        try { socket = new ServerSocket(3698); }
+        System.out.println("Cheguei a linha 32!!");
+        try { socket = new ServerSocket(3895);
+            System.out.println(socket.getLocalPort() + " PORTA");
+            }
         catch(IOException ex) {
             System.out.println("Failed to connect.");
             System.exit(1); }
-
+        System.out.println("Conectei me ao servidor com a socket 3698!!");
 
         /*
           Threads criadas no inicio para permitir que motor de fluxos seja servidor e cliente
          */
         try {
+            System.out.println("Linha 43");
             sockServ = socket.accept();
+            System.out.println("Linha 45");
+            System.out.println(sockServ != null);
+            System.out.println("\n A SOCKET É NULL OU NAO");
         } catch (IOException e) {
             e.printStackTrace();
         }

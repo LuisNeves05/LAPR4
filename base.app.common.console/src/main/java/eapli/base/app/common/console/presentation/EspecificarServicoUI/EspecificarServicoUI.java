@@ -13,6 +13,7 @@ import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.fluxoAtividade.domain.FluxoAtividadeBuilder;
 import eapli.base.formulario.domain.Formulario;
 //import eapli.base.formulario.gramatica.ValidaScript;
+import eapli.base.formulario.gramatica.ValidaScript;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.*;
@@ -452,11 +453,11 @@ public class EspecificarServicoUI extends AbstractUI {
                 return false;
             }
 
-            /*if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
+            if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
                 flag = false;
             else
                 System.out.println("Script inválido");
-            */
+
         }
 
         return true;

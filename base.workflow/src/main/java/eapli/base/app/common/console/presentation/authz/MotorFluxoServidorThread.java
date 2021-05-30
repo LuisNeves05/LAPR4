@@ -16,8 +16,7 @@ import java.net.ServerSocket;
 class MotorFluxoServidorThread extends Thread {
     private Socket myS;
     private DataInputStream sIn;
-    private ServerSocket svs;
-    private DataOutputStream cOut;
+    private ServerSocket serverSocket;
 
     public MotorFluxoServidorThread(Socket s) {
         myS = s;
@@ -26,12 +25,11 @@ class MotorFluxoServidorThread extends Thread {
 
     public void run() {
         int nChars;
-
+        System.out.println("ENtrou dentro do fluxo servidor!!!!!");
         //String MENSAGEM_ERRO = "POR FAVOR INTRODUZA UM CÓDIGO VÁLIDO!";
         try {
 
             sIn = new DataInputStream(myS.getInputStream());
-            cOut = new DataOutputStream(myS.getOutputStream());
             System.out.println("Chegou um novo pedido ao motor de fluxos servidor!");
             //Pedido do cliente
 
@@ -49,7 +47,6 @@ class MotorFluxoServidorThread extends Thread {
                     MotorFluxosAtivosThread motorFluxosAtivosThread = new MotorFluxosAtivosThread(myS);
                     motorFluxosAtivosThread.start();
                 }
-
                 flag = false;
             }
 

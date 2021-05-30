@@ -29,7 +29,7 @@ class ServicoRHCliente extends Thread {
 
     public void run() {
         byte[] data = new byte[300];
-        String ip = "127.0.0.1";
+        String ip = "10.8.0.81";
 
         try {
             serverIP = InetAddress.getByName(ip);
@@ -40,7 +40,7 @@ class ServicoRHCliente extends Thread {
 
         //teoricamente, estarme ei a ligar à porta associada à socket da thread servidor
         try {
-            sock = new Socket(serverIP, 3698);
+            sock = new Socket(serverIP, 3895);
         } catch (IOException ex) {
             System.out.println("Failed to connect.");
             System.exit(1);
