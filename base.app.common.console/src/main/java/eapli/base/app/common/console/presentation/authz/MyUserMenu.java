@@ -77,7 +77,6 @@ public class MyUserMenu extends Menu {
 
             ServerMain n = new ServerMain();
             n.teste();
-            n.run();
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));

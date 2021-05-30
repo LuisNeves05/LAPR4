@@ -1,6 +1,6 @@
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/ServerMain.java
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/MotorFluxoClienteThread.java
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/ServicoRHCliente.java
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/Protocolo.java
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/MotorFluxoTarefasPendentesThread.java
-/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/lei20_21_s4_2dl_4/base.workflow/src/main/java/MotorFluxoServidorThread.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/ServerMain.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/ServicoRHCliente.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/Protocolo.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/MotorFluxoClienteThread.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/MotorFluxoServidorThread.java
+/Users/tiagomarante/Desktop/lapr4DEFENITIVOCARALHO/LAPR4/lei20_21_s4_2dl_4/base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/MotorFluxoTarefasPendentesThread.java

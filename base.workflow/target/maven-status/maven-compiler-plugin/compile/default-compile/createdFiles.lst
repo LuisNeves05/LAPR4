@@ -1,6 +1,6 @@
-ServerMain.class
-ServicoRHCliente.class
-Protocolo.class
-MotorFluxoClienteThread.class
-MotorFluxoServidorThread.class
-MotorFluxoTarefasPendentesThread.class
+eapli/base/app/common/console/presentation/authz/ServicoRHCliente.class
+eapli/base/app/common/console/presentation/authz/MotorFluxoClienteThread.class
+eapli/base/app/common/console/presentation/authz/MotorFluxoServidorThread.class
+eapli/base/app/common/console/presentation/authz/ServerMain.class
+eapli/base/app/common/console/presentation/authz/Protocolo.class
+eapli/base/app/common/console/presentation/authz/MotorFluxoTarefasPendentesThread.class
