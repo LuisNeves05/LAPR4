@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="base.workflow:war">
+    <output-path>$PROJECT_DIR$/base.workflow/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>base.workflow</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="workflow-1.3.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="base.workflow:war exploded" />
+    </root>
+  </artifact>
+</component>

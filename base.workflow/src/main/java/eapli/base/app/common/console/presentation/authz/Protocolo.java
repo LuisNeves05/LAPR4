@@ -1,3 +1,5 @@
+package eapli.base.app.common.console.presentation.authz;
+
 public class Protocolo {
 
     public static final int VERSAO = 0;

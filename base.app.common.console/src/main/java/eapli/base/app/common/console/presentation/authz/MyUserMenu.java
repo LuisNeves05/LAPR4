@@ -33,6 +33,7 @@ import eapli.base.app.common.console.presentation.EspecificarServicoUI.Especific
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
+import eapli.base.tarefaManual.domain.TarefaManual;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -73,6 +74,11 @@ public class MyUserMenu extends Menu {
 
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
+
+            ServerMain n = new ServerMain();
+            n.teste();
+            n.run();
+
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));

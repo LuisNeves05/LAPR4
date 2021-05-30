@@ -1,3 +1,5 @@
+package eapli.base.app.common.console.presentation.authz;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -46,7 +48,7 @@ class MotorFluxoServidorThread extends Thread {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("\nMotorFluxoServidorThread");
+            System.out.println("\neapli.base.app.common.console.presentation.authz.MotorFluxoServidorThread");
         }
     }
 

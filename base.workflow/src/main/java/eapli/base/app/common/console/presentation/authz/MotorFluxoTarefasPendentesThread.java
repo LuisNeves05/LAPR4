@@ -1,3 +1,5 @@
+package eapli.base.app.common.console.presentation.authz;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
