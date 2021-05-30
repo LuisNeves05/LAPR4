@@ -3,6 +3,7 @@ package eapli.base.tarefaManual.domain;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
+import eapli.base.tarefaManual.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -61,5 +62,10 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     @Override
     public String toString() {
         return super.toString();
+    }
+
+
+    public TarefaManualExecucaoDTO toDTO(){
+        return new TarefaManualExecucaoDTO(super.identity(), this.estadoRealizacao, this.equipasExecuta);
     }
 }

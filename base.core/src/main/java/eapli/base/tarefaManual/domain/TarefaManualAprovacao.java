@@ -2,6 +2,7 @@ package eapli.base.tarefaManual.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tarefaManual.domain.estado.EstadoAprovacao;
+import eapli.base.tarefaManual.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -38,4 +39,5 @@ public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot
     public Long identity() {
         return super.identity();
     }
+
 }

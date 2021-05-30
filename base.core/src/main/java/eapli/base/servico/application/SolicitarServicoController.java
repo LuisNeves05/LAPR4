@@ -30,13 +30,9 @@ import java.util.List;
 
 public class SolicitarServicoController {
 
-    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-
-    private final UserSession userSession = authorizationService.session().get();
-
     private SystemUser systemUser;
 
-    private final Colaborador colabPedido = colabPorUserName(systemUser.username());
+    private Colaborador colabPedido;
 
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
 
@@ -65,6 +61,7 @@ public class SolicitarServicoController {
         if(authorizationService.hasSession() && authorizationService.session().isPresent()) {
             UserSession userSession = authorizationService.session().get();
             this.systemUser = userSession.authenticatedUser();
+            this.colabPedido = colabPorUserName(systemUser.username());
         }
     }
 

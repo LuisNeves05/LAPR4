@@ -7,6 +7,7 @@ import eapli.framework.representations.dto.DTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @DTO
 public class TarefaManualExecucaoDTO {
@@ -18,14 +19,14 @@ public class TarefaManualExecucaoDTO {
 
     public List<String> equipasExecuta = new ArrayList<>();
 
-    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao,List<Equipa> equipasExecuta){
+    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao, Set<Equipa> equipasExecuta){
         this.id = id.toString();
         this.estadoRealizacao = estadoRealizacao.toString();
         for(Equipa eq : equipasExecuta)
             this.equipasExecuta.add(eq.identity().toString());
     }
 
-    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao, Colaborador colabExecuta){
+    public TarefaManualExecucaoDTO(Long id, EstadoRealizacao estadoRealizacao, Colaborador colabExecuta, String ignore){
         this.id = id.toString();
         this.estadoRealizacao = estadoRealizacao.toString();
         this.colabExecuta = colabExecuta.identity().toString();
@@ -44,7 +45,7 @@ public class TarefaManualExecucaoDTO {
         StringBuilder sb1 = new StringBuilder();
         sb1.append(sb.substring(0,sb.length()-1));
         sb1.append(")");
-        
+
 
         return String.valueOf(sb1);
     }
@@ -53,4 +54,5 @@ public class TarefaManualExecucaoDTO {
     public String toString() {
         return "[" + id  + "!" + estadoRealizacao + "!"+ colabExecuta + "!" + arrayToString(equipasExecuta) +"]";
     }
+
 }

@@ -1,5 +1,6 @@
 package eapli.base.tarefaManual.domain;
 
+import eapli.base.tarefaManual.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -22,6 +23,10 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
         this.ticket = ticket;
     }
 
+    protected TarefaManual(Long id, String ignore){
+        this.id = id;
+    }
+
     @Override
     public Long identity() {
         return id;
@@ -31,4 +36,5 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
     public String toString() {
         return ticket.toString();
     }
+
 }

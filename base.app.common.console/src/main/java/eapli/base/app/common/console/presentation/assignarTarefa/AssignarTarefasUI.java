@@ -21,8 +21,7 @@ public class AssignarTarefasUI extends AbstractUI {
             System.out.println("Ainda não têm uma equipa associada.Não pode reivindicar tarefas.");
             return false;
         }
-        for (Equipa equipa: listaequipas
-             ) {
+        for (Equipa equipa: listaequipas) {
            setTarefasManualExecucao.addAll((List<TarefaManualExecucao>) controller.tarefasManualExecucao(equipa));
 
         }

@@ -4,6 +4,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -36,9 +37,9 @@ public class AssignarTarefaController {
         return tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipa);
     }
 
-//    public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){
-//        return tarefaExecucaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
-//    }
+    public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){
+        return tarefaExecucaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
+    }
 
     public TarefaManualExecucao assignarTarefaExecutante(TarefaManualExecucao tarefa) {
         tarefa.defineColaboradorExecutante(colabPedido);
