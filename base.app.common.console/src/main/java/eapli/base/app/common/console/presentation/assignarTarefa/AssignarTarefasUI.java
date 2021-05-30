@@ -72,6 +72,4 @@ public class AssignarTarefasUI extends AbstractUI {
         tarefa.retirarEquipa();
         tarefa.defineColaboradorExecutante(controller.responsavelTarefa());
     }
-//todo por favor testar isto no bootstrap que agora tenho de lhe dar uma beca em SCCOMP
-
 }
