@@ -1,30 +1,30 @@
 grammar ValidaScript;
 
 prog: stat*  | validaExp*;
-stat: expr NEWLINE # printExpr
-| ID '=' expr NEWLINE # assign
+stat: operacoesAritmeticas NEWLINE # printExpr
+| ID '=' operacoesAritmeticas NEWLINE # assign
 | NEWLINE # blank
 
 ;
-expr: expr op=('*'|'/') expr # MulDiv
-| expr op=('+'|'-') expr# AddSub
+operacoesAritmeticas: operacoesAritmeticas op=('*'|'/') operacoesAritmeticas # MulDiv
+| operacoesAritmeticas op=('+'|'-') operacoesAritmeticas# AddSub
 | INT # inte
 | ID # id
-| '(' expr ')' # parens
+| '(' operacoesAritmeticas ')' # parens
 ;
 
-validaExp: validaExp DEFINE exprExp EXPREGULAR     #defineExpRegular
-      | SE exprExp VAZIO ENTAO exprExp NAOVAZIO       #validaEntreCampos
-      | SE exprExp NAOVAZIO ENTAO exprExp VAZIO       #validaEntreCampos
-      | SE exprExp MAIOR exprExp ENTAO exprExp VAZIO      #validaEntreCampos
-      | SE exprExp MAIOR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
-      | SE exprExp MENOR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
-      | SE exprExp ATR exprExp ENTAO exprExp NAOVAZIO   #validaEntreCampos
-      | DEFINE exprExp NAOVAZIO                    #defineCampoNaoVazio
-      | DEFINE exprExp VAZIO                       #defineCampoPodeSerVazio
+validaExp: validaExp DEFINE variavel EXPREGULAR     #defineExpRegular
+      | SE variavel VAZIO ENTAO variavel NAOVAZIO       #validaEntreCampos
+      | SE variavel NAOVAZIO ENTAO variavel VAZIO       #validaEntreCampos
+      | SE variavel MAIOR variavel ENTAO variavel VAZIO      #validaEntreCampos
+      | SE variavel MAIOR variavel ENTAO variavel NAOVAZIO   #validaEntreCampos
+      | SE variavel MENOR variavel ENTAO variavel NAOVAZIO   #validaEntreCampos
+      | SE variavel ATR variavel ENTAO variavel NAOVAZIO   #validaEntreCampos
+      | DEFINE variavel NAOVAZIO                    #defineCampoNaoVazio
+      | DEFINE variavel VAZIO                       #defineCampoPodeSerVazio
 ;
 
-exprExp:    INT          #int
+variavel:    INT          #int
         | NOMEATRIBUTO   #nomeAtributo
         | MAIOR          #maior
         | MENOR          #menor

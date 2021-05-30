@@ -38,23 +38,16 @@ public class ServerMain {
         /*
           Threads criadas no inicio para permitir que motor de fluxos seja servidor e cliente
          */
-        //MotorFluxoClienteThread motorClienteThread = new MotorFluxoClienteThread(sockCli);
-        //motorClienteThread.start();
+        MotorFluxoClienteThread motorClienteThread = new MotorFluxoClienteThread(sockCli);
+        motorClienteThread.start();
         sockServ = socket.accept();
         MotorFluxoServidorThread motorFluxoServidorThread = new MotorFluxoServidorThread(sockServ);
         motorFluxoServidorThread.start();
 
 
         while(true) { // read messages from the console and send them to the server
-            //System.out.println("Ola, este é o servidor principal!\n\n");
-            //sleep(2);
-            //frase="(" + nick + ") " + frase;
-            //data = frase.getBytes();
-            //sOutCli.write((byte)frase.length());
+            Thread.sleep(7000);
         }
 
-        //serverConn.join();
-        //sockCli.close();
-        //sockServ.close();
     }
 }

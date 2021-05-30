@@ -18,6 +18,7 @@ class MotorFluxoServidorThread extends Thread {
     public MotorFluxoServidorThread(Socket s) {
         myS = s;
     }
+    boolean flag = true;
 
     public void run() {
         int nChars;
@@ -33,22 +34,14 @@ class MotorFluxoServidorThread extends Thread {
             nChars = sIn.readInt();
 
             while (true) {
+                Thread.sleep(10000);
 
-
-                //Mediante o codigo, fazemos coisas diferentes
-                switch (nChars){
-                    case 4:
-
-                        MotorFluxoTarefasPendentesThread motorFluxoTarefasPendentesThread = new MotorFluxoTarefasPendentesThread(myS);
-                        motorFluxoTarefasPendentesThread.start();
-
-                    case 5:
-
-
-                    default:
-                        //mensagem de erro caso o que cliente introduziu nao faça sentido
-                        //cOut.write(MENSAGEM_ERRO.getBytes(StandardCharsets.UTF_8));
+                if(nChars == 4 && flag == true){
+                    MotorFluxoTarefasPendentesThread motorFluxoTarefasPendentesThread = new MotorFluxoTarefasPendentesThread(myS);
+                    motorFluxoTarefasPendentesThread.start();
                 }
+
+                flag = false;
             }
 
         } catch (Exception ex) {
