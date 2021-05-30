@@ -43,8 +43,6 @@ public class MotorFluxoTarefasPendentesThread extends Thread{
 
             while(true) {
 
-                Thread.sleep(10000);
-
                 System.out.println("A ESPERA DO ID DO COLABORADOR");
                 idColaborador = sIn.readUTF();
                 System.out.println("OLA DEPOIS DO COLAB");
