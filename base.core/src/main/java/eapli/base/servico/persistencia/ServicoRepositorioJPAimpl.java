@@ -56,8 +56,9 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
     @Override
     public List<Servico> servicoPorCatalogo(final Catalogo catalogo) {
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where :catalogo = s.catalogo", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where :catalogo = s.catalogo and s.estado = :completo", Servico.class);
         query.setParameter("catalogo", catalogo);
+        query.setParameter("completo", EstadoServico.COMPLETO);
         return query.getResultList();
     }
 

@@ -66,8 +66,6 @@ public class EspecificarServicoController {
 
     public void adicionaFormulario(Servico s, Formulario formulario){
         s.adicionaFormulario(formulario);
-        repoServ.save(s);
-        s.limpaForms();
     }
     
     public List<Servico> servicosIncompletos() {

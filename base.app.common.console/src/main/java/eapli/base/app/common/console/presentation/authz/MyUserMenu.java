@@ -90,7 +90,7 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(ESPECIFICAR_SERVICO_OPTION, "Especificar Serviço", new EspecificarServicoUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_COLABORADOR_OPTION, "Especificar Colaborador", new EspecificarColaboradorUI()::show));
             addItem(MenuItem.of(CRIAR_EQUIPA_OPTION, "Criar nova Equipa", new EspecificarEquipaUI()::show));
-            addItem(MenuItem.of(TERMINAR_ESPECIFICAR_SERVICO_OPTION, "Terminar especificação de servicos", new TerminarEspecificacaoServicoPendenteUI()::show));
+            addItem(MenuItem.of(TERMINAR_ESPECIFICAR_SERVICO_OPTION, "Completar serviços", new TerminarEspecificacaoServicoPendenteUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_CATALOGO_OPTION, "Especificar catalogo", new EspecificarCatalogoUI()::show));
             addItem(MenuItem.of(SOLICITAR_SERVICO_OPTION, "Solicitar Serviço", new SolicitarServicoUI()::show));
             addItem(MenuItem.of( ADICIONAR_NIVEL_CRITICIDADE , "Adicionar Nível de Criticidade", new AdicionarNivelCriticidadeUI()::show));

@@ -54,16 +54,9 @@ public class SolicitarServicoController {
 
     private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
 
-    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
-
-    private final TarefaExecucaoRepositorio tarefaExecucaoRepositorio = PersistenceContext.repositories().tarefaExecucaoRepositorio();
-
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
-
-
-
 
 
     public SolicitarServicoController(){
