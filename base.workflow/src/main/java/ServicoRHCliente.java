@@ -1,19 +1,22 @@
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 
 
-public class ServicoRHCliente {
+class ServicoRHCliente {
+    private static InetAddress serverIP;
+    private static Socket sock;
 
-    static InetAddress serverIP;
-    static Socket sock;
-
+    /*private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
+    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+    private final UserSession userSession = authorizationService.session().get();
+    private final SystemUser systemUser = userSession.authenticatedUser();
+    private final Colaborador colabAtual =colabPorUserName(systemUser.username());*/
 
     public static void main(String args[]) throws Exception {
         String nick, frase;
-        byte[] data = new byte[250];
+        byte[] data = new byte[300];
 
-        if (args.length != 1) {
+        if(args.length!=1) {
             System.out.println(
                     "Server IPv4/IPv6 address or DNS name is required as argument");
             System.exit(1);
@@ -21,47 +24,49 @@ public class ServicoRHCliente {
 
         try {
             serverIP = InetAddress.getByName(args[0]);
-        } catch (UnknownHostException ex) {
+        }
+        catch(UnknownHostException ex) {
             System.out.println("Invalid server: " + args[0]);
             System.exit(1);
         }
 
-        try {
-            sock = new Socket(serverIP, 4678);
-        } catch (IOException ex) {
+        //teoricamente, estarme ei a ligar à porta associada à socket da thread servidor
+        try { sock = new Socket(serverIP, 3698); }
+        catch(IOException ex) {
             System.out.println("Failed to connect.");
-            System.exit(1);
-        }
+            System.exit(1); }
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        DataInputStream sIn = new DataInputStream(sock.getInputStream());
         DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-
         System.out.println("Connected to server");
 
-        // start a thread to read incoming messages from the server
-        //Thread serverConn = new Thread(new TcpChatCliConn(sock));
-
-        while (true) { // read messages from the console and send them to the server
-            System.out.println("Ola, este é o servidor principal!\n\n");
-            System.out.println("Introduz 4 e espera pelo melhor: \n");
-
-            frase=in.readLine();
-
-            if(frase.compareTo("4")==0)
-            {
-                //envia sinal 4, que pede tarefa
-                sOut.write(4); break;
-            }
+        //ESTA A PEDIR TAREFAS PENDENTES
 
 
+        while(true) { // read messages from the console and send them to the server
 
-            //frase="(" + nick + ") " + frase;
-            //data = frase.getBytes();
-            //sOutCli.write((byte)frase.length());
-            //sOut.write(data,0,(byte)frase.length());
+            sOut.writeInt(4);
+            sOut.flush();
+            System.out.println("ENVIOU O SINAL PARA O SERVIDOR A DIZER QUE QUER TAREFAS");
+
+            sOut.writeUTF("Ola mano");
+            sOut.flush();
+
+            int tamanho = sIn.read();
+            System.out.println("\nRECEBEU O TAMANHO DA STRING " + tamanho);
+
+            sIn.read(data,0,tamanho);
+
+            String teste = new String(data,0,tamanho);
+
+            System.out.println("Recebi isto  " + teste);
+
         }
 
-        sock.close();
     }
-}
 
+   /* public Colaborador colabPorUserName(Username username){
+        return colaboradorRepositorio.colabPorUsername(username).iterator().next();
+    }*/
+}

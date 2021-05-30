@@ -1,6 +1,11 @@
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Thread para lidar com os diversos pedidos de tarefas pendentes por parte do cliente
@@ -9,36 +14,55 @@ public class MotorFluxoTarefasPendentesThread extends Thread{
 
     private Socket myS;
     private DataInputStream sIn;
-    private ServerSocket server = null;
+    private DataOutputStream cOut;
+    private String idColaborador;
+
+    private String listaTarefasPendentes = "Ticket id!Cenas id!cenas;Ticketid 2!outras cenas!;";
+    //TODO CONTROLLER DE TAREFAS PENDENTES
 
     public MotorFluxoTarefasPendentesThread(Socket s) {
         myS=s;
     }
 
     public void run() {
-        int nChars;
-        byte[] data = new byte[255];
+
+        try {
+            sIn = new DataInputStream(myS.getInputStream());
+            cOut = new DataOutputStream(myS.getOutputStream());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            System.out.println("ERRO NOS INPUTS OUTPUTS");
+            e.printStackTrace();
+        }
+
+        byte[] data;
         try {
 
-            sIn = new DataInputStream(myS.getInputStream());
+
+            System.out.println("Chegou um novo pedido ao motor fluxo de tarefas pendentes servidor!!");
+
             while(true) {
 
-                myS = server.accept();
-                System.out.println("Chegou um novo pedido ao motor fluxo servidor!!");
-                //TODO CRIAR MAIS UMA CLASSE THREAD PARA LIDAR COM OS MAMBOS
+                System.out.println("A ESPERA DO ID DO COLABORADOR");
+                idColaborador = sIn.readUTF();
+                System.out.println("OLA DEPOIS DO COLAB");
 
-                nChars=sIn.read();
-                if(sIn.read() == 5){
+                //TODO CHAMAR CONTROLLER PARA MANDAR AS CENAS
+                System.out.println("Chegou o id " +idColaborador);
+                data = listaTarefasPendentes.getBytes(StandardCharsets.UTF_8);
 
-                }
-                if(nChars==0) break; // empty line means client wants to exit
-                sIn.read(data,0,nChars);
-                //TcpChatSrv.sendToAll(nChars,data);
+                //envia o tamanho do que tem para enviar
+                //TODO dividir por 255 por causa da cena do tamanho max
+                cOut.write(data.length);
+                cOut.flush();
+
+                cOut.write(data,0,data.length);
+                cOut.flush();
+
             }
-            // the client wants to exit
-            //TcpChatSrv.remCli(myS);
         }
-        catch(Exception ex) { System.out.println("Error"); }
+        catch(Exception ex) {
+            System.out.println("ERRO NAS TAREFAS PENDENTES THREAD");
+            ex.printStackTrace(); }
     }
-
 }
