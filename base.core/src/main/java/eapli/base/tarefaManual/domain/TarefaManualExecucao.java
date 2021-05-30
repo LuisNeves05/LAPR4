@@ -41,6 +41,10 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
 
     protected TarefaManualExecucao() {}
 
+    public void adicionaEquipaExecucao(Equipa equipaExec){
+        equipasExecuta.add(equipaExec);
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;

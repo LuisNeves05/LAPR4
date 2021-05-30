@@ -27,7 +27,9 @@
       <module name="base.bootstrappers" target="11" />
       <module name="base.core" target="11" />
       <module name="base.persistence.impl" target="11" />
+      <module name="base.portal" target="15" />
       <module name="base.workflow" target="15" />
+      <module name="folder2" target="11" />
       <module name="LAPR" target="11" />
       <module name="LAPR4" target="11" />
       <module name="lei20_21_s4_2dl_4" target="11" />

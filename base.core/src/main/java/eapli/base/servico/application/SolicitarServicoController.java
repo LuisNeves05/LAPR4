@@ -52,6 +52,10 @@ public class SolicitarServicoController {
 
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
 
+
+
+
+
     public SolicitarServicoController(){
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
         if(authorizationService.hasSession() && authorizationService.session().isPresent()) {

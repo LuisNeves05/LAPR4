@@ -13,7 +13,6 @@ class ServicoRHCliente {
     private final Colaborador colabAtual =colabPorUserName(systemUser.username());*/
 
     public static void main(String args[]) throws Exception {
-        String nick, frase;
         byte[] data = new byte[300];
 
         if(args.length!=1) {
@@ -46,12 +45,12 @@ class ServicoRHCliente {
 
         while(true) { // read messages from the console and send them to the server
 
+            Thread.sleep(10000);
+
             sOut.writeInt(4);
-            sOut.flush();
             System.out.println("ENVIOU O SINAL PARA O SERVIDOR A DIZER QUE QUER TAREFAS");
 
             sOut.writeUTF("Ola mano");
-            sOut.flush();
 
             int tamanho = sIn.read();
             System.out.println("\nRECEBEU O TAMANHO DA STRING " + tamanho);
@@ -63,6 +62,7 @@ class ServicoRHCliente {
             System.out.println("Recebi isto  " + teste);
 
         }
+
 
     }
 

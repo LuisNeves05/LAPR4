@@ -41,6 +41,9 @@ public class EspecificarServicoController {
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
     private final ColaboradorRepositorio colabRep = PersistenceContext.repositories().colaboradorRepositorio();
     private final EquipaRepositorio eqRep = PersistenceContext.repositories().equipaRepositorio();
+    private final FluxoAtividadeRepositorio fluxoAtivRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
+    private final AtividadeAprovacaoRepositorio ativAprovRep = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
+    private final AtividadeRealizacaoRepositorio ativRealRep = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
 
     private SystemUser systemUser;
 

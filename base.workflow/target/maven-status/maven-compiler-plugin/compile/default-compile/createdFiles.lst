@@ -1,0 +1,6 @@
+ServerMain.class
+ServicoRHCliente.class
+Protocolo.class
+MotorFluxoClienteThread.class
+MotorFluxoServidorThread.class
+MotorFluxoTarefasPendentesThread.class
