@@ -1,5 +1,7 @@
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.app.common.console.presentation.authz.MotorFluxoTarefasPendentesThread;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -38,9 +40,14 @@ class MotorFluxoServidorThread extends Thread {
             while (true) {
                 Thread.sleep(10000);
 
-                if(nChars == 4 && flag == true){
+                if(nChars == Protocolo.PEDE_TAREFAS_PENDENTES && flag){
                     MotorFluxoTarefasPendentesThread motorFluxoTarefasPendentesThread = new MotorFluxoTarefasPendentesThread(myS);
                     motorFluxoTarefasPendentesThread.start();
+
+                }else if(nChars == Protocolo.PEDE_ESTADO_FLUXO_ATIVIDADES && flag){
+
+                    MotorFluxosAtivosThread motorFluxosAtivosThread = new MotorFluxosAtivosThread(myS);
+                    motorFluxosAtivosThread.start();
                 }
 
                 flag = false;
@@ -48,7 +55,7 @@ class MotorFluxoServidorThread extends Thread {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("\neapli.base.app.common.console.presentation.authz.MotorFluxoServidorThread");
+            System.out.println("\nMotorFluxoServidorThread");
         }
     }
 

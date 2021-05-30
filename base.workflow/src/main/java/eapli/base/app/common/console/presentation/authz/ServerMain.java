@@ -1,6 +1,9 @@
 package eapli.base.app.common.console.presentation.authz;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,7 +18,7 @@ public class ServerMain extends Thread{
     static Socket sockCli, sockServ;
     static ServerSocket socket;
 
-    public void run(){
+    public void run() {
 
         String ip = "127.0.0.1";
 
@@ -29,33 +32,30 @@ public class ServerMain extends Thread{
             System.out.println("Failed to connect.");
             System.exit(1); }
 
-        //socket.setSoTimeout(100);
 
         /*
           Threads criadas no inicio para permitir que motor de fluxos seja servidor e cliente
          */
-        MotorFluxoClienteThread motorClienteThread = new MotorFluxoClienteThread(sockCli);
-        motorClienteThread.start();
         try {
             sockServ = socket.accept();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         MotorFluxoServidorThread motorFluxoServidorThread = new MotorFluxoServidorThread(sockServ);
         motorFluxoServidorThread.start();
+        MotorFluxoClienteThread motorClienteThread = new MotorFluxoClienteThread(sockCli);
+        motorClienteThread.start();
 
 
         while(true) { // read messages from the console and send them to the server
             try {
-                Thread.sleep(7000);
+                Thread.sleep(9000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-    }
-
-    public void teste(){
-        System.out.println("teste");
     }
 }

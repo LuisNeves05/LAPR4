@@ -1,12 +1,15 @@
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.tarefaManual.application.QueriesTarefaController;
+
+import java.awt.geom.QuadCurve2D;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +20,8 @@ public class MotorFluxoTarefasPendentesThread extends Thread{
     private Socket myS;
     private DataInputStream sIn;
     private DataOutputStream cOut;
-    private String idColaborador;
+    private final QueriesTarefaController queryTarefaController = new QueriesTarefaController();
 
-    private String listaTarefasPendentes = "Ticket id!Cenas id!cenas;Ticketid 2!outras cenas!;";
     //TODO CONTROLLER DE TAREFAS PENDENTES
 
     public MotorFluxoTarefasPendentesThread(Socket s) {
@@ -37,9 +39,7 @@ public class MotorFluxoTarefasPendentesThread extends Thread{
             e.printStackTrace();
         }
 
-        byte[] data;
         try {
-
 
             System.out.println("Chegou um novo pedido ao motor fluxo de tarefas pendentes servidor!!");
 
@@ -47,26 +47,49 @@ public class MotorFluxoTarefasPendentesThread extends Thread{
 
                 Thread.sleep(10000);
 
-                System.out.println("A ESPERA DO ID DO COLABORADOR");
-                idColaborador = sIn.readUTF();
-                System.out.println("OLA DEPOIS DO COLAB");
+                //Lê num mecanografico do colaborador que esta a fazer o pedido
+                String idColaborador = sIn.readUTF();
 
-                //TODO CHAMAR CONTROLLER PARA MANDAR AS CENAS
-                System.out.println("Chegou o id " +idColaborador);
-                data = listaTarefasPendentes.getBytes(StandardCharsets.UTF_8);
+                Colaborador colab = queryTarefaController.colabPorID(idColaborador);
 
-                //envia o tamanho do que tem para enviar
-                //TODO dividir por 255 por causa da cena do tamanho max
-                cOut.write(data.length);
-                cOut.flush();
+                String aux = queryTarefaController.tarefasManuaisAprovDTO(colab);
+                List<String> stringList = divideProtocol(aux, 200);
 
-                cOut.write(data,0,data.length);
-                cOut.flush();
+                for(String a: stringList) {
+                    byte[] data = a.getBytes(StandardCharsets.UTF_8);
 
+                    if(stringList.size()>1){
+                        data[255] = 1;
+                    }else{
+                        data[255] = 0;
+                    }
+                    cOut.write(data.length);
+                    cOut.flush();
+                    cOut.write(data,0,data.length);
+                    cOut.flush();
+                    stringList.remove(a);
+                }
             }
         }
         catch(Exception ex) {
             System.out.println("ERRO NAS TAREFAS PENDENTES THREAD");
             ex.printStackTrace(); }
+    }
+
+    public static List<String> divideProtocol(String string, int protocolMax){
+        List<String> stringApart = new ArrayList<>();
+
+        StringBuilder s = new StringBuilder();
+
+        for(int i = 0; i < string.length(); i++){
+            if(i % protocolMax == 0 && s.length() != 0){
+                stringApart.add(String.valueOf(s));
+                s = new StringBuilder();
+            }
+            s.append(string.charAt(i));
+        }
+
+        stringApart.add(String.valueOf(s));
+        return stringApart;
     }
 }
