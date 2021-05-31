@@ -56,8 +56,8 @@ public class MyUserMenu extends Menu {
     private static final int TERMINAR_ESPECIFICAR_SERVICO_OPTION = 7;
     private static final int ESPECIFICAR_CATALOGO_OPTION = 8;
     private static final int SOLICITAR_SERVICO_OPTION = 9;
-    private static final int ADICIONAR_NIVEL_CRITICIDADE =10 ;
-    private static final int CRIAR_NIVEL_CRITICIDADE =11 ;
+    private static final int ADICIONAR_NIVEL_CRITICIDADE = 10;
+    private static final int CRIAR_NIVEL_CRITICIDADE = 11;
     private static final int REIVINDICAR_TAREFA = 12;
 
     public MyUserMenu() {
@@ -76,13 +76,6 @@ public class MyUserMenu extends Menu {
         if (authz.hasSession()) {
 
 
-            System.out.println("Antes de rodar");
-            //ServicoRHCliente n = new ServicoRHCliente();
-           //n.start();
-
-            System.out.println("\n depois de rodar");
-
-
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
@@ -93,9 +86,9 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(TERMINAR_ESPECIFICAR_SERVICO_OPTION, "Terminar especificação de servicos", new TerminarEspecificacaoServicoPendenteUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_CATALOGO_OPTION, "Especificar catalogo", new EspecificarCatalogoUI()::show));
             addItem(MenuItem.of(SOLICITAR_SERVICO_OPTION, "Solicitar Serviço", new SolicitarServicoUI()::show));
-            addItem(MenuItem.of( ADICIONAR_NIVEL_CRITICIDADE , "Adicionar Nível de Criticidade", new AdicionarNivelCriticidadeUI()::show));
-            addItem(MenuItem.of( CRIAR_NIVEL_CRITICIDADE , "Criar Nível de Criticidade", new EspecificarNivelCriticidadeUI()::show));
-            addItem(MenuItem.of( REIVINDICAR_TAREFA , "Reivindicar Tarefa", new AssignarTarefasUI()::show));
+            addItem(MenuItem.of(ADICIONAR_NIVEL_CRITICIDADE, "Adicionar Nível de Criticidade", new AdicionarNivelCriticidadeUI()::show));
+            addItem(MenuItem.of(CRIAR_NIVEL_CRITICIDADE, "Criar Nível de Criticidade", new EspecificarNivelCriticidadeUI()::show));
+            addItem(MenuItem.of(REIVINDICAR_TAREFA, "Reivindicar Tarefa", new AssignarTarefasUI()::show));
 
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));
