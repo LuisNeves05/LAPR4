@@ -1,7 +1,5 @@
-eapli\base\app\common\console\presentation\authz\MotorFluxoTarefasPendentesThread.class
-eapli\base\app\common\console\presentation\authz\MotorFluxosAtivosThread.class
-eapli\base\app\common\console\presentation\authz\Protocolo.class
-eapli\base\app\common\console\presentation\authz\MotorFluxoServidorThread.class
-eapli\base\app\common\console\presentation\authz\ServerMain.class
-eapli\base\app\common\console\presentation\authz\MotorFluxoClienteThread.class
-eapli\base\app\common\console\presentation\authz\ServicoRHCliente.class
+eapli/base/app/common/console/presentation/authz/Server/TcpChatSrv.class
+eapli/base/app/common/console/presentation/authz/Client/TcpChatCliConn.class
+eapli/base/app/common/console/presentation/authz/Client/TcpChatCli.class
+eapli/base/app/common/console/presentation/authz/Protocolo/Utils.class
+eapli/base/app/common/console/presentation/authz/Server/TcpChatSrvClient.class
