@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class TcpChatSrv {
     private static HashMap<Socket, DataOutputStream> cliList = new HashMap<>();
     private static ServerSocket sock;
-    private static String myIp = "192.168.1.8";
+    private static String myIp = "127.0.0.1";
 
     /*
     static {

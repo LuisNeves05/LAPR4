@@ -26,6 +26,8 @@ package eapli.base.app.common.console.presentation.authz;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
+import eapli.base.app.common.console.presentation.authz.Client.TcpChatCli;
+import eapli.base.app.common.console.presentation.authz.Server.TcpChatSrv;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
@@ -74,6 +76,13 @@ public class MyUserMenu extends Menu {
 
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
+
+            TcpChatCli c = new TcpChatCli();
+            try {
+                c.startClient(5);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
