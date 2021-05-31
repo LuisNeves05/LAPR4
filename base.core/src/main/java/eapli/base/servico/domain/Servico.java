@@ -1,19 +1,14 @@
 package eapli.base.servico.domain;
 
-import com.sun.istack.Nullable;
+
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.criticidade.domain.NivelCriticidade;
-import eapli.base.equipa.domain.Equipa;
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,6 +17,7 @@ import java.util.Set;
 @Entity
 @Table
 public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<ServicoIdentificador> {
+
     /**
      * Identificador único do Serviço
      */
@@ -70,7 +66,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne
     private Catalogo catalogo;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Formulario> formularios;
     /**
      * Feedback do colaborador que requisitou o serviço
@@ -129,9 +125,6 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
         return  (this.nivelCriticidade!= null);
     }
 
-    public void limpaForms(){
-        this.formularios.clear();
-    }
     /**
      * Identidade do Servico
      */
@@ -186,6 +179,14 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public FluxoAtividade fluxoDoServico(){return fluxoAtividade;}
 
+    public boolean estaCompleto() {
+        return this.servicoIdent != null && this.titulo != null && this.descBreve != null
+                && this.descComp != null && keywords.size() > 0 && this.catalogo != null && fluxoAtividade != null && !formularios.isEmpty();
+    }
+
+    public void completar() {
+        this.estado = EstadoServico.COMPLETO;
+    }
     /**
      * toString do Servico
      */

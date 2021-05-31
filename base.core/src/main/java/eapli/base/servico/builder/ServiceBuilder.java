@@ -108,10 +108,6 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
-    public boolean estaCompleto() {
-        return this.servicoIdentificador != null && this.titulo != null && this.descBreve != null && this.descComp != null && keywords.size() > 0 && this.catalogo != null;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) {

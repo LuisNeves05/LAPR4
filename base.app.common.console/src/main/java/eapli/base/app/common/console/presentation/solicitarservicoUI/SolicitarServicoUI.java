@@ -21,36 +21,35 @@ import java.util.Set;
 public class SolicitarServicoUI extends AbstractUI {
 
     private final SolicitarServicoController lcp = new SolicitarServicoController();
-    private final QueriesTarefaController cont = new QueriesTarefaController();
-
-    private final QueriesFluxoAtivo fluxoAt = new QueriesFluxoAtivo();
-
 
     @Override
     protected boolean doShow() {
 
-        //System.out.println(cont.tarefasManuaisAprovDTO(lcp.colaboradorLogado()));
-        System.out.println(fluxoAt.fluxosAtivos());
 
         List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
         for (int i = 0; i < catalogoList.size(); i++) {
-            System.out.println(i + " - " + catalogoList.get(i).toString());
+            System.out.println(i + 1 + " - " + catalogoList.get(i).toString());
         }
 
         int indCatalogo = Console.readInteger("Escolha o catalogo a que pretende aceder (index)");
 
-        Catalogo c = catalogoList.get(indCatalogo);
+        Catalogo c = catalogoList.get(indCatalogo - 1);
 
-        List<Servico> servicoList = lcp.listarServicosPorCat(c); //TODO METER ISTO A RETORNAR SERVIÇOS COMPLETOS
+        List<Servico> servicoList = lcp.listarServicosPorCat(c);
+
+        if(servicoList.isEmpty()){
+            System.out.println("Não existem serviços completos neste catálogo");
+            return false;
+        }
 
         for (int i = 0; i < servicoList.size(); i++) {
-            System.out.println(i + " - " + servicoList.get(i).toString());
+            System.out.println(i + 1 + " - " + servicoList.get(i).toString());
         }
 
         int indServico = Console.readInteger("Escolha o servico que pretende requisitar (index)");
 
-        Servico s = servicoList.get(indServico);
+        Servico s = servicoList.get(indServico - 1);
 
         System.out.println("\nTendo o serviço sido escolhido, vai agora ter de preencher os respetivos formulários\n");
 

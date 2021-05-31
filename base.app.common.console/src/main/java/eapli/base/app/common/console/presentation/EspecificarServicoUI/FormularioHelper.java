@@ -56,7 +56,6 @@ public class FormularioHelper {
         String expReg = Console.readLine("Expressão regular para validação do atributo: ");
 
         f.addAtributo(nomeVar,lable,descAjuda,td,expReg);
-        fc.saveForm(f);
         continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
         if (continuar.equalsIgnoreCase("nao")) {
             flag = false;

@@ -325,20 +325,18 @@ public class EspecificarServicoUI extends AbstractUI {
             completar = Console.readLine("Deseja dar este Serviço como completo? (sim/nao)");
         } while (validaSimNao(completar));
         if (completar.equalsIgnoreCase("sim")) {
-            if(serviceBuilder.estaCompleto()) {
+            Servico serv = especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
+            if(serv.estaCompleto()) {
                 associarNivelCrit(serviceBuilder);
-                serviceBuilder.comEstado(EstadoServico.COMPLETO);
-                especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
+                serv.completar();
 
                 System.out.println("Serviço Completo especificado\n");
             }
             else {
                 System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
-                especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
             }
         }else{
             System.out.println("O Serviço Incompleto ficou registado\n");
-            especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
         }
     }
 
@@ -717,12 +715,12 @@ public class EspecificarServicoUI extends AbstractUI {
     public Servico especificarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtividadeBuilder) {
 
         serviceBuilder.comFluxo(fluxoAtividadeBuilder.build());
-        Servico serv = controller.especificarServico(serviceBuilder.build());
+        Servico serv = serviceBuilder.build();
             for(Formulario formulario : formularios) {
                 controller.adicionaFormulario(serv, formulario);
             }
 
-        return serv;
+        return controller.especificarServico(serv);
     }
 
     private boolean validaSimNao(String a) {
@@ -815,10 +813,8 @@ public class EspecificarServicoUI extends AbstractUI {
                         "ao catalogo deste Serviço? (sim/nao)");
             } while (validaSimNao(nivelCrit));
             if (nivelCrit.equalsIgnoreCase("sim")) {
-
-                System.out.println("Nível de criticidade do catálogo associado ao Serviço \n");
                 serviceBuilder.comNivelCrit(catalogo.nivelCritToService());
-
+                System.out.println("Nível de criticidade do catálogo associado ao Serviço \n");
             }
         }
             novoNivelCriticidade = escolherNivelCrit();

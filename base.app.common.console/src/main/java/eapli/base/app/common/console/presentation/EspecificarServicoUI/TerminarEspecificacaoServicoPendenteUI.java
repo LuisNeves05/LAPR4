@@ -1,6 +1,6 @@
 package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
-import eapli.base.Utils.QueryMaker;
+import eapli.base.servico.application.FinalizarEspecificacaoServicoController;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -11,28 +11,44 @@ import static java.lang.Thread.sleep;
 
 public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
 
-    private QueryMaker qm = new QueryMaker();
-    private FormularioHelper fh = new FormularioHelper();
+    private final FinalizarEspecificacaoServicoController fesc = new FinalizarEspecificacaoServicoController();
 
     @Override
     protected boolean doShow() {
-        List<Servico> listServicos = qm.queryServicoIncompleto();
+        List<Servico> listServicos = fesc.servicosIncompletos();
         if(listServicos.isEmpty()){
-            System.out.println("Não existem serviços por especificar!");
+            System.out.println("Não existem serviços incompleto!");
         }else{
             for(int i=0; i<listServicos.size();i++){
-                System.out.println(i + " " +listServicos.get(i).toString() + "\n");
+                System.out.println(i + 1 + " " +listServicos.get(i).toString() + "\n");
             }
 
-            int choice = Console.readInteger("Escolha um dos servicos (index)");
-            Servico servico = listServicos.get(choice);
-            fh.form();
+            boolean flag = true;
+            while (flag) {
+                int choice = Console.readInteger("(0 para sair) Escolha um dos servicos (index)");
+                if(choice == 0){
+                    return false;
+                }
+                else if(choice > 0 && choice <= listServicos.size()) {
+                    Servico servico = listServicos.get(choice - 1);
+                    if(servico.estaCompleto()){
+                        servico.completar();
+                        fesc.guardarServico(servico);
+                        System.out.println("Serviço Completo.");
+                    }else{
+                        System.out.println("Este serviço ainda não tem todos os campos obrigatórios");
+                    }
+                    flag = false;
+                }else{
+                    System.out.println("Coloque um index válido.");
+                }
+            }
         }
-        return false;
+        return true;
     }
 
     @Override
     public String headline() {
-        return "Terminar especificação de serviço pendente";
+        return "Terminar especificação de serviço incompleto";
     }
 }
