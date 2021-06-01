@@ -67,7 +67,7 @@ public class SolicitarServicoUI extends AbstractUI {
             for (Atributo atributo : a) {
                 TipoDados td = atributo.tipoDados();
                 String ajudaResposta = tipoDadosStr(td);
-                String resposta = Console.readLine(atributo.nomeVar() + ": " + "    Responda conforme -> " + ajudaResposta);
+                String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                 Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
                 respostas.add(rAtr);
             }
@@ -85,7 +85,7 @@ public class SolicitarServicoUI extends AbstractUI {
         lcp.criarTarefaExecucao(s, ticket);
 
         s.fluxoDoServico().ativar();
-        lcp.guardarFluxo(s.fluxoDoServico());
+        lcp.guardarFluxo(s);
 
         return false;
     }

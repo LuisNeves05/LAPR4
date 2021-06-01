@@ -5,6 +5,10 @@
  */
 package eapli.base.infrastructure.bootstrapers;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
+import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.atividadeRealizacao.domain.TipoExecucao;
 import eapli.base.catalogo.application.EspecificarCatalogoController;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.clientusermanagement.domain.MecanographicNumber;
@@ -69,7 +73,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
     private String masterBootStrap(){
 
-        TipoEquipa te = registarTipoEquipaController.tipoEquipaServico("Id123","Equipa de Software", 5);
+        TipoEquipa tipoEquipaRRH = registarTipoEquipaController.tipoEquipaServico("Id123RH","Equipa de RRH", 5);
+        TipoEquipa tipoEquipaAvariaTecnica = registarTipoEquipaController.tipoEquipaServico("Id123AT","Equipa de Avarias técnicas", 6);
+
 
         String pattern = "05-12-2000";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -80,73 +86,161 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
             e.printStackTrace();
         }
 
-        Set<Role> roless = new HashSet<>();
-        roless.add(BaseRoles.ADMIN);
-        roless.add(BaseRoles.COLABORADOR);
+        Set<Role> rolessAdmin = new HashSet<>();
+        Set<Role> rolessGSH = new HashSet<>();
+        Set<Role> rolessCOLAB = new HashSet<>();
+        rolessAdmin.add(BaseRoles.ADMIN);
+        rolessCOLAB.add(BaseRoles.COLABORADOR);
+        rolessGSH.add(BaseRoles.GSH);
 
-        Colaborador c = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
+
+        /**
+         * Administrador
+         */
+        Colaborador admin = colaboradorController.especificarColaborador(new NomeCurto("Luis"), new NomeCompleto("Luis Neves"),
                 new MecanographicNumber("1191421"), new Morada("Porto", "Penafiel"),
-                new NrContacto(910900398), date, null, roless, "Luis", "Password1", "luismanuelneves@gmail.com");
+                new NrContacto(910900398), date, null, rolessAdmin, "Luis", "Password1", "luismanuelneves@gmail.com");
 
+        /**
+         * Colaborador normal
+         */
         Colaborador rui = colaboradorController.especificarColaborador(new NomeCurto("Rui"), new NomeCompleto("Rui Alves"),
                 new MecanographicNumber("1181597"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206840), date, c, roless, "Rui", "Password1", "rui@gmail.com");
+                new NrContacto(927206840), date, admin, rolessCOLAB, "Rui", "Password1", "rui@gmail.com");
+
+        /**
+         * Colaborador normal
+         */
+        Colaborador tiago = colaboradorController.especificarColaborador(new NomeCurto("Tiago"), new NomeCompleto("Tiago Marante"),
+                new MecanographicNumber("1181235"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(927206840), date, admin, rolessCOLAB, "Tiago", "Password1", "tiago@gmail.com");
 
 
+        /**
+         * Colaborador normal
+         */
+        Colaborador sergio = colaboradorController.especificarColaborador(new NomeCurto("Sergio"), new NomeCompleto("Sergio Neves"),
+                new MecanographicNumber("1200625"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(927296840), date, admin, rolessCOLAB, "Sergio", "Password1", "sergio@gmail.com");
 
-        Set<Colaborador> colaboradors = new HashSet<>();
-        colaboradors.add(c);
-        Acronimo acr = new Acronimo("LAPR");
-        Equipa equipa = controllerEquipa.especificarEquipa("12367",acr,"Designação Equipa",colaboradors,te);
+        /**
+         * Gestor Serviços Helpdesk
+         */
+        Colaborador joaoGestorSH = colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
+                new MecanographicNumber("1121624"), new Morada("Porto", "Marco de Canaveses"),
+                new NrContacto(927206841), date, admin, rolessGSH, "Joao", "Password1", "joao@gmail.com");
 
+        /**
+         * Colaborador Sergio pertence à equipa de rrh
+         */
+        Set<Colaborador> colaboradoresRRHTeam = new HashSet<>();
+        colaboradoresRRHTeam.add(sergio);
+
+        /**
+         * Colaborador Rui pertence à equipa de avarias Tecnicas
+         */
+        Set<Colaborador> colaboradoresTecnicaTeam = new HashSet<>();
+        colaboradoresRRHTeam.add(rui);
+        colaboradoresRRHTeam.add(tiago);
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Colaboradores são adicionados às respetivas equipas
+         */
+        Acronimo acrRRH = new Acronimo("RRH");
+        Acronimo acrTCN = new Acronimo("TCN");
+        Equipa equipa_RRH = controllerEquipa.especificarEquipa("123SFT",acrRRH,"Equipa Software",colaboradoresRRHTeam,tipoEquipaRRH);
+        Equipa equipa_Tecnica = controllerEquipa.especificarEquipa("123TCN",acrTCN,"Equipa Avaria Tecnica",colaboradoresTecnicaTeam,tipoEquipaAvariaTecnica);
 
         Set<Equipa> equipasSet = new HashSet<>();
-        equipasSet.add(equipa);
-        Colaborador colab = colaboradorController.especificarColaborador(new NomeCurto("Joao"), new NomeCompleto("Joao Alves"),
-                new MecanographicNumber("1181596"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(927206841), date, c, roless, "Joao", "Password1", "joao@gmail.com");
+        equipasSet.add(equipa_RRH);
+        equipasSet.add(equipa_Tecnica);
 
-        Colaborador tiago = colaboradorController.especificarColaborador(new NomeCurto("Tiago"), new NomeCompleto("Tiago Alves"),
-                new MecanographicNumber("1181212"), new Morada("Porto", "Marco de Canaveses"),
-                new NrContacto(921587569), date, c, roless, "Tiago", "Password1", "tiago@gmail.com");
+        //////////////////////////////////////////////////////////////////////////////////
 
-        AddOrDeleteEquipaController adod = new AddOrDeleteEquipaController(equipa);
+
+        AddOrDeleteEquipaController adod = new AddOrDeleteEquipaController(equipa_Tecnica);
         Set<Colaborador> lista = new HashSet<>();
-        lista.add(colab);
-        lista.add(tiago);
         lista.add(rui);
+        lista.add(tiago);
         adod.adicionarColaboradores(lista);
 
-        Catalogo catalogo = catalogoController.especificarCatalogo("Titulo Catalogo","Catalogo RH", "Catalogo de recursos humanos",12,c, equipasSet);
+        //////////////////////////////////////////////////////////////////////////////////
 
-        Keyword k = new Keyword("Software");
-        Keyword k2 = new Keyword("JAVA");
-        Set<Keyword> keywords = new HashSet<>();
-        keywords.add(k);
-        keywords.add(k2);
-        Objetivo obj = new Objetivo(12,50,0,0);
+        Catalogo catalogoRRH = catalogoController.especificarCatalogo("Recursos Humanos","Pedidos aos recursos humanos", "Pedir férias/alteração dados pessoais/ etcs",12,admin, equipasSet);
+
+        Catalogo catalogoAvariaTecnicas = catalogoController.especificarCatalogo("Avarias","Avarias de equipamentos/comunicação", "Contem tipos de avarias possiveis que possam ocorrer no edificio da empresa",13,admin, equipasSet);
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Keywords para serviço relacionado com os recursos humanos
+         */
+        Keyword k = new Keyword("Ferias");
+        Keyword k2 = new Keyword("NIB");
+        Keyword k3 = new Keyword("IBAN");
+        Keyword k4 = new Keyword("Salario");
+        Keyword k5 = new Keyword("Horas");
+        Set<Keyword> keywordsRRH = new HashSet<>();
+        keywordsRRH.add(k);
+        keywordsRRH.add(k2);
+        keywordsRRH.add(k3);
+        keywordsRRH.add(k4);
+        keywordsRRH.add(k5);
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Keywords para serviço relacionado com avarias
+         */
+        Keyword k6 = new Keyword("Avariou");
+        Keyword k7 = new Keyword("Queimou");
+        Keyword k8 = new Keyword("Estragou");
+        Keyword k9 = new Keyword("Caiu");
+        Keyword k10 = new Keyword("Partiu");
+        Set<Keyword> keywordsAvariaTecnica = new HashSet<>();
+        keywordsAvariaTecnica.add(k6);
+        keywordsAvariaTecnica.add(k7);
+        keywordsAvariaTecnica.add(k8);
+        keywordsAvariaTecnica.add(k9);
+        keywordsAvariaTecnica.add(k10);
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        Objetivo obj = new Objetivo(20,250,0,0);
         NivelCriticidade nc  = enc.especificarNivelCriticidade("elevada", 4, Color.RED,obj,true);
-        Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDSERV"), new Titulo("Titulo Servico"), new DescricaoBreve("Desc breve Serv"),
-                new DescricaoCompleta("Desc comp Servico"), new byte[2], keywords, EstadoServico.INCOMPLETO, null, catalogo, false, nc));
-        Formulario f = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
-        f.addAtributo("Nome Variavel","Label do Form","Descricao Ajuda", TipoDados.INT,"EXP regular");
-        f.addAtributo("Nome Variavel2","Label do Form","Descricao Ajuda",TipoDados.STRING,"EXP regular");
-        f.addAtributo("Nome Variavel3","Label do Form","Descricao Ajuda",TipoDados.BOOLEANO,"EXP regular");
-        efc.saveForm(f);
-        Formulario f2 = efc.especificarFormulario(new NomeFormulario("Nome Formulario"));
-        f2.addAtributo("Nome Variavel Teste","Label do Form","Descricao Ajuda",TipoDados.INT,"EXP regular");
-        f2.addAtributo("Nome Variavel  Teste2","Label do Form","Descricao Ajuda",TipoDados.FRACIONAL,"EXP regular");
-        f2.addAtributo("Nome Variavel  Teste3","Label do Form","Descricao Ajuda",TipoDados.INT,"EXP regular");
-        efc.saveForm(f2);
+
+        /////////////////////////////////////////////////////////////////////////////////
+
+        /**
+         * Serviço tem atividade de aprovação, neste caso, é aprovado pelo responsavel hierarquico do colaborador requerente
+         *
+         * É assignado a uma equipa, logo é de resolução manual
+         *
+         */
+        AtividadeAprovacao atividadeAprovacao = new AtividadeAprovacao();
+        atividadeAprovacao.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
+
+        AtividadeRealizacao atividadeRealizacao = new AtividadeRealizacao(TipoExecucao.MANUAL,"");
+        atividadeRealizacao.adicionarEquipaExecucao(equipa_Tecnica);
+
+        FluxoAtividade fluxoAtividade = new FluxoAtividade(atividadeAprovacao,atividadeRealizacao);
+
+        Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAvaria"), new Titulo("Reportar anomalia de Comunicação"), new DescricaoBreve("Anomalia em comunicação da rede da empresa"),
+                new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], keywordsAvariaTecnica, EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
+
+
+        Formulario f = efc.especificarFormulario(new NomeFormulario("Avaria"));
+        f.addAtributo("Equipamento que avariou: ","Código do equipamento","Código na lateral do equipamento", TipoDados.INT,"[0-9]+");
+        f.addAtributo("Edifício do equipamento: ","Nome do edificio do equipamento","Nome afixado na entrada do edificio",TipoDados.STRING,"[a-zA-Z]+");
+        f.addAtributo("Comentário: ","Avaria concreta do equipamento","Avaliação empírica da avaria",TipoDados.STRING,"[a-zA-Z]+");
+
         especificarServicoController.adicionaFormulario(servico,f);
-        especificarServicoController.adicionaFormulario(servico,f2);
+        especificarServicoController.especificarServico(servico);
 
 
-        //System.out.println("#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
-
-
-
-        System.out.println("#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
+        System.out.println("\n\n#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
 
         return "";
     }

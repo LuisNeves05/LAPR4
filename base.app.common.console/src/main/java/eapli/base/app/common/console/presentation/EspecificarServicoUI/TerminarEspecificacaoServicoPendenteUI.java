@@ -7,8 +7,6 @@ import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
 
     private final FinalizarEspecificacaoServicoController fesc = new FinalizarEspecificacaoServicoController();
@@ -19,6 +17,7 @@ public class TerminarEspecificacaoServicoPendenteUI extends AbstractUI {
         if(listServicos.isEmpty()){
             System.out.println("Não existem serviços incompleto!");
         }else{
+            System.out.println("\n\n");
             for(int i=0; i<listServicos.size();i++){
                 System.out.println(i + 1 + " " +listServicos.get(i).toString() + "\n");
             }

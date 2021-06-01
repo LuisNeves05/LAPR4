@@ -101,8 +101,8 @@ public class SolicitarServicoController {
     }
 
 
-    public FluxoAtividade guardarFluxo(FluxoAtividade fluxoAtividade){
-        return fluxoAtividadeRepositorio.save(fluxoAtividade);
+    public Servico guardarFluxo(Servico serv){
+        return repoServ.save(serv);
     }
 
     public TiposDeTarefa tiposDeTarefa(){

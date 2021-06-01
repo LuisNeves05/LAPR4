@@ -58,6 +58,11 @@ public class ServiceBuilder implements DomainFactory<Servico> {
         return this;
     }
 
+    public ServiceBuilder comKeywords(final Set<Keyword> keywords) {
+        this.keywords = keywords;
+        return this;
+    }
+
     public ServiceBuilder comRequerFeedback(final boolean requerFeedback) {
         this.requerFeedback = requerFeedback;
         return this;

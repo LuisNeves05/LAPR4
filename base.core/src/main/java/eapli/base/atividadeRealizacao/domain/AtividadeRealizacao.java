@@ -44,12 +44,12 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
             this.scriptAutomatico = scriptAutomatico;
     }
 
-    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String scriptAutomatico){
+    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String ignore){
         this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
         if(tipoExecucao == TipoExecucao.AUTOMATICA)
-            this.scriptAutomatico = scriptAutomatico;
+            this.scriptAutomatico = ignore;
     }
 
     protected AtividadeRealizacao() {}

@@ -6,6 +6,7 @@ import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.formulario.domain.Formulario;
 import eapli.framework.domain.model.AggregateRoot;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -192,7 +193,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
      */
     @Override
     public String toString() {
-        return servicoIdent.toString() + " " + this.titulo + " " + descBreve + " " + estado;
+        return this.titulo + " - " + estado;
     }
 
 

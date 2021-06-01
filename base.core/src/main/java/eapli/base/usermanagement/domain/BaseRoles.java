@@ -53,6 +53,11 @@ public final class BaseRoles {
      */
     public static final Role RRH = Role.valueOf("RRH");
 
+    /**
+     * Gestor Serviços Helpdesk
+     */
+    public static final Role GSH = Role.valueOf("GSH");
+
 
     /**
      * get available role types for adding new users

@@ -191,10 +191,11 @@ public class EspecificarServicoUI extends AbstractUI {
 
         List<Formulario> formularios = new ArrayList<>(serv.formulariosDoServico());
 
+
         serviceBuilder.comDescComp(serv.descricaoCompletaDoServico().toString())
                     .comDescBreve(serv.descricaoBreveDoServico().toString()).comIcon(serv.iconDoServico())
                     .comEstado(serv.estado()).comCatalogo(serv.catalogo()).comFluxo(serv.fluxoDoServico())
-                    .comRequerFeedback(serv.requerFeedbackDoServico()).comNivelCrit(serv.nivelCriticidadeServico());
+                    .comRequerFeedback(serv.requerFeedbackDoServico()).comNivelCrit(serv.nivelCriticidadeServico()).comKeywords(serv.listaKewordsDoServico());
 
         FluxoAtividadeBuilder fluxoAtivBuilder = new FluxoAtividadeBuilder();
 
@@ -324,19 +325,22 @@ public class EspecificarServicoUI extends AbstractUI {
         do {
             completar = Console.readLine("Deseja dar este Serviço como completo? (sim/nao)");
         } while (validaSimNao(completar));
+        Servico serv = especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
         if (completar.equalsIgnoreCase("sim")) {
-            Servico serv = especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
             if(serv.estaCompleto()) {
                 associarNivelCrit(serviceBuilder);
                 serv.completar();
+                controller.especificarServico(serv);
 
                 System.out.println("Serviço Completo especificado\n");
             }
             else {
                 System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
+                controller.especificarServico(serv);
             }
         }else{
             System.out.println("O Serviço Incompleto ficou registado\n");
+            controller.especificarServico(serv);
         }
     }
 
@@ -425,6 +429,8 @@ public class EspecificarServicoUI extends AbstractUI {
                 return true;
             }
             else if (atReal.equalsIgnoreCase("aut")) {
+                equipasExec.clear();
+                colab = null;
                 tipoExec = TipoExecucao.AUTOMATICA;
                 if(inserirScriptValidacaoTarefaAutomatica())
                 fluxoAtivBuilder.comAtividadeRealizacao(new AtividadeRealizacao(colab, tipoExec, scriptAutomatico));
@@ -720,7 +726,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 controller.adicionaFormulario(serv, formulario);
             }
 
-        return controller.especificarServico(serv);
+        return serv;
     }
 
     private boolean validaSimNao(String a) {

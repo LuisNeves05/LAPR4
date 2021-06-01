@@ -41,7 +41,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
     @OneToOne
     private Colaborador colaboradorResponsavel;
 
-    @OneToMany
+    @ManyToMany
     private Set<Equipa> equipas = new HashSet<>();
 
     @OneToOne(cascade= CascadeType.ALL)
@@ -71,7 +71,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public String toString(){
-        return id + " " + titulo;
+        return ""+titulo;
     }
 
     public  boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){

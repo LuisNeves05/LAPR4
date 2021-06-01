@@ -77,14 +77,6 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
-            TcpChatCli c = new TcpChatCli();
-            try {
-                c.startClient(5);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
