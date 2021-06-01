@@ -182,7 +182,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
 
     public boolean estaCompleto() {
         return this.servicoIdent != null && this.titulo != null && this.descBreve != null
-                && this.descComp != null && keywords.size() > 0 && this.catalogo != null && fluxoAtividade != null && !formularios.isEmpty();
+                && this.descComp != null && keywords.size() > 0 && this.catalogo != null && fluxoAtividade != null && !formularios.isEmpty() && nivelCriticidade!=null;
     }
 
     public void completar() {

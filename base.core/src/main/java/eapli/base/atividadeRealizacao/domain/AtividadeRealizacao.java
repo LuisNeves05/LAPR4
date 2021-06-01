@@ -21,7 +21,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @OneToOne
     private Colaborador colabExecucao;
 
-    @OneToMany
+    @ManyToMany
     private Set<Equipa> equipasExecucao;
 
     @OneToMany(cascade = CascadeType.ALL)

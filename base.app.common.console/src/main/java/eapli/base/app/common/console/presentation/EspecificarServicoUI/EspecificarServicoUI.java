@@ -111,7 +111,7 @@ public class EspecificarServicoUI extends AbstractUI {
             return false;
 
         FluxoAtividadeBuilder fluxoAtivBuilder = new FluxoAtividadeBuilder();
-
+        serviceBuilder.comEstado(EstadoServico.INCOMPLETO);
         List<ColaboradoresAprovacao> colabsAprov = new ArrayList<>();
         List<Equipa> equipasExec = new ArrayList<>();
         List<Formulario> formularios = new ArrayList<>();
@@ -315,10 +315,12 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         especificarFormulario(formularios);
+        associarNivelCrit(serviceBuilder);
 
         finalizarServico(serviceBuilder, formularios, fluxoAtivBuilder);
 
         return true;}
+
 
     private void finalizarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder){
         String completar;
@@ -328,7 +330,6 @@ public class EspecificarServicoUI extends AbstractUI {
         Servico serv = especificarServico(serviceBuilder, formularios, fluxoAtivBuilder);
         if (completar.equalsIgnoreCase("sim")) {
             if(serv.estaCompleto()) {
-                associarNivelCrit(serviceBuilder);
                 serv.completar();
                 controller.especificarServico(serv);
 

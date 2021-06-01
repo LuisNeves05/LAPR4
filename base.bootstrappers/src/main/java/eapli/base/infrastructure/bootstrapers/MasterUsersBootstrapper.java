@@ -228,7 +228,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         FluxoAtividade fluxoAtividade = new FluxoAtividade(atividadeAprovacao,atividadeRealizacao);
 
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAvaria"), new Titulo("Reportar anomalia de Comunicação"), new DescricaoBreve("Anomalia em comunicação da rede da empresa"),
-                new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], keywordsAvariaTecnica, EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
+                new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], new HashSet<>(), EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
 
 
         Formulario f = efc.especificarFormulario(new NomeFormulario("Avaria"));
