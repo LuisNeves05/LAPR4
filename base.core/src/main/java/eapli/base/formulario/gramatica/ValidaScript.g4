@@ -4,13 +4,12 @@ prog: validaExp* | stat ;
 
 stat: expr NEWLINE # printExpr
 | ID '=' expr NEWLINE # assign
-| NEWLINE # blank
-
+| NEWLINE            # blank
 ;
 
 
 validaExp: DEFINE exprExp EXPREGULAR              #defineExpRegular
-      | SE exprExp ' ' VAZIO ENTAO exprExp NAOVAZIO             #validaEntreCampos
+      | SE exprExp VAZIO ENTAO exprExp NAOVAZIO             #validaEntreCampos
       | SE exprExp NAOVAZIO ENTAO exprExp VAZIO             #validaEntreCampos
       | SE exprExp MAIOR exprExp ENTAO exprExp VAZIO        #validaEntreCampos
       | SE exprExp MAIOR exprExp ENTAO exprExp NAOVAZIO     #validaEntreCampos
@@ -36,7 +35,6 @@ exprExp:    INT          #int
 
 NEWLINE : [\r\n]+ ;
 INT:[0-9]+;
-ID:[a-z]+;
 MUL : '*' ; // assigns token name to '*' used above in grammar
 DIV : '/' ;
 ADD : '+' ;
@@ -54,3 +52,4 @@ MENOR : '<';
 NOMEATRIBUTO : [A-Za-z]+;
 ESPACO : [ ] -> skip;
 EXPREGULAR : '@' .+? '@';
+ID:[a-z]+;
