@@ -1,5 +1,5 @@
-eapli/base/app/common/console/presentation/authz/Server/TcpChatSrv.class
-eapli/base/app/common/console/presentation/authz/Client/TcpChatCliConn.class
-eapli/base/app/common/console/presentation/authz/Client/TcpChatCli.class
-eapli/base/app/common/console/presentation/authz/Protocolo/Utils.class
-eapli/base/app/common/console/presentation/authz/Server/TcpChatSrvClient.class
+eapli\base\app\common\console\presentation\authz\Protocolo\Utils.class
+eapli\base\app\common\console\presentation\authz\Server\TcpChatSrvClient.class
+eapli\base\app\common\console\presentation\authz\Client\TcpChatCliConn.class
+eapli\base\app\common\console\presentation\authz\Server\TcpChatSrv.class
+eapli\base\app\common\console\presentation\authz\Client\TcpChatCli.class
