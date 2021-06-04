@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
-public class TcpChatCli {
+public class Cliente {
     static InetAddress serverIP;
     static Socket sock;
     private static String name = "CLIENTE";

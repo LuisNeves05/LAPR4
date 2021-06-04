@@ -8,12 +8,12 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class TcpChatSrvClient extends Thread {
+class ThreadCliente extends Thread {
     private Socket myS;
     private DataInputStream sIn;
-    private static final Logger LOGGER = Logger.getLogger(TcpChatSrvClient.class.getName() );
+    private static final Logger LOGGER = Logger.getLogger(ThreadCliente.class.getName() );
 
-    public TcpChatSrvClient(Socket s) {
+    public ThreadCliente(Socket s) {
         myS = s;
     }
 
@@ -35,7 +35,6 @@ class TcpChatSrvClient extends Thread {
 
                 switch (protocolo) {
                     case 4:
-                        //TODO CHAMAR CONTROLADOR
                         String tarefasPendentes = "[123!PENDENTE!POR_APROVAR!tes][123!PENDENTE!POR_APROVAR!tes]" +
                                 "[123!PENDENTE!POR_APROVAR!tes][123!PENDENTE!POR_APROVAR!tes]";
 
@@ -65,10 +64,10 @@ class TcpChatSrvClient extends Thread {
                 //Server.TcpChatSrv.
             }
             // the client wants to exit
-            TcpChatSrv.remCli(myS);
+            ServidorMain.remCli(myS);
         } catch (Exception ex) {
             try {
-                TcpChatSrv.removeC(myS);
+                ServidorMain.removeC(myS);
             } catch (Exception e) {
                 e.printStackTrace();
             }

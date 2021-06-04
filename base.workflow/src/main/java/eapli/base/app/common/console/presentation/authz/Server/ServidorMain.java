@@ -4,10 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
-public class TcpChatSrv {
+public class ServidorMain {
     private static HashMap<Socket, DataOutputStream> cliList = new HashMap<>();
     private static ServerSocket sock;
-    private static String myIp = "127.0.0.1";
+    private static String myIp = "192.168.1.165";
 
     /*
     static {
@@ -48,7 +48,7 @@ public class TcpChatSrv {
                 e.printStackTrace();
             }
             System.out.printf("NOVO CLIENTE in port %s\n", s.getPort());
-            Thread cli = new TcpChatSrvClient(s);
+            Thread cli = new ThreadCliente(s);
             cli.start();
         }
     }
