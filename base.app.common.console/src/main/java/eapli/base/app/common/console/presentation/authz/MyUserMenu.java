@@ -23,6 +23,7 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.Dashboard2.HttpServerAjaxVoting;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
@@ -76,15 +77,9 @@ public class MyUserMenu extends Menu {
         if (authz.hasSession()) {
 
 
-            Cliente n = new Cliente();
+            HttpServerAjaxVoting server = new HttpServerAjaxVoting();
             try {
-                n.startClient(6);
-                n.startClient(5);
-                n.startClient(3);
-                n.startClient(5);
-                n.startClient(2);
-                n.startClient(5);
-                n.startClient(5);
+                server.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
