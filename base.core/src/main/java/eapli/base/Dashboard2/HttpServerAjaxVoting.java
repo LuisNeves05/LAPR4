@@ -1,5 +1,6 @@
 package eapli.base.Dashboard2;
 
+import eapli.base.Dashboard2.www.DashboardUtils;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static eapli.base.Dashboard2.www.DashboardUtils.*;
 
 
 /**
@@ -57,8 +59,22 @@ public class HttpServerAjaxVoting {
     }
 
     public static synchronized String getVotesStandingInHTML() {
+        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+        UserSession userSession = authorizationService.session().get();
+        SystemUser systemUser = userSession.authenticatedUser();
+
+
         StringBuilder textHtml = new StringBuilder();
-        textHtml.append("<hr><ul>");
+
+        // NavBard
+        textHtml.append(DashboardUtils.navBar());
+
+        // Welcome Dashboard
+        textHtml.append(nameInDashboard(String.valueOf(systemUser.username())));
+
+        // Four Cards
+        //TODO CONTROLLERS
+        textHtml.append(DashboardUtils.fourBoxes(randInt(0,10),randInt(0,10),randInt(0,10)));
 
 
 
@@ -70,27 +86,22 @@ public class HttpServerAjaxVoting {
         }
 
          */
-        /////////////////////////////////////////////////////////////////////////////////
 
+        /////////////////////////////////////////////////////////////////////////////////
+        /*
         textHtml.append("<h3>Tarefas a Expirar " + Math.random() + "</h3>");
         textHtml.append("<h3>Tarefas a Pendentes " + Math.random() + "</h3>");
         textHtml.append("<h3>Tarefas a Expiradas " + Math.random() + "</h3>");
         //textHtml.append("<h3>Tarefas a expirar "    + candidateVotes[0] + "</h3>");
 
 
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        UserSession userSession = authorizationService.session().get();
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        System.out.println(systemUser.username());
-
-
+         */
         ////////////////////////////////////////////////////////////////////////////////
 
 
-        textHtml.append("</ul><hr><p>HTTP server accesses counter test: " + accessesCounter + "</p><hr>");
+        textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
 
-
+        doTime(2);
         return String.valueOf(textHtml);
     }
 
@@ -116,11 +127,6 @@ public class HttpServerAjaxVoting {
         }
     }
 
-    private static void doTime(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }

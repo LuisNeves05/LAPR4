@@ -1,14 +1,46 @@
-package eapli.base.Dashboard.TaskCards;
+package eapli.base.Dashboard2.www;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Random;
 
-public class TaskCard {
+public class DashboardUtils {
+
+    public static String nameInDashboard(String colabName){
+        StringBuilder s = new StringBuilder();
+
+        s.append("<section class=\"welcome p-t-10\">\n" +
+                "                <div class=\"containerS\">\n" +
+                "                    <div class=\"row\">\n" +
+                "                        <div class=\"col-md-12\">\n" +
+                "                            <h1 class=\"title-4\">Bem vindo de volta \n" +
+                "                                <span>" + colabName + "</span>\n" +
+                "                            </h1>\n" +
+                "                            <hr class=\"line-seprate\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "            </section>");
+
+        return s.toString();
+    }
+
+    public static String navBar(){
+        StringBuilder s = new StringBuilder();
+
+        s.append("<nav class=\"navbar navbar-dark bg-dark\">\n" +
+                "  <a class=\"navbar-brand\" href=\"#\">\n" +
+                //"    <img src=\"/docs/4.0/assets/brand/bootstrap-solid.svg\" width=\"30\" height=\"30\" class=\"d-inline-block align-top\" alt=\"\">\n" +
+                "Dashboard\n" +
+                "  </a>\n" +
+                "</nav>"
+        );
+
+        return s.toString();
+    }
+
+
     public static String fourBoxes(int tarefasAEx, int tarefasPend, int tarefasExp)  {
         StringBuilder s = new StringBuilder();
-        s.append(cssMethod());
+
 
         s.append("<!-- STATISTIC-->\n" +
                 "                <div class=\"containerS\">\n" +
@@ -58,18 +90,31 @@ public class TaskCard {
         return s.toString();
     }
 
-    public static String cssMethod(){
-        StringBuilder s = new StringBuilder();
+    public static int randInt(int min, int max) {
 
-        String content = null;
+        // NOTE: This will (intentionally) not run as written so that folks
+        // copy-pasting have to think about how to initialize their
+        // Random instance.  Initialization of the Random instance is outside
+        // the main scope of the question, but some decent options are to have
+        // a field that is initialized once and then re-used as needed or to
+        // use ThreadLocalRandom (if using at least Java 1.7).
+        //
+        // In particular, do NOT do 'Random rand = new Random()' here or you
+        // will get not very good / not very random results.
+        Random rand = new Random();
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+
+    public static void doTime(int sec) {
         try {
-            content = Files.readString(Path.of("src/TaskCards/style.txt"), StandardCharsets.US_ASCII);
-        } catch (IOException e) {
+            Thread.sleep(sec * 1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        s.append("<style>" + content + "</style>");
-
-        return s.toString();
     }
 }
