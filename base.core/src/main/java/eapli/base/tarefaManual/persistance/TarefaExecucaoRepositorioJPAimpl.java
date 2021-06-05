@@ -12,6 +12,7 @@ import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
+import java.util.List;
 
 
 public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<TarefaManual, Long, Long>
@@ -22,11 +23,13 @@ public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<Tarefa
     }
 
     @Override
-    public Iterable<TarefaManualExecucao> tarefasManuaisExecucaoNA(Equipa equipa) {
+    public List<TarefaManualExecucao> tarefasManuaisExecucaoNA(List<Equipa> equipas) {
+
         QueryMaker qm = new QueryMaker();
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualExecucao t where t.equipasExecuta.size != 0 and :equipa MEMBER of t.equipasExecuta", TarefaManualExecucao.class);
-        query.setParameter("equipa", equipa);
+        query.setParameter("equipa", equipas);
         return query.getResultList();
+
     }
 
     @Override

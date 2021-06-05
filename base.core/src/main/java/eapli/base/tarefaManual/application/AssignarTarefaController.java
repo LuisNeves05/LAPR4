@@ -15,6 +15,8 @@ import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
+import java.util.List;
+
 public class AssignarTarefaController {
 
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
@@ -23,6 +25,7 @@ public class AssignarTarefaController {
     private final UserSession userSession = authorizationService.session().get();
     private final SystemUser systemUser = userSession.authenticatedUser();
     private final Colaborador colabPedido =colabPorUserName(systemUser.username());
+    private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
     public Colaborador colabPorUserName(Username username){
@@ -33,8 +36,8 @@ public class AssignarTarefaController {
        return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
     }
 
-    public Iterable<TarefaManualExecucao> tarefasManualExecucao( Equipa equipa){
-        return tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipa);
+    public List<TarefaManualExecucao> tarefasManualExecucao(){
+        return  tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
     }
 
     public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){

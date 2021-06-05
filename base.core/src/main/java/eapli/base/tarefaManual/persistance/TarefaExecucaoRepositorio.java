@@ -7,10 +7,12 @@ import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.framework.domain.repositories.DomainRepository;
 
+import java.util.List;
+
 public interface TarefaExecucaoRepositorio extends DomainRepository<Long, TarefaManual> {
 
 
-    Iterable<TarefaManualExecucao> tarefasManuaisExecucaoNA(Equipa equipa);
+    List<TarefaManualExecucao> tarefasManuaisExecucaoNA(List<Equipa> equipas);
 
     Iterable<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
 

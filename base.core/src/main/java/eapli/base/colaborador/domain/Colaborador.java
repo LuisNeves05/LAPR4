@@ -101,6 +101,11 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
                 ", nrContacto=" + nrContacto +
                 '}';
     }
+
+    public List<Equipa> obterEquipasColaborador() {
+        return equipas;
+    }
+
     public String nomeToString(){
         return nomeCurto.toString();
     }

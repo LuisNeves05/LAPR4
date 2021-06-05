@@ -17,23 +17,11 @@ public class AssignarTarefasUI extends AbstractUI {
     protected boolean doShow() {
 
         TarefaManualExecucao tarefa = null;
-        List<Equipa> listaequipas = (List<Equipa>) controller.equipasColab();
-        Set<TarefaManualExecucao> setTarefasManualExecucao = new HashSet<>();
-        if (listaequipas.isEmpty()) {
-            System.out.println("Ainda não têm uma equipa associada.Não pode reivindicar tarefas.");
-            return false;
-        }
-        for (Equipa equipa : listaequipas) {
-            setTarefasManualExecucao.addAll((List<TarefaManualExecucao>) controller.tarefasManualExecucao(equipa));
-
-        }
+        List<TarefaManualExecucao> listaTarefasManualExecucao =  controller.tarefasManualExecucao();
 
 
-        if (setTarefasManualExecucao.isEmpty()) {
-            System.out.println("Não existem tarefas para reivindicar .");
-            return false;
-        }
-        List<TarefaManualExecucao> listaTarefasManualExecucao = new ArrayList<>(setTarefasManualExecucao);
+//TODO TESTAR MAIS ASSIGNAÇÕES A VER SE NAO SE PARTE
+
 
         int index = 1;
         for (TarefaManualExecucao t : listaTarefasManualExecucao) {
