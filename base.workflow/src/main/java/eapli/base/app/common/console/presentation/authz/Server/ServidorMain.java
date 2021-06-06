@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class ServidorMain {
     private static HashMap<Socket, DataOutputStream> cliList = new HashMap<>();
     private static ServerSocket sock;
-    private static String myIp = "192.168.1.165";
+    private static String myIp = "10.8.0.82";
 
     /*
     static {

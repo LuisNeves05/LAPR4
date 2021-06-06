@@ -73,30 +73,9 @@ public class HttpServerAjaxVoting {
         textHtml.append(nameInDashboard(String.valueOf(systemUser.username())));
 
         // Four Cards
-        //TODO CONTROLLERS
+        // TODO CONTROLLERS
         textHtml.append(DashboardUtils.fourBoxes(randInt(0,10),randInt(0,10),randInt(0,10)));
 
-
-
-        /*for (int i = 0; i < candidatesNumber; i++) {
-            textHtml.append("<li>" +
-                    "<button type=button voteFor(" + (i + 1) + ")>Vote for " + candidateName[i] + "</button> " +
-                    " - " +
-                    candidateVotes[i] + " votes </li>");
-        }
-
-         */
-
-        /////////////////////////////////////////////////////////////////////////////////
-        /*
-        textHtml.append("<h3>Tarefas a Expirar " + Math.random() + "</h3>");
-        textHtml.append("<h3>Tarefas a Pendentes " + Math.random() + "</h3>");
-        textHtml.append("<h3>Tarefas a Expiradas " + Math.random() + "</h3>");
-        //textHtml.append("<h3>Tarefas a expirar "    + candidateVotes[0] + "</h3>");
-
-
-         */
-        ////////////////////////////////////////////////////////////////////////////////
 
 
         textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");

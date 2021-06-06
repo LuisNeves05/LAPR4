@@ -30,6 +30,8 @@ import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarE
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
 import eapli.base.app.common.console.presentation.authz.Client.Cliente;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
 import eapli.base.app.common.console.presentation.authz.Server.ServidorMain;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
@@ -68,6 +70,7 @@ public class MyUserMenu extends Menu {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
+
     public MyUserMenu(final Role onlyWithThis) {
         super(MENU_TITLE);
         buildMyUserMenu(onlyWithThis);
@@ -77,19 +80,15 @@ public class MyUserMenu extends Menu {
         if (authz.hasSession()) {
 
 
-            HttpServerAjaxVoting server = new HttpServerAjaxVoting();
-            try {
-                server.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            TcpCliSumTLS n = new TcpCliSumTLS();
 
-            ServidorMain servidorMain = new ServidorMain();
-            try {
-                servidorMain.startServer();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            n.getFluxActFromServer();
+            n.getTarPenFromServer(authz.session().get().authenticatedUser().username().toString());
+
+
+            TcpSrvSumTLS server = new TcpSrvSumTLS();
+            server.startServer();
+
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
