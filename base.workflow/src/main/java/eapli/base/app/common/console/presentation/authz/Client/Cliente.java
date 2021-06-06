@@ -10,11 +10,11 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
-public class TcpChatCli {
+public class Cliente {
     static InetAddress serverIP;
     static Socket sock;
     private static String name = "CLIENTE";
-    private final String ip = "192.168.1.8";
+    private final String ip = "192.168.1.3";
 
 
     public void startClient(int protocoloNum) throws Exception {
@@ -40,7 +40,8 @@ public class TcpChatCli {
         nick = name;
 
         // start a thread to read incoming messages from the server
-        Thread serverConn = new Thread(new TcpChatCliConn(sock));
+        TcpChatCliConn newCon = new TcpChatCliConn(sock);
+        Thread serverConn = new Thread(newCon);
         serverConn.start();
 
 
@@ -50,9 +51,8 @@ public class TcpChatCli {
         sOut.write(data,0,frase.getBytes(StandardCharsets.UTF_8).length);
         sOut.write(0);
 
-        //System.out.println("cona");
-
         serverConn.join();
+        System.out.println("RETURNED : " + newCon.getDataBuilder());
         sock.close();
     }
 }

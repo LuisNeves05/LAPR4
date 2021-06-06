@@ -2,16 +2,12 @@ package eapli.base.app.common.console.presentation.authz.Client;
 
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 
 class TcpChatCliConn implements Runnable {
     private Socket s;
     private DataInputStream sIn;
+    private StringBuilder dataBuilder = new StringBuilder();
 
     public TcpChatCliConn(Socket tcp_s) {
         s = tcp_s;
@@ -21,6 +17,7 @@ class TcpChatCliConn implements Runnable {
         int nChars;
         byte[] data = new byte[250];
         String frase;
+
 
         try {
             while (true) {
@@ -33,6 +30,8 @@ class TcpChatCliConn implements Runnable {
                 if(frase.length() > 0){
                     String t = String.valueOf(frase.charAt(frase.length()-1));
 
+                    dataBuilder.append(frase);
+
                     System.out.printf("Received : %s \n", frase);
                     if (t.equals(String.valueOf(0))) {
                         break;
@@ -44,5 +43,9 @@ class TcpChatCliConn implements Runnable {
             System.out.println("Client disconnected.");
         }
 
+    }
+
+    public String getDataBuilder() {
+        return String.valueOf(dataBuilder).substring(0, dataBuilder.length()-1);
     }
 }

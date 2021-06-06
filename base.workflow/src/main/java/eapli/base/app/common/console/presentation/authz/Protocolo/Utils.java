@@ -1,5 +1,5 @@
 package eapli.base.app.common.console.presentation.authz.Protocolo;
-import eapli.base.app.common.console.presentation.authz.Server.TcpChatSrv;
+import eapli.base.app.common.console.presentation.authz.Server.ServidorMain;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -24,10 +24,10 @@ public class Utils {
         stringApart.add(String.valueOf(s));
 
         for(String elem : stringApart){
-            TcpChatSrv.sendToAll(elem.length(),elem.getBytes(StandardCharsets.UTF_8));
+            ServidorMain.sendToAll(elem.length(),elem.getBytes(StandardCharsets.UTF_8));
         }
 
-        TcpChatSrv.sendToAll(1,String.valueOf(0).getBytes(StandardCharsets.UTF_8));
+        ServidorMain.sendToAll(1,String.valueOf(0).getBytes(StandardCharsets.UTF_8));
 
 
         return stringApart;

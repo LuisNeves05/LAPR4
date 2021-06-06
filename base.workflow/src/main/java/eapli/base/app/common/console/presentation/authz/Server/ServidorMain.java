@@ -4,10 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
-public class TcpChatSrv {
+public class ServidorMain {
     private static HashMap<Socket, DataOutputStream> cliList = new HashMap<>();
     private static ServerSocket sock;
-    private static String myIp = "127.0.0.1";
+    private static String myIp = "10.8.0.82";
 
     /*
     static {
@@ -21,8 +21,13 @@ public class TcpChatSrv {
      */
 
 
-    public void startServer() throws Exception {
-        InetAddress serverIp = InetAddress.getByName(myIp);
+    public void startServer() {
+        InetAddress serverIp = null;
+        try {
+            serverIp = InetAddress.getByName(myIp);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         try {
             sock = new ServerSocket(4444, 0, serverIp);
         } catch (IOException ex) {
@@ -31,10 +36,19 @@ public class TcpChatSrv {
             System.exit(1);
         }
         while (true) {
-            Socket s = sock.accept(); // wait for a new client connection request
-            addCli(s);
+            Socket s = null; // wait for a new client connection request
+            try {
+                s = sock.accept();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                addCli(s);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.out.printf("NOVO CLIENTE in port %s\n", s.getPort());
-            Thread cli = new TcpChatSrvClient(s);
+            Thread cli = new ThreadCliente(s);
             cli.start();
         }
     }

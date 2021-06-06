@@ -23,19 +23,20 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.Dashboard2.HttpServerAjaxVoting;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
-import eapli.base.app.common.console.presentation.authz.Client.TcpChatCli;
-import eapli.base.app.common.console.presentation.authz.Server.TcpChatSrv;
+import eapli.base.app.common.console.presentation.authz.Client.Cliente;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
+import eapli.base.app.common.console.presentation.authz.Server.ServidorMain;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
-import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
-
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
-import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
-import eapli.base.tarefaManual.domain.TarefaManual;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -69,6 +70,7 @@ public class MyUserMenu extends Menu {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
+
     public MyUserMenu(final Role onlyWithThis) {
         super(MENU_TITLE);
         buildMyUserMenu(onlyWithThis);
@@ -76,6 +78,17 @@ public class MyUserMenu extends Menu {
 
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
+
+
+            TcpCliSumTLS n = new TcpCliSumTLS();
+
+            n.getFluxActFromServer();
+            n.getTarPenFromServer(authz.session().get().authenticatedUser().username().toString());
+
+
+            TcpSrvSumTLS server = new TcpSrvSumTLS();
+            server.startServer();
+
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
