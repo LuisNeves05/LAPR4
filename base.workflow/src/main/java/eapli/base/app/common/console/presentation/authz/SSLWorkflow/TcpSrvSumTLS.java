@@ -82,7 +82,9 @@ class TcpSrvSumTLSThread implements Runnable {
             switch (protocolo) {
                 case 4:
                     String colab = sIn.readUTF();
-                    System.out.println("Enviar Tarefas Pendentes para o " + colab);
+                    String frase = "Enviar Tarefas Pendentes para o " + colab;
+                    System.out.println(frase);
+                    sOut.writeUTF(frase);
                     break;
                 case 5:
                     System.out.println("Enviar Fluxos");
@@ -93,6 +95,7 @@ class TcpSrvSumTLSThread implements Runnable {
 
             System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + s.getPort() +
                     " disconnected");
+
         } catch (IOException ex) {
             System.out.println(ex);
         } finally {

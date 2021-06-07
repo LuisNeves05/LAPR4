@@ -37,4 +37,7 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
         return ticket.toString();
     }
 
+    public Ticket procurarTicket() {
+        return ticket;
+    }
 }

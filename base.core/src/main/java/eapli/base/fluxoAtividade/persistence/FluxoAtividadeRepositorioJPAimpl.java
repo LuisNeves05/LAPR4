@@ -23,4 +23,11 @@ public class FluxoAtividadeRepositorioJPAimpl extends JpaAutoTxRepository<FluxoA
         query.setParameter("a", StatusFluxo.ATIVO);
         return query.getResultList();
     }
+
+    @Override
+    public Iterable<FluxoAtividade> fluxosTotal() {
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from FluxoAtividade t", FluxoAtividade.class);
+        return query.getResultList();
+    }
 }

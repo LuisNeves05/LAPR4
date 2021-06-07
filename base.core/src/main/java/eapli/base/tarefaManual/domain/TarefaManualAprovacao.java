@@ -23,6 +23,7 @@ public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
     }
 
+
     protected TarefaManualAprovacao() {}
 
     public void assignaColabAprovacao(Colaborador colaborador){

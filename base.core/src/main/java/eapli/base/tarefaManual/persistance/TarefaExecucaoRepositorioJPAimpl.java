@@ -47,6 +47,10 @@ public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<Tarefa
         return query.getResultList();
     }
 
+
+
+
+
     /*
     @Override
     public Iterable<TarefaManualExecucao> tarefasManuaisExecucaoColab(Colaborador colab) {

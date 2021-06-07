@@ -18,7 +18,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueriesFluxoAtivo {
+public class FluxoAtivoController {
 
     private final FluxoAtividadeRepositorio repoFluxo= PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
@@ -29,6 +29,19 @@ public class QueriesFluxoAtivo {
         for(FluxoAtividade elem : fluxoList){
             fluxo.add(elem.toDTO().toString());
         }
+
+
+        return HelpMethods.arrayToString(fluxo);
+    }
+
+    public String fluxosTotaisQueries(){
+        Iterable<FluxoAtividade> fluxoList= repoFluxo.fluxosTotal();
+        List<String> fluxo = new ArrayList<>();
+
+        for(FluxoAtividade elem : fluxoList){
+            fluxo.add(elem.toDTO().toString());
+        }
+
 
         return HelpMethods.arrayToString(fluxo);
     }

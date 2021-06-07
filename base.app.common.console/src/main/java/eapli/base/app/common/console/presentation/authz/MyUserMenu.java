@@ -23,26 +23,29 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
-import eapli.base.Dashboard2.HttpServerAjaxVoting;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
-import eapli.base.app.common.console.presentation.authz.Client.Cliente;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
-import eapli.base.app.common.console.presentation.authz.Server.ServidorMain;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.fluxoAtividade.application.FluxoAtivoController;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManual.application.QueriesTarefaController;
+import eapli.base.tarefaManual.services.TarefasPendentesService;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
+
+import java.util.List;
 
 public class MyUserMenu extends Menu {
 
@@ -79,7 +82,16 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
+            ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
+            QueriesTarefaController controller = new QueriesTarefaController();
 
+            AuthorizationService authz = AuthzRegistry.authorizationService();
+            Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
+
+            TarefasPendentesService service = new TarefasPendentesService();
+            System.out.println("DASHBOARD: " + service.dashboardData(colab));
+
+            /*
             TcpCliSumTLS n = new TcpCliSumTLS();
 
             n.getFluxActFromServer();
@@ -88,6 +100,7 @@ public class MyUserMenu extends Menu {
 
             TcpSrvSumTLS server = new TcpSrvSumTLS();
             server.startServer();
+             */
 
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));

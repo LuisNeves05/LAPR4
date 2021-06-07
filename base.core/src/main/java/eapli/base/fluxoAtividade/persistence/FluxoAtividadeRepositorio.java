@@ -8,4 +8,6 @@ public interface FluxoAtividadeRepositorio extends DomainRepository<Long, FluxoA
 
     Iterable<FluxoAtividade> fluxosAtivos();
 
+    Iterable<FluxoAtividade> fluxosTotal();
+
 }

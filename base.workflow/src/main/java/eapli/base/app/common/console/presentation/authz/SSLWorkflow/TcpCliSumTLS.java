@@ -30,7 +30,12 @@ public class TcpCliSumTLS {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //DataInputStream sIn = new DataInputStream(sock.getInputStream());
+        DataInputStream sIn = null;
+        try {
+            sIn = new DataInputStream(sock.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         String frase;
@@ -38,6 +43,10 @@ public class TcpCliSumTLS {
         try {
             sOut.writeUTF(frase);
             sOut.writeUTF(colabName);
+
+            //WAITING FOR RESPONSE
+            String response = sIn.readUTF();
+            System.out.println("Client Response from server: " + response);
         } catch (IOException e) {
             e.printStackTrace();
         }
