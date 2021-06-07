@@ -1,14 +1,20 @@
 package eapli.base.app.common.console.presentation.authz.SSLWorkflow;
 
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManual.services.TarefasPendentesService;
+
 import java.io.*;
 import java.net.*;
 
-import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.net.ssl.SSLProtocolException;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
-import javax.net.ssl.SSLSocket;
+
+import static org.apache.commons.lang3.math.NumberUtils.toInt;
 
 public class TcpSrvSumTLS {
 
@@ -83,8 +89,16 @@ class TcpSrvSumTLSThread implements Runnable {
                 case 4:
                     String colab = sIn.readUTF();
                     String frase = "Enviar Tarefas Pendentes para o " + colab;
-                    System.out.println(frase);
-                    sOut.writeUTF(frase);
+
+
+                    Colaborador colabServer = colabWithString(colab);
+                    TarefasPendentesService service = new TarefasPendentesService();
+                    String t = service.dashboardData(colabServer);
+                    String[] splittedData = t.split(",");
+
+                    String returnFromServer = String.format("%s,%s,%s", toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2]));
+                    System.out.println(returnFromServer);
+                    sOut.writeUTF(returnFromServer);
                     break;
                 case 5:
                     System.out.println("Enviar Fluxos");
@@ -101,12 +115,27 @@ class TcpSrvSumTLSThread implements Runnable {
         } finally {
             try {
                 s.close();
+            } catch (SSLProtocolException e){
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
 
+    }
+
+    public static Colaborador colabWithString (String user){
+        ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
+        Iterable<Colaborador> tds = repoColab.findAll();
+
+        for(Colaborador elem : tds){
+            if(elem.nomeToString().contains(user)){
+                return elem;
+            }
+        }
+
+        return null;
     }
 }
 

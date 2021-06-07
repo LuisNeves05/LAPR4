@@ -1,4 +1,4 @@
-package eapli.base.Dashboard2;
+package Dashboard2;
 
 import java.io.*;
 
@@ -41,8 +41,10 @@ public class HTTPmessage {
         return ret;
     }
 
+
     static private void writeHeaderLine(DataOutputStream out, String line) throws IOException {
         out.write(line.getBytes(), 0, line.length());
+        //System.out.printf("%s   %s\n", CR, LF);
         out.write(CR);
         out.write(LF);
     }

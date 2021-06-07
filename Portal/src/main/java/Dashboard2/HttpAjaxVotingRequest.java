@@ -1,6 +1,4 @@
-package eapli.base.Dashboard2;
-
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+package Dashboard2;
 
 import java.io.*;
 import java.net.Socket;

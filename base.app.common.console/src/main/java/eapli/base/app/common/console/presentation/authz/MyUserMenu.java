@@ -23,34 +23,25 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
-import eapli.base.Dashboard2.DashboardThread;
-import eapli.base.Dashboard2.HttpServerAjaxVoting;
+import Dashboard2.DashboardThread;
+import Dashboard2.HttpServerAjaxVoting;
+import Dashboard2.www.DashboardUtils;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
-import eapli.base.fluxoAtividade.application.FluxoAtivoController;
-import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManual.application.QueriesTarefaController;
-import eapli.base.tarefaManual.services.TarefasPendentesService;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
-
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.logging.Level;
 
 public class MyUserMenu extends Menu {
 
@@ -91,9 +82,13 @@ public class MyUserMenu extends Menu {
             System.out.println("Threads: " + Thread.currentThread());
 
 
-            Thread t1 = new Thread(new DashboardThread());
-            t1.start();
+            if(DashboardUtils.available(9222)){
+                Thread t1 = new Thread(new DashboardThread());
+                t1.start();
+            }
 
+            //TcpSrvSumTLS s = new TcpSrvSumTLS();
+            //s.startServer();
 
             /*
             TcpCliSumTLS n = new TcpCliSumTLS();

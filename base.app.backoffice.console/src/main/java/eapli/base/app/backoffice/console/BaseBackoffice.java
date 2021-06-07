@@ -23,6 +23,8 @@
  */
 package eapli.base.app.backoffice.console;
 
+import Dashboard2.DashboardThread;
+import Dashboard2.www.DashboardUtils;
 import eapli.base.app.common.console.BaseApplication;
 import eapli.base.app.common.console.presentation.authz.LoginUI;
 import eapli.base.app.backoffice.console.presentation.MainMenu;
@@ -66,6 +68,8 @@ public final class BaseBackoffice extends BaseApplication {
         // login and go to main menu
         if (new LoginUI().show()) {
             // go to main menu
+
+
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
         }
