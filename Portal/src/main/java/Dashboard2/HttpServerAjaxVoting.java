@@ -108,7 +108,7 @@ public class HttpServerAjaxVoting {
 
         //textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
 
-        //doTime(4);
+        doTime(4);
         return String.valueOf(textHtml);
     }
 

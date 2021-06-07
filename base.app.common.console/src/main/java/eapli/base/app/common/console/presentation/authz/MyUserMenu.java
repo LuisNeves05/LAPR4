@@ -79,27 +79,8 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
-            System.out.println("Threads: " + Thread.currentThread());
 
 
-            if(DashboardUtils.available(9222)){
-                Thread t1 = new Thread(new DashboardThread());
-                t1.start();
-            }
-
-            //TcpSrvSumTLS s = new TcpSrvSumTLS();
-            //s.startServer();
-
-            /*
-            TcpCliSumTLS n = new TcpCliSumTLS();
-
-            n.getFluxActFromServer();
-            n.getTarPenFromServer(authz.session().get().authenticatedUser().username().toString());
-
-
-            TcpSrvSumTLS server = new TcpSrvSumTLS();
-            server.startServer();
-             */
 
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
