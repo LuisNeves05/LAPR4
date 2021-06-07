@@ -19,6 +19,7 @@ public class QueriesTarefaController {
 
     public String tarefasManuaisAprovDTO(Colaborador colaborador) {
         Iterable<TarefaManualExecucao> tarefasList = repoTarefasExec.tarefasManuaisExecucaoPendentes(colaborador);
+        System.out.println(tarefasList);
         List<String> tarefas = new ArrayList<>();
 
         for (TarefaManualExecucao tarefaM : tarefasList) {

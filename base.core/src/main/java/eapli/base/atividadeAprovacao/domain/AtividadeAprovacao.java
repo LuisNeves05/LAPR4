@@ -27,6 +27,11 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
         this.colabsAprov = new HashSet<>();
     }
 
+    @Override
+    public String toString() {
+        return colabsAprov.toString() + "CO" +tarefasAprov + "CON";
+    }
+
     public void adicionaTarefaAprov(TarefaManualAprovacao tarAprov){
         tarefasAprov.add(tarAprov);
     }

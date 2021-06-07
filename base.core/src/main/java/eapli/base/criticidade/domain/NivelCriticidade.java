@@ -72,6 +72,10 @@ public class NivelCriticidade implements Comparable<Long>, AggregateRoot<Long> {
         return cor;
     }
 
+    public Objetivo objetivos() {
+        return objetivo;
+    }
+
     public boolean isDefault() {
         return isDefault;
     }

@@ -26,7 +26,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @OneToOne
     private Colaborador colabRequisitou;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar createdOn;
 
     @OneToOne
@@ -44,9 +44,18 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     @Enumerated(EnumType.STRING)
     private EstadoTicket estadoTicket;
 
+    private int periodoMaxApr;
+
+    private int periodoMaxRes;
+
+    public Calendar criacaoTicket() {
+        return createdOn;
+    }
+
     protected Ticket(){}
 
-    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket, EstadoTicket estadoTicket) {
+    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
+                  EstadoTicket estadoTicket) {
         this.colabRequisitou = colabRequisitou;
         this.createdOn = Calendars.now();
         this.servico = servico;
@@ -54,6 +63,8 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
         this.urgenciaTicket = urgenciaTicket;
         this.formulariosPreenchidos = new HashSet<>();
         this.estadoTicket = estadoTicket;
+        this.periodoMaxApr = servico.nivelCriticidadeServico().objetivos().aprovacaoMax();
+        this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().resolucaoMax();
     }
 
     public void adicionaFormularioResposta(FormularioPreenchido fp){
@@ -75,17 +86,15 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     public String toString() {
         return "Ticket "+ id +" : \n"+
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + formatDate(createdOn) +
+                "       Criado em : " + createdOn.getCalendarType() +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
                 "       Urgência : " + urgenciaTicket ;}
 
+    public int periodoMaxApr() {
+        return periodoMaxApr;
+    }
 
-
-    private String formatDate(Calendar calendar){
-
-        Date date =  calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        String strDate = dateFormat.format(date);
-        return strDate;
+    public int periodoMaxRes() {
+        return periodoMaxRes;
     }
 }

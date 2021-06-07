@@ -23,20 +23,23 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.Dashboard2.DashboardThread;
 import eapli.base.Dashboard2.HttpServerAjaxVoting;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
-import eapli.base.app.common.console.presentation.authz.Client.Cliente;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
-import eapli.base.app.common.console.presentation.authz.Server.ServidorMain;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.fluxoAtividade.application.FluxoAtivoController;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManual.application.QueriesTarefaController;
+import eapli.base.tarefaManual.services.TarefasPendentesService;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -44,7 +47,13 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.logging.Level;
+
 public class MyUserMenu extends Menu {
+
 
     private static final String MENU_TITLE = "My account >";
 
@@ -79,7 +88,14 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
+            System.out.println("Threads: " + Thread.currentThread());
 
+
+            Thread t1 = new Thread(new DashboardThread());
+            t1.start();
+
+
+            /*
             TcpCliSumTLS n = new TcpCliSumTLS();
 
             n.getFluxActFromServer();
@@ -88,6 +104,7 @@ public class MyUserMenu extends Menu {
 
             TcpSrvSumTLS server = new TcpSrvSumTLS();
             server.startServer();
+             */
 
 
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
