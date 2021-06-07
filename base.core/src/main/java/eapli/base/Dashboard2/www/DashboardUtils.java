@@ -66,7 +66,7 @@ public class DashboardUtils {
                 "                        </div>\n" +
                 "                        <div class=\"col-md-6 col-lg-3\">\n" +
                 "                            <div class=\"statistic__item statistic__item--blue\">\n" +
-                "                                <h2 class=\"number\">1,086</h2>\n" +
+                "                                <h2 class=\"number\">0</h2>\n" +
                 "                                <span class=\"desc\">this week</span>\n" +
                 "                                <div class=\"icon\">\n" +
                 "                                    <i class=\"zmdi zmdi-calendar-note\"></i>\n" +
@@ -116,5 +116,9 @@ public class DashboardUtils {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int toInt(String data){
+        return Integer.parseInt(data);
     }
 }

@@ -1,6 +1,11 @@
 package eapli.base.Dashboard2;
 
 import eapli.base.Dashboard2.www.DashboardUtils;
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManual.application.QueriesTarefaController;
+import eapli.base.tarefaManual.services.TarefasPendentesService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -10,6 +15,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import static eapli.base.Dashboard2.www.DashboardUtils.*;
 
@@ -41,7 +47,8 @@ public class HttpServerAjaxVoting {
         while (true) {
             cliSock = sock.accept();
             HttpAjaxVotingRequest req = new HttpAjaxVotingRequest(cliSock, BASE_FOLDER);
-            req.start();
+            req.run();
+            //req.start();
             incAccessesCounter();
         }
     }
@@ -74,11 +81,22 @@ public class HttpServerAjaxVoting {
 
         // Four Cards
         // TODO CONTROLLERS
-        textHtml.append(DashboardUtils.fourBoxes(randInt(0,10),randInt(0,10),randInt(0,10)));
+        /////////////////////////////////////////////////////////////
+        ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
+        QueriesTarefaController controller = new QueriesTarefaController();
+
+        AuthorizationService authz = AuthzRegistry.authorizationService();
+        Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
+
+        TarefasPendentesService service = new TarefasPendentesService();
+        String t = service.dashboardData(colab);
+        String[] splittedData = t.split(",");
+        /////////////////////////////////////////////////////////////
+        textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2])));
 
 
 
-        textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
+        //textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
 
         doTime(2);
         return String.valueOf(textHtml);

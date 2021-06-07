@@ -23,6 +23,8 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
+import eapli.base.Dashboard2.DashboardThread;
+import eapli.base.Dashboard2.HttpServerAjaxVoting;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
@@ -45,9 +47,13 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
+import java.util.logging.Level;
 
 public class MyUserMenu extends Menu {
+
 
     private static final String MENU_TITLE = "My account >";
 
@@ -82,14 +88,12 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
-            ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
-            QueriesTarefaController controller = new QueriesTarefaController();
+            System.out.println("Threads: " + Thread.currentThread());
 
-            AuthorizationService authz = AuthzRegistry.authorizationService();
-            Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
 
-            TarefasPendentesService service = new TarefasPendentesService();
-            System.out.println("DASHBOARD: " + service.dashboardData(colab));
+            Thread t1 = new Thread(new DashboardThread());
+            t1.start();
+
 
             /*
             TcpCliSumTLS n = new TcpCliSumTLS();
