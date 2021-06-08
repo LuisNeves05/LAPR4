@@ -1,6 +1,6 @@
-package eapli.base.Dashboard2;
+package Dashboard2;
 
-import eapli.base.Dashboard2.HTTPmessage;
+import Dashboard2.HTTPmessage;
 
 import java.io.*;
 import java.net.*;

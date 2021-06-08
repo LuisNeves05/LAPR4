@@ -18,7 +18,7 @@ public class TcpCliSumTLS {
     static SSLSocket sock;
 
 
-    public void getTarPenFromServer(String colabName) {
+    public String getTarPenFromServer(String colabName) {
 
         preparingSSLClient();
 
@@ -46,7 +46,10 @@ public class TcpCliSumTLS {
 
             //WAITING FOR RESPONSE
             String response = sIn.readUTF();
-            System.out.println("Client Response from server: " + response);
+            //TODO IF CONSTANT
+            //System.out.println("Client Response from server: " + response);
+
+            return response;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,6 +59,8 @@ public class TcpCliSumTLS {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
     public void getFluxActFromServer(){
@@ -116,8 +121,8 @@ public class TcpCliSumTLS {
             System.out.println("Application aborted.");
             System.exit(1);
         }
-
-        System.out.println("Connected to: " + serverIp + ":" + SERVER_PORT);
+        //TODO IF CONSTANT
+        //System.out.println("Connected to: " + serverIp + ":" + SERVER_PORT);
 
         try {
             sock.startHandshake();

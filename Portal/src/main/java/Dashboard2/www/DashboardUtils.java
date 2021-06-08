@@ -1,5 +1,11 @@
-package eapli.base.Dashboard2.www;
+package Dashboard2.www;
 
+import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Random;
 
 public class DashboardUtils {
@@ -119,6 +125,16 @@ public class DashboardUtils {
     }
 
     public static int toInt(String data){
-        return Integer.parseInt(data);
+        return Integer.parseInt(data.trim());
     }
+
+    public static boolean available(int port) {
+        try (Socket ignored = new Socket("localhost", port)) {
+            return false;
+        } catch (IOException ignored) {
+            return true;
+        }
+    }
+
+
 }

@@ -1,6 +1,7 @@
-package eapli.base.Dashboard2;
+package Dashboard2;
 
-import eapli.base.Dashboard2.www.DashboardUtils;
+import Dashboard2.www.DashboardUtils;
+import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -10,23 +11,26 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
-import static eapli.base.Dashboard2.www.DashboardUtils.*;
+import static Dashboard2.www.DashboardUtils.*;
 
 
 /**
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
 public class HttpServerAjaxVoting {
-    static private final String BASE_FOLDER = "base.core/src/main/java/eapli/base/Dashboard2/www";
+    static private final String BASE_FOLDER = "Portal/src/main/java/Dashboard2/www";
     static private ServerSocket sock;
     static private String PORT;
+    static ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
+    static AuthorizationService authz = AuthzRegistry.authorizationService();
+    static Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
+
 
     public void start() throws Exception {
         Socket cliSock;
@@ -80,25 +84,31 @@ public class HttpServerAjaxVoting {
         textHtml.append(nameInDashboard(String.valueOf(systemUser.username())));
 
         // Four Cards
-        // TODO CONTROLLERS
-        /////////////////////////////////////////////////////////////
-        ColaboradorRepositorio repoColab = PersistenceContext.repositories().colaboradorRepositorio();
-        QueriesTarefaController controller = new QueriesTarefaController();
-
-        AuthorizationService authz = AuthzRegistry.authorizationService();
-        Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
-
-        TarefasPendentesService service = new TarefasPendentesService();
-        String t = service.dashboardData(colab);
-        String[] splittedData = t.split(",");
-        /////////////////////////////////////////////////////////////
-        textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2])));
+        /*
 
 
+
+
+
+
+        String packBeforeSplit = client.getTarPenFromServer(colab.nomeToString());
+
+        System.out.printf("DEBUG %s\n", packBeforeSplit);
+        String[] splittedData = packBeforeSplit.split(",");
+        //textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2])));
+*/
+        TcpCliSumTLS client = new TcpCliSumTLS();
+        String packBeforeSplit = client.getTarPenFromServer(colab.nomeToString());
+        String[] splittedData = packBeforeSplit.split(",");
+
+        //System.out.println(packBeforeSplit);
+        //System.out.printf("-%s-   -%s-  -%s-\n", toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2]));
+
+        textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2])));
 
         //textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
 
-        doTime(2);
+        doTime(4);
         return String.valueOf(textHtml);
     }
 

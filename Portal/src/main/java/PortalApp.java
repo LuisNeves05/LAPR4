@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.base.app.backoffice.console;
 
 import Dashboard2.DashboardThread;
 import Dashboard2.www.DashboardUtils;
+import eapli.base.app.backoffice.console.presentation.PortalMainMenu;
 import eapli.base.app.common.console.BaseApplication;
 import eapli.base.app.common.console.presentation.authz.LoginUI;
 import eapli.base.app.backoffice.console.presentation.MainMenu;
@@ -38,17 +38,13 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 
-/**
- *
- * @author Paulo Gandra Sousa
- */
-@SuppressWarnings("squid:S106")
-public final class BaseBackoffice extends BaseApplication {
+
+public final class PortalApp extends BaseApplication {
 
     /**
      * avoid instantiation of this class.
      */
-    private BaseBackoffice() {
+    private PortalApp() {
     }
 
     /**
@@ -60,7 +56,7 @@ public final class BaseBackoffice extends BaseApplication {
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
-        new BaseBackoffice().run(args);
+        new PortalApp().run(args);
     }
 
     @Override
@@ -69,24 +65,24 @@ public final class BaseBackoffice extends BaseApplication {
         if (new LoginUI().show()) {
             // go to main menu
 
-            if(DashboardUtils.available(9992)){
+            /*if(DashboardUtils.available(9992)){
                 Thread t1 = new Thread(new DashboardThread());
                 t1.start();
-            }
+            }*/
 
-            final MainMenu menu = new MainMenu();
+            final PortalMainMenu menu = new PortalMainMenu();
             menu.mainLoop();
         }
     }
 
     @Override
     protected String appTitle() {
-        return "Base Back Office";
+        return "Portal";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Base Back Office";
+        return "Portal";
     }
 
     @SuppressWarnings("unchecked")
