@@ -65,10 +65,10 @@ public final class PortalApp extends BaseApplication {
         if (new LoginUI().show()) {
             // go to main menu
 
-            /*if(DashboardUtils.available(9992)){
+            if(DashboardUtils.available(9992)){
                 Thread t1 = new Thread(new DashboardThread());
                 t1.start();
-            }*/
+            }
 
             final PortalMainMenu menu = new PortalMainMenu();
             menu.mainLoop();

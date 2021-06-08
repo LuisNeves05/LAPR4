@@ -54,11 +54,12 @@ public class TcpCliSumTLS {
             e.printStackTrace();
         }
 
+        /*
         try {
             sock.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return null;
     }
@@ -92,7 +93,7 @@ public class TcpCliSumTLS {
     }
 
     private static void preparingSSLClient() {
-        String serverIp = "labs-ssh4";
+        String serverIp = "10.8.0.83";
         String clientSSL = "client1_J";
 
 
