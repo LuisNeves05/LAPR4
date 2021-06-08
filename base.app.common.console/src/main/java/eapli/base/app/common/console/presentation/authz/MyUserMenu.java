@@ -79,10 +79,6 @@ public class MyUserMenu extends Menu {
     private void buildMyUserMenu(final Role onlyWithThis) {
         if (authz.hasSession()) {
 
-
-
-
-
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
