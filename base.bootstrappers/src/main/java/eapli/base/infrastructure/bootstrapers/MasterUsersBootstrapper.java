@@ -27,6 +27,8 @@ import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
+import eapli.base.formulario.persistencia.FormularioRepositorio;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
@@ -54,6 +56,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     private final AddUserController acd = new AddUserController();
     private final EspecificarFormularioController efc = new EspecificarFormularioController();
     private final EspecificarNivelCriticidadeController enc = new EspecificarNivelCriticidadeController();
+    private final FormularioRepositorio formRep = PersistenceContext.repositories().formularioRepositorio();
 
 
     @Override
@@ -64,7 +67,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     }
 
     private void registerAdmin(final String username, final String password, final String firstName,
-            final String lastName, final String email) {
+                               final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
         masterBootStrap();
@@ -91,7 +94,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Set<Role> rolessCOLAB = new HashSet<>();
         rolessAdmin.add(BaseRoles.ADMIN);
         rolessCOLAB.add(BaseRoles.COLABORADOR);
-        rolessGSH.add(BaseRoles.GSH);
+        rolessGSH.add(BaseRoles.RRH);
 
 
         /**
@@ -219,24 +222,28 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          * É assignado a uma equipa, logo é de resolução manual
          *
          */
+
         AtividadeAprovacao atividadeAprovacao = new AtividadeAprovacao();
         atividadeAprovacao.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
+        AtividadeAprovacao at = especificarServicoController.guardaAtividadeAprovacao(atividadeAprovacao);
 
-        AtividadeRealizacao atividadeRealizacao = new AtividadeRealizacao(TipoExecucao.MANUAL,"");
-        atividadeRealizacao.adicionarEquipaExecucao(equipa_Tecnica);
+        AtividadeRealizacao ativReal = new AtividadeRealizacao(TipoExecucao.MANUAL,null);
+        ativReal.adicionarEquipaExecucao(equipa_Tecnica);
+        AtividadeRealizacao atividadeRealizacao = especificarServicoController.guardaAtividadeRealizacao(ativReal);
 
-        FluxoAtividade fluxoAtividade = new FluxoAtividade(atividadeAprovacao,atividadeRealizacao);
+        FluxoAtividade fluxoAtividade = especificarServicoController.guardaFluxo(new FluxoAtividade(at,atividadeRealizacao));
 
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAvaria"), new Titulo("Reportar anomalia de Comunicação"), new DescricaoBreve("Anomalia em comunicação da rede da empresa"),
                 new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], new HashSet<>(), EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
 
 
-        Formulario f = efc.especificarFormulario(new NomeFormulario("Avaria"));
+        Formulario f = new Formulario(new NomeFormulario("Avaria"), new HashSet<>());
         f.addAtributo("Equipamento que avariou: ","Código do equipamento","Código na lateral do equipamento", TipoDados.INT,"[0-9]+");
         f.addAtributo("Edifício do equipamento: ","Nome do edificio do equipamento","Nome afixado na entrada do edificio",TipoDados.STRING,"[a-zA-Z]+");
         f.addAtributo("Comentário: ","Avaria concreta do equipamento","Avaliação empírica da avaria",TipoDados.STRING,"[a-zA-Z]+");
+        Formulario fSav = formRep.save(f);
 
-        especificarServicoController.adicionaFormulario(servico,f);
+        especificarServicoController.adicionaFormulario(servico,fSav);
         especificarServicoController.especificarServico(servico);
 
 

@@ -5,8 +5,6 @@ import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManual.application.QueriesTarefaController;
-import eapli.base.tarefaManual.services.TarefasPendentesService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;

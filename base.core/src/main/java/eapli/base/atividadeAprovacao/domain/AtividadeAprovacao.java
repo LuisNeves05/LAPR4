@@ -1,6 +1,6 @@
 package eapli.base.atividadeAprovacao.domain;
 
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @ElementCollection
     private Set<ColaboradoresAprovacao> colabsAprov;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<TarefaManualAprovacao> tarefasAprov;
 
     public AtividadeAprovacao(){

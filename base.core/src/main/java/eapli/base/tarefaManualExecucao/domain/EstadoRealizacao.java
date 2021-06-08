@@ -1,4 +1,4 @@
-package eapli.base.tarefaManual.domain.estado;
+package eapli.base.tarefaManualExecucao.domain;
 
 public enum EstadoRealizacao {
     POR_EXECUTAR, EM_EXECUCAO, CONCLUIDA

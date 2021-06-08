@@ -1,7 +1,8 @@
-package eapli.base.fluxoAtividade.domain;
+package eapli.base.fluxoAtividade.builder;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.framework.domain.model.DomainFactory;
 
 public class FluxoAtividadeBuilder implements DomainFactory<FluxoAtividade> {

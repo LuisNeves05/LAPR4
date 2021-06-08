@@ -2,7 +2,7 @@ package eapli.base.fluxoAtividade.dto;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
-import eapli.base.fluxoAtividade.statusFluxo.StatusFluxo;
+import eapli.base.fluxoAtividade.domain.StatusFluxo;
 import eapli.framework.representations.dto.DTO;
 
 @DTO

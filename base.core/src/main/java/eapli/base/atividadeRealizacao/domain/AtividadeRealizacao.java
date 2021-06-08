@@ -4,7 +4,7 @@ import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -24,10 +24,10 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @ManyToMany
     private Set<Equipa> equipasExecucao;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<TarefaManualExecucao> tarefasManualExecucao;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<TarefaAutomatica> tarefasAutomaticas;
 
     @Enumerated(EnumType.STRING)
