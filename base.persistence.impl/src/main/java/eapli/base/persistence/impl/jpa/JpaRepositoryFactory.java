@@ -24,8 +24,12 @@ import eapli.base.infrastructure.persistence.RepositoryFactory;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 
 import eapli.base.servico.persistencia.ServicoRepositorioJPAimpl;
-import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
-import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorioJPAimpl;
+import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
+import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorioJPAimpl;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorioJPAimpl;
+import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
+import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorioJPAimpl;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorioJPAimpl;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
@@ -119,8 +123,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
 
 	@Override
-	public TarefaExecucaoRepositorio tarefaExecucaoRepositorio(){
-		return new TarefaExecucaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	public TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio(){
+		return new TarefaManualExecucaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio(){
+		return new TarefaManualAprovacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio(){
+		return new TarefaAutomaticaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override

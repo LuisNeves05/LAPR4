@@ -1,7 +1,6 @@
-package eapli.base.tarefaManual.domain;
+package eapli.base.tarefaManualAprovacao.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.tarefaManual.domain.estado.EstadoAprovacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -10,7 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot<Long>, Comparable<Long> {
+public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    private Ticket ticket;
 
     @ManyToMany
     private Set<Colaborador> colabsAprova = new HashSet<>();
@@ -19,15 +25,18 @@ public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot
     private EstadoAprovacao estadoAprovacao;
 
     public TarefaManualAprovacao(Ticket ticket){
-        super(ticket);
+        this.ticket = ticket;
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
     }
 
-
-    protected TarefaManualAprovacao() {}
+    protected TarefaManualAprovacao(){}
 
     public void assignaColabAprovacao(Colaborador colaborador){
         colabsAprova.add(colaborador);
+    }
+
+    public Ticket procurarTicket(){
+        return ticket;
     }
 
     @Override
@@ -37,7 +46,7 @@ public class TarefaManualAprovacao extends TarefaManual implements AggregateRoot
 
     @Override
     public Long identity() {
-        return super.identity();
+        return id;
     }
 
     public EstadoAprovacao estadoAprov() {

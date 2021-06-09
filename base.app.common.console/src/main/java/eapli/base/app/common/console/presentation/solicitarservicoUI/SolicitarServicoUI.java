@@ -1,21 +1,14 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
-import eapli.base.fluxoAtividade.application.FluxoAtivoController;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
-import eapli.base.tarefaManual.application.QueriesTarefaController;
 import eapli.base.ticket.domain.Ticket;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -84,14 +77,10 @@ public class SolicitarServicoUI extends AbstractUI {
         }
 
         Ticket ticket = lcp.criarTicket(s, urgencia);
-
         lcp.criarTarefaAprovacao(s, ticket);
-
         lcp.criarTarefaExecucao(s, ticket);
-
-        s.fluxoDoServico().ativar();
-        lcp.guardarFluxo(s);
-
+        lcp.ativarFluxoServico(s.fluxoDoServico());
+        lcp.guardarFluxo(s.fluxoDoServico());
 
         return false;
     }

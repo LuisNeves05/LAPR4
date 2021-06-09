@@ -3,9 +3,9 @@ package eapli.base.Utils.bibliotecaTarefa;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.domain.Ticket;
 
 import java.util.Set;

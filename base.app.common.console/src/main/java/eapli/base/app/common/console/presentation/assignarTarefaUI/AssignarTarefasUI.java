@@ -2,10 +2,11 @@ package eapli.base.app.common.console.presentation.assignarTarefaUI;
 
 import eapli.base.tarefaManual.application.AssignarTarefaController;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualExecucao.application.AssignarTarefaController;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-
-import java.util.*;
+import java.util.List;
 
 public class AssignarTarefasUI extends AbstractUI {
 
@@ -16,9 +17,6 @@ public class AssignarTarefasUI extends AbstractUI {
 
         TarefaManualExecucao tarefa = null;
         List<TarefaManualExecucao> listaTarefasManualExecucao =  controller.tarefasManualExecucao();
-
-
-//TODO TESTAR MAIS ASSIGNAÇÕES A VER SE NAO SE PARTE
 
 
         int index = 1;

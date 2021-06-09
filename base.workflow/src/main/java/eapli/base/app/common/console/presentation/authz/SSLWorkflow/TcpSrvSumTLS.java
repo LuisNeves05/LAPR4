@@ -3,7 +3,7 @@ package eapli.base.app.common.console.presentation.authz.SSLWorkflow;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManual.services.TarefasPendentesService;
+import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
 import java.io.*;
 import java.net.*;

@@ -1,15 +1,13 @@
-package eapli.base.tarefaManual.persistance;
+package eapli.base.tarefaManualExecucao.persistance;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefaManual.domain.TarefaManual;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.repositories.DomainRepository;
-
 import java.util.List;
 
-public interface TarefaExecucaoRepositorio extends DomainRepository<Long, TarefaManual> {
+public interface TarefaExecucaoRepositorio extends DomainRepository<Long, TarefaManualExecucao> {
 
 
     List<TarefaManualExecucao> tarefasManuaisExecucaoNA(List<Equipa> equipas);

@@ -1,24 +1,23 @@
-package eapli.base.tarefaManual.persistance;
+package eapli.base.tarefaManualExecucao.persistance;
 
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefaManual.domain.TarefaManual;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.domain.estado.EstadoAprovacao;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
+import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
 import java.util.List;
 
 
-public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<TarefaManual, Long, Long>
-        implements TarefaExecucaoRepositorio {
+public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<TarefaManualExecucao, Long, Long>
+        implements TarefaManualExecucaoRepositorio {
 
-    public TarefaExecucaoRepositorioJPAimpl(String puname) {
+    public TarefaManualExecucaoRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
     }
 

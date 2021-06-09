@@ -1,8 +1,13 @@
 package eapli.base.servico.application;
 
+
+import eapli.base.Utils.bibliotecaTarefa.TiposDeTarefa;
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
+import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.atividadeRealizacao.domain.TipoExecucao;
+import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
@@ -16,15 +21,14 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
-import eapli.base.atividadeRealizacao.domain.TipoExecucao;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
-import eapli.base.tarefaManual.domain.TarefaManual;
-import eapli.base.Utils.bibliotecaTarefa.TiposDeTarefa;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
-import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
+import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -55,6 +59,18 @@ public class SolicitarServicoController {
     private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
 
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
+
+    private final AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
+
+    private final AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
+
+    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
+
+    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRep = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
+
+    private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRep = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
+
+    private final TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
 
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
 
@@ -101,10 +117,6 @@ public class SolicitarServicoController {
     }
 
 
-    public Servico guardarFluxo(Servico serv){
-        return repoServ.save(serv);
-    }
-
     public TiposDeTarefa tiposDeTarefa(){
         return tiposDeTarefa;
     }
@@ -113,11 +125,14 @@ public class SolicitarServicoController {
         return colabPedido;
     }
 
-    public Ticket criarTicket(Servico s, String urgencia) {
-        return new Ticket(this.colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR);
+    public Ticket criarTicket(Servico s, String urgencia){
+        if(s.fluxoDoServico().ativAprovacaoDoFluxo() == null)
+            return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR));
+        else
+            return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.EM_EXECUCAO));
     }
 
-    public void  criarTarefaAprovacao(Servico s, Ticket ticket) {
+    public void criarTarefaAprovacao(Servico s, Ticket ticket) {
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
         if (at != null) {
@@ -131,7 +146,9 @@ public class SolicitarServicoController {
                 Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
                 tarefaManualAprovacao.assignaColabAprovacao(respServico);
             }
-            at.adicionaTarefaAprov(tarefaManualAprovacao);
+            TarefaManualAprovacao tarManAprov = tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
+            at.adicionaTarefaAprov(tarManAprov);
+            atividadeAprovacaoRepositorio.save(at);
         }
     }
 
@@ -144,15 +161,27 @@ public class SolicitarServicoController {
                 for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);
                 }
-                ar.adicionarTarefaExecucao(tme);
+                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tme);
+                ar.adicionarTarefaExecucao(tarManExec);
+
             } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tme = tiposDeTarefa().novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR);
-                ar.adicionarTarefaExecucao(tme);
+                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tiposDeTarefa().
+                        novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR));
+                ar.adicionarTarefaExecucao(tarManExec);
             }
         } else {
             TarefaAutomatica tarefaAutomatica = tiposDeTarefa().novaTarefaAutomatica(ticket, ar.scriptAutomatico());
-            ar.adicionarTarefaAutomatica(tarefaAutomatica);
+            TarefaAutomatica tarAut = tarefaAutomaticaRepositorio.save(tarefaAutomatica);
+            ar.adicionarTarefaAutomatica(tarAut);
         }
+        atividadeRealizacaoRepositorio.save(ar);
+    }
 
+    public FluxoAtividade guardarFluxo(FluxoAtividade fluxoDoServico) {
+        return fluxoAtividadeRepositorio.save(fluxoDoServico);
+    }
+
+    public void ativarFluxoServico(FluxoAtividade fluxoDoServico) {
+        fluxoDoServico.ativar();
     }
 }

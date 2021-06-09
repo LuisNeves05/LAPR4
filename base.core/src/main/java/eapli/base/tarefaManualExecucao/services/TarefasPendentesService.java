@@ -1,18 +1,17 @@
-package eapli.base.tarefaManual.services;
+package eapli.base.tarefaManualExecucao.services;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
 public class TarefasPendentesService {
-    private final TarefaExecucaoRepositorio repoTarefasExec = PersistenceContext.repositories().tarefaExecucaoRepositorio();
+    private final TarefaManualExecucaoRepositorio repoTarefasExec = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
     private int hardcodedTime = 2;
 
     public String dashboardData(Colaborador colab){

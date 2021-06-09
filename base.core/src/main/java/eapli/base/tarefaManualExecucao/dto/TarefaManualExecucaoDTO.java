@@ -1,8 +1,8 @@
-package eapli.base.tarefaManual.dto;
+package eapli.base.tarefaManualExecucao.dto;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
+import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
 import eapli.framework.representations.dto.DTO;
 
 import java.util.ArrayList;

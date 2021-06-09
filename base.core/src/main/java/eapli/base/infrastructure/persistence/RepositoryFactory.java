@@ -12,7 +12,9 @@ import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefaManual.persistance.TarefaExecucaoRepositorio;
+import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
+import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tipoEquipa.persistencia.TipoEquipaRepositorio;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -107,7 +109,11 @@ public interface RepositoryFactory {
 
 	TicketRepositorio ticketRepositorio();
 
-	TarefaExecucaoRepositorio tarefaExecucaoRepositorio();
+	TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio();
+
+	TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio();
+
+	TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio();
 
 	FluxoAtividadeRepositorio fluxoAtividadeRepositorio();
 

@@ -2,10 +2,9 @@ package eapli.base.fluxoAtividade.domain;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
-import eapli.base.fluxoAtividade.statusFluxo.StatusFluxo;
 import eapli.base.fluxoAtividade.dto.FluxoAtividadeDTO;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
 
 import javax.persistence.*;
@@ -19,10 +18,10 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     private AtividadeAprovacao atividadeAprovacao;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     private AtividadeRealizacao atividadeRealizacao;
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +54,14 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
 
     public void desativar(){
         this.statusFluxo = StatusFluxo.INATIVO;
+    }
+
+    public void definirAtividadeRealizacao(AtividadeRealizacao atividadeRealizacao){
+        this.atividadeRealizacao = atividadeRealizacao;
+    }
+
+    public void definirAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao){
+        this.atividadeAprovacao = atividadeAprovacao;
     }
 
     @Override

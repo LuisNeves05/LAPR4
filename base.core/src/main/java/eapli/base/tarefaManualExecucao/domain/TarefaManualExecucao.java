@@ -1,9 +1,8 @@
-package eapli.base.tarefaManual.domain;
+package eapli.base.tarefaManualExecucao.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefaManual.domain.estado.EstadoRealizacao;
-import eapli.base.tarefaManual.dto.TarefaManualExecucaoDTO;
+import eapli.base.tarefaManualExecucao.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -11,7 +10,14 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<Long>, Comparable<Long> {
+public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    private Ticket ticket;
 
     @OneToOne
     private Colaborador colabExecuta;
@@ -28,13 +34,13 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
     }
 
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
-        super(ticket);
+        this.ticket = ticket;
         this.equipasExecuta = equipasExecuta;
         this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
     }
 
     public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao){
-        super(ticket);
+        this.ticket = ticket;
         this.colabExecuta = colabExecuta;
         this.estadoRealizacao = estadoRealizacao;
     }
@@ -45,6 +51,10 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
         equipasExecuta.add(equipaExec);
     }
 
+    public Ticket procurarTicket(){
+        return ticket;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -52,7 +62,7 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
 
     @Override
     public Long identity() {
-        return super.identity();
+        return id;
     }
 
 
@@ -70,6 +80,6 @@ public class TarefaManualExecucao extends TarefaManual implements AggregateRoot<
 
 
     public TarefaManualExecucaoDTO toDTO(){
-        return new TarefaManualExecucaoDTO(super.identity(), this.estadoRealizacao, this.colabExecuta, "");
+        return new TarefaManualExecucaoDTO(id, this.estadoRealizacao, this.colabExecuta, "");
     }
 }
