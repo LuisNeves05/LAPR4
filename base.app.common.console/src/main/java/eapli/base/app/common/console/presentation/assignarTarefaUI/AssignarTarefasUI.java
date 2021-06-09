@@ -1,14 +1,7 @@
-package eapli.base.app.common.console.presentation.assignarTarefa;
+package eapli.base.app.common.console.presentation.assignarTarefaUI;
 
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
-import eapli.base.equipa.domain.Equipa;
-import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManual.application.AssignarTarefaController;
-import eapli.base.tarefaManual.application.QueriesTarefaController;
 import eapli.base.tarefaManual.domain.TarefaManualExecucao;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 

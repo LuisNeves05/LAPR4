@@ -1,6 +1,7 @@
 package eapli.base.tarefaManual.domain;
 
 import eapli.base.tarefaManual.dto.TarefaManualExecucaoDTO;
+import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -40,4 +41,12 @@ public abstract class TarefaManual implements AggregateRoot<Long>, Comparable<Lo
     public Ticket procurarTicket() {
         return ticket;
     }
+
+    public boolean estaCompleta(){
+        return this.ticket.estadoTicket().equals(EstadoTicket.CONCLUIDO);
+    }
+
+//    public boolean concluirTarefa (){
+//        this.ticket.;
+//    }
 }

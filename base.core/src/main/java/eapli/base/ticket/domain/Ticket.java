@@ -6,18 +6,14 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
-
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
-public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
+public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +48,8 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
         return createdOn;
     }
 
-    protected Ticket(){}
+    protected Ticket() {
+    }
 
     public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
                   EstadoTicket estadoTicket) {
@@ -67,7 +64,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
         this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().resolucaoMax();
     }
 
-    public void adicionaFormularioResposta(FormularioPreenchido fp){
+    public void adicionaFormularioResposta(FormularioPreenchido fp) {
         formulariosPreenchidos.add(fp);
     }
 
@@ -84,11 +81,12 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
 
     @Override
     public String toString() {
-        return "Ticket "+ id +" : \n"+
+        return "Ticket " + id + " : \n" +
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
                 "       Criado em : " + createdOn.getCalendarType() +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
-                "       Urgência : " + urgenciaTicket ;}
+                "       Urgência : " + urgenciaTicket;
+    }
 
     public int periodoMaxApr() {
         return periodoMaxApr;
@@ -96,5 +94,18 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
 
     public int periodoMaxRes() {
         return periodoMaxRes;
+    }
+
+    public EstadoTicket estadoTicket() {
+        return this.estadoTicket;
+    }
+
+    public void completarTicket() {
+        this.estadoTicket = EstadoTicket.CONCLUIDO;
+    }
+
+
+    public void emExecucao() {
+        this.estadoTicket = EstadoTicket.EM_EXECUCAO;
     }
 }

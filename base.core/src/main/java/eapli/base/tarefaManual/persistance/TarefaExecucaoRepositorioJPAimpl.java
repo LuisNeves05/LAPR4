@@ -33,7 +33,7 @@ public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<Tarefa
     }
 
     @Override
-    public Iterable<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador) {
+    public List<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador) {
         QueryMaker qm = new QueryMaker();
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualAprovacao t where t.estadoAprovacao = :a and :colaborador MEMBER of colabsAprova", TarefaManualAprovacao.class);
         query.setParameter("colaborador", colaborador);
@@ -51,7 +51,14 @@ public class TarefaExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<Tarefa
     }
 
 
-
+    @Override
+    public List<TarefaManualExecucao> tarefasManuaisExecEmExecucao(Colaborador colaborador) {
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualExecucao t where t.estadoRealizacao = :a and :colaborador = t.colabExecuta", TarefaManualExecucao.class);
+        query.setParameter("colaborador", colaborador);
+        query.setParameter("a", EstadoRealizacao.EM_EXECUCAO);
+        return query.getResultList();
+    }
 
 
     /*

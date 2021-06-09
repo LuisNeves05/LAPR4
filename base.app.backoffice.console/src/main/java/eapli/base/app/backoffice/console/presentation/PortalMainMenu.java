@@ -25,8 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.common.console.presentation.PesquisarCatalogo.PesquisarCatalogoUI;
 import eapli.base.app.common.console.presentation.PesquisarServico.PesquisarServicoUI;
-import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
-import eapli.base.app.common.console.presentation.authz.MyUserMenu;
+import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTarefasUI;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
 import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction;
