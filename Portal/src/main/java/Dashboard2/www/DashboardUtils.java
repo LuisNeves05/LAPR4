@@ -1,8 +1,6 @@
 package Dashboard2.www;
 
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
-import eapli.base.infrastructure.persistence.PersistenceContext;
+import SSLWorkflow.ClientSSL;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -63,7 +61,7 @@ public class DashboardUtils {
                 "                        </div>\n" +
                 "                        <div class=\"col-md-6 col-lg-3\">\n" +
                 "                            <div class=\"statistic__item statistic__item--orange\">\n" +
-                "                                <h2 class=\"number\">" + tarefasAEx + "</h2>\n" +
+                "                                <h2 class=\"number\">" + tarefasPend + "</h2>\n" +
                 "                                <span class=\"desc\">Tarefas pendentes</span>\n" +
                 "                                <div class=\"icon\">\n" +
                 "                                    <i class=\"zmdi zmdi-shopping-cart\"></i>\n" +
@@ -134,6 +132,20 @@ public class DashboardUtils {
         } catch (IOException ignored) {
             return true;
         }
+    }
+
+    public static String getTarefasFromServer(String colab){
+        ClientSSL client = new ClientSSL();
+        String packBeforeSplit = null;
+        try {
+            packBeforeSplit = client.getTarPenFromServer(colab);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] splittedData = packBeforeSplit.split(",");
+
+        return DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2]));
+
     }
 
 
