@@ -39,7 +39,7 @@ public class TarefasPendentesService {
                 tarefasAExp += 1;
             }
 
-            if(minutes > periodoApr && minutes > periodoRes){
+            if(minutes >= periodoApr && minutes >= periodoRes){
                 tarefasExp += 1;
             }
         }

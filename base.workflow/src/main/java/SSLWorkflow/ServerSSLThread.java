@@ -18,6 +18,7 @@ class ServerSSLThread implements Runnable {
     private Socket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
+    static TarefasPendentesService service = new TarefasPendentesService();
 
     public ServerSSLThread(Socket cli_s) {
         s = cli_s;
@@ -44,34 +45,33 @@ class ServerSSLThread implements Runnable {
 
 
                     Colaborador colabServer = colabWithString(colab);
-                    TarefasPendentesService service = new TarefasPendentesService();
+
                     String t = service.dashboardData(colabServer);
                     String[] splittedData = t.split(",");
 
                     String returnFromServer = String.format("%s,%s,%s", toInt(splittedData[0]), toInt(splittedData[1]), toInt(splittedData[2]));
-                    System.out.println(returnFromServer);
+
+                    System.out.printf("Sending to Client : %s Thread Active: %s\n", returnFromServer, Thread.activeCount());
                     sOut.writeUTF(returnFromServer);
                     break;
+
                 case 5:
                     System.out.println("Enviar Fluxos");
                     break;
 
+                default:
+                    System.out.println("Protocolo Nao Defenido!");
+                    break;
+
             }
 
+            s.close();
 
-            System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + s.getPort() +
-                    " disconnected");
+            //System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + s.getPort() +
+            //        " disconnected");
 
-        } catch (IOException ex) {
-            System.out.println(ex);
-        } finally {
-            try {
-                s.close();
-            } catch (SSLProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
