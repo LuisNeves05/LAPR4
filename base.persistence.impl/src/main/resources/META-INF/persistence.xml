@@ -25,8 +25,8 @@
     <class>eapli.base.tipoEquipa.domain.TipoEquipa</class>
     <class>eapli.base.criticidade.domain.NivelCriticidade</class>
     <class>eapli.base.formularioPreenchido.domain.FormularioPreenchido</class>
-    <class>eapli.base.tarefaManual.domain.TarefaManualAprovacao</class>
-    <class>eapli.base.tarefaManual.domain.TarefaManualExecucao</class>
+    <class>eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao</class>
+    <class>eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao</class>
     <class>eapli.base.tarefaAutomatica.domain.TarefaAutomatica</class>
     <class>eapli.base.fluxoAtividade.domain.FluxoAtividade</class>
     <class>eapli.base.atividadeAprovacao.domain.AtividadeAprovacao</class>
@@ -38,19 +38,18 @@
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
 
 
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10258/lei20_21_s4_2dl_4"/>
-      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
-      <property name="javax.persistence.jdbc.password" value="lapr4"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-<!--      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>-->
-<!--      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>-->
-<!--      <property name="javax.persistence.jdbc.password" value="lapr4"/>-->
-<!--      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>-->
-      <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
-      <!-- <property name = "hibernate.show_sql" value = "true" /> -->
+        <!--   <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10258/lei20_21_s4_2dl_4"/>
+         <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+         <property name="javax.persistence.jdbc.password" value="lapr4"/>
+         <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>>-->
+        <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
+        <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
+        <property name="javax.persistence.jdbc.password" value="lapr4"/>
+        <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
+
     </properties>
   </persistence-unit>
 </persistence>
