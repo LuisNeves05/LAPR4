@@ -10,10 +10,7 @@ import eapli.framework.time.util.Calendars;
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table
@@ -86,7 +83,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long>{
     public String toString() {
         return "Ticket "+ id +" : \n"+
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + createdOn.getCalendarType() +
+                "       Criado em : " + createdOn.getTime().toString() +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
                 "       Urgência : " + urgenciaTicket ;}
 
