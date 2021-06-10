@@ -23,9 +23,6 @@
  */
 package eapli.base.app.common.console.presentation.authz;
 
-import Dashboard2.DashboardThread;
-import Dashboard2.HttpServerAjaxVoting;
-import Dashboard2.www.DashboardUtils;
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;

@@ -18,6 +18,8 @@
         <java.version>11</java.version>
     </properties>
 
+
+
     <modules>
         <module>base.app.backoffice.console</module>
         <module>base.app.user.console</module>
@@ -78,6 +80,7 @@
     </dependencies>
 
     <dependencyManagement>
+
         <dependencies>
             <dependency><!--Necessary to avoid drop-and-create failure with latest spring boot version-->
                 <groupId>org.hibernate</groupId>
@@ -93,4 +96,5 @@
             <url>https://pagsousa.jfrog.io/artifactory/default-maven-virtual</url>
         </repository>
     </repositories>
+
 </project>

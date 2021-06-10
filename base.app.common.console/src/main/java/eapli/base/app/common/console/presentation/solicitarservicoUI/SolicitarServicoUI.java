@@ -8,7 +8,6 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
-import eapli.base.ticket.domain.Ticket;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -26,17 +25,33 @@ public class SolicitarServicoUI extends AbstractUI {
 
         List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
+        if (catalogoList.isEmpty()) {
+            System.out.println("Ainda não existem catálogos");
+            return false;
+        }
+
         for (int i = 0; i < catalogoList.size(); i++) {
             System.out.println(i + 1 + " - " + catalogoList.get(i).toString());
         }
 
-        int indCatalogo = Console.readInteger("Escolha o catalogo a que pretende aceder (index)");
+        boolean flag = true;
+        Catalogo c = null;
 
-        Catalogo c = catalogoList.get(indCatalogo - 1);
+        while (flag) {
+            int indCatalogo = Console.readInteger("Escolha o catalogo a que pretende aceder (index) (0 para sair)");
+            if (indCatalogo == 0) {
+                return false;
+            } else if (indCatalogo > 0 && indCatalogo <= catalogoList.size()) {
+                c = catalogoList.get(indCatalogo - 1);
+                flag = false;
+            } else {
+                System.out.println("Indique um index válido");
+            }
+        }
 
         List<Servico> servicoList = lcp.listarServicosPorCat(c);
 
-        if(servicoList.isEmpty()){
+        if (servicoList.isEmpty()) {
             System.out.println("Não existem serviços completos neste catálogo");
             return false;
         }
@@ -45,17 +60,42 @@ public class SolicitarServicoUI extends AbstractUI {
             System.out.println(i + 1 + " - " + servicoList.get(i).toString());
         }
 
-        int indServico = Console.readInteger("Escolha o servico que pretende requisitar (index)");
+        flag = true;
+        Servico s = null;
+        while (flag) {
 
-        Servico s = servicoList.get(indServico - 1);
+            int indServico = Console.readInteger("Escolha o servico que pretende requisitar (index) (0 para sair)");
+
+            if (indServico == 0) {
+                return false;
+            } else if (indServico > 0 && indServico <= servicoList.size()) {
+                s = servicoList.get(indServico - 1);
+                flag = false;
+            } else {
+                System.out.println("Indique um index válido");
+            }
+        }
 
         System.out.println("\nTendo o serviço sido escolhido, vai agora ter de preencher os respetivos formulários\n");
 
+        flag = true;
+        String urgencia = null;
+        while (flag) {
+            urgencia = Console.readLine("\nQual a urgência deste serviço?  (baixa | moderada | alta)");
+            if (lcp.validaUrgencia(urgencia))
+                flag = false;
+            else if (urgencia.equalsIgnoreCase("0"))
+                return false;
+            else {
+                System.out.println("Coloque uma urgência válida");
+            }
+        }
+
         List<Formulario> formularioList = lcp.formulariosServico(s);
 
-        String urgencia = Console.readLine("\nQual a urgência deste serviço?  (baixa | moderada | alta)");
-
         Set<FormularioPreenchido> fps = new HashSet<>();
+
+        //TODO VALIDAR FORMULARIO LPROG
         for (Formulario f : formularioList) {
             System.out.println("\nFormulario " + f.name() + "\n");
 
@@ -76,13 +116,7 @@ public class SolicitarServicoUI extends AbstractUI {
             lcp.saveFormPreenchido(fp);
         }
 
-        Ticket ticket = lcp.criarTicket(s, urgencia);
-        lcp.criarTarefaAprovacao(s, ticket);
-        lcp.criarTarefaExecucao(s, ticket);
-        lcp.ativarFluxoServico(s.fluxoDoServico());
-        lcp.guardarFluxo(s.fluxoDoServico());
-
-        return false;
+        return lcp.solicitarServico(s, urgencia);
     }
 
     @Override

@@ -11,8 +11,6 @@ public interface TarefaManualExecucaoRepositorio extends DomainRepository<Long, 
 
     Iterable<TarefaManualExecucao> tarefasManuaisExecucaoNA(Equipa equipa);
 
-    Iterable<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
-
     Iterable<TarefaManualExecucao> tarefasManuaisExecucaoPendentes(Colaborador colaborador);
 
     //Iterable<TarefaManualExecucao> tarefasManuaisExecucaoColab(Colaborador colaborador);

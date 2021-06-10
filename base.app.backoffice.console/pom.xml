@@ -6,7 +6,7 @@
     <parent>
         <groupId>eapli</groupId>
         <artifactId>base</artifactId>
-        <relativePath>../</relativePath>
+        <relativePath>../pom.xml</relativePath>
         <version>1.3.0-SNAPSHOT</version>
     </parent>
         
@@ -23,6 +23,12 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>eapli</groupId>
+            <artifactId>Portal</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>eapli</groupId>
             <artifactId>base.app.common.console</artifactId>

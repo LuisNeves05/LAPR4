@@ -8,5 +8,6 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface TarefaManualAprovacaoRepositorio extends DomainRepository<Long, TarefaManualAprovacao> {
 
+    Iterable<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
 
 }

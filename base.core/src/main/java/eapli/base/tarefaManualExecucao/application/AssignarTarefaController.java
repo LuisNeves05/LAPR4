@@ -5,6 +5,7 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -19,11 +20,11 @@ public class AssignarTarefaController {
 
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
+    private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
     private final UserSession userSession = authorizationService.session().get();
     private final SystemUser systemUser = userSession.authenticatedUser();
     private final Colaborador colabPedido =colabPorUserName(systemUser.username());
-    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
     public Colaborador colabPorUserName(Username username){
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
@@ -38,7 +39,7 @@ public class AssignarTarefaController {
     }
 
     public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){
-        return tarefaManualExecucaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
+        return tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
     public TarefaManualExecucao assignarTarefaExecutante(TarefaManualExecucao tarefa) {

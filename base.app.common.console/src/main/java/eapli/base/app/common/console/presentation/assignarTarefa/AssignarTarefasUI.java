@@ -27,7 +27,6 @@ public class AssignarTarefasUI extends AbstractUI {
         }
         for (Equipa equipa : listaequipas) {
             setTarefasManualExecucao.addAll((List<TarefaManualExecucao>) controller.tarefasManualExecucao(equipa));
-
         }
 
 
