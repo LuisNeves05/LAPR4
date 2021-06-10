@@ -3,6 +3,7 @@ package eapli.base.atividadeRealizacao.domain;
 import com.sun.istack.Nullable;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.model.AggregateRoot;
@@ -36,20 +37,27 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @Nullable
     private String scriptAutomatico;
 
+    @OneToMany
+    private Set<Formulario> formularios;
+
     public AtividadeRealizacao(TipoExecucao tipoExecucao, String scriptAutomatico){
-        this.tarefasAutomaticas = new HashSet<>();
-        this.equipasExecucao = new HashSet<>();
         this.tipoExecucao = tipoExecucao;
-        if(tipoExecucao == TipoExecucao.AUTOMATICA)
+        if(this.tipoExecucao == TipoExecucao.AUTOMATICA) {
+            this.tarefasAutomaticas = new HashSet<>();
             this.scriptAutomatico = scriptAutomatico;
+        }
+        else{
+            formularios = new HashSet<>();
+            this.equipasExecucao = new HashSet<>();
+            this.tarefasManualExecucao = new HashSet<>();
+        }
     }
 
     public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String ignore){
         this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
-        if(tipoExecucao == TipoExecucao.AUTOMATICA)
-            this.scriptAutomatico = ignore;
+        formularios = new HashSet<>();
     }
 
     protected AtividadeRealizacao() {}
@@ -64,6 +72,12 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
 
     public void adicionarTarefaAutomatica(TarefaAutomatica tarefaAutomatica){
         tarefasAutomaticas.add(tarefaAutomatica);
+    }
+
+    public void adicionaFormulario(Formulario f){
+        if(!this.formularios.contains(f)){
+            formularios.add(f);
+        }
     }
 
     public Set<Equipa> equipasExecucao(){

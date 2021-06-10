@@ -67,7 +67,7 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     @OneToOne
     private Catalogo catalogo;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<Formulario> formularios;
     /**
      * Feedback do colaborador que requisitou o serviço
@@ -78,10 +78,10 @@ public class Servico implements AggregateRoot<ServicoIdentificador>, Comparable<
     /**
      * Nível de Criticidade associada ao serviço
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private NivelCriticidade nivelCriticidade;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private FluxoAtividade fluxoAtividade;
 
 

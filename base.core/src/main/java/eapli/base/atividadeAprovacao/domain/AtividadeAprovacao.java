@@ -1,5 +1,6 @@
 package eapli.base.atividadeAprovacao.domain;
 
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -22,9 +23,13 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @OneToMany
     private Set<TarefaManualAprovacao> tarefasAprov;
 
+    @OneToMany
+    private Set<Formulario> formularios;
+
     public AtividadeAprovacao(){
         this.tarefasAprov = new HashSet<>();
         this.colabsAprov = new HashSet<>();
+        this.formularios = new HashSet<>();
     }
 
     @Override
@@ -38,6 +43,12 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
 
     public void adicionaColabAprov(ColaboradoresAprovacao colabAprov){
         colabsAprov.add(colabAprov);
+    }
+
+    public void adicionaFormulario(Formulario f){
+        if(!this.formularios.contains(f)){
+            formularios.add(f);
+        }
     }
 
     public Set<ColaboradoresAprovacao> colabsDeAprovacao(){
