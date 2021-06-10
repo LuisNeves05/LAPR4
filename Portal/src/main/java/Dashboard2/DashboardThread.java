@@ -7,7 +7,7 @@ public class DashboardThread implements Runnable {
     public void run() {
         //java.util.logging.Logger.getLogger("o.h.orm.connections.pooling").setLevel(Level.SEVERE);
 
-        HttpServerAjaxVoting s = new HttpServerAjaxVoting();
+        HttpsServer s = new HttpsServer();
         try {
             s.start();
         } catch (Exception e) {

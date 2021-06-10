@@ -1,7 +1,7 @@
 package Dashboard2;
 
 import Dashboard2.www.DashboardUtils;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpCliSumTLS;
+import SSLWorkflow.ClientSSL;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
@@ -21,7 +21,7 @@ import static Dashboard2.www.DashboardUtils.*;
 /**
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HttpServerAjaxVoting {
+public class HttpsServer {
     static private final String BASE_FOLDER = "Portal/src/main/java/Dashboard2/www";
     static private ServerSocket sock;
     static private String PORT;
@@ -48,7 +48,7 @@ public class HttpServerAjaxVoting {
         }
         while (true) {
             cliSock = sock.accept();
-            HttpAjaxVotingRequest req = new HttpAjaxVotingRequest(cliSock, BASE_FOLDER);
+            HttpsAjax req = new HttpsAjax(cliSock, BASE_FOLDER);
             req.run();
             //req.start();
             incAccessesCounter();
@@ -95,7 +95,7 @@ public class HttpServerAjaxVoting {
         String[] splittedData = packBeforeSplit.split(",");
         //textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2])));
 */
-        TcpCliSumTLS client = new TcpCliSumTLS();
+        ClientSSL client = new ClientSSL();
         String packBeforeSplit = client.getTarPenFromServer(colab.nomeToString());
         String[] splittedData = packBeforeSplit.split(",");
 

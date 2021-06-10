@@ -28,7 +28,6 @@ import eapli.base.app.common.console.presentation.EspecificarServicoUI.Especific
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
-import eapli.base.app.common.console.presentation.authz.SSLWorkflow.TcpSrvSumTLS;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;

@@ -7,7 +7,7 @@ import java.io.*;
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
 
-public class HTTPmessage {
+public class HttpsMessage {
 
     private static final int CR = 13;
     private static final int LF = 10;
@@ -66,7 +66,7 @@ public class HTTPmessage {
      * @param in
      * @throws IOException
      */
-    public HTTPmessage(DataInputStream in) throws IOException {
+    public HttpsMessage(DataInputStream in) throws IOException {
         String firstLine = readHeaderLine(in);
         isRequest = !firstLine.startsWith("HTTP/");
         method = null;
@@ -106,7 +106,7 @@ public class HTTPmessage {
         if (content != null) in.readFully(content, 0, content.length);
     }
 
-    public HTTPmessage() {
+    public HttpsMessage() {
         isRequest = true;
         method = null;
         uri = null;
