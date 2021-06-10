@@ -826,29 +826,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 System.out.println("Insira um período de resolução máximo válido\n");
             }
         }
-        flag = true;
-        while (flag) {
-            aprovacaoMedia = Console.readInteger("Defina o período de aprovação médio deste  nível de criticidade personalizado (em minutos)\n");
-
-            if (aprovacaoMedia > 0) {
-                flag = false;
-            }
-            if (flag) {
-                System.out.println("Insira um período de aprovação média válido\n");
-            }
-        }
-        flag = true;
-        while (flag) {
-            resolucaoMedia = Console.readInteger("Defina o período de resolução médio deste  nível de criticidade personalizado (em minutos)\n");
-
-            if (resolucaoMedia > 0) {
-                flag = false;
-            }
-            if (flag) {
-                System.out.println("Insira um período de resolução média válido\n");
-            }
-        }
-        return new Objetivo(aprovacaoMax, resolucaoMax, aprovacaoMedia, resolucaoMedia);
+        return new Objetivo(aprovacaoMax, resolucaoMax, 0, 0);
     }
     private NivelCriticidade criarNivelCriticidade(NivelCriticidade nivelCriticidade,Objetivo objetivo){
         return new NivelCriticidade(nivelCriticidade.getEtiqueta(),nivelCriticidade.getValorDeEscala(),nivelCriticidade.getCor(),objetivo, nivelCriticidade.isDefault());
@@ -857,7 +835,7 @@ public class EspecificarServicoUI extends AbstractUI {
     private boolean associarNivelCrit(ServiceBuilder serviceBuilder) {
         String nivelCrit;
         NivelCriticidade novoNivelCriticidade;
-        boolean flag = false;
+        boolean flag;
 
         if (this.catalogo.nivelCritToService() != null) {
             do {
