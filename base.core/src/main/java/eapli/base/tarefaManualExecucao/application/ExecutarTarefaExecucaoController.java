@@ -5,7 +5,6 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 
-import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -18,7 +17,7 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.List;
 
-public class ExecutarTarefaController {
+public class ExecutarTarefaExecucaoController {
 
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
@@ -43,9 +42,7 @@ public class ExecutarTarefaController {
         return  tarefaExecucaoRepositorio.tarefasManuaisExecEmExecucao(colabPedido);
     }
 
-    public List<TarefaManualAprovacao> tarefasManualAprovacao( ){
-        return tarefaExecucaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
-    }
+
 
     public TarefaManualExecucao executarTarefaExecPendente(TarefaManualExecucao tarefa ) {
         tarefa.defineColaboradorExecutante(colabPedido);
@@ -58,15 +55,5 @@ public class ExecutarTarefaController {
         return null;
     }
 //todo executarTarefa Aprovacao
-    public TarefaManualAprovacao executarTarefaAprPendente(TarefaManualAprovacao tarefa ) {
-    //    tarefa.defineColaboradorExecutante(colabPedido);
 
-        try {
-            //TODO GUARDAR TAREFA MANUAL APROVACAO
-            return tarefaExecucaoRepositorio.save(tarefa);
-        } catch (IntegrityViolationException violation) {
-            System.out.println("Erro na persistência da tarefa!");
-        }
-        return null;
-    }
 }

@@ -1,13 +1,14 @@
 package eapli.base.tarefaManualAprovacao.persistance;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.repositories.DomainRepository;
+
+import java.util.List;
 
 public interface TarefaManualAprovacaoRepositorio extends DomainRepository<Long, TarefaManualAprovacao> {
 
-    Iterable<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
+    List<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
+
 
 }

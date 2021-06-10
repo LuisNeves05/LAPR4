@@ -4,9 +4,7 @@ import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
-import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
@@ -31,14 +29,7 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
 
     }
 
-    @Override
-    public List<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador) {
-        QueryMaker qm = new QueryMaker();
-        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualAprovacao t where t.estadoAprovacao = :a and :colaborador MEMBER of colabsAprova", TarefaManualAprovacao.class);
-        query.setParameter("colaborador", colaborador);
-        query.setParameter("a", EstadoAprovacao.POR_APROVAR);
-        return query.getResultList();
-    }
+
 
     @Override
     public Iterable<TarefaManualExecucao> tarefasManuaisExecucaoPendentes(Colaborador colaborador) {

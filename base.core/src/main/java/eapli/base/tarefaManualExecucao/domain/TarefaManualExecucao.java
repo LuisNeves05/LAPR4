@@ -32,7 +32,13 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     private EstadoRealizacao estadoRealizacao;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dataAprovado;
+    private Calendar dataRealizacao;
+
+    @Enumerated(EnumType.STRING)
+    private Enum decisao;
+
+    @Column(name = "COMENTARIO")
+    private String comentario;
 
 
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
@@ -70,11 +76,11 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     }
 
     public Calendar dataDecisaoRealizacao(){
-        return dataAprovado;
+        return dataRealizacao;
     }
 
     public void definirMomentoRealizacao(){
-        dataAprovado = Calendars.now();
+        dataRealizacao = Calendars.now();
     }
 
     @Override
@@ -94,5 +100,22 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
 
     public TarefaManualExecucaoDTO toDTO(){
         return new TarefaManualExecucaoDTO(id, this.estadoRealizacao, this.colabExecuta, "");
+    }
+
+    public Enum obterDecisao() {
+        return decisao;
+    }
+
+
+    public void decidirTarefa(Enum decisao) {
+        this.decisao = decisao;
+    }
+
+    public String obterComentario() {
+        return comentario;
+    }
+
+    public void fazerComentario(String comentario) {
+        this.comentario = comentario;
     }
 }

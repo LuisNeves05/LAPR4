@@ -48,8 +48,6 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
         this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
-        if(tipoExecucao == TipoExecucao.AUTOMATICA)
-            this.scriptAutomatico = ignore;
     }
 
     protected AtividadeRealizacao() {}

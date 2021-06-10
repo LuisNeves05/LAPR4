@@ -1,7 +1,4 @@
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\Protocolo\Utils.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\Client\Cliente.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\SSLWorkflow\TcpCliSumTLS.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\Server\ServidorMain.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\Client\TcpChatCliConn.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\SSLWorkflow\TcpSrvSumTLS.java
-C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\eapli\base\app\common\console\presentation\authz\Server\ThreadCliente.java
+C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\SSLWorkflow\ServerSSL.java
+C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\SSLWorkflow\ClientSSL.java
+C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\SSLWorkflow\ServerSSLThread.java
+C:\Users\joaos\Desktop\New folder\base.workflow\src\main\java\Protocolo\Utils.java

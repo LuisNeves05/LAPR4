@@ -34,6 +34,12 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
     }
 
+    @Enumerated(EnumType.STRING)
+    private Enum decisao;
+
+    @Column(name = "COMENTARIO")
+    private String comentario;
+
     protected TarefaManualAprovacao(){}
 
     public Ticket procurarTicket(){
@@ -65,4 +71,21 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     public Long identity() {
         return id;
     }
+    public Enum obterDecisao() {
+        return decisao;
+    }
+
+
+    public void decidirTarefa(Enum decisao) {
+        this.decisao = decisao;
+    }
+
+    public String obterComentario() {
+        return comentario;
+    }
+
+    public void fazerComentario(String comentario) {
+        this.comentario = comentario;
+    }
 }
+

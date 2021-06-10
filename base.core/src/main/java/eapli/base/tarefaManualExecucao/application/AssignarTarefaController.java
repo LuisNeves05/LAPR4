@@ -39,7 +39,7 @@ public class AssignarTarefaController {
     }
 
     public List<TarefaManualExecucao> tarefasManualExecucao(){
-        return  tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
+        return  tarefaManualExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
     }
 
     public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){
