@@ -10,6 +10,9 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Entity
 @Table
@@ -48,8 +51,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         return createdOn;
     }
 
-    protected Ticket() {
-    }
+    protected Ticket(){}
 
     public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
                   EstadoTicket estadoTicket) {
@@ -64,7 +66,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().resolucaoMax();
     }
 
-    public void adicionaFormularioResposta(FormularioPreenchido fp) {
+    public void adicionaFormularioResposta(FormularioPreenchido fp){
         formulariosPreenchidos.add(fp);
     }
 
@@ -81,12 +83,11 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public String toString() {
-        return "Ticket " + id + " : \n" +
+        return "Ticket "+ id +" : \n"+
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + createdOn.getCalendarType() +
+                "       Criado em : " + createdOn.getTime().toString() +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
-                "       Urgência : " + urgenciaTicket;
-    }
+                "       Urgência : " + urgenciaTicket ;}
 
     public int periodoMaxApr() {
         return periodoMaxApr;

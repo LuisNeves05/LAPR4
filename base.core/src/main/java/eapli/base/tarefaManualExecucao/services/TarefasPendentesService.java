@@ -3,6 +3,7 @@ package eapli.base.tarefaManualExecucao.services;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 
@@ -12,13 +13,15 @@ import java.util.List;
 
 public class TarefasPendentesService {
     private final TarefaManualExecucaoRepositorio repoTarefasExec = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
+    private final TarefaManualAprovacaoRepositorio repoTarefasAprov = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
+
     private int hardcodedTime = 2;
 
     public String dashboardData(Colaborador colab){
         int tarefasAExp = 0,tarefasPen = 0, tarefasExp = 0;
 
         List<TarefaManualExecucao> tarefasManLis = (List<TarefaManualExecucao>) repoTarefasExec.tarefasManuaisExecucaoPendentes(colab);
-        List<TarefaManualAprovacao> tarefasManAprList = (List<TarefaManualAprovacao>) repoTarefasExec.tarefasManuaisAprovacaoNA(colab);
+
 
         for(TarefaManualExecucao elems : tarefasManLis){
             Calendar ticketTime = elems.procurarTicket().criacaoTicket();
@@ -40,6 +43,8 @@ public class TarefasPendentesService {
                 tarefasExp += 1;
             }
         }
+
+        List<TarefaManualAprovacao> tarefasManAprList = (List<TarefaManualAprovacao>) repoTarefasAprov.tarefasManuaisAprovacaoNA(colab);
 
         for(TarefaManualAprovacao elems : tarefasManAprList){
             Calendar ticketTime = elems.procurarTicket().criacaoTicket();

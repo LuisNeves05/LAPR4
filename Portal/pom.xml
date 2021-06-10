@@ -13,25 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>eapli</groupId>
-            <artifactId>base.core</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>eapli</groupId>
             <artifactId>eapli.base.workflow</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>eapli</groupId>
-            <artifactId>base.app.common.console</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>eapli</groupId>
-            <artifactId>base.app.backoffice.console</artifactId>
             <version>1.3.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

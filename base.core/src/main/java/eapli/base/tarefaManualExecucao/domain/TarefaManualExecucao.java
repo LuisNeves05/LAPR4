@@ -5,8 +5,10 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaManualExecucao.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Set;
 
 @Entity
@@ -29,9 +31,9 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     @Enumerated(EnumType.STRING)
     private EstadoRealizacao estadoRealizacao;
 
-    public EstadoRealizacao estadoRealizacao() {
-        return estadoRealizacao;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dataAprovado;
+
 
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
         this.ticket = ticket;
@@ -47,12 +49,32 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
 
     protected TarefaManualExecucao() {}
 
-    public void adicionaEquipaExecucao(Equipa equipaExec){
-        equipasExecuta.add(equipaExec);
+    public EstadoRealizacao estadoRealizacao() {
+        return estadoRealizacao;
     }
 
     public Ticket procurarTicket(){
         return ticket;
+    }
+
+    public void adicionaEquipaExecucao(Equipa equipaExec){
+        equipasExecuta.add(equipaExec);
+    }
+
+    public void retirarEquipa(){
+        this.equipasExecuta.clear();
+    }
+
+    public void defineColaboradorExecutante(Colaborador colaborador){
+        this.colabExecuta= colaborador;
+    }
+
+    public Calendar dataDecisaoRealizacao(){
+        return dataAprovado;
+    }
+
+    public void definirMomentoRealizacao(){
+        dataAprovado = Calendars.now();
     }
 
     @Override
@@ -65,19 +87,10 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return id;
     }
 
-
-    public void retirarEquipa(){
-         this.equipasExecuta.clear();
-    }
-    public void defineColaboradorExecutante(Colaborador colaborador){
-        this.colabExecuta= colaborador;
-    }
-
     @Override
     public String toString() {
-        return super.toString();
+        return ticket.toString();
     }
-
 
     public TarefaManualExecucaoDTO toDTO(){
         return new TarefaManualExecucaoDTO(id, this.estadoRealizacao, this.colabExecuta, "");

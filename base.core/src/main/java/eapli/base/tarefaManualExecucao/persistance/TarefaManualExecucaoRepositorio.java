@@ -7,7 +7,7 @@ import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.repositories.DomainRepository;
 import java.util.List;
 
-public interface TarefaExecucaoRepositorio extends DomainRepository<Long, TarefaManualExecucao> {
+public interface TarefaManualExecucaoRepositorio extends DomainRepository<Long, TarefaManualExecucao> {
 
 
     List<TarefaManualExecucao> tarefasManuaisExecucaoNA(List<Equipa> equipas);

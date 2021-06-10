@@ -1,4 +1,4 @@
-/*
+package eapli.base.app.backoffice.console;/*
  * Copyright (c) 2013-2019 the original author or authors.
  *
  * MIT License
@@ -27,7 +27,6 @@ import Dashboard2.www.DashboardUtils;
 import eapli.base.app.backoffice.console.presentation.PortalMainMenu;
 import eapli.base.app.common.console.BaseApplication;
 import eapli.base.app.common.console.presentation.authz.LoginUI;
-import eapli.base.app.backoffice.console.presentation.MainMenu;
 import eapli.base.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;

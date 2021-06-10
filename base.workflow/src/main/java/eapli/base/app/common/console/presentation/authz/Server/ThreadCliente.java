@@ -2,6 +2,7 @@ package eapli.base.app.common.console.presentation.authz.Server;
 
 
 import eapli.base.app.common.console.presentation.authz.Protocolo.Utils;
+import eapli.base.colaborador.domain.Colaborador;
 
 import java.io.DataInputStream;
 import java.net.Socket;

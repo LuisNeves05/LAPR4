@@ -1,7 +1,5 @@
 package eapli.base.app.common.console.presentation.assignarTarefaUI;
 
-import eapli.base.tarefaManual.application.AssignarTarefaController;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.application.AssignarTarefaController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;

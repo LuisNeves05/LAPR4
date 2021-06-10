@@ -1,9 +1,9 @@
-package eapli.base.tarefaManual.services;
+package eapli.base.tarefaManualExecucao.services;
 
 
-import eapli.base.tarefaManual.application.ExecutarTarefaController;
-import eapli.base.tarefaManual.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManual.domain.TarefaManualExecucao;
+import eapli.base.tarefaManualExecucao.application.ExecutarTarefaController;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
 
 import java.util.List;

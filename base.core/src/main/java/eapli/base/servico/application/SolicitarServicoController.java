@@ -125,6 +125,10 @@ public class SolicitarServicoController {
         return colabPedido;
     }
 
+    public boolean validaUrgencia(String urgencia) {
+        return urgencia.equalsIgnoreCase("baixa") || urgencia.equalsIgnoreCase("moderada") || urgencia.equalsIgnoreCase("alta");
+    }
+
     public Ticket criarTicket(Servico s, String urgencia){
         if(s.fluxoDoServico().ativAprovacaoDoFluxo() == null)
             return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR));
@@ -132,7 +136,7 @@ public class SolicitarServicoController {
             return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.EM_EXECUCAO));
     }
 
-    public void criarTarefaAprovacao(Servico s, Ticket ticket) {
+    public boolean criarTarefaAprovacao(Servico s, Ticket ticket) {
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
         if (at != null) {
@@ -149,6 +153,9 @@ public class SolicitarServicoController {
             TarefaManualAprovacao tarManAprov = tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
             at.adicionaTarefaAprov(tarManAprov);
             atividadeAprovacaoRepositorio.save(at);
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -183,5 +190,15 @@ public class SolicitarServicoController {
 
     public void ativarFluxoServico(FluxoAtividade fluxoDoServico) {
         fluxoDoServico.ativar();
+    }
+
+    public boolean solicitarServico(Servico s, String urgencia) {
+        Ticket ticket = criarTicket(s, urgencia);
+
+        if(!criarTarefaAprovacao(s, ticket))
+            criarTarefaExecucao(s, ticket);
+
+            ativarFluxoServico(s.fluxoDoServico());
+            return guardarFluxo(s.fluxoDoServico()) != null;
     }
 }
