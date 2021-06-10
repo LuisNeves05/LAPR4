@@ -6,13 +6,13 @@ import java.net.Socket;
 /**
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
-public class HttpAjaxVotingRequest extends Thread {
+public class HttpsAjax extends Thread {
     String baseFolder;
     Socket sock;
     DataInputStream inS;
     DataOutputStream outS;
 
-    public HttpAjaxVotingRequest(Socket s, String f) {
+    public HttpsAjax(Socket s, String f) {
         baseFolder = f;
         sock = s;
     }
@@ -25,14 +25,14 @@ public class HttpAjaxVotingRequest extends Thread {
             System.out.println("Thread error on data streams creation");
         }
         try {
-            HTTPmessage request = new HTTPmessage(inS);
-            HTTPmessage response = new HTTPmessage();
+            HttpsMessage request = new HttpsMessage(inS);
+            HttpsMessage response = new HttpsMessage();
             // System.out.println(request.getURI());
 
             if (request.getMethod().equals("GET")) {
                 if (request.getURI().equals("/votes")) {
                     response.setContentFromString(
-                            HttpServerAjaxVoting.getVotesStandingInHTML(), "text/html");
+                            HttpsServer.getVotesStandingInHTML(), "text/html");
                     response.setResponseStatus("200 Ok");
                 } else {
                     String fullname = baseFolder + "/";
@@ -51,7 +51,7 @@ public class HttpAjaxVotingRequest extends Thread {
             } else { // NOT GET
                 if (request.getMethod().equals("PUT")
                         && request.getURI().startsWith("/votes/")) {
-                    HttpServerAjaxVoting.castVote(request.getURI().substring(7));
+                    HttpsServer.castVote(request.getURI().substring(7));
                     response.setResponseStatus("200 Ok");
                 } else {
                     response.setContentFromString(

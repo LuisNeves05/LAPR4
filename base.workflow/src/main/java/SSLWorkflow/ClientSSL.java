@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.authz.SSLWorkflow;
+package SSLWorkflow;
 
 import java.io.*;
 import java.net.*;
@@ -8,9 +8,9 @@ import javax.net.ssl.*;
  * @author asc@isep.ipp.pt
  */
 
-public class TcpCliSumTLS {
+public class ClientSSL {
 
-    static final String BASEFOLDER = "base.workflow/src/main/java/eapli/base/app/common/console/presentation/authz/SSLWorkflow/SSLCert/";
+    static final String BASEFOLDER = "base.workflow/src/main/java/SSLWorkflow/SSLCert/";
     static final int SERVER_PORT = 6565;
     static final String KEYSTORE_PASS = "forgotten";
 
@@ -93,7 +93,7 @@ public class TcpCliSumTLS {
     }
 
     private static void preparingSSLClient() {
-        String serverIp = "10.8.0.83";
+        String serverIp = "10.9.21.129";
         String clientSSL = "client1_J";
 
 
