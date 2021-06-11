@@ -53,21 +53,19 @@ public final class ServerApp extends BaseApplication {
      *            the command line arguments
      */
     public static void main(final String[] args) {
+        AuthzRegistry.configure(PersistenceContext.repositories().users(),
+                new BasePasswordPolicy(), new PlainTextEncoder());
+
         new ServerApp().run(args);
     }
 
     @Override
     protected void doMain(final String[] args) {
-        // login and go to main menu
-        if (new LoginUI().show()) {
-            // go to main menu
-
-            ServerSSL newServer = new ServerSSL();
-            try {
-                newServer.startServer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        ServerSSL newServer = new ServerSSL();
+        try {
+            newServer.startServer();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

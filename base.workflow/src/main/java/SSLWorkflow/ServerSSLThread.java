@@ -60,21 +60,24 @@ class ServerSSLThread implements Runnable {
                     break;
 
                 default:
-                    System.out.println("Protocolo Nao Defenido!");
+                    System.out.println("Protocolo Nao Definido!");
                     break;
 
             }
-
-            s.close();
-
-            //System.out.println("Client " + clientIP.getHostAddress() + ", port number: " + s.getPort() +
-            //        " disconnected");
+            //s.close();
+            //Thread.currentThread().interrupt();
 
         } catch (IOException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
+        }finally {
+            try {
+                s.close();
+            } catch (IOException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
         }
-
-
     }
 
     public static Colaborador colabWithString(String user) {

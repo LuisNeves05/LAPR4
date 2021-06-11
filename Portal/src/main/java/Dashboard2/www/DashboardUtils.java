@@ -1,10 +1,13 @@
 package Dashboard2.www;
 
+import Dashboard2.DashboardThread;
 import SSLWorkflow.ClientSSL;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URI;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class DashboardUtils {
 
@@ -146,6 +149,25 @@ public class DashboardUtils {
 
         return DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2]));
 
+    }
+
+
+    public static void openDashboard(int time){
+
+        Thread t1 = new Thread(new DashboardThread());
+        t1.start();
+
+        try {
+            TimeUnit.SECONDS.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:9992/"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

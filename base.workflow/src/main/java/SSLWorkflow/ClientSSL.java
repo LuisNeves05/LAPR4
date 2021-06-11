@@ -37,7 +37,7 @@ public class ClientSSL {
 
         //TODO IF CONSTANT
         //System.out.println("Client Response from server: " + response);
-        sock.close();
+        //sock.close();
         return response;
     }
 
@@ -106,11 +106,11 @@ public class ClientSSL {
             sock.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
 }
-
 
 
 

@@ -37,6 +37,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 
+import static Dashboard2.www.DashboardUtils.openDashboard;
+
 
 public final class PortalApp extends BaseApplication {
 
@@ -64,8 +66,8 @@ public final class PortalApp extends BaseApplication {
         if (new LoginUI().show()) {
             // go to main menu
 
-            Thread t1 = new Thread(new DashboardThread());
-            t1.start();
+
+            openDashboard(5);
 
             final PortalMainMenu menu = new PortalMainMenu();
             menu.mainLoop();

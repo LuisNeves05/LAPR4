@@ -49,8 +49,7 @@ public class HttpsServer {
         while (true) {
             cliSock = sock.accept();
             HttpsAjax req = new HttpsAjax(cliSock, BASE_FOLDER);
-            req.run();
-            //req.start();
+            req.start();
             incAccessesCounter();
         }
     }
@@ -89,13 +88,6 @@ public class HttpsServer {
     }
 
     public static synchronized void castVote(String i) {
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        UserSession userSession = authorizationService.session().get();
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        System.out.println(systemUser.username());
-
-
         //TODO CHAMAR CONTROLADORES ???
 
         int cN;
