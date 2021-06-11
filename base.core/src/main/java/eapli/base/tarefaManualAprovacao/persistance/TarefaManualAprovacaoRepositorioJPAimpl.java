@@ -2,7 +2,9 @@ package eapli.base.tarefaManualAprovacao.persistance;
 
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
@@ -25,6 +27,15 @@ public class TarefaManualAprovacaoRepositorioJPAimpl extends JpaAutoTxRepository
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualAprovacao t where t.estadoAprovacao = :a and :colaborador MEMBER of colabsAprova", TarefaManualAprovacao.class);
         query.setParameter("colaborador", colaborador);
         query.setParameter("a", EstadoAprovacao.POR_APROVAR);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Formulario> obterAtividadeRealizacao(TarefaManualAprovacao tarefa) {
+
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT a.formularios from AtividadeAprovacao a where :tarefa MEMBER of a.tarefasAprov ", AtividadeAprovacao.class);
+        query.setParameter("tarefa",tarefa);
         return query.getResultList();
     }
 }

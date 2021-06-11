@@ -8,7 +8,7 @@ import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
 
-public class ExecutarTarefaManualPendenteUI extends AbstractUI {
+public class ExecutarTarefaManualExecUI extends AbstractUI {
     private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
     List<TarefaManualExecucao> listaTarefasManualExecucao;
 
@@ -41,7 +41,9 @@ public class ExecutarTarefaManualPendenteUI extends AbstractUI {
                  if (forms.isEmpty()) {// nao precisa de comentario nem decisao
                      tarefaManualExecucao.procurarTicket().completarTicket();
                  tarefaManualExecucao.definirMomentoRealizacao();}
-                 else{}
+                 else {
+                     return false; //todo mock par
+                 }
        // todo se tiver decisao e comment
 
 

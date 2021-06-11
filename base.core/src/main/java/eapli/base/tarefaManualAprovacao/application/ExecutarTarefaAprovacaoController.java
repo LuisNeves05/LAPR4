@@ -3,9 +3,11 @@ package eapli.base.tarefaManualAprovacao.application;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -32,7 +34,9 @@ public class ExecutarTarefaAprovacaoController {
     public List<TarefaManualAprovacao> tarefasManualAprovacao( ){
         return  tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
-
+    public List<Formulario> obterAtividadeAprovacao(TarefaManualAprovacao tarefa){
+        return tarefaManualAprovacaoRepositorio.obterAtividadeRealizacao(tarefa);
+    }
     public TarefaManualAprovacao executarTarefaAprPendente(TarefaManualAprovacao tarefa ) {
         //    tarefa.defineColaboradorExecutante(colabPedido);
 
