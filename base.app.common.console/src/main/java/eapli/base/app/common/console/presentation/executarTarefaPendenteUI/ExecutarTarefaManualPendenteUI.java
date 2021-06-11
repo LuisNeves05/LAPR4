@@ -1,8 +1,9 @@
 package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
 
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.tarefaManualExecucao.application.ExecutarTarefaExecucaoController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
-import eapli.base.tarefaManualExecucao.services.ExecutarTarefaManualExecucaoService;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -10,7 +11,6 @@ import java.util.List;
 
 public class ExecutarTarefaManualPendenteUI extends AbstractUI {
     private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
-    ExecutarTarefaManualExecucaoService executarTarefa = new ExecutarTarefaManualExecucaoService();
     List<TarefaManualExecucao> listaTarefasManualExecucao;
 
     @Override
@@ -37,9 +37,13 @@ public class ExecutarTarefaManualPendenteUI extends AbstractUI {
                 System.out.println("Coloque um index válido");
             }
         }
-                    executarTarefa.comecarTarefaManualExec(tarefaManualExecucao);
+                controller.comecarTarefaManualExec(tarefaManualExecucao);
+                   List<Formulario> forms =  controller.obterAtividadeRealizacao(tarefaManualExecucao);
+                   if (forms.isEmpty()) {// nao precisa de comentario nem decisao
+                       tarefaManualExecucao.procurarTicket().completarTicket();
+                   tarefaManualExecucao.definirMomentoRealizacao();}
+                   else{}
        // todo se tiver decisao e comment
-        //  if (tarefaManualExecucao.)
 
 
 

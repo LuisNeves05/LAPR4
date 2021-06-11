@@ -1,6 +1,7 @@
 package eapli.base.tarefaManualExecucao.services;
 
 
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
 import eapli.base.tarefaManualExecucao.application.ExecutarTarefaExecucaoController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
@@ -18,9 +19,6 @@ private final ExecutarTarefaAprovacaoController  controllerAPP = new ExecutarTar
         tarefa.definirMomentoRealizacao();
     }
 
-    public void comentarTarefa(){
-
-    }
 
     public boolean mostrarTarefasAprovacao(){
         TarefaManualExecucao tarefaManualAprovacao = null;

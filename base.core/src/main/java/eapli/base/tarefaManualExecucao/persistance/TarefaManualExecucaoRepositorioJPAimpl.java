@@ -2,8 +2,10 @@ package eapli.base.tarefaManualExecucao.persistance;
 
 import eapli.base.Application;
 import eapli.base.Utils.QueryMaker;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -47,6 +49,15 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualExecucao t where t.estadoRealizacao = :a and :colaborador = t.colabExecuta", TarefaManualExecucao.class);
         query.setParameter("colaborador", colaborador);
         query.setParameter("a", EstadoRealizacao.EM_EXECUCAO);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Formulario> obterAtividadeRealizacao(TarefaManualExecucao tarefa) {
+
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT atReal.formularios from AtividadeRealizacao atReal where :tarefa MEMBER of atReal.tarefasManualExecucao ", AtividadeRealizacao.class);
+        query.setParameter("tarefa",tarefa);
         return query.getResultList();
     }
 
