@@ -1,5 +1,6 @@
 package eapli.base.tarefaManualExecucao.domain;
 
+import eapli.base.Utils.DecisaoEnum;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaManualExecucao.dto.TarefaManualExecucaoDTO;
@@ -35,7 +36,7 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     private Calendar dataRealizacao;
 
     @Enumerated(EnumType.STRING)
-    private Enum decisao;
+    private DecisaoEnum decisao;
 
     @Column(name = "COMENTARIO")
     private String comentario;
@@ -102,12 +103,12 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return new TarefaManualExecucaoDTO(id, this.estadoRealizacao, this.colabExecuta, "");
     }
 
-    public Enum obterDecisao() {
+    public DecisaoEnum obterDecisao() {
         return decisao;
     }
 
 
-    public void decidirTarefa(Enum decisao) {
+    public void decidirTarefa(DecisaoEnum decisao) {
         this.decisao = decisao;
     }
 

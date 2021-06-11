@@ -34,7 +34,7 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
 
 
     @Override
-    public Iterable<TarefaManualExecucao> tarefasManuaisExecucaoPendentes(Colaborador colaborador) {
+    public List<TarefaManualExecucao> tarefasManuaisExecucaoPendentes(Colaborador colaborador) {
         QueryMaker qm = new QueryMaker();
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualExecucao t where t.estadoRealizacao = :a and :colaborador = t.colabExecuta", TarefaManualExecucao.class);
         query.setParameter("colaborador", colaborador);

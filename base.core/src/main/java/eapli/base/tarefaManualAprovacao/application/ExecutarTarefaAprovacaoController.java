@@ -30,7 +30,7 @@ public class ExecutarTarefaAprovacaoController {
     }
 
     public List<TarefaManualAprovacao> tarefasManualAprovacao( ){
-        return (List<TarefaManualAprovacao>) tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
+        return  tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
     public TarefaManualAprovacao executarTarefaAprPendente(TarefaManualAprovacao tarefa ) {

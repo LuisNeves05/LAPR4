@@ -1,10 +1,10 @@
 package eapli.base.tarefaManualAprovacao.domain;
 
+import eapli.base.Utils.DecisaoEnum;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -35,7 +35,7 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     }
 
     @Enumerated(EnumType.STRING)
-    private Enum decisao;
+    private DecisaoEnum decisao;
 
     @Column(name = "COMENTARIO")
     private String comentario;
@@ -71,12 +71,12 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     public Long identity() {
         return id;
     }
-    public Enum obterDecisao() {
+
+    public DecisaoEnum obterDecisao() {
         return decisao;
     }
 
-
-    public void decidirTarefa(Enum decisao) {
+    public void decidirTarefa(DecisaoEnum decisao) {
         this.decisao = decisao;
     }
 

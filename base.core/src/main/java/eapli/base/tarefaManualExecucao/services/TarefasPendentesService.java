@@ -20,7 +20,7 @@ public class TarefasPendentesService {
     public String dashboardData(Colaborador colab){
         int tarefasAExp = 0,tarefasPen = 0, tarefasExp = 0;
 
-        List<TarefaManualExecucao> tarefasManLis = (List<TarefaManualExecucao>) repoTarefasExec.tarefasManuaisExecucaoPendentes(colab);
+        List<TarefaManualExecucao> tarefasManLis = repoTarefasExec.tarefasManuaisExecucaoPendentes(colab);
 
 
         for(TarefaManualExecucao elems : tarefasManLis){

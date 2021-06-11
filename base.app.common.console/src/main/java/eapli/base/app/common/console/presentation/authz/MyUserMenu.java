@@ -27,7 +27,7 @@ import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarE
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.EspecificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
-import eapli.base.app.common.console.presentation.assignarTarefa.AssignarTarefasUI;
+import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTarefasUI;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
