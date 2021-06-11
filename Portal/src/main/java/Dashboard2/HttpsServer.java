@@ -49,8 +49,7 @@ public class HttpsServer {
         while (true) {
             cliSock = sock.accept();
             HttpsAjax req = new HttpsAjax(cliSock, BASE_FOLDER);
-            req.run();
-            //req.start();
+            req.start();
             incAccessesCounter();
         }
     }
@@ -82,42 +81,13 @@ public class HttpsServer {
         textHtml.append(nameInDashboard(String.valueOf(systemUser.username())));
 
         // Four Cards
-        /*
-
-
-
-
-
-
-        String packBeforeSplit = client.getTarPenFromServer(colab.nomeToString());
-
-        System.out.printf("DEBUG %s\n", packBeforeSplit);
-        String[] splittedData = packBeforeSplit.split(",");
-        //textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]), toInt(splittedData[2])));
-*/
-        ClientSSL client = new ClientSSL();
-        String packBeforeSplit = client.getTarPenFromServer(colab.nomeToString());
-        String[] splittedData = packBeforeSplit.split(",");
-
-        //System.out.println(packBeforeSplit);
-        //System.out.printf("-%s-   -%s-  -%s-\n", toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2]));
-
-        textHtml.append(DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2])));
-
-        //textHtml.append("<h3>HTTP server accesses counter test: " + accessesCounter + "</h3>");
+        textHtml.append(DashboardUtils.getTarefasFromServer(colab.nomeToString()));
 
         doTime(4);
         return String.valueOf(textHtml);
     }
 
     public static synchronized void castVote(String i) {
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        UserSession userSession = authorizationService.session().get();
-        SystemUser systemUser = userSession.authenticatedUser();
-
-        System.out.println(systemUser.username());
-
-
         //TODO CHAMAR CONTROLADORES ???
 
         int cN;

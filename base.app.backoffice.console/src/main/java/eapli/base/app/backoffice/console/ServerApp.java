@@ -23,7 +23,7 @@ package eapli.base.app.backoffice.console;/*
  */
 
 import Dashboard2.DashboardThread;
-import Dashboard2.www.DashboardUtils;
+import SSLWorkflow.ServerSSL;
 import eapli.base.app.backoffice.console.presentation.PortalMainMenu;
 import eapli.base.app.common.console.BaseApplication;
 import eapli.base.app.common.console.presentation.authz.LoginUI;
@@ -37,15 +37,15 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 
-import static Dashboard2.www.DashboardUtils.openDashboard;
+import java.io.IOException;
 
 
-public final class PortalApp extends BaseApplication {
+public final class ServerApp extends BaseApplication {
 
     /**
      * avoid instantiation of this class.
      */
-    private PortalApp() {
+    private ServerApp() {
     }
 
     /**
@@ -53,35 +53,30 @@ public final class PortalApp extends BaseApplication {
      *            the command line arguments
      */
     public static void main(final String[] args) {
-
         AuthzRegistry.configure(PersistenceContext.repositories().users(),
                 new BasePasswordPolicy(), new PlainTextEncoder());
 
-        new PortalApp().run(args);
+        new ServerApp().run(args);
     }
 
     @Override
     protected void doMain(final String[] args) {
-        // login and go to main menu
-        if (new LoginUI().show()) {
-            // go to main menu
-
-
-            openDashboard(5);
-
-            final PortalMainMenu menu = new PortalMainMenu();
-            menu.mainLoop();
+        ServerSSL newServer = new ServerSSL();
+        try {
+            newServer.startServer();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     protected String appTitle() {
-        return "Portal";
+        return "Server";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Portal";
+        return "Server";
     }
 
     @SuppressWarnings("unchecked")

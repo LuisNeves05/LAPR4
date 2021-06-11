@@ -18,50 +18,27 @@ public class ClientSSL {
     static SSLSocket sock;
 
 
-    public String getTarPenFromServer(String colabName) {
+    public String getTarPenFromServer(String colabName) throws IOException {
 
         preparingSSLClient();
 
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DataOutputStream sOut = null;
-        try {
-            sOut = new DataOutputStream(sock.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataInputStream sIn = null;
-        try {
-            sIn = new DataInputStream(sock.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
+        DataInputStream sIn = new DataInputStream(sock.getInputStream());
 
 
-        String frase;
-        frase = "4";
-        try {
-            sOut.writeUTF(frase);
-            sOut.writeUTF(colabName);
+        String protocol =  "4";
+        sOut.writeUTF(protocol);
+        sOut.writeUTF(colabName);
 
-            //WAITING FOR RESPONSE
-            String response = sIn.readUTF();
-            //TODO IF CONSTANT
-            //System.out.println("Client Response from server: " + response);
+        //WAITING FOR RESPONSE
+        String response = sIn.readUTF();
 
-            return response;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-        try {
-            sock.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        return null;
+        //TODO IF CONSTANT
+        //System.out.println("Client Response from server: " + response);
+        //sock.close();
+        return response;
     }
 
     public void getFluxActFromServer(){
@@ -93,7 +70,7 @@ public class ClientSSL {
     }
 
     private static void preparingSSLClient() {
-        String serverIp = "10.9.21.129";
+        String serverIp = "labs-ssh4";
         String clientSSL = "client1_J";
 
 
@@ -129,11 +106,11 @@ public class ClientSSL {
             sock.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
 }
-
 
 
 

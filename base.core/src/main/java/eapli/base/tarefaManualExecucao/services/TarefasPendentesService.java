@@ -31,15 +31,15 @@ public class TarefasPendentesService {
 
             int minutes = (int) ChronoUnit.MINUTES.between(ticketTime.toInstant(), Calendar.getInstance().toInstant());
 
-            if(minutes < periodoApr && minutes < periodoRes){
+            if(minutes <= periodoApr && minutes <= periodoRes){
                 tarefasPen++;
             }
 
-            if(minutes < hardcodedTime && minutes < hardcodedTime){
+            if(minutes <= hardcodedTime && minutes <= hardcodedTime){
                 tarefasAExp += 1;
             }
 
-            if(minutes > periodoApr && minutes > periodoRes){
+            if(minutes >= periodoApr && minutes >= periodoRes){
                 tarefasExp += 1;
             }
         }
@@ -54,15 +54,15 @@ public class TarefasPendentesService {
 
             int minutes = (int) ChronoUnit.MINUTES.between(ticketTime.toInstant(), Calendar.getInstance().toInstant());
 
-            if(minutes < periodoApr && minutes < periodoRes){
+            if(minutes <= periodoApr && minutes <= periodoRes){
                 tarefasPen++;
             }
 
-            if(minutes < hardcodedTime && minutes < hardcodedTime){
+            if(minutes <= hardcodedTime && minutes <= hardcodedTime){
                 tarefasAExp += 1;
             }
 
-            if(minutes > periodoApr && minutes > periodoRes){
+            if(minutes >= periodoApr && minutes >= periodoRes){
                 tarefasExp += 1;
             }
         }

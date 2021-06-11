@@ -17,7 +17,7 @@ public class ServerSSL {
     static final String KEYSTORE_PASS = "forgotten";
 
 
-    public void startServer(){
+    public void startServer() throws IOException {
         SSLServerSocket sock = null;
         Socket cliSock = null;
 
@@ -42,15 +42,8 @@ public class ServerSSL {
 
 
         while (true) {
-			try {
-				cliSock = sock.accept();
-                System.out.println("Thread1: " + Thread.activeCount());
-                new Thread(new ServerSSLThread(cliSock)).start();
-                System.out.println("Thread2: " + Thread.activeCount());
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+            cliSock = sock.accept();
+            new Thread(new ServerSSLThread(cliSock)).start();
         }
     }
 }

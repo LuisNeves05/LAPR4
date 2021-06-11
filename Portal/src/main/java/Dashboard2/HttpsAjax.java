@@ -23,52 +23,42 @@ public class HttpsAjax extends Thread {
             inS = new DataInputStream(sock.getInputStream());
         } catch (IOException ex) {
             System.out.println("Thread error on data streams creation");
+            Thread.currentThread().interrupt();
         }
         try {
             HttpsMessage request = new HttpsMessage(inS);
             HttpsMessage response = new HttpsMessage();
-            // System.out.println(request.getURI());
 
-            if (request.getMethod().equals("GET")) {
-                if (request.getURI().equals("/votes")) {
-                    response.setContentFromString(
-                            HttpsServer.getVotesStandingInHTML(), "text/html");
-                    response.setResponseStatus("200 Ok");
-                } else {
-                    String fullname = baseFolder + "/";
-                    if (request.getURI().equals("/")) fullname = fullname + "index.html";
-                    else fullname = fullname + request.getURI();
-                    if (response.setContentFromFile(fullname)) {
-                        response.setResponseStatus("200 Ok");
-                    } else {
-                        response.setContentFromString(
-                                "<html><body><h1>404 File not found</h1></body></html>",
-                                "text/html");
-                        response.setResponseStatus("404 Not Found");
-                    }
-                }
-                response.send(outS);
-            } else { // NOT GET
-                if (request.getMethod().equals("PUT")
-                        && request.getURI().startsWith("/votes/")) {
-                    HttpsServer.castVote(request.getURI().substring(7));
+            if (request.getURI().equals("/votes")) {
+                response.setContentFromString(
+                        HttpsServer.getVotesStandingInHTML(), "text/html");
+                response.setResponseStatus("200 Ok");
+            } else {
+                String fullname = baseFolder + "/";
+                if (request.getURI().equals("/")) fullname = fullname + "index.html";
+                else fullname = fullname + request.getURI();
+                if (response.setContentFromFile(fullname)) {
                     response.setResponseStatus("200 Ok");
                 } else {
                     response.setContentFromString(
-                            "<html><body><h1>ERROR: 405 Method Not Allowed</h1></body></html>",
+                            "<html><body><h1>404 File not found</h1></body></html>",
                             "text/html");
-                    response.setResponseStatus("405 Method Not Allowed");
+                    response.setResponseStatus("404 Not Found");
                 }
-                response.send(outS);
             }
+            response.send(outS);
         } catch (IOException ex) {
+            ex.printStackTrace();
             System.out.println("Thread error when reading request");
+            Thread.currentThread().interrupt();
         }
         try {
             sock.close();
         } catch (IOException ex) {
             System.out.println("CLOSE IOException");
+            Thread.currentThread().interrupt();
         }
+        Thread.currentThread().interrupt();
     }
 }
 

@@ -195,7 +195,7 @@ public class SolicitarServicoController {
     public boolean solicitarServico(Servico s, String urgencia) {
         Ticket ticket = criarTicket(s, urgencia);
 
-        if(!criarTarefaAprovacao(s, ticket))
+        if(criarTarefaAprovacao(s, ticket))
             criarTarefaExecucao(s, ticket);
 
             ativarFluxoServico(s.fluxoDoServico());

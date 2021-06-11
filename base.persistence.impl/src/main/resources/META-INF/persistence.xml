@@ -38,18 +38,18 @@
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
 
 
-        <!--   <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10258/lei20_21_s4_2dl_4"/>
-         <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
-         <property name="javax.persistence.jdbc.password" value="lapr4"/>
-         <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>>-->
-        <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
-        <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
-        <property name="javax.persistence.jdbc.password" value="lapr4"/>
-        <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+       <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10258/lei20_21_s4_2dl_4"/>
+      <!-- <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+       <property name="javax.persistence.jdbc.password" value="lapr4"/>
+       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>>-->
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>-->
+      <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+      <property name="javax.persistence.jdbc.password" value="lapr4"/>
+      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 
-        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-        <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
 
-    </properties>
-  </persistence-unit>
+  </properties>
+</persistence-unit>
 </persistence>
