@@ -67,7 +67,7 @@ public final class PortalApp extends BaseApplication {
             // go to main menu
 
 
-            //openDashboard(5);
+            openDashboard(1);
 
             final PortalMainMenu menu = new PortalMainMenu();
             menu.mainLoop();

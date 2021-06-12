@@ -97,6 +97,45 @@ public class DashboardUtils {
         return s.toString();
     }
 
+    public static String bootstrapTest(){
+        StringBuilder s = new StringBuilder();
+
+        s.append("<div class=\"containerS\">\n" +
+                "<table class=\"table\">\n" +
+                "  <thead class=\"thead-dark\">\n" +
+                "    <tr>\n" +
+                "      <th scope=\"col\">ID</th>\n" +
+                "      <th scope=\"col\">Status</th>\n" +
+                "      <th scope=\"col\">Last</th>\n" +
+                "      <th scope=\"col\">Handle</th>\n" +
+                "    </tr>\n" +
+                "  </thead>\n" +
+                "  <tbody>\n" +
+                "    <tr>\n" +
+                "      <th scope=\"row\">1</th>\n" +
+                "      <td>Mark</td>\n" +
+                "      <td>Otto</td>\n" +
+                "      <td>@mdo</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <th scope=\"row\">2</th>\n" +
+                "      <td>Jacob</td>\n" +
+                "      <td>Thornton</td>\n" +
+                "      <td>@fat</td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <th scope=\"row\">3</th>\n" +
+                "      <td>Larry</td>\n" +
+                "      <td>the Bird</td>\n" +
+                "      <td>@twitter</td>\n" +
+                "    </tr>\n" +
+                "  </tbody>\n" +
+                "</table>"+
+                "</div>\n");
+
+        return s.toString();
+    }
+
     public static int randInt(int min, int max) {
 
         // NOTE: This will (intentionally) not run as written so that folks
@@ -151,14 +190,28 @@ public class DashboardUtils {
 
     }
 
+    public static String getFluxosFromServer(){
+        ClientSSL client = new ClientSSL();
+        String packBeforeSplit = null;
+        try {
+            packBeforeSplit = client.getFluxActFromServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //String[] splittedData = packBeforeSplit.split(",");
 
-    public static void openDashboard(int time){
+        return packBeforeSplit;
 
-        Thread t1 = new Thread(new DashboardThread());
+    }
+
+
+    public static void openDashboard(int userRole){
+
+        Thread t1 = new Thread(new DashboardThread(userRole));
         t1.start();
 
         try {
-            TimeUnit.SECONDS.sleep(time);
+            TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

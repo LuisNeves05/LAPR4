@@ -1,5 +1,6 @@
 package SSLWorkflow;
 
+import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
 import java.io.DataInputStream;
@@ -8,13 +9,15 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import static SSLWorkflow.Utils.fluxosAtivosServer;
 import static SSLWorkflow.Utils.tarefasPendentesServer;
 
 class ServerSSLThread implements Runnable {
     private Socket s;
     private DataOutputStream sOut;
     private DataInputStream sIn;
-    static TarefasPendentesService service = new TarefasPendentesService();
+    static TarefasPendentesService serviceTarefas = new TarefasPendentesService();
+    static FluxoAtividadeService serviceFluxo = new FluxoAtividadeService();
 
     public ServerSSLThread(Socket cli_s) {
         s = cli_s;
@@ -37,12 +40,11 @@ class ServerSSLThread implements Runnable {
 
             switch (protocolo) {
                 case 4:
-                    tarefasPendentesServer(s, sOut, sIn, service);
+                    tarefasPendentesServer(s, sOut, sIn, serviceTarefas);
                     break;
 
                 case 5:
-                    System.out.println("Enviar Fluxos");
-                    Thread.currentThread().interrupt();
+                    fluxosAtivosServer(s, sOut, serviceFluxo);
                     break;
 
                 default:

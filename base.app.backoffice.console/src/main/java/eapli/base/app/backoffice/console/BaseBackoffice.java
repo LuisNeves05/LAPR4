@@ -36,6 +36,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.eventpubsub.EventDispatcher;
 
+import static Dashboard2.www.DashboardUtils.openDashboard;
+
 /**
  *
  * @author Paulo Gandra Sousa
@@ -67,11 +69,7 @@ public final class BaseBackoffice extends BaseApplication {
         if (new LoginUI().show()) {
             // go to main menu
 
-            /*
-            if(DashboardUtils.available(9992)){
-                Thread t1 = new Thread(new DashboardThread());
-                t1.start();
-            }*/
+            openDashboard(0);
 
             final MainMenu menu = new MainMenu();
             menu.mainLoop();

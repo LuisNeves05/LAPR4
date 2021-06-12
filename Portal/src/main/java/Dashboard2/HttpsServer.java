@@ -22,6 +22,8 @@ import static Dashboard2.www.DashboardUtils.*;
  * @author ANDRE MOREIRA (asc@isep.ipp.pt)
  */
 public class HttpsServer {
+    private static int userRole;
+
     static private final String BASE_FOLDER = "Portal/src/main/java/Dashboard2/www";
     static private ServerSocket sock;
     static private String PORT;
@@ -29,6 +31,9 @@ public class HttpsServer {
     static AuthorizationService authz = AuthzRegistry.authorizationService();
     static Colaborador colab = ((List<Colaborador>) repoColab.colabPorUsername(authz.session().get().authenticatedUser().username())).get(0);
 
+    public HttpsServer(int userRole) {
+        this.userRole = userRole;
+    }
 
     public void start() throws Exception {
         Socket cliSock;
@@ -81,7 +86,15 @@ public class HttpsServer {
         textHtml.append(nameInDashboard(String.valueOf(systemUser.username())));
 
         // Four Cards
-        textHtml.append(DashboardUtils.getTarefasFromServer(colab.nomeToString()));
+        if(userRole == 1){
+            textHtml.append(DashboardUtils.getTarefasFromServer(colab.nomeToString()));
+        }
+
+        if(userRole == 0){
+            textHtml.append(DashboardUtils.getFluxosFromServer());
+        }
+
+        textHtml.append(DashboardUtils.bootstrapTest());
 
         doTime(4);
         return String.valueOf(textHtml);

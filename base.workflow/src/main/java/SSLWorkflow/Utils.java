@@ -2,6 +2,7 @@ package SSLWorkflow;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
+import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
@@ -126,6 +127,24 @@ public class Utils {
         Thread.currentThread().interrupt();
 
         return;
+    }
+
+    public static void fluxosAtivosServer(Socket s, DataOutputStream sOut, FluxoAtividadeService service) throws IOException {
+        // Asks DB for the data
+        String response = service.dashboardData();
+
+        //String returnFromServer = String.format("%s,%s,%s", toInt(splittedData[0]), toInt(splittedData[1]), toInt(splittedData[2]));
+        System.out.printf("Thread Active: %s\n", Thread.getAllStackTraces().size());
+
+        // Send To Client
+        sOut.writeUTF(response);
+        s.close();
+
+        s = null;
+        Thread.currentThread().interrupt();
+
+        return;
+
     }
 
 }
