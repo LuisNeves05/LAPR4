@@ -105,8 +105,11 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.estadoTicket = EstadoTicket.CONCLUIDO;
     }
 
-
     public void emExecucao() {
         this.estadoTicket = EstadoTicket.EM_EXECUCAO;
     }
+
+    public void aprovarTicket(){ this.estadoTicket = EstadoTicket.APROVADO;}
+
+    public void rejeitarTicket(){ this.estadoTicket = EstadoTicket.REJEITADO;}
 }

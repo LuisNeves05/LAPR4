@@ -4,11 +4,16 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.tarefaManualExecucao.services.ExecutarTarefaManualExecucaoService;
+import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
+import eapli.framework.actions.ActionHistoryKeeper;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -27,7 +32,13 @@ public class ExecutarTarefaExecucaoController {
     private final SystemUser systemUser = userSession.authenticatedUser();
     private final Colaborador colabPedido =colabPorUserName(systemUser.username());
     private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
+    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
+
+
+    public ExecutarTarefaExecucaoController() {
+
+    }
 
     public Colaborador colabPorUserName(Username username){
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
@@ -60,10 +71,21 @@ public class ExecutarTarefaExecucaoController {
         return tarefaExecucaoRepositorio.obterAtividadeRealizacao(tarefa);
     }
 
-    public void comecarTarefaManualExec(TarefaManualExecucao tarefa){
-        // todo fazer execucacao da tarefa manual
-        execucaoService.comecarTarefaManualExec(tarefa);
+    public Colaborador colablogged(){
+        return this.colabPedido;
     }
-//todo executarTarefa Aprovacao
 
+
+    public void saveFormPreenchido(FormularioPreenchido fp) {
+        fpr.save(fp);
+    }
+
+    public void saveTarefaExecucao(TarefaManualExecucao tarefa) {
+        tarefa.definirMomentoRealizacao();
+        tarefaExecucaoRepositorio.save(tarefa);
+    }
+    public void saveTicket(Ticket ticket){
+        ActionHistoryKeeper ticketRepo;
+        ticketRepositorio.save(ticket);
+    }
 }

@@ -3,6 +3,7 @@ package eapli.base.formularioPreenchido.domain;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.domain.Servico;
+import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
 
@@ -21,8 +22,6 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @OneToOne
     private Formulario formulario;
 
-    @OneToOne
-    private Servico servico;
 
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
@@ -35,14 +34,25 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @ElementCollection
     private Set<Resposta> respostas;
 
+    @OneToOne
+    private Ticket ticket;
+
     public FormularioPreenchido(){}
 
-    public FormularioPreenchido(Formulario formulario, String urgencia, Set<Resposta> respostaSet, Servico servico, Colaborador colaborador){
+    public FormularioPreenchido(Formulario formulario, String urgencia, Set<Resposta> respostaSet, Ticket ticket, Colaborador colaborador){
         this.formulario = formulario;
         this.createdOn = Calendars.now();
         this.urgencia = urgencia;
         this.respostas = respostaSet;
-        this.servico = servico;
+        this.respostas = respostaSet;
+        this.ticket = ticket;        this.colaboradorPedido = colaborador;
+    }
+
+    public FormularioPreenchido(Formulario formulario, Set<Resposta> respostaSet, Ticket ticket, Colaborador colaborador){
+        this.formulario = formulario;
+        this.createdOn = Calendars.now();
+        this.respostas = respostaSet;
+        this.ticket = ticket;
         this.colaboradorPedido = colaborador;
     }
 

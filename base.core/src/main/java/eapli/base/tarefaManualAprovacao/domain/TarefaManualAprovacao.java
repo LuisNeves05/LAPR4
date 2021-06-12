@@ -1,6 +1,5 @@
 package eapli.base.tarefaManualAprovacao.domain;
 
-import eapli.base.Utils.DecisaoEnum;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
@@ -33,12 +32,6 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         this.ticket = ticket;
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
     }
-
-    @Enumerated(EnumType.STRING)
-    private DecisaoEnum decisao;
-
-    @Column(name = "COMENTARIO")
-    private String comentario;
 
     protected TarefaManualAprovacao(){}
 
@@ -76,20 +69,6 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         return id;
     }
 
-    public DecisaoEnum obterDecisao() {
-        return decisao;
-    }
 
-    public void decidirTarefa(DecisaoEnum decisao) {
-        this.decisao = decisao;
-    }
-
-    public String obterComentario() {
-        return comentario;
-    }
-
-    public void fazerComentario(String comentario) {
-        this.comentario = comentario;
-    }
 }
 

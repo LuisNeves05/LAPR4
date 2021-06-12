@@ -70,4 +70,26 @@ public class Atributo implements ValueObject {
         return this.nomeVar;
     }
 
+    public String obterExpRegular() {
+        return expRegular;
+    }
+
+    public String tipoDadosStr(TipoDados a) {
+        if (a == TipoDados.DATA) {
+            return "Data";
+        } else if (a == TipoDados.BOOLEANO) {
+            return "Sim/Não";
+        } else if (a == TipoDados.STRING) {
+            return "Frase";
+        } else if (a == TipoDados.FRACIONAL) {
+            return "Numero fracional";
+        } else if (a == TipoDados.INT) {
+            return "Numero";
+        } else if (a == TipoDados.DECISAO) {
+            return "Deferido/Indeferido";
+        } else if (a == TipoDados.CONCLUSAO) {
+            return "Concluido/Inacabado";
+        } else
+            return "";
+    }
 }

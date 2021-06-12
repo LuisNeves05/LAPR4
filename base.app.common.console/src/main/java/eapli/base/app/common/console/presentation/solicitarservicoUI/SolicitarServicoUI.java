@@ -8,6 +8,7 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
 import eapli.base.servico.domain.Servico;
+import eapli.base.ticket.domain.Ticket;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -94,7 +95,7 @@ public class SolicitarServicoUI extends AbstractUI {
         List<Formulario> formularioList = lcp.formulariosServico(s);
 
         Set<FormularioPreenchido> fps = new HashSet<>();
-
+        Ticket ticket = lcp.criarTicket(s, urgencia);
         //TODO VALIDAR FORMULARIO LPROG
         for (Formulario f : formularioList) {
             System.out.println("\nFormulario " + f.name() + "\n");
@@ -104,19 +105,19 @@ public class SolicitarServicoUI extends AbstractUI {
 
             for (Atributo atributo : a) {
                 TipoDados td = atributo.tipoDados();
-                String ajudaResposta = tipoDadosStr(td);
+                String ajudaResposta = atributo.tipoDadosStr(td);
                 String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                 Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
                 respostas.add(rAtr);
             }
 
-            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, s, lcp.colaboradorLogado());
+            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());
             fps.add(fp);
 
             lcp.saveFormPreenchido(fp);
         }
 
-        return lcp.solicitarServico(s, urgencia);
+        return lcp.solicitarServico(s,ticket);
     }
 
     @Override
@@ -124,18 +125,4 @@ public class SolicitarServicoUI extends AbstractUI {
         return "Solicitar um Serviço!";
     }
 
-    private String tipoDadosStr(TipoDados a) {
-        if (a == TipoDados.DATA) {
-            return "Data";
-        } else if (a == TipoDados.BOOLEANO) {
-            return "Sim/Não";
-        } else if (a == TipoDados.STRING) {
-            return "Frase";
-        } else if (a == TipoDados.FRACIONAL) {
-            return "Numero fracional";
-        } else if (a == TipoDados.INT) {
-            return "Numero";
-        } else
-            return "";
-    }
 }

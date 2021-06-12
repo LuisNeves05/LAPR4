@@ -1,14 +1,19 @@
 package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
 
-import eapli.base.Utils.DecisaoEnum;
+import eapli.base.Utils.HelpMethods;
+import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.TipoDados;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExecutarTarefaManualAprovUI extends AbstractUI {
     private final ExecutarTarefaAprovacaoController controller = new ExecutarTarefaAprovacaoController();
@@ -39,47 +44,57 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
             }
         }
         List<Formulario> forms = controller.obterAtividadeAprovacao(tarefaManualAprovacao);
+        Set<FormularioPreenchido> fps = new HashSet<>();
 
-        boolean aprovar = false;
+        if (!forms.isEmpty()) {// precisa de comentario
+            for (Formulario f : forms) {
+                System.out.println("\nFormulario " + f.name() + "\n");
 
-        while (!(aprovar)) {
-            String decisao = Console.readLine("Pretende aprovar esta tarefa?(S/N ou 0 para sair)? ");
-            if (decisao.equalsIgnoreCase("0")) {
-                return false;
-            } else if (decisao.equalsIgnoreCase("S")) {
-                tarefaManualAprovacao.decidirTarefa(DecisaoEnum.APROVADO);
-                if (!forms.isEmpty()) {// precisa de comentario
-                    String comentario = Console.readLine("Justifique a sua escolha :");
-                    tarefaManualAprovacao.fazerComentario(comentario);
+                Set<Resposta> respostas = new HashSet<>();
+                Set<Atributo> a = f.atributos();
+                for (Atributo atributo : a) {
+                    TipoDados td = atributo.tipoDados();
+                    String ajudaResposta = atributo.tipoDadosStr(td);
+                    String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
+                    boolean flag = true;
+                    do {
+
+                        if (HelpMethods.validaResposta(resposta,atributo.obterExpRegular())) {
+                            if (atributo.tipoDados() == TipoDados.DECISAO) {
+                                if (resposta.equalsIgnoreCase("deferido")) {
+                                    tarefaManualAprovacao.procurarTicket().aprovarTicket();
+
+                                } else {
+                                    tarefaManualAprovacao.procurarTicket().rejeitarTicket();
+                                }
+                                flag = false;
+                            }
+                        }
+                    } while (flag);
+                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+                    respostas.add(rAtr);
                 }
-                tarefaManualAprovacao.definirMomentoAprovacao();
-                aprovar = true;
-            }
-            else if (decisao.equalsIgnoreCase("N")) {
-                tarefaManualAprovacao.decidirTarefa(DecisaoEnum.REJEITADO);
-                if (!forms.isEmpty()) {// precisa de comentario
-                    String comentario = Console.readLine("Justifique a sua escolha :");
-                    tarefaManualAprovacao.fazerComentario(comentario);
-                }
-                tarefaManualAprovacao.definirMomentoAprovacao();
-                aprovar = true;}
-            else {
-                System.out.println("Insira uma resposta válida");
 
+                FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), controller.colabLogged());
+                fps.add(fp);
+
+                controller.saveFormPreenchido(fp);
+
+                controller.saveTicket(tarefaManualAprovacao.procurarTicket());
+
+                controller.saveTarefaAprovacao(tarefaManualAprovacao);
             }
         }
-
-        // todo se tiver decisao e comment
-
 
         return true;
     }
 
-
     @Override
     public String headline() {
         return "Tarefa a aprovar ";
+
     }
+
 }
 
 

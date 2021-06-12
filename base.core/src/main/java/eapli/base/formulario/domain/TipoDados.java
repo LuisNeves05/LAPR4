@@ -6,6 +6,8 @@ public enum TipoDados{
     INT,
     DATA,
     FRACIONAL,
-    BOOLEANO
+    BOOLEANO,
+    DECISAO,
+    CONCLUSAO,
 }
 

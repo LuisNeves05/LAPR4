@@ -28,7 +28,7 @@ public class FormularioHelper {
         String tipoDados;
         TipoDados td = TipoDados.STRING;
         do {
-            tipoDados = Console.readLine("Tipo de dados do atributo (Numero inteiro - 1 | Frase - 2 | Numero fracional - 3 | Data - 4");
+            tipoDados = Console.readLine("Tipo de dados do atributo (Numero inteiro - 1 | Frase - 2 | Numero fracional - 3 | Data - 4| Booleano - 5| ");
             switch (tipoDados) {
                 case "1":
                     tipoDados = "INT";
