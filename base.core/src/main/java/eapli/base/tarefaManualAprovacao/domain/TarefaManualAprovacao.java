@@ -62,6 +62,10 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         return estadoAprovacao;
     }
 
+    public Ticket getTicket() {
+        return ticket;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;

@@ -48,7 +48,7 @@ public class HttpsAjax extends Thread {
             }
             response.send(outS);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             System.out.println("Thread error when reading request");
             Thread.currentThread().interrupt();
         }

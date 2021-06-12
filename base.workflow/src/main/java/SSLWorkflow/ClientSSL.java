@@ -41,36 +41,27 @@ public class ClientSSL {
         return response;
     }
 
-    public void getFluxActFromServer(){
+    public String getFluxActFromServer() throws IOException {
 
         preparingSSLClient();
 
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DataOutputStream sOut = null;
-        try {
-            sOut = new DataOutputStream(sock.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //DataInputStream sIn = new DataInputStream(sock.getInputStream());
+        DataOutputStream  sOut = new DataOutputStream(sock.getOutputStream());
+        DataInputStream sIn = new DataInputStream(sock.getInputStream());
 
 
-        String frase = "5";
-        try {
-            sOut.writeUTF(frase);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            sock.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String protocol = "5";
+        sOut.writeUTF(protocol);
+
+        //WAITING FOR RESPONSE
+        String response = sIn.readUTF();
+
+        return response;
     }
 
     private static void preparingSSLClient() {
-        String serverIp = "labs-ssh4";
+        String serverIp = "10.8.0.83";
         String clientSSL = "client1_J";
 
 
@@ -104,8 +95,10 @@ public class ClientSSL {
 
         try {
             sock.startHandshake();
+        } catch (SSLException e){
+            Thread.currentThread().interrupt();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             Thread.currentThread().interrupt();
         }
     }

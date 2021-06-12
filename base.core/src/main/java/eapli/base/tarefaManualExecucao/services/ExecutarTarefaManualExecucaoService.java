@@ -10,17 +10,18 @@ import eapli.framework.io.util.Console;
 import java.util.List;
 
 public class ExecutarTarefaManualExecucaoService {
-private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
-private final ExecutarTarefaAprovacaoController  controllerAPP = new ExecutarTarefaAprovacaoController();
+    private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
+    private final ExecutarTarefaAprovacaoController controllerAPP = new ExecutarTarefaAprovacaoController();
 
-        List<TarefaManualExecucao> listaTarefaManualExecucao;
-    public void comecarTarefaManualExec(TarefaManualExecucao tarefa){
- // todo fazer execucacao da tarefa manual
+    List<TarefaManualExecucao> listaTarefaManualExecucao;
+
+    public void comecarTarefaManualExec(TarefaManualExecucao tarefa) {
+        // todo fazer execucacao da tarefa manual
         tarefa.definirMomentoRealizacao();
     }
 
 
-    public boolean mostrarTarefasAprovacao(){
+    public boolean mostrarTarefasAprovacao() {
         TarefaManualExecucao tarefaManualAprovacao = null;
         listaTarefaManualExecucao = controller.tarefasManualExecucao();
         int index = 1;
@@ -36,10 +37,10 @@ private final ExecutarTarefaAprovacaoController  controllerAPP = new ExecutarTar
 
             if (opcao == 0) {
                 return false;
-            }else if (opcao <= listaTarefaManualExecucao.size() && opcao > 0) {
+            } else if (opcao <= listaTarefaManualExecucao.size() && opcao > 0) {
                 escolherTarefa = true;
                 tarefaManualAprovacao = listaTarefaManualExecucao.get(opcao - 1);
-            }else{
+            } else {
                 System.out.println("Coloque um index válido");
             }
         }

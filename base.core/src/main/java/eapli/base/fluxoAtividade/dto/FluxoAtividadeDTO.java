@@ -22,7 +22,7 @@ public class FluxoAtividadeDTO {
         this.estaRes = estaRes;
     }
 
-    public FluxoAtividadeDTO(Long id, StatusFluxo estado, AtividadeAprovacao estaApr, AtividadeRealizacao realizao){
+    public FluxoAtividadeDTO(Long id, StatusFluxo estado, AtividadeAprovacao estaApr, String realizao){
         this.id = id.toString();
         this.estado = estado.toString();
         this.estaApr = estaApr.toString();

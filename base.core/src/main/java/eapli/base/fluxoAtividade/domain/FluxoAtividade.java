@@ -83,6 +83,8 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
         
         List<TarefaManualExecucao> tarEx = new ArrayList<>(this.atividadeRealizacao.tarefaManualExecucaoList());
 
+
+
         /*
         if(tarAp.isEmpty()){
             return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarEx.get(0).estadoRealizacao().toString());
@@ -92,7 +94,7 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
             return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarAp.get(0).estadoAprov().toString());
         }*/
 
-        return new FluxoAtividadeDTO(this.id, this.statusFluxo, this.atividadeAprovacao, this.atividadeRealizacao);
+        return new FluxoAtividadeDTO(this.id, this.statusFluxo, this.atividadeAprovacao, this.atividadeRealizacao.tipoExecucao().toString());
 
     }
 

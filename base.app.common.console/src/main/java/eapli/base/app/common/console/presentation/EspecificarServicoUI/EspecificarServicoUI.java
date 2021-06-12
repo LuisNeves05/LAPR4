@@ -12,8 +12,10 @@ import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
+import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.gramatica.ValidaScript;
+import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.*;
@@ -38,6 +40,10 @@ public class EspecificarServicoUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
+        FluxoAtividadeService s = new FluxoAtividadeService();
+        s.dashboardData();
+
 
         String opcao;
         do {

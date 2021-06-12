@@ -34,7 +34,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
 
     @Override
     public String toString() {
-        return colabsAprov.toString() + "CO" +tarefasAprov + "CON";
+        return colabsAprov.toString();
     }
 
     public void adicionaTarefaAprov(TarefaManualAprovacao tarAprov){

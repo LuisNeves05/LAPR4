@@ -98,6 +98,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
         return scriptAutomatico;
     }
 
+
     @Override
     public boolean sameAs(Object other) {
         return false;
