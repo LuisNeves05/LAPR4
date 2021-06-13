@@ -130,14 +130,29 @@ public class Utils {
     }
 
     public static void fluxosAtivosServer(Socket s, DataOutputStream sOut, FluxoAtividadeService service) throws IOException {
+        StringBuilder returnResponse = new StringBuilder();
+
         // Asks DB for the data
         String response = service.dashboardData();
 
         //String returnFromServer = String.format("%s,%s,%s", toInt(splittedData[0]), toInt(splittedData[1]), toInt(splittedData[2]));
         System.out.printf("Thread Active: %s\n", Thread.getAllStackTraces().size());
 
+        returnResponse.append(response);
+
         // Send To Client
-        sOut.writeUTF(response);
+        //sOut.writeUTF(returnResponse.toString());
+
+        //WORKING
+        //sOut.write(response.getBytes(StandardCharsets.UTF_8));
+
+        var x= divideProtocol(response.getBytes(StandardCharsets.UTF_8), 5);
+
+        for(String elems : x){
+            System.out.println(elems);
+            sOut.write(elems.getBytes(StandardCharsets.UTF_8));
+        }
+
         s.close();
 
         s = null;

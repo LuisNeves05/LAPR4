@@ -94,8 +94,6 @@ public class HttpsServer {
             textHtml.append(DashboardUtils.getFluxosFromServer());
         }
 
-        textHtml.append(DashboardUtils.bootstrapTest());
-
         doTime(4);
         return String.valueOf(textHtml);
     }

@@ -16,6 +16,13 @@ public class FluxoAtividadeDTO {
 
     public String estaRes;
 
+    public FluxoAtividadeDTO(String id, String estado, String estaApr, String estaRes) {
+        this.id = id;
+        this.estado = estado;
+        this.estaApr = estaApr;
+        this.estaRes = estaRes;
+    }
+
     public FluxoAtividadeDTO(Long id, StatusFluxo estado, String estaRes){
         this.id = id.toString();
         this.estado = estado.toString();
@@ -32,10 +39,10 @@ public class FluxoAtividadeDTO {
     @Override
     public String toString() {
         if(this.estaApr == null){
-            return "|" + id + "!" + estado + "!" + this.estaRes + "|";
+            return  id + "!" + estado + "!" + this.estaRes;
         }
 
-        return "|" + id + "!" + estado + "!" + this.estaApr + "!" + this.estaRes + "|";
+        return id + "!" + estado + "!" + this.estaApr + "!" + this.estaRes + ";";
 
     }
 }

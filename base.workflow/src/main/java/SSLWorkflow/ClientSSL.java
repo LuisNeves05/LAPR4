@@ -1,8 +1,13 @@
 package SSLWorkflow;
 
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
-import java.net.*;
-import javax.net.ssl.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import static SSLWorkflow.Utils.convertByteArrayToString;
 
 /**
  * @author asc@isep.ipp.pt
@@ -28,7 +33,7 @@ public class ClientSSL {
         DataInputStream sIn = new DataInputStream(sock.getInputStream());
 
 
-        String protocol =  "4";
+        String protocol = "4";
         sOut.writeUTF(protocol);
         sOut.writeUTF(colabName);
 
@@ -47,7 +52,7 @@ public class ClientSSL {
 
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DataOutputStream  sOut = new DataOutputStream(sock.getOutputStream());
+        DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
         DataInputStream sIn = new DataInputStream(sock.getInputStream());
 
 
@@ -55,7 +60,10 @@ public class ClientSSL {
         sOut.writeUTF(protocol);
 
         //WAITING FOR RESPONSE
-        String response = sIn.readUTF();
+        //String response = sIn.readUTF();
+        byte[] responseInBytes = sIn.readAllBytes();
+
+        String response = convertByteArrayToString(responseInBytes);
 
         return response;
     }
@@ -95,7 +103,7 @@ public class ClientSSL {
 
         try {
             sock.startHandshake();
-        } catch (SSLException e){
+        } catch (SSLException e) {
             Thread.currentThread().interrupt();
         } catch (IOException e) {
             //e.printStackTrace();

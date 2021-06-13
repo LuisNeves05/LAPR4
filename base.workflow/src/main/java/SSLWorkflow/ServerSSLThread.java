@@ -3,6 +3,7 @@ package SSLWorkflow;
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
+import javax.net.ssl.SSLProtocolException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -56,10 +57,11 @@ class ServerSSLThread implements Runnable {
             Thread.currentThread().interrupt();
             return;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SSLProtocolException e){
             Thread.currentThread().interrupt();
-        }finally {
+        } catch (IOException e) {
+            Thread.currentThread().interrupt();
+        } finally {
             try {
                 s.close();
                 s = null;
