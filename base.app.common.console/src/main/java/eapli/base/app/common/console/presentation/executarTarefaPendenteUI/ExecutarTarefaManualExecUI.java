@@ -1,6 +1,7 @@
 package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
 
 import eapli.base.Utils.HelpMethods;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -43,7 +44,9 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 System.out.println("Coloque um index válido");
             }
         }
-        List<Formulario> forms = controller.obterAtividadeRealizacao(tarefaManualExecucao);
+        List<AtividadeRealizacao> atividade = controller.obterAtividadeRealizacao(tarefaManualExecucao);
+        AtividadeRealizacao ar = atividade.get(0);
+        Set<Formulario> forms= ar.obterFormularios();
         Set<FormularioPreenchido> fps = new HashSet<>();
 
         if (!forms.isEmpty()) {// precisa de comentario

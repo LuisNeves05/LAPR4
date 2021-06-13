@@ -1,6 +1,7 @@
 package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
 
 import eapli.base.Utils.HelpMethods;
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -43,10 +44,11 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                 System.out.println("Coloque um index válido");
             }
         }
-        List<Formulario> forms = controller.obterAtividadeAprovacao(tarefaManualAprovacao);
+        List<AtividadeAprovacao> atividade = controller.obterAtividadeAprovacao(tarefaManualAprovacao);
+        AtividadeAprovacao ap = atividade.get(0);
+        Set<Formulario> forms= ap.obterFormularios();
         Set<FormularioPreenchido> fps = new HashSet<>();
-
-        if (!forms.isEmpty()) {// precisa de comentario
+        if (!ap.obterFormularios().isEmpty()) {// precisa de comentario
             for (Formulario f : forms) {
                 System.out.println("\nFormulario " + f.name() + "\n");
 
@@ -59,7 +61,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                     boolean flag = true;
                     do {
 
-                        if (HelpMethods.validaResposta(resposta,atributo.obterExpRegular())) {
+                        if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
                             if (atributo.tipoDados() == TipoDados.DECISAO) {
                                 if (resposta.equalsIgnoreCase("deferido")) {
                                     tarefaManualAprovacao.procurarTicket().aprovarTicket();

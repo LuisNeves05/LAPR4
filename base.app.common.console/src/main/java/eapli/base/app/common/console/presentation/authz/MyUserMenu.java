@@ -31,6 +31,8 @@ import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTaref
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
+import eapli.base.app.common.console.presentation.executarTarefaPendenteUI.ExecutarTarefaManualAprovUI;
+import eapli.base.app.common.console.presentation.executarTarefaPendenteUI.ExecutarTarefaManualExecUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -58,6 +60,9 @@ public class MyUserMenu extends Menu {
     private static final int ADICIONAR_NIVEL_CRITICIDADE = 10;
     private static final int CRIAR_NIVEL_CRITICIDADE = 11;
     private static final int REIVINDICAR_TAREFA = 12;
+    private static final int APROVAR_TAREFA = 13;
+    private static final int EXECUTAR_TAREFA = 14;
+
 
     public MyUserMenu() {
         super(MENU_TITLE);
@@ -88,6 +93,8 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(ADICIONAR_NIVEL_CRITICIDADE, "Adicionar Nível de Criticidade", new AdicionarNivelCriticidadeUI()::show));
             addItem(MenuItem.of(CRIAR_NIVEL_CRITICIDADE, "Criar Nível de Criticidade", new EspecificarNivelCriticidadeUI()::show));
             addItem(MenuItem.of(REIVINDICAR_TAREFA, "Reivindicar Tarefa", new AssignarTarefasUI()::show));
+            addItem(MenuItem.of(APROVAR_TAREFA,"Aprovar Tarefa",new ExecutarTarefaManualAprovUI()::show));
+            addItem(MenuItem.of(EXECUTAR_TAREFA,"Executar Tarefa",new ExecutarTarefaManualExecUI()::show));
 
         } else {
             addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(onlyWithThis)::show));

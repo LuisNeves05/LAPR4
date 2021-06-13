@@ -53,10 +53,10 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
     }
 
     @Override
-    public List<Formulario> obterAtividadeRealizacao(TarefaManualExecucao tarefa) {
+    public List<AtividadeRealizacao> obterAtividadeRealizacao(TarefaManualExecucao tarefa) {
 
         QueryMaker qm = new QueryMaker();
-        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT atReal.formularios from AtividadeRealizacao atReal where :tarefa MEMBER of atReal.tarefasManualExecucao ", AtividadeRealizacao.class);
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT atReal from AtividadeRealizacao atReal where :tarefa MEMBER of atReal.tarefasManualExecucao ", AtividadeRealizacao.class);
         query.setParameter("tarefa",tarefa);
         return query.getResultList();
     }

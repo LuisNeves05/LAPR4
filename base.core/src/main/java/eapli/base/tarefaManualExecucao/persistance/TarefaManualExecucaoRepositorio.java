@@ -22,5 +22,5 @@ public interface TarefaManualExecucaoRepositorio extends DomainRepository<Long, 
 
 
     // todo tarefa de execucao vai estar contida no set de tarefas nas atividades de realizacao, ir buscar atividade de realizacao que tem essa tarefa
-    List<Formulario>  obterAtividadeRealizacao(TarefaManualExecucao tarefa);
+    List<AtividadeRealizacao>  obterAtividadeRealizacao(TarefaManualExecucao tarefa);
 }

@@ -51,9 +51,7 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         dataAprovado = Calendars.now();
     }
 
-    public EstadoAprovacao estadoAprov() {
-        return estadoAprovacao;
-    }
+    public EstadoAprovacao estadoAprov() { return estadoAprovacao; }
 
     public Ticket getTicket() {
         return ticket;
@@ -69,6 +67,13 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
         return id;
     }
 
+    @Override
+    public String toString() {
+        return
+                " - "+ "   "+
+                  ticket +
+                "   Estado de Aprovacao : " + this.estadoAprovacao.toString();
 
+    }
 }
 

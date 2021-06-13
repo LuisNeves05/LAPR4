@@ -122,4 +122,8 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     public Set<TarefaManualExecucao> tarefaManualExecucaoList() {
         return tarefasManualExecucao;
     }
+
+    public Set<Formulario> obterFormularios() {
+        return formularios;
+    }
 }

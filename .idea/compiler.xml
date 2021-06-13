@@ -33,6 +33,7 @@
       <module name="base.core" target="11" />
       <module name="base.persistence.impl" target="11" />
       <module name="eapli.base.workflow" target="11" />
+      <module name="New folder" target="11" />
       <module name="novoLAPR" target="11" />
       <module name="Portal" target="11" />
     </bytecodeTargetLevel>

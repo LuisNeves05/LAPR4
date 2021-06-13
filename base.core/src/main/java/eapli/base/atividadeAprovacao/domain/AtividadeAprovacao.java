@@ -68,4 +68,8 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     public Set<TarefaManualAprovacao> tarefasAprovList() {
         return tarefasAprov;
     }
+
+    public Set<Formulario> obterFormularios() {
+        return formularios;
+    }
 }

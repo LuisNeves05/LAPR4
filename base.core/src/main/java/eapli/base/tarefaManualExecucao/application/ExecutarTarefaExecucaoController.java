@@ -1,5 +1,6 @@
 package eapli.base.tarefaManualExecucao.application;
 
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
@@ -67,7 +68,7 @@ public class ExecutarTarefaExecucaoController {
         return null;
     }
 
-    public List<Formulario> obterAtividadeRealizacao(TarefaManualExecucao tarefa){
+    public List<AtividadeRealizacao> obterAtividadeRealizacao(TarefaManualExecucao tarefa){
         return tarefaExecucaoRepositorio.obterAtividadeRealizacao(tarefa);
     }
 
@@ -85,7 +86,6 @@ public class ExecutarTarefaExecucaoController {
         tarefaExecucaoRepositorio.save(tarefa);
     }
     public void saveTicket(Ticket ticket){
-        ActionHistoryKeeper ticketRepo;
         ticketRepositorio.save(ticket);
     }
 }

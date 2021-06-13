@@ -1,16 +1,15 @@
 package eapli.base.tarefaManualAprovacao.application;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.TarefaManualAprovacaoService;
-import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -19,8 +18,6 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,7 +51,7 @@ public class ExecutarTarefaAprovacaoController {
         return tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
-    public List<Formulario> obterAtividadeAprovacao(TarefaManualAprovacao tarefa) {
+    public List<AtividadeAprovacao> obterAtividadeAprovacao(TarefaManualAprovacao tarefa) {
         return tarefaManualAprovacaoRepositorio.obterAtividadeRealizacao(tarefa);
     }
 
