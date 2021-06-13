@@ -2,16 +2,19 @@ package Dashboard2.www;
 
 import Dashboard2.DashboardThread;
 import SSLWorkflow.ClientSSL;
+import eapli.base.fluxoAtividade.dto.FluxoAtividadeDTO;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class DashboardUtils {
 
-    public static String nameInDashboard(String colabName){
+    public static String nameInDashboard(String colabName) {
         StringBuilder s = new StringBuilder();
 
         s.append("<section class=\"welcome p-t-10\">\n" +
@@ -30,7 +33,7 @@ public class DashboardUtils {
         return s.toString();
     }
 
-    public static String navBar(){
+    public static String navBar() {
         StringBuilder s = new StringBuilder();
 
         s.append("<nav class=\"navbar navbar-dark bg-dark\">\n" +
@@ -45,7 +48,7 @@ public class DashboardUtils {
     }
 
 
-    public static String fourBoxes(int tarefasAEx, int tarefasPend, int tarefasExp)  {
+    public static String fourBoxes(int tarefasAEx, int tarefasPend, int tarefasExp) {
         StringBuilder s = new StringBuilder();
 
 
@@ -74,7 +77,7 @@ public class DashboardUtils {
                 "                        <div class=\"col-md-6 col-lg-3\">\n" +
                 "                            <div class=\"statistic__item statistic__item--blue\">\n" +
                 "                                <h2 class=\"number\">0</h2>\n" +
-                "                                <span class=\"desc\">this week</span>\n" +
+                "                                <span class=\"desc\">Esta semana</span>\n" +
                 "                                <div class=\"icon\">\n" +
                 "                                    <i class=\"zmdi zmdi-calendar-note\"></i>\n" +
                 "                                </div>\n" +
@@ -82,7 +85,7 @@ public class DashboardUtils {
                 "                        </div>\n" +
                 "                        <div class=\"col-md-6 col-lg-3\">\n" +
                 "                            <div class=\"statistic__item statistic__item--red\">\n" +
-                "                                <h2 class=\"number\">" + tarefasExp+ "</h2>\n" +
+                "                                <h2 class=\"number\">" + tarefasExp + "</h2>\n" +
                 "                                <span class=\"desc\">Tarefas expiradas</span>\n" +
                 "                                <div class=\"icon\">\n" +
                 "                                    <i class=\"zmdi zmdi-money\"></i>\n" +
@@ -93,6 +96,50 @@ public class DashboardUtils {
                 "                    </div>\n" +
                 "            </section>\n" +
                 "            <!-- END STATISTIC-->");
+
+        return s.toString();
+    }
+
+    public static String bootstrapTest() {
+        StringBuilder s = new StringBuilder();
+
+        s.append("<div class=\"containerS\">\n" +
+                "\t\t\t<div class=\"row justify-content-center\">\n" +
+                "\t\t\t\t<div class=\"col-md-6 text-center mb-5\">\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t<div class=\"row\">\n" +
+                "\t\t\t\t<div class=\"col-md-12\">\n" +
+                "\t\t\t\t\t<div class=\"table\">\n" +
+                "\t\t\t\t\t\t<table class=\"table table-striped\">\n" +
+                "\t\t\t\t\t\t  <thead>\n" +
+                "\t\t\t\t\t\t    <tr>\n" +
+                "\t\t\t\t\t\t      <th>ID</th>\n" +
+                "\t\t\t\t\t\t      <th>Aprovado Por</th>\n" +
+                "\t\t\t\t\t\t      <th>Tipo Tarefa</th>\n" +
+                "\t\t\t\t\t\t      <th>Status</th>\n" +
+                "\t\t\t\t\t\t    </tr>\n" +
+                "\t\t\t\t\t\t  </thead>\n" +
+                "\t\t\t\t\t\t  <tbody>\n" +
+                "\t\t\t\t\t\t    <tr>\n" +
+                "\t\t\t\t\t\t      <th scope=\"row\">1001</th>\n" +
+                "\t\t\t\t\t\t      <td>$3000</td>\n" +
+                "\t\t\t\t\t\t      <td>$1200</td>\n" +
+                "\t\t\t\t\t\t      <td><a href=\"#\" class=\"btn btn-success\">Progress</a></td>\n" +
+                "\t\t\t\t\t\t    </tr>\n" +
+                "\t\t\t\t\t\t    <tr>\n" +
+                "\t\t\t\t\t\t      <th scope=\"row\">1001</th>\n" +
+                "\t\t\t\t\t\t      <td>$3000</td>\n" +
+                "\t\t\t\t\t\t      <td>$1200</td>\n" +
+                "\t\t\t\t\t\t      <td><a href=\"#\" class=\"btn btn-success\">Progress</a></td>\n" +
+                "\t\t\t\t\t\t    </tr>\n" +
+                "\t\t\t\t\t\t  </tbody>\n" +
+                "\t\t\t\t\t\t</table>\n" +
+                "\t\t\t\t\t</div>\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t</section>" +
+                "</div>\n");
 
         return s.toString();
     }
@@ -125,7 +172,7 @@ public class DashboardUtils {
         }
     }
 
-    public static int toInt(String data){
+    public static int toInt(String data) {
         return Integer.parseInt(data.trim());
     }
 
@@ -137,7 +184,7 @@ public class DashboardUtils {
         }
     }
 
-    public static String getTarefasFromServer(String colab){
+    public static String getTarefasFromServer(String colab) {
         ClientSSL client = new ClientSSL();
         String packBeforeSplit = null;
         try {
@@ -147,18 +194,106 @@ public class DashboardUtils {
         }
         String[] splittedData = packBeforeSplit.split(",");
 
-        return DashboardUtils.fourBoxes(toInt(splittedData[0]),toInt(splittedData[1]),toInt(splittedData[2]));
+        return DashboardUtils.fourBoxes(toInt(splittedData[0]), toInt(splittedData[1]), toInt(splittedData[2]));
+
+    }
+
+    public static String getFluxosFromServer() {
+        ClientSSL client = new ClientSSL();
+        String packBeforeSplit = null;
+        try {
+            packBeforeSplit = client.getFluxActFromServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<FluxoAtividadeDTO> fluxosDTOList = new ArrayList<>();
+
+        String[] numberFluxos = packBeforeSplit.split(";");
+
+        for (int i = 0; i < numberFluxos.length; i++) {
+            var x = numberFluxos[i].split("!");
+
+            String id = x[0];
+            String status = x[1];
+            String aprovadoPor = x[2].replace("[", "").replace("]", "");
+            String tipoTarefa = x[3];
+
+            fluxosDTOList.add(new FluxoAtividadeDTO(id, status, aprovadoPor, tipoTarefa));
+        }
+
+        try {
+            return DashboardUtils.tableColours(fluxosDTOList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public static String tableColours(List<FluxoAtividadeDTO> fluxoList) throws IOException {
+
+
+
+
+        List<FluxoAtividadeDTO> fluxosDTOList = fluxoList;
+
+        StringBuilder s = new StringBuilder();
+
+        s.append("<div class=\"containerS\">\n" +
+                "\t\t\t<div class=\"row justify-content-center\">\n" +
+                "\t\t\t\t<div class=\"col-md-6 text-center mb-5\">\n" +
+                "\t\t\t\t</div>\n" +
+                "\t\t\t</div>\n" +
+                "\t\t\t<div class=\"row\">\n" +
+                "\t\t\t\t<div class=\"col-md-12\">\n" +
+                "\t\t\t\t\t<div class=\"table\">\n" +
+                "\t\t\t\t\t\t<table class=\"table table-striped\">\n" +
+                "\t\t\t\t\t\t  <thead>\n" +
+                "\t\t\t\t\t\t    <tr>\n" +
+                "\t\t\t\t\t\t      <th>ID</th>\n" +
+                "\t\t\t\t\t\t      <th>Aprovado Por</th>\n" +
+                "\t\t\t\t\t\t      <th>Tipo Tarefa</th>\n" +
+                "\t\t\t\t\t\t      <th>Status</th>\n" +
+                "\t\t\t\t\t\t    </tr>\n" +
+                "\t\t\t\t\t\t  </thead>\n" +
+                "\t\t\t\t\t\t  <tbody>\n");
+
+        for(FluxoAtividadeDTO elems : fluxosDTOList){
+
+            //Beging Of Table
+            s.append( "</tr>\n");
+
+            s.append("<th scope=\"row\">" + elems.id + "</th>\n" +
+                    "<td>" + elems.estaApr + "</td>\n" +
+                    "<td>" + elems.estaRes + "</td>\n");
+
+            if(elems.estado.equals("INATIVO")){
+                s.append("<td><a href=\"#\" class=\"btn btn-warning\">INATIVO</a></td>\n");
+            }
+
+            if(elems.estado.equals("ATIVO")){
+                s.append("<td><a href=\"#\" class=\"btn btn-success\">ATIVO</a></td>\n");
+            }
+
+            //End Of Table
+            s.append( "</tr>\n");
+
+        }
+
+        return s.toString();
 
     }
 
 
-    public static void openDashboard(int time){
+    public static void openDashboard(int userRole) {
 
-        Thread t1 = new Thread(new DashboardThread());
+        Thread t1 = new Thread(new DashboardThread(userRole));
         t1.start();
 
         try {
-            TimeUnit.SECONDS.sleep(time);
+            TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
