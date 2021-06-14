@@ -13,11 +13,6 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
      */
     private NomeFormulario nome;
 
-    /**
-     * Nome do formulário
-     */
-    private Set<Atributo> conjAtrib = new HashSet<>();
-
     public FormularioBuilder(){}
 
     public FormularioBuilder comNome(final NomeFormulario nome) {
@@ -25,16 +20,12 @@ public class FormularioBuilder implements DomainFactory<Formulario> {
         return this;
     }
 
-    public FormularioBuilder comConjAtributos(final Set<Atributo> conjAtrib) {
-        this.conjAtrib = conjAtrib;
-        return this;
-    }
 
     @Override
     public Formulario build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
 
-        return new Formulario(nome, conjAtrib);
+        return new Formulario(nome);
     }
 }

@@ -28,7 +28,6 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @OneToMany
     private Set<TarefaManualExecucao> tarefasManualExecucao;
 
-
     @OneToMany
     private Set<TarefaAutomatica> tarefasAutomaticas;
 
@@ -38,30 +37,24 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @Nullable
     private String scriptAutomatico;
 
-    @OneToMany
-    private Set<Formulario> formularios;
+    @OneToOne
+    private Formulario formulario;
 
-    public AtividadeRealizacao(TipoExecucao tipoExecucao, String scriptAutomatico) {
-        this.tipoExecucao = tipoExecucao;
-        if (this.tipoExecucao == TipoExecucao.AUTOMATICA) {
-            this.tarefasAutomaticas = new HashSet<>();
-            this.scriptAutomatico = scriptAutomatico;
-        } else {
-            formularios = new HashSet<>();
-            this.equipasExecucao = new HashSet<>();
-            this.tarefasManualExecucao = new HashSet<>();
-
-        }
+    public AtividadeRealizacao(String scriptAutomatico) {
+        this.tipoExecucao = TipoExecucao.AUTOMATICA;
+        this.scriptAutomatico = scriptAutomatico;
     }
 
-    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao, String ignore) {
+    public AtividadeRealizacao() {
+        this.tipoExecucao = TipoExecucao.MANUAL;
+        this.equipasExecucao = new HashSet<>();
+        this.tarefasManualExecucao = new HashSet<>();
+    }
+
+    public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao) {
         this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
-        formularios = new HashSet<>();
-    }
-
-    protected AtividadeRealizacao() {
     }
 
     public void adicionarTarefaExecucao(TarefaManualExecucao tarExec) {
@@ -77,9 +70,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     }
 
     public void adicionaFormulario(Formulario f) {
-        if (!this.formularios.contains(f)) {
-            formularios.add(f);
-        }
+        this.formulario = f;
     }
 
     public Set<Equipa> equipasExecucao() {
@@ -123,7 +114,7 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
         return tarefasManualExecucao;
     }
 
-    public Set<Formulario> obterFormularios() {
-        return formularios;
+    public Formulario formularioRealizacao() {
+        return formulario;
     }
 }

@@ -14,4 +14,5 @@ public interface FormularioRepositorio extends DomainRepository<Formulario, Form
 
     List<Atributo> atributosPorFormulario(final Formulario formulario);
 
+    void removePeloID(final Formulario formulario);
 }

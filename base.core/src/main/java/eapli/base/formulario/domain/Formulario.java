@@ -36,11 +36,10 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     /**
      * Construtor da entidade Formulário
      * @param nome Nome do Formulário
-     * @param conjAtrib Conjunto de atributos associados ao Formulário
      */
-    public Formulario(NomeFormulario nome, Set<Atributo> conjAtrib){
+    public Formulario(NomeFormulario nome){
         this.nome = nome;
-        this.conjuntoAtributos = conjAtrib;
+        conjuntoAtributos = new HashSet<>();
     }
 
     /**

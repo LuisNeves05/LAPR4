@@ -23,13 +23,12 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @OneToMany
     private Set<TarefaManualAprovacao> tarefasAprov;
 
-    @OneToMany
-    private Set<Formulario> formularios;
+    @OneToOne
+    private Formulario formulario;
 
     public AtividadeAprovacao(){
         this.tarefasAprov = new HashSet<>();
         this.colabsAprov = new HashSet<>();
-        this.formularios = new HashSet<>();
     }
 
     @Override
@@ -46,9 +45,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     }
 
     public void adicionaFormulario(Formulario f){
-        if(!this.formularios.contains(f)){
-            formularios.add(f);
-        }
+        this.formulario = f;
     }
 
     public Set<ColaboradoresAprovacao> colabsDeAprovacao(){
@@ -69,7 +66,7 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
         return tarefasAprov;
     }
 
-    public Set<Formulario> obterFormularios() {
-        return formularios;
+    public Formulario formularioAprovacao() {
+        return formulario;
     }
 }

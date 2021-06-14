@@ -15,7 +15,6 @@ import eapli.base.clientusermanagement.domain.MecanographicNumber;
 import eapli.base.colaborador.application.EspecificarColaboradorController;
 import eapli.base.colaborador.domain.*;
 import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
-import eapli.base.criticidade.domain.Etiqueta;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.application.AddOrDeleteEquipaController;
@@ -31,6 +30,7 @@ import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.domain.*;
+import eapli.base.servico.service.CriaServicoService;
 import eapli.base.tipoEquipa.application.RegistarTipoEquipaController;
 import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.base.usermanagement.application.AddUserController;
@@ -222,28 +222,28 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          * É assignado a uma equipa, logo é de resolução manual
          *
          */
-
+        CriaServicoService criarServicoService = new CriaServicoService();
         AtividadeAprovacao atividadeAprovacao = new AtividadeAprovacao();
         atividadeAprovacao.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
-        AtividadeAprovacao at = especificarServicoController.guardaAtividadeAprovacao(atividadeAprovacao);
+        AtividadeAprovacao at = criarServicoService.guardaAtividadeAprovacao(atividadeAprovacao);
 
-        AtividadeRealizacao ativReal = new AtividadeRealizacao(TipoExecucao.MANUAL,null);
+        AtividadeRealizacao ativReal = new AtividadeRealizacao();
         ativReal.adicionarEquipaExecucao(equipa_Tecnica);
-        AtividadeRealizacao atividadeRealizacao = especificarServicoController.guardaAtividadeRealizacao(ativReal);
+        AtividadeRealizacao atividadeRealizacao = criarServicoService.guardaAtividadeRealizacao(ativReal);
 
-        FluxoAtividade fluxoAtividade = especificarServicoController.guardaFluxo(new FluxoAtividade(at,atividadeRealizacao));
+        FluxoAtividade fluxoAtividade = criarServicoService.guardaFluxo(new FluxoAtividade(at,atividadeRealizacao));
 
         Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAvaria"), new Titulo("Reportar anomalia de Comunicação"), new DescricaoBreve("Anomalia em comunicação da rede da empresa"),
                 new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], new HashSet<>(), EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
 
 
-        Formulario f = new Formulario(new NomeFormulario("Avaria"), new HashSet<>());
+        Formulario f = new Formulario(new NomeFormulario("Avaria"));
         f.addAtributo("Equipamento que avariou: ","Código do equipamento","Código na lateral do equipamento", TipoDados.INT,"[0-9]+");
         f.addAtributo("Edifício do equipamento: ","Nome do edificio do equipamento","Nome afixado na entrada do edificio",TipoDados.STRING,"[a-zA-Z]+");
         f.addAtributo("Comentário: ","Avaria concreta do equipamento","Avaliação empírica da avaria",TipoDados.STRING,"[a-zA-Z]+");
         Formulario fSav = formRep.save(f);
 
-        especificarServicoController.adicionaFormulario(servico,fSav);
+        criarServicoService.adicionaFormulario(servico,fSav);
         especificarServicoController.especificarServico(servico);
 
 

@@ -20,7 +20,7 @@ public class EspecificarFormularioController {
         FormularioBuilder formularioBuilder = new FormularioBuilder();
         formularioBuilder.comNome(nome);
 
-        return repoForm.save(formularioBuilder.build());
+        return formularioBuilder.build();
     }
 
     public void saveForm(Formulario f){
