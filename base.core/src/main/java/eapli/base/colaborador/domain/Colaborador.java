@@ -109,4 +109,12 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     public String nomeToString(){
         return nomeCurto.toString();
     }
+
+    public MecanographicNumber numMecanografico() {
+        return numMecanografico;
+    }
+
+    public void setNumMecanografico(MecanographicNumber numMecanografico) {
+        this.numMecanografico = numMecanografico;
+    }
 }
