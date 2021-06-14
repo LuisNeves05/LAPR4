@@ -17,11 +17,8 @@ public class HelpMethods {
         return String.valueOf(sb);
     }
 
-    public static boolean validaResposta(final String resposta, final String regex) {
-
-        //todo fazer expressao para todos os tipos de dados
-
-        Pattern pattern = Pattern.compile(regex);
+    public static boolean validaResposta(String resposta, String expReg) {
+        Pattern pattern = Pattern.compile(expReg);
         Matcher matcher = pattern.matcher(resposta);
 
         return matcher.find();

@@ -1,9 +1,9 @@
 package eapli.base.servico.application;
 
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
-import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
-import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
+import eapli.base.atividadeAprovacao.CriarAtividadeAprovacaoService.CriarAtividadeAprovacaoService;
+import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
+import eapli.base.atividadeRealizacao.domain.TipoExecucao;
+import eapli.base.atividadeRealizacao.service.CriarAtividadeRealizacaoService;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
@@ -11,18 +11,13 @@ import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.equipa.persistencia.EquipaRepositorio;
-import eapli.base.fluxoAtividade.domain.FluxoAtividade;
-import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
+import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.application.UserSession;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-
+import eapli.base.servico.service.CriaServicoService;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,23 +32,15 @@ public class EspecificarServicoController {
      * Repositório do Serviço
      */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
-    private final FormularioRepositorio formRep = PersistenceContext.repositories().formularioRepositorio();
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
     private final ColaboradorRepositorio colabRep = PersistenceContext.repositories().colaboradorRepositorio();
     private final EquipaRepositorio eqRep = PersistenceContext.repositories().equipaRepositorio();
-    private final FluxoAtividadeRepositorio fluxoAtivRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
-    private final AtividadeAprovacaoRepositorio ativAprovRep = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
-    private final AtividadeRealizacaoRepositorio ativRealRep = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
+    private final CriaServicoService criarServicoService = new CriaServicoService();
+    private final CriarAtividadeAprovacaoService criarAtividadeAprovacaoService = new CriarAtividadeAprovacaoService();
+    private final CriarAtividadeRealizacaoService criarAtividadeRealizacaoService = new CriarAtividadeRealizacaoService();
 
-    private SystemUser systemUser;
 
-    public EspecificarServicoController(){
-        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        if(authorizationService.hasSession() && authorizationService.session().isPresent()) {
-            UserSession userSession = authorizationService.session().get();
-            this.systemUser = userSession.authenticatedUser();
-        }
-    }
+    public EspecificarServicoController(){}
 
     /**
      * Especificação de um novo Serviço
@@ -67,10 +54,6 @@ public class EspecificarServicoController {
      */
     public Iterable<Catalogo> listaCatalogos() {
         return repoCat.findAll();
-    }
-
-    public void adicionaFormulario(Servico s, Formulario formulario){
-        s.adicionaFormulario(formulario);
     }
 
     public List<Servico> servicosIncompletos() {
@@ -98,31 +81,29 @@ public class EspecificarServicoController {
         repoServ.save(s);
     }
 
-    public Iterable<Servico> listaServicos() {
-        return repoServ.findAll();
+
+
+    public Servico criarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtividadeBuilder) {
+        return criarServicoService.especificarServico(serviceBuilder,formularios,fluxoAtividadeBuilder);
     }
 
-    public Formulario guardaFormulario(Formulario formulario) {
-        return formRep.save(formulario);
+    public Iterable<Servico> servicoPeloIdentificador(String identificador) {
+        return repoServ.servicoPorIdentificador(identificador);
     }
 
-    public FluxoAtividade guardaFluxo(FluxoAtividade fluxoAtividade) {
-        return fluxoAtivRepositorio.save(fluxoAtividade);
+    public void fluxoComAtividadeAprovacao(FluxoAtividadeBuilder fluxoAtivBuilder, List<ColaboradoresAprovacao> colabsAprov, Formulario form) {
+        criarAtividadeAprovacaoService.fluxoComAtividadeAprovacao(fluxoAtivBuilder, colabsAprov, form);
     }
 
-    public AtividadeRealizacao guardaAtividadeRealizacao(AtividadeRealizacao atividadeRealizacao) {
-        return ativRealRep.save(atividadeRealizacao);
+    public void fluxoComAtividadeRealizacaoEquipas(FluxoAtividadeBuilder fluxoAtivBuilder, List<Equipa> equipasExec, Formulario form) {
+        criarAtividadeRealizacaoService.fluxoComAtividadeRealizacaoEquipas(fluxoAtivBuilder, equipasExec, form);
     }
 
-    public AtividadeAprovacao guardaAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao) {
-        return ativAprovRep.save(atividadeAprovacao);
+    public void fluxoComAtividadeRealizacaoColab(FluxoAtividadeBuilder fluxoAtivBuilder, Colaborador colab, TipoExecucao tipoExec, Formulario form){
+        criarAtividadeRealizacaoService.fluxoComAtividadeRealizacaoColaborador(fluxoAtivBuilder, colab, tipoExec, form);
     }
 
-    public void removerAtividadeRealizacao(AtividadeRealizacao ativRealizacaoDoFluxo) {
-        ativRealRep.removePeloID(ativRealizacaoDoFluxo);
-    }
-
-    public void removerAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao) {
-        ativAprovRep.removePeloID(atividadeAprovacao);
+    public void fluxoComAtividadeRealizacaoAutomatica(FluxoAtividadeBuilder fluxoAtivBuilder,String scriptAutomatico) {
+        criarAtividadeRealizacaoService.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder, scriptAutomatico);
     }
 }

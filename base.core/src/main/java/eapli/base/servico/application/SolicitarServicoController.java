@@ -1,13 +1,6 @@
 package eapli.base.servico.application;
 
 
-import eapli.base.Utils.bibliotecaTarefa.TiposDeTarefa;
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
-import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
-import eapli.base.atividadeAprovacao.persistence.AtividadeAprovacaoRepositorio;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
-import eapli.base.atividadeRealizacao.domain.TipoExecucao;
-import eapli.base.atividadeRealizacao.persistence.AtividadeRealizacaoRepositorio;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
@@ -22,13 +15,8 @@ import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoReposito
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
-import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
-import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
-import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
-import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
-import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
-import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
-import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
+import eapli.base.tarefaManualAprovacao.service.CriarTarefaManualAprovacaoService;
+import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
@@ -40,7 +28,6 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SolicitarServicoController {
 
@@ -49,30 +36,14 @@ public class SolicitarServicoController {
     private Colaborador colabPedido;
 
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
-
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
-
     private final CatalogoRepositorio catRep = PersistenceContext.repositories().catalogoRepositorio();
-
     private final FormularioRepositorio repoForm = PersistenceContext.repositories().formularioRepositorio();
-
     private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
-
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
-
-    private final AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
-
-    private final AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
-
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
-
-    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRep = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
-
-    private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRep = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
-
-    private final TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
-
-    private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
+    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
+    private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService();
 
 
     public SolicitarServicoController(){
@@ -117,10 +88,6 @@ public class SolicitarServicoController {
     }
 
 
-    public TiposDeTarefa tiposDeTarefa(){
-        return tiposDeTarefa;
-    }
-
     public Colaborador colaboradorLogado(){
         return colabPedido;
     }
@@ -136,53 +103,7 @@ public class SolicitarServicoController {
             return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.EM_EXECUCAO));
     }
 
-    public boolean criarTarefaAprovacao(Servico s, Ticket ticket) {
-        AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();
 
-        if (at != null) {
-            Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
-            TarefaManualAprovacao tarefaManualAprovacao = tiposDeTarefa().novaTarefaManualAprovacao(ticket);
-            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)) {
-                Colaborador respHierarquico = colaboradorLogado().seuColabResponsavel();
-                tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
-            }
-            if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)) {
-                Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
-                tarefaManualAprovacao.assignaColabAprovacao(respServico);
-            }
-            TarefaManualAprovacao tarManAprov = tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
-            at.adicionaTarefaAprov(tarManAprov);
-            atividadeAprovacaoRepositorio.save(at);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public void criarTarefaExecucao(Servico s, Ticket ticket) {
-        AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
-
-        if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
-            if (!ar.equipasExecucao().isEmpty()) {
-                TarefaManualExecucao tme = tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
-                for (Equipa equipa : ar.equipasExecucao()) {
-                    tme.adicionaEquipaExecucao(equipa);
-                }
-                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tme);
-                ar.adicionarTarefaExecucao(tarManExec);
-
-            } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tiposDeTarefa().
-                        novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR));
-                ar.adicionarTarefaExecucao(tarManExec);
-            }
-        } else {
-            TarefaAutomatica tarefaAutomatica = tiposDeTarefa().novaTarefaAutomatica(ticket, ar.scriptAutomatico());
-            TarefaAutomatica tarAut = tarefaAutomaticaRepositorio.save(tarefaAutomatica);
-            ar.adicionarTarefaAutomatica(tarAut);
-        }
-        atividadeRealizacaoRepositorio.save(ar);
-    }
 
     public FluxoAtividade guardarFluxo(FluxoAtividade fluxoDoServico) {
         return fluxoAtividadeRepositorio.save(fluxoDoServico);
@@ -194,10 +115,8 @@ public class SolicitarServicoController {
 
     public boolean solicitarServico(Servico s, Ticket ticket) {
 
-
-        if(criarTarefaAprovacao(s, ticket))
-            criarTarefaExecucao(s, ticket);
-
+        if(!criarTarefaManualAprovacaoService.criarTarefaAprovacao(s, ticket, colaboradorLogado()))
+            criarTarefaManualExecucaoService.criarTarefaExecucao(s, ticket);
             ativarFluxoServico(s.fluxoDoServico());
             return guardarFluxo(s.fluxoDoServico()) != null;
     }

@@ -69,7 +69,7 @@ public final class BaseBackoffice extends BaseApplication {
         if (new LoginUI().show()) {
             // go to main menu
 
-            openDashboard(0);
+            //openDashboard(0);
 
             final MainMenu menu = new MainMenu();
             menu.mainLoop();

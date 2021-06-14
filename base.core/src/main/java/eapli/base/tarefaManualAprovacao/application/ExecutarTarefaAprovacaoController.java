@@ -7,9 +7,11 @@ import eapli.base.equipa.domain.Equipa;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.servico.domain.Servico;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.TarefaManualAprovacaoService;
+import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -31,6 +33,7 @@ public class ExecutarTarefaAprovacaoController {
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
     private final TicketRepositorio ticketRepo = PersistenceContext.repositories().ticketRepositorio();
     private final UserSession userSession = authorizationService.session().get();
+    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
 
 
     public ExecutarTarefaAprovacaoController() {
@@ -51,7 +54,7 @@ public class ExecutarTarefaAprovacaoController {
         return tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
-    public List<AtividadeAprovacao> obterAtividadeAprovacao(TarefaManualAprovacao tarefa) {
+    public List<AtividadeAprovacao> atividadeAprovacaoDaTarefa(TarefaManualAprovacao tarefa) {
         return tarefaManualAprovacaoRepositorio.obterAtividadeRealizacao(tarefa);
     }
 
@@ -82,7 +85,11 @@ public class ExecutarTarefaAprovacaoController {
         tarefaManualAprovacaoRepositorio.save(tarefa);
     }
 
-public void saveTicket(Ticket ticket){
+    public void saveTicket(Ticket ticket){
         ticketRepo.save(ticket);
 }
+
+    public void criarTarefaManualExecução(Servico s, Ticket t){
+        criarTarefaManualExecucaoService.criarTarefaExecucao(s, t);
+    }
 }

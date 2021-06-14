@@ -53,8 +53,15 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
 
     public EstadoAprovacao estadoAprov() { return estadoAprovacao; }
 
-    public Ticket getTicket() {
+    public Ticket ticketDaTarefaAprovacao() {
         return ticket;
+    }
+
+    public void aprovado(){
+        this.estadoAprovacao = EstadoAprovacao.APROVADO;
+    }
+    public void rejeitado(){
+        this.estadoAprovacao = EstadoAprovacao.REJEITADO;
     }
 
     @Override

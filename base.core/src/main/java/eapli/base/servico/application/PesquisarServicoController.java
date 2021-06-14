@@ -41,15 +41,7 @@ public class PesquisarServicoController {
      */
     public Iterable<Servico> pesquisaIdentificador(final String identificador){
 
-        Iterable<Catalogo> listaCatalogo = catalogosColaborador();
-
-        Set<Servico> servicos = new HashSet<>();
-
-        for(Catalogo cs : listaCatalogo){
-            servicos.addAll((List<Servico>) pesquisarServicoPorIdentificador(identificador, cs));
-        }
-
-        return servicos;
+        return repoServ.servicoPorIdentificador(identificador);
     }
 
     public Iterable<Servico> pesquisaTitulo(final String titulo){
@@ -89,10 +81,6 @@ public class PesquisarServicoController {
         }
 
         return servicos;
-    }
-
-    public Iterable<Servico> pesquisarServicoPorIdentificador(final String identificador, final Catalogo catalogo){
-        return repoServ.servicoPorIdentificadorCatalogo(identificador, catalogo);
     }
 
     public Iterable<Servico> pesquisarServicoPorTitulo(final String titulo, final Catalogo catalogo){

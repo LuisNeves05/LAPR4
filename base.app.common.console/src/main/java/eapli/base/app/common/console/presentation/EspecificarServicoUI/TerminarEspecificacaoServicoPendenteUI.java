@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.EspecificarServicoUI;
+package eapli.base.app.common.console.presentation.especificarServicoUI;
 
 import eapli.base.servico.application.FinalizarEspecificacaoServicoController;
 import eapli.base.servico.domain.Servico;

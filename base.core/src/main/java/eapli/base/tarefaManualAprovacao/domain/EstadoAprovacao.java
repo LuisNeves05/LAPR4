@@ -1,7 +1,7 @@
 package eapli.base.tarefaManualAprovacao.domain;
 
 public enum EstadoAprovacao {
-    POR_APROVAR("Por Aprovrar"), APROVADO("Aprovado"), REJEITADO("Rejeitado");
+    POR_APROVAR("Por Aprovar"), APROVADO("Aprovado"), REJEITADO("Rejeitado");
 
     private String estadoAprov;
 

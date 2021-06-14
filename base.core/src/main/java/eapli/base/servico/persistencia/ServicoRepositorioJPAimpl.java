@@ -18,11 +18,10 @@ public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long
     }
 
     @Override
-    public Iterable<Servico> servicoPorIdentificadorCatalogo(final String ident, final Catalogo catalogo){
+    public Iterable<Servico> servicoPorIdentificador(final String ident){
         QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.servicoIdent = :ident and :catalogo = s.catalogo", Servico.class);
+        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT s from Servico s where s.servicoIdent = :ident", Servico.class);
         query.setParameter("ident", new ServicoIdentificador(ident));
-        query.setParameter("catalogo", catalogo);
         return query.getResultList();
     }
 

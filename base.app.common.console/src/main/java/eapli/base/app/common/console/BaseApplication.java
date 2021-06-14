@@ -39,6 +39,7 @@ public abstract class BaseApplication {
 
             printFooter();
         } catch (final Exception e) {
+            e.printStackTrace();
             System.out.println(
                     "Something unexpected has happened and the application will terminate. Please check the logs.\n");
             LOGGER.error(e);

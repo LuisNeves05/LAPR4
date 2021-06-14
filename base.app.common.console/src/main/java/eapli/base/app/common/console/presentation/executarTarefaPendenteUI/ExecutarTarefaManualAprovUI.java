@@ -9,6 +9,7 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.ticket.domain.Ticket;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -24,6 +25,12 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
     protected boolean doShow() {
         TarefaManualAprovacao tarefaManualAprovacao = null;
         listaTarefaAprov = controller.tarefasManualAprovacao();
+
+        if(listaTarefaAprov.isEmpty()){
+            System.out.println("Ainda não existem tarefas de aprovação atribuidas a si.");
+            return false;
+        }
+
         int index = 1;
         for (TarefaManualAprovacao t : listaTarefaAprov) {
             System.out.println(index + " " + t.toString());
@@ -31,7 +38,6 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
         }
 
         boolean escolherTarefa = false;
-
         while (!escolherTarefa) {
             int opcao = Console.readInteger("Escolha a tarefa que pretende analisar : (prima 0 para sair)");
 
@@ -44,12 +50,10 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                 System.out.println("Coloque um index válido");
             }
         }
-        List<AtividadeAprovacao> atividade = controller.obterAtividadeAprovacao(tarefaManualAprovacao);
+        List<AtividadeAprovacao> atividade = controller.atividadeAprovacaoDaTarefa(tarefaManualAprovacao);
         AtividadeAprovacao ap = atividade.get(0);
-        Set<Formulario> forms= ap.obterFormularios();
-        Set<FormularioPreenchido> fps = new HashSet<>();
-        if (!ap.obterFormularios().isEmpty()) {// precisa de comentario
-            for (Formulario f : forms) {
+        Formulario f = ap.formularioAprovacao();
+
                 System.out.println("\nFormulario " + f.name() + "\n");
 
                 Set<Resposta> respostas = new HashSet<>();
@@ -57,20 +61,26 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                 for (Atributo atributo : a) {
                     TipoDados td = atributo.tipoDados();
                     String ajudaResposta = atributo.tipoDadosStr(td);
-                    String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                     boolean flag = true;
+                    String resposta;
                     do {
-
+                        resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                         if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
                             if (atributo.tipoDados() == TipoDados.DECISAO) {
-                                if (resposta.equalsIgnoreCase("deferido")) {
-                                    tarefaManualAprovacao.procurarTicket().aprovarTicket();
-
+                                if (resposta.equalsIgnoreCase("Deferido")) {
+                                    tarefaManualAprovacao.aprovado();
+                                    Ticket ticket = tarefaManualAprovacao.procurarTicket();
+                                    ticket.aprovarTicket();
+                                    controller.criarTarefaManualExecução(ticket.servicoDoTicket(), ticket);
                                 } else {
+                                    tarefaManualAprovacao.rejeitado();
                                     tarefaManualAprovacao.procurarTicket().rejeitarTicket();
                                 }
-                                flag = false;
                             }
+                            flag = false;
+                        }
+                        if(flag){
+                            System.out.println("Dado incorreto.");
                         }
                     } while (flag);
                     Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
@@ -78,25 +88,18 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                 }
 
                 FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), controller.colabLogged());
-                fps.add(fp);
 
                 controller.saveFormPreenchido(fp);
-
                 controller.saveTicket(tarefaManualAprovacao.procurarTicket());
-
                 controller.saveTarefaAprovacao(tarefaManualAprovacao);
-            }
-        }
 
         return true;
     }
 
     @Override
     public String headline() {
-        return "Tarefa a aprovar ";
-
+        return "Tarefa a aprovar";
     }
-
 }
 
 

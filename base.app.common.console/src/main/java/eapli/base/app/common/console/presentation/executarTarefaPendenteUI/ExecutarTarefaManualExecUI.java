@@ -24,6 +24,12 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
     protected boolean doShow() {
         TarefaManualExecucao tarefaManualExecucao = null;
         listaTarefasManualExecucao = controller.tarefasManualExecucaoPendente();
+
+        if(listaTarefasManualExecucao.isEmpty()){
+            System.out.println("Ainda não existem tarefas de execução atribuidas a si.");
+            return false;
+        }
+
         int index = 1;
         for (TarefaManualExecucao t : listaTarefasManualExecucao) {
             System.out.println(index + " " + t.toString());
@@ -46,37 +52,43 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
         }
         List<AtividadeRealizacao> atividade = controller.obterAtividadeRealizacao(tarefaManualExecucao);
         AtividadeRealizacao ar = atividade.get(0);
-        Set<Formulario> forms= ar.obterFormularios();
-        Set<FormularioPreenchido> fps = new HashSet<>();
+        Formulario f = ar.formularioRealizacao();
 
-        if (!forms.isEmpty()) {// precisa de comentario
-            for (Formulario f : forms) {
-                System.out.println("\nFormulario " + f.name() + "\n");
+        System.out.println("\nFormulario " + f.name() + "\n");
 
-                Set<Resposta> respostas = new HashSet<>();
-                Set<Atributo> a = f.atributos();
-                for (Atributo atributo : a) {
-                    TipoDados td = atributo.tipoDados();
-                    String ajudaResposta = atributo.tipoDadosStr(td);
-                    String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
-                    boolean flag = true;
-                    do {
-                        if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular()))
-                            flag = false;
-
-                    } while (flag);
-                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                    respostas.add(rAtr);
+        Set<Resposta> respostas = new HashSet<>();
+        Set<Atributo> a = f.atributos();
+        for (Atributo atributo : a) {
+            TipoDados td = atributo.tipoDados();
+            String ajudaResposta = atributo.tipoDadosStr(td);
+            boolean flag = true;
+            String resposta;
+            do {
+                resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
+                if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
+                    if (atributo.tipoDados() == TipoDados.CONCLUSAO) {
+                        if (resposta.equalsIgnoreCase("Concluido")) {
+                            tarefaManualExecucao.procurarTicket().completarTicket();
+                        } else {
+                            tarefaManualExecucao.procurarTicket().inacabadoTicket();
+                        }
+                    }
+                    flag = false;
                 }
+                if(flag){
+                    System.out.println("Dado incorreto.");
+                }
+            } while (flag);
 
-                FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualExecucao.procurarTicket(), controller.colablogged());
-                fps.add(fp);
-
-                controller.saveFormPreenchido(fp);
-                controller.saveTicket(tarefaManualExecucao.procurarTicket());
-                controller.saveTarefaExecucao(tarefaManualExecucao);
-            }
+            Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+            respostas.add(rAtr);
         }
+
+        FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualExecucao.procurarTicket(), controller.colablogged());
+
+        controller.saveFormPreenchido(fp);
+        controller.saveTicket(tarefaManualExecucao.procurarTicket());
+        controller.saveTarefaExecucao(tarefaManualExecucao);
 
         return true;
     }

@@ -6,6 +6,7 @@ import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -51,7 +52,8 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         return createdOn;
     }
 
-    protected Ticket(){}
+    protected Ticket() {
+    }
 
     public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
                   EstadoTicket estadoTicket) {
@@ -66,7 +68,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().resolucaoMax();
     }
 
-    public void adicionaFormularioResposta(FormularioPreenchido fp){
+    public void adicionaFormularioResposta(FormularioPreenchido fp) {
         formulariosPreenchidos.add(fp);
     }
 
@@ -83,11 +85,16 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public String toString() {
-        return "Ticket "+ id +" : \n"+
+        return "Ticket " + id + " : \n" +
                 "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
                 "       Criado em : " + createdOn.getTime().toString() +
                 "       Serviço : " + servico.descricaoBreveDoServico() +
-                "       Urgência : " + urgenciaTicket ;}
+                "       Urgência : " + urgenciaTicket;
+    }
+
+    public Servico servicoDoTicket() {
+        return servico;
+    }
 
     public int periodoMaxApr() {
         return periodoMaxApr;
@@ -105,11 +112,19 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.estadoTicket = EstadoTicket.CONCLUIDO;
     }
 
+    public void inacabadoTicket() {
+        this.estadoTicket = EstadoTicket.INACABADO;
+    }
+
     public void emExecucao() {
         this.estadoTicket = EstadoTicket.EM_EXECUCAO;
     }
 
-    public void aprovarTicket(){ this.estadoTicket = EstadoTicket.APROVADO;}
+    public void aprovarTicket() {
+        this.estadoTicket = EstadoTicket.APROVADO;
+    }
 
-    public void rejeitarTicket(){ this.estadoTicket = EstadoTicket.REJEITADO;}
+    public void rejeitarTicket() {
+        this.estadoTicket = EstadoTicket.REJEITADO;
+    }
 }
