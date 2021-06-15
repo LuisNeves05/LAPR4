@@ -4,7 +4,9 @@ import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
@@ -21,7 +23,9 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
+
 import java.util.List;
+import java.util.Set;
 
 
 public class ExecutarTarefaAprovacaoController {
@@ -73,7 +77,6 @@ public class ExecutarTarefaAprovacaoController {
     }
 
 
-
     public Colaborador colabLogged() {
         return this.colabPedido;
     }
@@ -87,15 +90,44 @@ public class ExecutarTarefaAprovacaoController {
         tarefaManualAprovacaoRepositorio.save(tarefa);
     }
 
-    public void saveTicket(Ticket ticket){
+    public void saveTicket(Ticket ticket) {
         ticketRepo.save(ticket);
-}
+    }
 
-    public void criarTarefaManualExecucao(Servico s, Ticket t){
+    public void criarTarefaManualExecucao(Servico s, Ticket t) {
         criarTarefaManualExecucaoService.criarTarefaExecucao(s, t);
     }
 
     public boolean tarefasAprovacaoAprovadas(Ticket ticket) {
         return aprovarTicketService.tarefasTotalmenteAprovadas(ticket);
     }
+
+
+    public void isDecisao(String resposta, TarefaManualAprovacao tarefaManualAprovacao) {
+        if (resposta.equalsIgnoreCase("Deferido")) {
+            tarefaManualAprovacao.aprovado();
+            Ticket ticket = tarefaManualAprovacao.procurarTicket();
+            if (tarefasAprovacaoAprovadas(ticket)) {
+                ticket.aprovarTicket();
+                criarTarefaManualExecucao(ticket.servicoDoTicket(), ticket);
+            }
+        } else {
+            tarefaManualAprovacao.rejeitado();
+            tarefaManualAprovacao.procurarTicket().rejeitarTicket();
+        }
+    }
+
+    public Resposta adicionarResposta(String reposta, String nomeVar){
+        Resposta resposta= new Resposta(reposta,nomeVar);
+
+        return resposta;
+    }
+    public void terminarExecucao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
+
+        FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), colabLogged());
+        saveFormPreenchido(fp);
+        saveTicket(tarefaManualAprovacao.procurarTicket());
+        saveTarefaAprovacao(tarefaManualAprovacao);
+    }
+
 }

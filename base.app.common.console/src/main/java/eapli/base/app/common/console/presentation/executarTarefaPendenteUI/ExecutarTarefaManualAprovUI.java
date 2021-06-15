@@ -67,17 +67,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                         resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                         if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
                             if (atributo.tipoDados() == TipoDados.DECISAO) {
-                                if (resposta.equalsIgnoreCase("Deferido")) {
-                                    tarefaManualAprovacao.aprovado();
-                                    Ticket ticket = tarefaManualAprovacao.procurarTicket();
-                                    if(controller.tarefasAprovacaoAprovadas(ticket)){
-                                        ticket.aprovarTicket();
-                                        controller.criarTarefaManualExecucao(ticket.servicoDoTicket(), ticket);
-                                    }
-                                } else {
-                                    tarefaManualAprovacao.rejeitado();
-                                    tarefaManualAprovacao.procurarTicket().rejeitarTicket();
-                                }
+                              controller.isDecisao(resposta,tarefaManualAprovacao);
                             }
                             flag = false;
                         }
@@ -85,15 +75,10 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                             System.out.println("Dado incorreto.");
                         }
                     } while (flag);
-                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                    respostas.add(rAtr);
+                    respostas.add(controller.adicionarResposta(resposta,atributo.nomeVar()));
                 }
 
-                FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), controller.colabLogged());
-
-                controller.saveFormPreenchido(fp);
-                controller.saveTicket(tarefaManualAprovacao.procurarTicket());
-                controller.saveTarefaAprovacao(tarefaManualAprovacao);
+                controller.terminarExecucao(f,respostas,tarefaManualAprovacao);
 
         return true;
     }
