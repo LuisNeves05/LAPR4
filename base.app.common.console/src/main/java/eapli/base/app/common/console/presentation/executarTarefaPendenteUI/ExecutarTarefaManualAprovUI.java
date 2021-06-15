@@ -78,7 +78,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                     respostas.add(controller.adicionarResposta(resposta,atributo.nomeVar()));
                 }
 
-                controller.terminarExecucao(f,respostas,tarefaManualAprovacao);
+               // controller.terminarExecucao(f,respostas,tarefaManualAprovacao);
 
         return true;
     }

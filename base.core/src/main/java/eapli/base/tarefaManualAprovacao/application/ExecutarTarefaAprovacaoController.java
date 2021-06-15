@@ -106,10 +106,10 @@ public class ExecutarTarefaAprovacaoController {
     public void isDecisao(String resposta, TarefaManualAprovacao tarefaManualAprovacao) {
         if (resposta.equalsIgnoreCase("Deferido")) {
             tarefaManualAprovacao.aprovado();
-            Ticket ticket = tarefaManualAprovacao.procurarTicket();
-            if (tarefasAprovacaoAprovadas(ticket)) {
-                ticket.aprovarTicket();
-                criarTarefaManualExecucao(ticket.servicoDoTicket(), ticket);
+
+            if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.procurarTicket())) {
+                tarefaManualAprovacao.procurarTicket().aprovarTicket();
+                criarTarefaManualExecucao(tarefaManualAprovacao.procurarTicket().servicoDoTicket(), tarefaManualAprovacao.procurarTicket());
             }
         } else {
             tarefaManualAprovacao.rejeitado();
