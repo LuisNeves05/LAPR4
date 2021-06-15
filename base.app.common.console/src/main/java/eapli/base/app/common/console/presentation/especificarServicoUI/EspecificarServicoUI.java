@@ -8,11 +8,10 @@ import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.gramatica.ValidaScript;
+import eapli.base.formulario.gramatica.Script;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.EstadoServico;
@@ -479,7 +478,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 return false;
             }
 
-            if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
+            if (Script.validadeGrammarFromString(scriptAutomatico))
                 flag = false;
             else
                 System.out.println("Script inválido");

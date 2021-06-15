@@ -1,18 +1,12 @@
 package eapli.base.equipa.persistencia;
 
 import eapli.base.Application;
-import eapli.base.Utils.QueryMaker;
 import eapli.base.catalogo.domain.Catalogo;
-import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.CodigoEquipa;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.fluxoAtividade.domain.FluxoAtividade;
-import eapli.base.servico.domain.DescricaoBreve;
-import eapli.base.servico.domain.Servico;
-import eapli.base.servico.domain.Titulo;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import javax.persistence.*;
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -41,8 +35,7 @@ public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Long, 
     }
 
     public Iterable<Equipa> equipasDoCatalogo(Catalogo catalogo){
-        QueryMaker qm = new QueryMaker();
-        Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT c.equipas FROM Catalogo c where c = :catalogo",
+        Query query = super.createQuery("SELECT c.equipas FROM Catalogo c where c = :catalogo",
                 Iterable.class);
         query.setParameter("catalogo", catalogo);
         return query.getResultList();

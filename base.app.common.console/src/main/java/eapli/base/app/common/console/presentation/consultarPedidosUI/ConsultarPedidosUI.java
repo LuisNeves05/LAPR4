@@ -45,7 +45,7 @@ public class ConsultarPedidosUI extends AbstractUI {
             }
         }
 
-        //System.out.println("Thread count: " + Thread.activeCount());
+        System.out.println("Thread count: " + Thread.activeCount());
 
 
         return true;

@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.EspecificarServicoUI;
+package eapli.base.app.common.console.presentation.especificarServicoUI;
 
 import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
