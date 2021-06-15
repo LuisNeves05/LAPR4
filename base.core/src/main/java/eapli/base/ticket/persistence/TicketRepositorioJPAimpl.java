@@ -6,6 +6,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
+import java.util.List;
 
 
 public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, Long>
@@ -26,6 +27,14 @@ public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, 
     public Iterable<Ticket> ticketPorColabConcluido(Colaborador colab){
         Query query = super.createQuery("SELECT t from Ticket t where t.colabRequisitou = :colabReq and t.estadoTicket='CONCLUIDO'", Ticket.class);
         query.setParameter("colabReq", colab);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Ticket> ticketsComFeedbackDoColab(Colaborador colabLogado){
+        Query query = super.createQuery("SELECT t from Ticket t where (select s.requerFeedback from Servico s where t.servico = s) = :feedback and  t.colabRequisitou = :colabLogado and t.estadoTicket='CONCLUIDO'", Ticket.class);
+        query.setParameter("colabLogado", colabLogado);
+        query.setParameter("feedback", true);
         return query.getResultList();
     }
 }

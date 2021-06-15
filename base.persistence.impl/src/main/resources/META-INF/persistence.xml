@@ -44,7 +44,7 @@
              <property name="javax.persistence.jdbc.password" value="lapr4"/>
              <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>>-->
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true"/>
-            <property name="javax.persistence.jdbc.user" value="lei20_21_s4_2dl_4"/>
+            <property name="javax.persistence.jdbc.user" value="lapr4grupo"/>
             <property name="javax.persistence.jdbc.password" value="lapr4"/>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
 

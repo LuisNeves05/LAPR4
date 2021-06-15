@@ -48,6 +48,8 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     private int periodoMaxRes;
 
+    private String feedback;
+
     public Calendar criacaoTicket() {
         return createdOn;
     }
@@ -126,5 +128,9 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     public void rejeitarTicket() {
         this.estadoTicket = EstadoTicket.REJEITADO;
+    }
+
+    public void feedbackDoColaborador(String respostaFeedback) {
+        this.feedback = respostaFeedback;
     }
 }

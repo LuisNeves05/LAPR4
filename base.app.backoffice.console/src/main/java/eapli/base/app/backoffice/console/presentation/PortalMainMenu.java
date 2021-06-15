@@ -32,6 +32,7 @@ import eapli.base.app.backoffice.console.presentation.authz.DeactivateUserAction
 import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import eapli.base.app.common.console.presentation.consultarPedidosUI.ConsultarPedidosUI;
+import eapli.base.app.common.console.presentation.darFeedbackUI.DarFeedbackUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -74,11 +75,13 @@ public class PortalMainMenu extends AbstractUI {
     private static final int PESQUISA_CATALOGO = 6;
 
 
+
     //PORTAL
 
     private static final int SOLICITAR_SERVICO_OPTION = 1;
     private static final int REIVINDICAR_TAREFA = 2;
     private static final int CONSULTAR_TAREFAS = 3;
+    private static final int DAR_FEEDBACK = 7;
 
 
     private static final String SEPARATOR_LABEL = "--------------";
@@ -172,8 +175,8 @@ public class PortalMainMenu extends AbstractUI {
 
         menu.addItem(MenuItem.of(SOLICITAR_SERVICO_OPTION, "Solicitar Serviço", new SolicitarServicoUI()::show));
         menu.addItem(MenuItem.of(REIVINDICAR_TAREFA, "Reivindicar Tarefa", new AssignarTarefasUI()::show));
-
         menu.addItem(MenuItem.of(CONSULTAR_TAREFAS, "Consultar Tarefa", new ConsultarPedidosUI()::show));
+        menu.addItem(MenuItem.of(DAR_FEEDBACK, "Dar Feedback", new DarFeedbackUI()::show));
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
