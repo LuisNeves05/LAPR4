@@ -15,4 +15,5 @@ public interface TicketRepositorio extends DomainRepository<Long, Ticket> {
 
     Iterable<Ticket> ticketPorColabConcluido(Colaborador colab);
 
+    List<Ticket> ticketsComFeedbackDoColab(Colaborador colabLogado);
 }
