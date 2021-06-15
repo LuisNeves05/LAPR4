@@ -6,7 +6,9 @@ import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
+import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+
 import javax.persistence.Query;
 import java.util.List;
 
@@ -32,7 +34,16 @@ public class TarefaManualAprovacaoRepositorioJPAimpl extends JpaAutoTxRepository
 
         QueryMaker qm = new QueryMaker();
         final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT a from AtividadeAprovacao a where :tarefa MEMBER of a.tarefasAprov ", AtividadeAprovacao.class);
-        query.setParameter("tarefa",tarefa);
+        query.setParameter("tarefa", tarefa);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TarefaManualAprovacao> tarefasAprovacaoDoTicket(Ticket ticket) {
+
+        QueryMaker qm = new QueryMaker();
+        final Query query = qm.criarEntityManager("eapli.base").createQuery("SELECT t from TarefaManualAprovacao t where :ticket = t.ticket", TarefaManualAprovacao.class);
+        query.setParameter("ticket", ticket);
         return query.getResultList();
     }
 }

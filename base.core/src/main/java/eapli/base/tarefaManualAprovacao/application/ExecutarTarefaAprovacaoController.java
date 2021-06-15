@@ -14,6 +14,7 @@ import eapli.base.tarefaManualAprovacao.service.TarefaManualAprovacaoService;
 import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
+import eapli.base.tarefaManualAprovacao.service.TarefasAprovadasService;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -34,6 +35,7 @@ public class ExecutarTarefaAprovacaoController {
     private final TicketRepositorio ticketRepo = PersistenceContext.repositories().ticketRepositorio();
     private final UserSession userSession = authorizationService.session().get();
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
+    private final TarefasAprovadasService aprovarTicketService = new TarefasAprovadasService();
 
 
     public ExecutarTarefaAprovacaoController() {
@@ -89,7 +91,11 @@ public class ExecutarTarefaAprovacaoController {
         ticketRepo.save(ticket);
 }
 
-    public void criarTarefaManualExecução(Servico s, Ticket t){
+    public void criarTarefaManualExecucao(Servico s, Ticket t){
         criarTarefaManualExecucaoService.criarTarefaExecucao(s, t);
+    }
+
+    public boolean tarefasAprovacaoAprovadas(Ticket ticket) {
+        return aprovarTicketService.tarefasTotalmenteAprovadas(ticket);
     }
 }

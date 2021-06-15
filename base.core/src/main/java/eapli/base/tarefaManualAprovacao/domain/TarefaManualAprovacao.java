@@ -20,7 +20,7 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     private Ticket ticket;
 
     @ManyToMany
-    private Set<Colaborador> colabsAprova = new HashSet<>();
+    private Set<Colaborador> colabsAprova;
 
     @Enumerated(EnumType.STRING)
     private EstadoAprovacao estadoAprovacao;
@@ -31,6 +31,7 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     public TarefaManualAprovacao(Ticket ticket){
         this.ticket = ticket;
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
+        colabsAprova = new HashSet<>();
     }
 
     protected TarefaManualAprovacao(){}

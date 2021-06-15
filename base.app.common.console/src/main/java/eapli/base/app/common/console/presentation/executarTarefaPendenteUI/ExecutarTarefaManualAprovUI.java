@@ -70,8 +70,10 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                                 if (resposta.equalsIgnoreCase("Deferido")) {
                                     tarefaManualAprovacao.aprovado();
                                     Ticket ticket = tarefaManualAprovacao.procurarTicket();
-                                    ticket.aprovarTicket();
-                                    controller.criarTarefaManualExecução(ticket.servicoDoTicket(), ticket);
+                                    if(controller.tarefasAprovacaoAprovadas(ticket)){
+                                        ticket.aprovarTicket();
+                                        controller.criarTarefaManualExecucao(ticket.servicoDoTicket(), ticket);
+                                    }
                                 } else {
                                     tarefaManualAprovacao.rejeitado();
                                     tarefaManualAprovacao.procurarTicket().rejeitarTicket();
