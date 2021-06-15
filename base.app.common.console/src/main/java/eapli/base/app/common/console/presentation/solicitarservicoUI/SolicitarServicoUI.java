@@ -4,6 +4,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
+import eapli.base.formulario.gramatica.Script;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
@@ -109,6 +110,14 @@ public class SolicitarServicoUI extends AbstractUI {
                 String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                 Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
                 respostas.add(rAtr);
+            }
+
+            Set<String> scriptsForm = f.scriptsValidacao();
+
+            if (!scriptsForm.isEmpty()) {
+                for (String scri : scriptsForm) {
+                    Script.executaScript(scri);
+                }
             }
 
             FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());

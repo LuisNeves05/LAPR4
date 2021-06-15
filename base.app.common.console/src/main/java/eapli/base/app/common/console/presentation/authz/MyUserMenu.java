@@ -24,7 +24,7 @@
 package eapli.base.app.common.console.presentation.authz;
 
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
-import eapli.base.app.common.console.presentation.especificarServicoUI.EspecificarServicoUI;
+import eapli.base.app.common.console.presentation.EspecificarServicoUI.EspecificarServicoUI;
 import eapli.base.app.common.console.presentation.especificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTarefasUI;
@@ -83,7 +83,6 @@ public class MyUserMenu extends Menu {
             addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
             addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(onlyWithThis)::show));
             addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
-            //REMOVER DEPOIS //TODO
             addItem(MenuItem.of(ESPECIFICAR_SERVICO_OPTION, "Especificar Serviço", new EspecificarServicoUI()::show));
             addItem(MenuItem.of(ESPECIFICAR_COLABORADOR_OPTION, "Especificar Colaborador", new EspecificarColaboradorUI()::show));
             addItem(MenuItem.of(CRIAR_EQUIPA_OPTION, "Criar nova Equipa", new EspecificarEquipaUI()::show));

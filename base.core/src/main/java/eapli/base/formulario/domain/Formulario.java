@@ -34,12 +34,19 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     private Set<Atributo> conjuntoAtributos = new HashSet<>();
 
     /**
+     * Conjunto de scripts de validação do formulario
+     */
+    @ElementCollection
+    private Set<String> scriptsValidacao;
+
+    /**
      * Construtor da entidade Formulário
      * @param nome Nome do Formulário
      */
     public Formulario(NomeFormulario nome){
         this.nome = nome;
         conjuntoAtributos = new HashSet<>();
+        this.scriptsValidacao = new HashSet<>();
     }
 
     /**
@@ -50,6 +57,10 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     public boolean addAtributo(String nomeVar, String label, String descAjuda, TipoDados a , String expRegular){
         Atributo atributo = new Atributo(nomeVar, label, descAjuda, a , expRegular);
         return this.conjuntoAtributos.add(atributo);
+    }
+
+    public void adicionaScripts(Set<String> scripts){
+        this.scriptsValidacao.addAll(scripts);
     }
 
     @Override
@@ -83,5 +94,9 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
 
     public NomeFormulario name(){
         return nome;
+    }
+
+    public Set<String> scriptsValidacao(){
+        return this.scriptsValidacao;
     }
 }

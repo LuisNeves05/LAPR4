@@ -16,4 +16,11 @@ public class Resposta {
         this.pergunta= pergunta;
     }
 
+    public String resposta(){
+        return this.resposta;
+    }
+
+    public String pergunta(){
+        return this.pergunta;
+    }
 }

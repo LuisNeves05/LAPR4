@@ -32,6 +32,7 @@
       <module name="base.bootstrappers" target="11" />
       <module name="base.core" target="11" />
       <module name="base.persistence.impl" target="11" />
+      <module name="base.workflow" target="11" />
       <module name="eapli.base.workflow" target="11" />
       <module name="lei20_21_s4_2dl_4" target="11" />
       <module name="New folder" target="11" />

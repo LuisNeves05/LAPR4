@@ -1,5 +1,6 @@
-package eapli.base.app.common.console.presentation.especificarServicoUI;
+package eapli.base.app.common.console.presentation.EspecificarServicoUI;
 
+import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.atividadeRealizacao.domain.TipoExecucao;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
@@ -7,22 +8,25 @@ import eapli.base.criticidade.application.EspecificarNivelCriticidadeController;
 import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
-import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.gramatica.ValidaScript;
+import eapli.base.formulario.gramatica.Script;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.builder.ServiceBuilder;
-import eapli.base.servico.domain.*;
+import eapli.base.servico.domain.EstadoServico;
+import eapli.base.servico.domain.Keyword;
+import eapli.base.servico.domain.Servico;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class EspecificarServicoUI extends AbstractUI {
 
@@ -97,10 +101,10 @@ public class EspecificarServicoUI extends AbstractUI {
 
         Iterable<Servico> servicoComIdentificador = servicoController.servicoPeloIdentificador(identificador);
 
-            if (servicoComIdentificador.iterator().hasNext()) {
-                System.out.println("Já existe um Serviço com esse identificador.");
-                return false;
-            }
+        if (servicoComIdentificador.iterator().hasNext()) {
+            System.out.println("Já existe um Serviço com esse identificador.");
+            return false;
+        }
 
 
         if (identificador.equalsIgnoreCase("-1")) {
@@ -341,7 +345,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
         List<Formulario> formsServ = especificarFormulario();
         if(!formsServ.isEmpty())
-        formularios.addAll(formsServ);
+            formularios.addAll(formsServ);
         associarNivelCrit(serviceBuilder);
 
         finalizarServico(serviceBuilder, formularios, fluxoAtivBuilder);
@@ -452,7 +456,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 colab = null;
                 if (inserirScriptValidacaoTarefaAutomatica())
                     servicoController.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder,scriptAutomatico);
-                    flag = false;
+                flag = false;
             } else if (atReal.equalsIgnoreCase("man")) {
                 tipoExec = TipoExecucao.MANUAL;
                 return escolherResponsavelExecucao(serviceBuilder, catalogo, equipasExec, formularios, fluxoAtivBuilder);
@@ -474,7 +478,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 return false;
             }
 
-            if (ValidaScript.validadeGrammarFromString(scriptAutomatico))
+            if (Script.validadeGrammarFromString(scriptAutomatico))
                 flag = false;
             else
                 System.out.println("Script inválido");

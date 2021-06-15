@@ -87,10 +87,12 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return id;
     }
 
+
     @Override
     public String toString() {
         return ticket.toString();
     }
+
 
     public TarefaManualExecucaoDTO toDTO(){
         return new TarefaManualExecucaoDTO(id, this.estadoRealizacao, this.colabExecuta, "");

@@ -1,232 +1,220 @@
-// Generated from C:/Users/luism/Desktop/lei20_21_s4_2dl_4/base.core/src/main/java/eapli/base/formulario/gramatica\ValidaScript.g4 by ANTLR 4.9.1
-package eapli.base.eapli.base.formulario.gramatica;
+// Generated from C:/Users/luism/Desktop/lei20_21_s4_2dl_4/base.core/src/main/java/eapli/base/formulario/gramatica\Gramatica.g4 by ANTLR 4.9.1
+package eapli.base.formulario.gramatica;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link ValidaScriptListener},
+ * This class provides an empty implementation of {@link GramaticaListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class ValidaScriptBaseListener implements ValidaScriptListener {
+public class GramaticaBaseListener implements GramaticaListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(ValidaScriptParser.ProgContext ctx) { }
+	@Override public void enterParseEspecificao(GramaticaParser.ParseEspecificaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(ValidaScriptParser.ProgContext ctx) { }
+	@Override public void exitParseEspecificao(GramaticaParser.ParseEspecificaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrintExpr(ValidaScriptParser.PrintExprContext ctx) { }
+	@Override public void enterParseValidacao(GramaticaParser.ParseValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrintExpr(ValidaScriptParser.PrintExprContext ctx) { }
+	@Override public void exitParseValidacao(GramaticaParser.ParseValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign(ValidaScriptParser.AssignContext ctx) { }
+	@Override public void enterInstructionEspecificacao(GramaticaParser.InstructionEspecificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign(ValidaScriptParser.AssignContext ctx) { }
+	@Override public void exitInstructionEspecificacao(GramaticaParser.InstructionEspecificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBlank(ValidaScriptParser.BlankContext ctx) { }
+	@Override public void enterInstructionValidacao(GramaticaParser.InstructionValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBlank(ValidaScriptParser.BlankContext ctx) { }
+	@Override public void exitInstructionValidacao(GramaticaParser.InstructionValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefineExpRegular(ValidaScriptParser.DefineExpRegularContext ctx) { }
+	@Override public void enterServico1dataInicioFimEspecificacao(GramaticaParser.Servico1dataInicioFimEspecificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefineExpRegular(ValidaScriptParser.DefineExpRegularContext ctx) { }
+	@Override public void exitServico1dataInicioFimEspecificacao(GramaticaParser.Servico1dataInicioFimEspecificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValidaEntreCampos(ValidaScriptParser.ValidaEntreCamposContext ctx) { }
+	@Override public void enterServico1dataInicioFimValidacao(GramaticaParser.Servico1dataInicioFimValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValidaEntreCampos(ValidaScriptParser.ValidaEntreCamposContext ctx) { }
+	@Override public void exitServico1dataInicioFimValidacao(GramaticaParser.Servico1dataInicioFimValidacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefineCampoNaoVazio(ValidaScriptParser.DefineCampoNaoVazioContext ctx) { }
+	@Override public void enterServico1Justificacao(GramaticaParser.Servico1JustificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefineCampoNaoVazio(ValidaScriptParser.DefineCampoNaoVazioContext ctx) { }
+	@Override public void exitServico1Justificacao(GramaticaParser.Servico1JustificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefineCampoPodeSerVazio(ValidaScriptParser.DefineCampoPodeSerVazioContext ctx) { }
+	@Override public void enterDataInicio(GramaticaParser.DataInicioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefineCampoPodeSerVazio(ValidaScriptParser.DefineCampoPodeSerVazioContext ctx) { }
+	@Override public void exitDataInicio(GramaticaParser.DataInicioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParens(ValidaScriptParser.ParensContext ctx) { }
+	@Override public void enterDataFim(GramaticaParser.DataFimContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParens(ValidaScriptParser.ParensContext ctx) { }
+	@Override public void exitDataFim(GramaticaParser.DataFimContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMulDiv(ValidaScriptParser.MulDivContext ctx) { }
+	@Override public void enterJustificacao(GramaticaParser.JustificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMulDiv(ValidaScriptParser.MulDivContext ctx) { }
+	@Override public void exitJustificacao(GramaticaParser.JustificacaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAddSub(ValidaScriptParser.AddSubContext ctx) { }
+	@Override public void enterEnviar_email(GramaticaParser.Enviar_emailContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAddSub(ValidaScriptParser.AddSubContext ctx) { }
+	@Override public void exitEnviar_email(GramaticaParser.Enviar_emailContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInte(ValidaScriptParser.InteContext ctx) { }
+	@Override public void enterCorpo_email(GramaticaParser.Corpo_emailContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInte(ValidaScriptParser.InteContext ctx) { }
+	@Override public void exitCorpo_email(GramaticaParser.Corpo_emailContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterId(ValidaScriptParser.IdContext ctx) { }
+	@Override public void enterOpExprMulDiv(GramaticaParser.OpExprMulDivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitId(ValidaScriptParser.IdContext ctx) { }
+	@Override public void exitOpExprMulDiv(GramaticaParser.OpExprMulDivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInt(ValidaScriptParser.IntContext ctx) { }
+	@Override public void enterOpExprSumDif(GramaticaParser.OpExprSumDifContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInt(ValidaScriptParser.IntContext ctx) { }
+	@Override public void exitOpExprSumDif(GramaticaParser.OpExprSumDifContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNomeAtributo(ValidaScriptParser.NomeAtributoContext ctx) { }
+	@Override public void enterAtomExpr(GramaticaParser.AtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNomeAtributo(ValidaScriptParser.NomeAtributoContext ctx) { }
+	@Override public void exitAtomExpr(GramaticaParser.AtomExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMaior(ValidaScriptParser.MaiorContext ctx) { }
+	@Override public void enterDate(GramaticaParser.DateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMaior(ValidaScriptParser.MaiorContext ctx) { }
+	@Override public void exitDate(GramaticaParser.DateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMenor(ValidaScriptParser.MenorContext ctx) { }
+	@Override public void enterMonth(GramaticaParser.MonthContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMenor(ValidaScriptParser.MenorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIgual(ValidaScriptParser.IgualContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIgual(ValidaScriptParser.IgualContext ctx) { }
+	@Override public void exitMonth(GramaticaParser.MonthContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
