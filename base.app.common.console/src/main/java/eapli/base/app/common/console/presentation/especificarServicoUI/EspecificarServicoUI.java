@@ -9,7 +9,6 @@ import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
-import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.gramatica.Script;
 import eapli.base.servico.application.EspecificarServicoController;
@@ -41,10 +40,6 @@ public class EspecificarServicoUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-
-        FluxoAtividadeService s = new FluxoAtividadeService();
-        s.dashboardData();
-
 
         String opcao;
         do {
@@ -212,10 +207,10 @@ public class EspecificarServicoUI extends AbstractUI {
 
         List<Formulario> formularios = new ArrayList<>(serv.formulariosDoServico());
 
-        if(serv.descricaoBreveDoServico() != null){
+        if (serv.descricaoBreveDoServico() != null) {
             serviceBuilder.comDescBreve(serv.descricaoBreveDoServico().toString());
         }
-        if(serv.descricaoCompletaDoServico() != null){
+        if (serv.descricaoCompletaDoServico() != null) {
             serviceBuilder.comDescComp(serv.descricaoCompletaDoServico().toString());
         }
 
@@ -344,7 +339,7 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         List<Formulario> formsServ = especificarFormulario();
-        if(!formsServ.isEmpty())
+        if (!formsServ.isEmpty())
             formularios.addAll(formsServ);
         associarNivelCrit(serviceBuilder);
 
@@ -455,7 +450,7 @@ public class EspecificarServicoUI extends AbstractUI {
                 equipasExec.clear();
                 colab = null;
                 if (inserirScriptValidacaoTarefaAutomatica())
-                    servicoController.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder,scriptAutomatico);
+                    servicoController.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder, scriptAutomatico);
                 flag = false;
             } else if (atReal.equalsIgnoreCase("man")) {
                 tipoExec = TipoExecucao.MANUAL;

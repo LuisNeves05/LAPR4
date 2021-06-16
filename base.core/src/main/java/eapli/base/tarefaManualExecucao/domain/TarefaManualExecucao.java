@@ -53,6 +53,10 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return estadoRealizacao;
     }
 
+    public Set<Equipa> equipasQueExecutam() {
+        return equipasExecuta;
+    }
+
     public Ticket procurarTicket(){
         return ticket;
     }

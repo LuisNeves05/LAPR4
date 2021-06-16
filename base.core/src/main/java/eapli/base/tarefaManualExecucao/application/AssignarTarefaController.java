@@ -57,6 +57,18 @@ public class AssignarTarefaController {
         return null;
     }
 
+    public TarefaManualExecucao assignarTarefaExecutanteAUmColaborador(TarefaManualExecucao tarefa, Colaborador colab) {
+        tarefa.retirarEquipa();
+        tarefa.defineColaboradorExecutante(colab);
+
+        try {
+            return tarefaManualExecucaoRepositorio.save(tarefa);
+        } catch (IntegrityViolationException violation) {
+            System.out.println("Erro na persistência da tarefa!");
+        }
+        return null;
+    }
+
     public Colaborador responsavelTarefa(){
         return this.colabPedido;
     }

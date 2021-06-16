@@ -38,6 +38,7 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
     @JoinTable(name="EQUIPA_RESPONSAVEL")
     private Set<Colaborador> listaColabsResponsaveis = new HashSet<>();
 
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="EQUIPA_COLABORADOR")
     private Set<Colaborador> listaColabs;
@@ -110,6 +111,8 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
     public boolean temResponsavel(Colaborador colab) {
         return this.listaColabsResponsaveis.contains(colab);
     }
+
+    public Set<Colaborador> listaDeColaboradores() {return listaColabs;}
 
     @Override
     public boolean equals(final Object o) {

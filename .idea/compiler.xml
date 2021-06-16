@@ -10,6 +10,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="base.persistence.impl" />
+        <module name="Executor" />
         <module name="eapli.base.workflow" />
         <module name="base.app.other.console" />
         <module name="base.workflow" />
@@ -34,6 +35,7 @@
       <module name="base.persistence.impl" target="11" />
       <module name="base.workflow" target="11" />
       <module name="eapli.base.workflow" target="11" />
+      <module name="Executor" target="11" />
       <module name="lei20_21_s4_2dl_4" target="11" />
       <module name="New folder" target="11" />
       <module name="novoLAPR" target="11" />

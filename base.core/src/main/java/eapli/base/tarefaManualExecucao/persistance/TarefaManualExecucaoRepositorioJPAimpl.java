@@ -24,9 +24,7 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
         Query query = super.createQuery("SELECT t from TarefaManualExecucao t where t.equipasExecuta.size != 0 and :equipa MEMBER of t.equipasExecuta", TarefaManualExecucao.class);
         query.setParameter("equipa", equipas);
         return query.getResultList();
-
     }
-
 
 
     @Override
@@ -43,6 +41,21 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
         Query query = super.createQuery("SELECT t from TarefaManualExecucao t where t.estadoRealizacao = :a and :colaborador = t.colabExecuta", TarefaManualExecucao.class);
         query.setParameter("colaborador", colaborador);
         query.setParameter("a", EstadoRealizacao.EM_EXECUCAO);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TarefaManualExecucao> tarefasPorExecutar() {
+        Query query = super.createQuery("select t from TarefaManualExecucao t where t.estadoRealizacao = :estado and t.colabExecuta = null" ,TarefaManualExecucao.class);
+        query.setParameter("estado", EstadoRealizacao.POR_EXECUTAR);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TarefaManualExecucao> tarefasDeCadaColaborador(Colaborador colaborador) {
+        Query query = super.createQuery("select t from TarefaManualExecucao t where t.estadoRealizacao = :estado and t.colabExecuta = :colab" ,TarefaManualExecucao.class);
+        query.setParameter("estado", EstadoRealizacao.POR_EXECUTAR);
+        query.setParameter("colab", colaborador);
         return query.getResultList();
     }
 

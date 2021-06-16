@@ -16,6 +16,7 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.CriarTarefaManualAprovacaoService;
+import eapli.base.tarefaManualExecucao.services.AssignarTarefaAlgoritmoService;
 import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
@@ -44,51 +45,52 @@ public class SolicitarServicoController {
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
     private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService();
+    private final AssignarTarefaAlgoritmoService assignarTarefaAlgoritmo = new AssignarTarefaAlgoritmoService();
 
 
-    public SolicitarServicoController(){
+    public SolicitarServicoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-        if(authorizationService.hasSession() && authorizationService.session().isPresent()) {
+        if (authorizationService.hasSession() && authorizationService.session().isPresent()) {
             UserSession userSession = authorizationService.session().get();
             this.systemUser = userSession.authenticatedUser();
             this.colabPedido = colabPorUserName(systemUser.username());
         }
     }
 
-    public List<Catalogo> listarCatalogosPorUser(){
+    public List<Catalogo> listarCatalogosPorUser() {
 
         List<Equipa> equipasColaborador = (List<Equipa>) equipasDoColaborador();
         List<Catalogo> catalogosColab = new ArrayList<>();
 
-        for(Equipa eq : equipasColaborador){
+        for (Equipa eq : equipasColaborador) {
             catalogosColab.addAll((List<Catalogo>) catRep.catalogosPorEquipa(eq));
         }
 
         return catalogosColab;
     }
 
-    public List<Servico> listarServicosPorCat(Catalogo catalogo){
+    public List<Servico> listarServicosPorCat(Catalogo catalogo) {
         return repoServ.servicoPorCatalogo(catalogo);
     }
 
-    public List<Formulario> formulariosServico(Servico servico){
+    public List<Formulario> formulariosServico(Servico servico) {
         return (List<Formulario>) repoForm.formularioPorServico(servico);
     }
 
-    public Iterable<Equipa> equipasDoColaborador(){
+    public Iterable<Equipa> equipasDoColaborador() {
         return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
     }
 
-    public Colaborador colabPorUserName(Username username){
+    public Colaborador colabPorUserName(Username username) {
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
     }
 
-    public void saveFormPreenchido(FormularioPreenchido fp){
+    public void saveFormPreenchido(FormularioPreenchido fp) {
         fpr.save(fp);
     }
 
 
-    public Colaborador colaboradorLogado(){
+    public Colaborador colaboradorLogado() {
         return colabPedido;
     }
 
@@ -96,13 +98,12 @@ public class SolicitarServicoController {
         return urgencia.equalsIgnoreCase("baixa") || urgencia.equalsIgnoreCase("moderada") || urgencia.equalsIgnoreCase("alta");
     }
 
-    public Ticket criarTicket(Servico s, String urgencia){
-        if(s.fluxoDoServico().ativAprovacaoDoFluxo() == null)
+    public Ticket criarTicket(Servico s, String urgencia) {
+        if (s.fluxoDoServico().ativAprovacaoDoFluxo() == null)
             return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR));
         else
             return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.EM_EXECUCAO));
     }
-
 
 
     public FluxoAtividade guardarFluxo(FluxoAtividade fluxoDoServico) {
@@ -115,9 +116,14 @@ public class SolicitarServicoController {
 
     public boolean solicitarServico(Servico s, Ticket ticket) {
 
-        if(!criarTarefaManualAprovacaoService.criarTarefaAprovacao(s, ticket, colaboradorLogado()))
+        if (!criarTarefaManualAprovacaoService.criarTarefaAprovacao(s, ticket, colaboradorLogado()))
             criarTarefaManualExecucaoService.criarTarefaExecucao(s, ticket);
-            ativarFluxoServico(s.fluxoDoServico());
-            return guardarFluxo(s.fluxoDoServico()) != null;
+
+        ativarFluxoServico(s.fluxoDoServico());
+        /**
+         * Algoritmo de atribuicao automatica
+         */
+        assignarTarefaAlgoritmo.assignarTarefasAoColabAutomaticamente();
+        return guardarFluxo(s.fluxoDoServico()) != null;
     }
 }
