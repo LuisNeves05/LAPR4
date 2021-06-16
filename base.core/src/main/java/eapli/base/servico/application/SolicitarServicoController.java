@@ -16,7 +16,6 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.CriarTarefaManualAprovacaoService;
-import eapli.base.tarefaManualExecucao.services.AssignarTarefaAlgoritmoService;
 import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
@@ -45,8 +44,6 @@ public class SolicitarServicoController {
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
     private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService();
-    private final AssignarTarefaAlgoritmoService assignarTarefaAlgoritmo = new AssignarTarefaAlgoritmoService();
-
 
     public SolicitarServicoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -120,10 +117,6 @@ public class SolicitarServicoController {
             criarTarefaManualExecucaoService.criarTarefaExecucao(s, ticket);
 
         ativarFluxoServico(s.fluxoDoServico());
-        /**
-         * Algoritmo de atribuicao automatica
-         */
-        assignarTarefaAlgoritmo.assignarTarefasAoColabAutomaticamente();
         return guardarFluxo(s.fluxoDoServico()) != null;
     }
 }

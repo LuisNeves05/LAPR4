@@ -1,5 +1,6 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
+import eapli.base.app.common.console.presentation.utils.HelpMethodsForUIs;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
@@ -126,7 +127,14 @@ public class SolicitarServicoUI extends AbstractUI {
             lcp.saveFormPreenchido(fp);
         }
 
-        return lcp.solicitarServico(s,ticket);
+        boolean result = lcp.solicitarServico(s, ticket);
+
+        /**
+         * Algoritmo de atribuicao automatica
+         */
+        HelpMethodsForUIs.sendToServer();
+
+        return result;
     }
 
     @Override

@@ -68,6 +68,28 @@ public class ClientSSL {
         return response;
     }
 
+    public String gestaoDeCargaAquandoAtribuidoTarefasAlg() throws IOException {
+
+        preparingSSLClient();
+
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
+        DataInputStream sIn = new DataInputStream(sock.getInputStream());
+
+
+        String protocol = "6";
+        sOut.writeUTF(protocol);
+
+        //WAITING FOR RESPONSE
+        String response = sIn.readUTF();
+
+        //TODO IF CONSTANT
+        //System.out.println("Client Response from server: " + response);
+        //sock.close();
+        return response;
+    }
+
     private static void preparingSSLClient() {
         String serverIp = "10.8.0.83";
         String clientSSL = "client1_J";

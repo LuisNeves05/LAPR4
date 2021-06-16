@@ -20,7 +20,7 @@ public class AssignarTarefaAlgoritmoService {
     public AssignarTarefaAlgoritmoService() {
     }
 
-    public void selecionarColabComMenosTarefas() {
+    public boolean selecionarColabComMenosTarefas() {
         final AssignarTarefaController controller = new AssignarTarefaController();
         final List<TarefaManualExecucao> listaTarefasManualExecucao = controller.tarefasManualExecucao();
         final TarefaManualExecucaoRepositorio repoTarefa = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
@@ -75,25 +75,28 @@ public class AssignarTarefaAlgoritmoService {
 
             if (controller.assignarTarefaExecutanteAUmColaborador(tarefaManualExecucao, choosenColab) != null) {
                 System.out.println("Tarefa com sucesso e atribuida ao " + choosenColab.nomeToString());
+                return true;
             }
         }
 
+        return false;
     }
 
-    public void selecionarFCFS() {
-
+    public boolean selecionarFCFS() {
+        return false;
     }
 
-    public void assignarTarefasAoColabAutomaticamente() {
+    public boolean assignarTarefasAoColabAutomaticamente() {
         String parameter = readFromProperties("algoritmoP");
 
         if (parameter.contains("fcfs")) {
-            selecionarFCFS();
+            return selecionarFCFS();
         }
 
         if (parameter.contains("time")) {
-            selecionarColabComMenosTarefas();
+            return selecionarColabComMenosTarefas();
         }
 
+        return false;
     }
 }

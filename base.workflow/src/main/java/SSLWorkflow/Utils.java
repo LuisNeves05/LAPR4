@@ -4,6 +4,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaManualExecucao.services.AssignarTarefaAlgoritmoService;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
 import java.io.DataInputStream;
@@ -146,6 +147,22 @@ public class Utils {
             sOut.write(elems.getBytes(StandardCharsets.UTF_8));
         }
 
+        s.close();
+
+        s = null;
+        Thread.currentThread().interrupt();
+
+        return;
+
+    }
+
+    public static void atribuicaoAutomaticaAlg(Socket s, DataOutputStream sOut, AssignarTarefaAlgoritmoService service) throws IOException {
+
+        // Asks DB for the Making the Decision
+        String response = String.valueOf(service.assignarTarefasAoColabAutomaticamente());
+
+        // Send To Client
+        sOut.writeUTF(response);
         s.close();
 
         s = null;

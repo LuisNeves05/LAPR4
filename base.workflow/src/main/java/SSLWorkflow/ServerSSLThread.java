@@ -1,6 +1,7 @@
 package SSLWorkflow;
 
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
+import eapli.base.tarefaManualExecucao.services.AssignarTarefaAlgoritmoService;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
 
 import java.io.DataInputStream;
@@ -9,8 +10,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import static SSLWorkflow.Utils.fluxosAtivosServer;
-import static SSLWorkflow.Utils.tarefasPendentesServer;
+import static SSLWorkflow.Utils.*;
 
 class ServerSSLThread implements Runnable {
     private Socket s;
@@ -18,6 +18,7 @@ class ServerSSLThread implements Runnable {
     private DataInputStream sIn;
     static TarefasPendentesService serviceTarefas = new TarefasPendentesService();
     static FluxoAtividadeService serviceFluxo = new FluxoAtividadeService();
+    static AssignarTarefaAlgoritmoService serviceAlg = new AssignarTarefaAlgoritmoService();
 
     public ServerSSLThread(Socket cli_s) {
         s = cli_s;
@@ -45,6 +46,10 @@ class ServerSSLThread implements Runnable {
 
                 case 5:
                     fluxosAtivosServer(s, sOut, serviceFluxo);
+                    break;
+
+                case 6:
+                    atribuicaoAutomaticaAlg(s, sOut, serviceAlg);
                     break;
 
                 default:
