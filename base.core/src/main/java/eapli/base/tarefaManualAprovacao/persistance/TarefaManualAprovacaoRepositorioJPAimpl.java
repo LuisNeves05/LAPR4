@@ -27,12 +27,6 @@ public class TarefaManualAprovacaoRepositorioJPAimpl extends JpaAutoTxRepository
         return query.getResultList();
     }
 
-    @Override
-    public List<AtividadeAprovacao> obterAtividadeRealizacao(TarefaManualAprovacao tarefa) {
-        Query query = super.createQuery("SELECT a from AtividadeAprovacao a where :tarefa MEMBER of a.tarefasAprov ", AtividadeAprovacao.class);
-        query.setParameter("tarefa", tarefa);
-        return query.getResultList();
-    }
 
     @Override
     public List<TarefaManualAprovacao> tarefasAprovacaoDoTicket(Ticket ticket) {

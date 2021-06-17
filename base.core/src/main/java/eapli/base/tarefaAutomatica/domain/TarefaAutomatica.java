@@ -1,5 +1,6 @@
 package eapli.base.tarefaAutomatica.domain;
 
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -15,11 +16,15 @@ public class TarefaAutomatica implements Comparable<Long>, AggregateRoot<Long> {
     @OneToOne(cascade = CascadeType.ALL)
     private Ticket ticket;
 
+    @OneToOne
+    private AtividadeRealizacao atividadeRealizacao;
+
     private String scriptExecucao;
 
-    public TarefaAutomatica(Ticket ticket, String scriptExecucao){
+    public TarefaAutomatica(Ticket ticket, String scriptExecucao, AtividadeRealizacao ar){
         this.ticket = ticket;
         this.scriptExecucao = scriptExecucao;
+        this.atividadeRealizacao = ar;
     }
 
     protected TarefaAutomatica(){}

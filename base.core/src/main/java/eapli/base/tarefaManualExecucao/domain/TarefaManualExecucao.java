@@ -1,5 +1,6 @@
 package eapli.base.tarefaManualExecucao.domain;
 
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaManualExecucao.dto.TarefaManualExecucaoDTO;
@@ -31,20 +32,25 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     @Enumerated(EnumType.STRING)
     private EstadoRealizacao estadoRealizacao;
 
+    @OneToOne
+    private AtividadeRealizacao atividadeRealizacao;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataRealizacao;
 
 
-    public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta){
+    public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta, AtividadeRealizacao atividadeRealizacao){
         this.ticket = ticket;
         this.equipasExecuta = equipasExecuta;
         this.estadoRealizacao = EstadoRealizacao.POR_EXECUTAR;
+        this.atividadeRealizacao = atividadeRealizacao;
     }
 
-    public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao){
+    public TarefaManualExecucao(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao, AtividadeRealizacao atividadeRealizacao){
         this.ticket = ticket;
         this.colabExecuta = colabExecuta;
         this.estadoRealizacao = estadoRealizacao;
+        this.atividadeRealizacao = atividadeRealizacao;
     }
 
     protected TarefaManualExecucao() {}
@@ -79,6 +85,10 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
 
     public void definirMomentoRealizacao(){
         dataRealizacao = Calendars.now();
+    }
+
+    public AtividadeRealizacao atividadeRealizacaoDaTarefa(){
+        return atividadeRealizacao;
     }
 
     @Override

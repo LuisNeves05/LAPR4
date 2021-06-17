@@ -59,13 +59,6 @@ public class TarefaManualExecucaoRepositorioJPAimpl extends JpaAutoTxRepository<
         return query.getResultList();
     }
 
-    @Override
-    public List<AtividadeRealizacao> obterAtividadeRealizacao(TarefaManualExecucao tarefa) {
-        Query query = super.createQuery("SELECT atReal from AtividadeRealizacao atReal where :tarefa MEMBER of atReal.tarefasManualExecucao ", AtividadeRealizacao.class);
-        query.setParameter("tarefa",tarefa);
-        return query.getResultList();
-    }
-
 
     /*
     @Override

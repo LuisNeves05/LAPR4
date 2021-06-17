@@ -11,7 +11,5 @@ public interface TarefaManualAprovacaoRepositorio extends DomainRepository<Long,
 
     List<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador);
 
-    List<AtividadeAprovacao> obterAtividadeRealizacao(TarefaManualAprovacao tarefa);
-
     List<TarefaManualAprovacao> tarefasAprovacaoDoTicket(Ticket ticket);
 }

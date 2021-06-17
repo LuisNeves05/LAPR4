@@ -29,22 +29,18 @@ public class CriarTarefaManualExecucaoService {
 
         if (ar.tipoExecucao() == TipoExecucao.MANUAL) {
             if (!ar.equipasExecucao().isEmpty()) {
-                TarefaManualExecucao tme = tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao());
+                TarefaManualExecucao tme = tiposDeTarefa().novaTarefaManualExecucaoEquipa(ticket, ar.equipasExecucao(), ar);
                 for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);
                 }
-                ar.adicionarTarefaExecucao(tarefaManualExecucaoRep.save(tme));
+                tarefaManualExecucaoRep.save(tme);
             } else if (ar.colabExec() != null) {
-                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tiposDeTarefa().
-                        novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR));
-                ar.adicionarTarefaExecucao(tarManExec);
+                tarefaManualExecucaoRep.save(tiposDeTarefa().
+                        novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR, ar));
             }
         } else {
-            TarefaAutomatica tarefaAutomatica = tiposDeTarefa().novaTarefaAutomatica(ticket, ar.scriptAutomatico());
-            TarefaAutomatica tarAut = tarefaAutomaticaRepositorio.save(tarefaAutomatica);
-            ar.adicionarTarefaAutomatica(tarAut);
+            tarefaAutomaticaRepositorio.save(tiposDeTarefa().novaTarefaAutomatica(ticket, ar.scriptAutomatico(), ar));
         }
-        atividadeRealizacaoRepositorio.save(ar);
     }
 
     public TiposDeTarefa tiposDeTarefa() {

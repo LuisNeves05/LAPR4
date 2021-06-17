@@ -1,20 +1,17 @@
 package eapli.base.tarefaManualExecucao.application;
 
-import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.tarefaManualExecucao.services.ExecutarTarefaManualExecucaoService;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
-import eapli.framework.actions.ActionHistoryKeeper;
+import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -38,7 +35,7 @@ public class ExecutarTarefaExecucaoController {
 
 
     public ExecutarTarefaExecucaoController() {
-
+        authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.COLABORADOR);
     }
 
     public Colaborador colabPorUserName(Username username){
@@ -48,11 +45,11 @@ public class ExecutarTarefaExecucaoController {
 
 
     public List<TarefaManualExecucao> tarefasManualExecucao(){
-        return  tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
+        return tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
     }
 
     public List<TarefaManualExecucao> tarefasManualExecucaoPendente(){
-        return  tarefaExecucaoRepositorio.tarefasManuaisExecEmExecucao(colabPedido);
+        return tarefaExecucaoRepositorio.tarefasManuaisExecEmExecucao(colabPedido);
     }
 
 
@@ -68,9 +65,6 @@ public class ExecutarTarefaExecucaoController {
         return null;
     }
 
-    public List<AtividadeRealizacao> obterAtividadeRealizacao(TarefaManualExecucao tarefa){
-        return tarefaExecucaoRepositorio.obterAtividadeRealizacao(tarefa);
-    }
 
     public Colaborador colablogged(){
         return this.colabPedido;

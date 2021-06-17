@@ -1,6 +1,5 @@
 package eapli.base.tarefaManualAprovacao.application;
 
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
@@ -17,7 +16,6 @@ import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.base.tarefaManualAprovacao.service.TarefasAprovadasService;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -60,10 +58,6 @@ public class ExecutarTarefaAprovacaoController {
         return tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
-    public List<AtividadeAprovacao> atividadeAprovacaoDaTarefa(TarefaManualAprovacao tarefa) {
-        return tarefaManualAprovacaoRepositorio.obterAtividadeRealizacao(tarefa);
-    }
-
     public TarefaManualAprovacao executarTarefaAprPendente(TarefaManualAprovacao tarefa) {
         //    tarefa.defineColaboradorExecutante(colabPedido);
 
@@ -101,14 +95,13 @@ public class ExecutarTarefaAprovacaoController {
         if (resposta.equalsIgnoreCase("Deferido")) {
             //TODO APROVAR NO MOTOR
             tarefaManualAprovacao.aprovado();
-
-            if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.procurarTicket())) {
-                tarefaManualAprovacao.procurarTicket().aprovarTicket();
-                criarTarefaManualExecucao(tarefaManualAprovacao.procurarTicket().servicoDoTicket(), tarefaManualAprovacao.procurarTicket());
+            if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.ticketDaTarefa())) {
+                criarTarefaManualExecucao(tarefaManualAprovacao.ticketDaTarefa().servicoDoTicket(), tarefaManualAprovacao.ticketDaTarefa());
+                tarefaManualAprovacao.ticketDaTarefa().aprovarTicket();
             }
         } else {
             tarefaManualAprovacao.rejeitado();
-            tarefaManualAprovacao.procurarTicket().rejeitarTicket();
+            tarefaManualAprovacao.ticketDaTarefa().rejeitarTicket();
         }
     }
 
@@ -117,9 +110,9 @@ public class ExecutarTarefaAprovacaoController {
     }
 
     public void terminarExecucao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
-        FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), colabLogged());
+        FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.ticketDaTarefa(), colabLogged());
         saveFormPreenchido(fp);
-        saveTicket(tarefaManualAprovacao.procurarTicket());
+        saveTicket(tarefaManualAprovacao.ticketDaTarefa());
         saveTarefaAprovacao(tarefaManualAprovacao);
     }
 }

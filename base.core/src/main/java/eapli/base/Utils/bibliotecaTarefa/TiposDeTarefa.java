@@ -1,5 +1,7 @@
 package eapli.base.Utils.bibliotecaTarefa;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
+import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
@@ -13,22 +15,22 @@ import java.util.Set;
 public class TiposDeTarefa implements TipoTarefa{
 
     @Override
-    public TarefaAutomatica novaTarefaAutomatica(Ticket ticket, String sriptExecucao) {
-        return new TarefaAutomatica(ticket, sriptExecucao);
+    public TarefaAutomatica novaTarefaAutomatica(Ticket ticket, String sriptExecucao, AtividadeRealizacao ar) {
+        return new TarefaAutomatica(ticket, sriptExecucao, ar);
     }
 
     @Override
-    public TarefaManualExecucao novaTarefaManualExecucaoEquipa(Ticket ticket, Set<Equipa> equipasExecuta) {
-        return new TarefaManualExecucao(ticket, equipasExecuta);
+    public TarefaManualExecucao novaTarefaManualExecucaoEquipa(Ticket ticket, Set<Equipa> equipasExecuta, AtividadeRealizacao ar) {
+        return new TarefaManualExecucao(ticket, equipasExecuta, ar);
     }
 
     @Override
-    public TarefaManualExecucao novaTarefaManualExecucaoColaborador(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao) {
-        return new TarefaManualExecucao(ticket, colabExecuta, estadoRealizacao);
+    public TarefaManualExecucao novaTarefaManualExecucaoColaborador(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao, AtividadeRealizacao ar) {
+        return new TarefaManualExecucao(ticket, colabExecuta, estadoRealizacao, ar);
     }
 
     @Override
-    public TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket) {
-        return new TarefaManualAprovacao(ticket);
+    public TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket, AtividadeAprovacao aa) {
+        return new TarefaManualAprovacao(ticket, aa);
     }
 }

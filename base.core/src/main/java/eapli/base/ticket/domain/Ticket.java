@@ -1,7 +1,6 @@
 package eapli.base.ticket.domain;
 
 import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.criticidade.domain.NivelCriticidade;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.servico.domain.Servico;
 import eapli.framework.domain.model.AggregateRoot;
@@ -11,9 +10,6 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @Entity
 @Table

@@ -1,5 +1,6 @@
 package eapli.base.tarefaManualAprovacao.domain;
 
+import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
@@ -28,15 +29,19 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataAprovado;
 
-    public TarefaManualAprovacao(Ticket ticket){
+    @OneToOne
+    private AtividadeAprovacao atividadeAprovacao;
+
+    public TarefaManualAprovacao(Ticket ticket, AtividadeAprovacao atividadeAprovacao){
         this.ticket = ticket;
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
+        this.atividadeAprovacao = atividadeAprovacao;
         colabsAprova = new HashSet<>();
     }
 
     protected TarefaManualAprovacao(){}
 
-    public Ticket procurarTicket(){
+    public Ticket ticketDaTarefa(){
         return ticket;
     }
 
@@ -54,8 +59,8 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
 
     public EstadoAprovacao estadoAprov() { return estadoAprovacao; }
 
-    public Ticket ticketDaTarefaAprovacao() {
-        return ticket;
+    public AtividadeAprovacao atividadeAprovacaoDaTarefa(){
+        return atividadeAprovacao;
     }
 
     public void aprovado(){

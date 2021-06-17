@@ -20,24 +20,16 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @ElementCollection
     private Set<ColaboradoresAprovacao> colabsAprov;
 
-    @OneToMany
-    private Set<TarefaManualAprovacao> tarefasAprov;
-
     @OneToOne
     private Formulario formulario;
 
     public AtividadeAprovacao(){
-        this.tarefasAprov = new HashSet<>();
         this.colabsAprov = new HashSet<>();
     }
 
     @Override
     public String toString() {
         return colabsAprov.toString();
-    }
-
-    public void adicionaTarefaAprov(TarefaManualAprovacao tarAprov){
-        tarefasAprov.add(tarAprov);
     }
 
     public void adicionaColabAprov(ColaboradoresAprovacao colabAprov){
@@ -60,10 +52,6 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
     @Override
     public Long identity() {
         return this.id;
-    }
-
-    public Set<TarefaManualAprovacao> tarefasAprovList() {
-        return tarefasAprov;
     }
 
     public Formulario formularioAprovacao() {

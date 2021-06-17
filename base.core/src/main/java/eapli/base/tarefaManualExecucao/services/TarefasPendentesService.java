@@ -47,10 +47,10 @@ public class TarefasPendentesService {
         List<TarefaManualAprovacao> tarefasManAprList = (List<TarefaManualAprovacao>) repoTarefasAprov.tarefasManuaisAprovacaoNA(colab);
 
         for(TarefaManualAprovacao elems : tarefasManAprList){
-            Calendar ticketTime = elems.procurarTicket().criacaoTicket();
+            Calendar ticketTime = elems.ticketDaTarefa().criacaoTicket();
 
-            int periodoApr = elems.procurarTicket().periodoMaxApr();
-            int periodoRes = elems.procurarTicket().periodoMaxRes();
+            int periodoApr = elems.ticketDaTarefa().periodoMaxApr();
+            int periodoRes = elems.ticketDaTarefa().periodoMaxRes();
 
             int minutes = (int) ChronoUnit.MINUTES.between(ticketTime.toInstant(), Calendar.getInstance().toInstant());
 

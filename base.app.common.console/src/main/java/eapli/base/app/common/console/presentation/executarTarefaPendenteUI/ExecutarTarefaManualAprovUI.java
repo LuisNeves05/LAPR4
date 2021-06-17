@@ -5,13 +5,14 @@ import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
-import eapli.base.ticket.domain.Ticket;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
+import eapli.framework.visitor.Visitor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +25,8 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        TarefaManualAprovacao tarefaManualAprovacao = null;
+
+
         listaTarefaAprov = controller.tarefasManualAprovacao();
 
         if(listaTarefaAprov.isEmpty()){
@@ -32,27 +34,14 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
             return false;
         }
 
-        int index = 1;
-        for (TarefaManualAprovacao t : listaTarefaAprov) {
-            System.out.println(index + " " + t.toString());
-            index++;
-        }
+        final SelectWidget<TarefaManualAprovacao> selector = new SelectWidget<>("Tarefas de Aprovação:", listaTarefaAprov,
+                new TarefasAprovacaoPrinter());
+        selector.show();
+        final TarefaManualAprovacao tarefaManualAprovacao = selector.selectedElement();
+        if(tarefaManualAprovacao == null)
+            return true;
 
-        boolean escolherTarefa = false;
-        while (!escolherTarefa) {
-            int opcao = Console.readInteger("Escolha a tarefa que pretende analisar : (prima 0 para sair)");
-
-            if (opcao == 0) {
-                return false;
-            } else if (opcao <= listaTarefaAprov.size() && opcao > 0) {
-                escolherTarefa = true;
-                tarefaManualAprovacao = listaTarefaAprov.get(opcao - 1);
-            } else {
-                System.out.println("Coloque um index válido");
-            }
-        }
-        List<AtividadeAprovacao> atividade = controller.atividadeAprovacaoDaTarefa(tarefaManualAprovacao);
-        AtividadeAprovacao ap = atividade.get(0);
+        AtividadeAprovacao ap = tarefaManualAprovacao.atividadeAprovacaoDaTarefa();
         Formulario f = ap.formularioAprovacao();
 
                 System.out.println("\nFormulario " + f.name() + "\n");

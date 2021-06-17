@@ -78,10 +78,10 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
         List<TarefaManualAprovacao> tarAp = new ArrayList<>();
         
         if(this.atividadeAprovacao != null){
-            tarAp = new ArrayList<>(this.atividadeAprovacao.tarefasAprovList());
+         //   tarAp = new ArrayList<>(this.atividadeAprovacao.tarefasAprovList());
         }
         
-        List<TarefaManualExecucao> tarEx = new ArrayList<>(this.atividadeRealizacao.tarefaManualExecucaoList());
+        //List<TarefaManualExecucao> tarEx = new ArrayList<>(this.atividadeRealizacao.tarefaManualExecucaoList());
 
 
 

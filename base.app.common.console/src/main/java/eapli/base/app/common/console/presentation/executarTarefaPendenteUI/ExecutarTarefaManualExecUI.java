@@ -19,12 +19,12 @@ import java.util.Set;
 
 public class ExecutarTarefaManualExecUI extends AbstractUI {
     private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
-    List<TarefaManualExecucao> listaTarefasManualExecucao;
+
 
     @Override
     protected boolean doShow() {
         TarefaManualExecucao tarefaManualExecucao = null;
-        listaTarefasManualExecucao = controller.tarefasManualExecucaoPendente();
+        List<TarefaManualExecucao> listaTarefasManualExecucao = controller.tarefasManualExecucaoPendente();
 
         if(listaTarefasManualExecucao.isEmpty()){
             System.out.println("Ainda não existem tarefas de execução atribuidas a si.");
@@ -51,8 +51,8 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 System.out.println("Coloque um index válido");
             }
         }
-        List<AtividadeRealizacao> atividade = controller.obterAtividadeRealizacao(tarefaManualExecucao);
-        AtividadeRealizacao ar = atividade.get(0);
+
+        AtividadeRealizacao ar = tarefaManualExecucao.atividadeRealizacaoDaTarefa();
         Formulario f = ar.formularioRealizacao();
 
         System.out.println("\nFormulario " + f.name() + "\n");

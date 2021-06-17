@@ -25,12 +25,6 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     @ManyToMany
     private Set<Equipa> equipasExecucao;
 
-    @OneToMany
-    private Set<TarefaManualExecucao> tarefasManualExecucao;
-
-    @OneToMany
-    private Set<TarefaAutomatica> tarefasAutomaticas;
-
     @Enumerated(EnumType.STRING)
     private TipoExecucao tipoExecucao;
 
@@ -48,25 +42,15 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
     public AtividadeRealizacao() {
         this.tipoExecucao = TipoExecucao.MANUAL;
         this.equipasExecucao = new HashSet<>();
-        this.tarefasManualExecucao = new HashSet<>();
     }
 
     public AtividadeRealizacao(Colaborador colabExec, TipoExecucao tipoExecucao) {
-        this.tarefasManualExecucao = new HashSet<>();
         this.colabExecucao = colabExec;
         this.tipoExecucao = tipoExecucao;
     }
 
-    public void adicionarTarefaExecucao(TarefaManualExecucao tarExec) {
-        tarefasManualExecucao.add(tarExec);
-    }
-
     public void adicionarEquipaExecucao(Equipa eqExec) {
         equipasExecucao.add(eqExec);
-    }
-
-    public void adicionarTarefaAutomatica(TarefaAutomatica tarefaAutomatica) {
-        tarefasAutomaticas.add(tarefaAutomatica);
     }
 
     public void adicionaFormulario(Formulario f) {
@@ -89,7 +73,6 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
         return scriptAutomatico;
     }
 
-
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -108,10 +91,6 @@ public class AtividadeRealizacao implements AggregateRoot<Long>, Comparable<Long
             return "Manual com realização do colaborador -->" + colabExecucao.toString();
         } else
             return "Execução automática";
-    }
-
-    public Set<TarefaManualExecucao> tarefaManualExecucaoList() {
-        return tarefasManualExecucao;
     }
 
     public Formulario formularioRealizacao() {
