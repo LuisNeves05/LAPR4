@@ -32,7 +32,7 @@ class ServerSSLThread implements Runnable {
         InetAddress clientIP;
 
         clientIP = s.getInetAddress();
-        System.out.println("New request incomming from " + clientIP.getHostAddress());
+        //System.out.println("New request incomming from " + clientIP.getHostAddress());
 
         try {
             sOut = new DataOutputStream(s.getOutputStream());
@@ -45,17 +45,17 @@ class ServerSSLThread implements Runnable {
 
             switch (protocolo) {
                 case 4:
-                    LOGGER.log(Level.FINE, "Protocol {0} Requested", protocolo);
+                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     tarefasPendentesServer(s, sOut, sIn, serviceTarefas);
                     break;
 
                 case 5:
-                    LOGGER.log(Level.FINE, "Protocol {0} Requested", protocolo);
+                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     fluxosAtivosServer(s, sOut, serviceFluxo);
                     break;
 
                 case 6:
-                    LOGGER.log(Level.FINE, "Protocol {0} Requested", protocolo);
+                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     atribuicaoAutomaticaAlg(s, sOut, serviceAlg);
                     break;
 

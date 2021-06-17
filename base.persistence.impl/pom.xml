@@ -31,5 +31,12 @@
             <version>${project.parent.version}</version>
             <type>jar</type>
         </dependency>
+
+        <!-- Hibernate c3p0 connection pool -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>3.6.3.Final</version>
+        </dependency>
     </dependencies>
 </project>

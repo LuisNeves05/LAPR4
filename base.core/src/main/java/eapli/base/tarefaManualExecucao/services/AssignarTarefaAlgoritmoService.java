@@ -61,10 +61,13 @@ public class AssignarTarefaAlgoritmoService {
             Map<Colaborador, Integer> sortedAlgoData = SortValues.sortByMaxPeriodTime(algoData);
             Colaborador choosenColab = (Colaborador) SortValues.colaboradorComMenosTarefasTempo(sortedAlgoData);
 
+            /*
             System.out.println("DEBUG : " + equipasQueExecutam);
             System.out.println("DEBUG : " + algoData);
             System.out.println("DEBUG : " + sortedAlgoData);
             System.out.println("DEBUG : " + choosenColab);
+
+             */
 
 
             /**
