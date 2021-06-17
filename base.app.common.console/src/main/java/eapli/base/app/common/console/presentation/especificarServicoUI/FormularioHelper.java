@@ -4,7 +4,7 @@ import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.formulario.gramatica.Script;
+import eapli.base.formulario.gramatica.ScriptFormularios;
 import eapli.framework.io.util.Console;
 
 public class FormularioHelper {
@@ -89,7 +89,7 @@ public class FormularioHelper {
                     String script;
                     do {
                         script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
-                    }while(!Script.validadeGrammarFromString(script));
+                    }while(!ScriptFormularios.validadeGrammarFromString(script));
                     f.addScript(script);
                     flag = false;
                 }

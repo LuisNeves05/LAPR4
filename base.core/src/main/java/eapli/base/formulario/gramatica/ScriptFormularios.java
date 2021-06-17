@@ -1,5 +1,7 @@
 package eapli.base.formulario.gramatica;
 
+import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaLexer;
+import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaParser;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -10,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Script {
+public class ScriptFormularios {
 
     private List<Resposta> list = new ArrayList<>();
 
-    public Script(List<Resposta> list){
+    public ScriptFormularios(List<Resposta> list){
         this.list = list;
     }
 

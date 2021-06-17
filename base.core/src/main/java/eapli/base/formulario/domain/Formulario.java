@@ -1,14 +1,6 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.formulario.gramatica.*;
-import eapli.base.formulario.gramatica.GramaticaLexer;
-import eapli.base.formulario.gramatica.GramaticaParser;
-import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.framework.domain.model.AggregateRoot;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import javax.persistence.*;
 import java.util.*;

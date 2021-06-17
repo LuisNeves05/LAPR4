@@ -1,9 +1,9 @@
 package eapli.base.formulario.gramatica;
 
-import com.sun.jdi.event.ExceptionEvent;
+import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaBaseListener;
+import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaParser;
 import eapli.base.formularioPreenchido.domain.Resposta;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,14 +83,14 @@ public class EvalGramaticaListener extends GramaticaBaseListener {
                     if (!resposta1.isEmpty()) {
                         String decisao = ctx.decisao().getText();
 
-                        switch (decisao){
+                        switch (decisao) {
                             case "NAOVAZIO":
-                                if(resposta2.isEmpty()){
+                                if (resposta2.isEmpty()) {
                                     throww();
                                 }
                                 break;
                             case "VAZIO":
-                                if(!resposta2.isEmpty()){
+                                if (!resposta2.isEmpty()) {
                                     throww();
                                 }
                                 break;
@@ -100,17 +100,17 @@ public class EvalGramaticaListener extends GramaticaBaseListener {
                     break;
                 case "VAZIO":
 
-                    if(resposta1.isEmpty()){
+                    if (resposta1.isEmpty()) {
                         String decisao = ctx.decisao().getText();
 
-                        switch (decisao){
+                        switch (decisao) {
                             case "NAOVAZIO":
-                                if(resposta2.isEmpty()){
+                                if (resposta2.isEmpty()) {
                                     throww();
                                 }
                                 break;
                             case "VAZIO":
-                                if(!resposta2.isEmpty()){
+                                if (!resposta2.isEmpty()) {
                                     throww();
                                 }
                         }
@@ -119,18 +119,29 @@ public class EvalGramaticaListener extends GramaticaBaseListener {
                 case "NAME":
                     String decisao = ctx.decisao().getText();
 
-                    switch (decisao){
+                    switch (decisao) {
                         case "NAOVAZIO":
-                            if(resposta2.isEmpty()){
+                            if (resposta2.isEmpty()) {
                                 throww();
                             }
                             break;
                         case "VAZIO":
-                            if(!resposta2.isEmpty()){
+                            if (!resposta2.isEmpty()) {
                                 throww();
                             }
                     }
             }
+        }
+    }
+
+    @Override
+    public void exitLimitaNomeAtributo(GramaticaParser.LimitaNomeAtributoContext ctx) {
+        int indice = Integer.parseInt(ctx.atributo().NUMERO().getText());
+        String resposta = respostas.get(indice).resposta();
+
+        if (!resposta.equals(ctx.nomes().NAME().getText())) {
+            System.out.println("A resposta introduzida não corresponde às opções pre-definidas");
+            throww();
         }
     }
 
@@ -143,7 +154,7 @@ public class EvalGramaticaListener extends GramaticaBaseListener {
         return matcherAlphaNumericCheck.find();
     }
 
-    private void throww(){
+    private void throww() {
         throw new IllegalArgumentException();
     }
 }

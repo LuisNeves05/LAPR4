@@ -6,7 +6,7 @@ import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.formulario.gramatica.Script;
+import eapli.base.formulario.gramatica.ScriptFormularios;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
@@ -119,7 +119,7 @@ public class SolicitarServicoUI extends AbstractUI {
                 }
                 lista = new ArrayList<>(respostas);
 
-            }while (!Script.executa(lista, f.scriptsValidacao()));
+            }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
 
             FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());
             fps.add(fp);
