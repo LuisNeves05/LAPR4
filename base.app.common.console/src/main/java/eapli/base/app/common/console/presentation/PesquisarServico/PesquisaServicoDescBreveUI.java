@@ -29,14 +29,16 @@ public class PesquisaServicoDescBreveUI extends AbstractUI {
 
         final String descBreve = Console.readLine("Indique a Descrição Breve que quer pesquisar:");
 
-        Set<Servico> servicos = (Set<Servico>) psController.pesquisaDescBreve(descBreve);
+        Iterable<Servico> servicos =  psController.todosServicos();
 
-        if(!servicos.isEmpty()){
+        if(servicos.iterator().hasNext()){
             for (Servico sv : servicos){
-                if(sv.estado().equals("INCOMPLETO"))
-                System.out.println(sv.toString() + "   BREVEMENTE DISPONIVEL");
-                else
-                System.out.println(sv.toString());
+                if(psController.servicoContiverDescBreve(sv,descBreve)) {
+                    if (sv.estado().equals("INCOMPLETO"))
+                        System.out.println(sv.toString() + "   BREVEMENTE DISPONIVEL");
+                    else
+                        System.out.println(sv.toString());
+                }
             }
             return true;
         }

@@ -22,8 +22,7 @@ public class CriarTarefaManualExecucaoService {
     private final TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
 
-    public CriarTarefaManualExecucaoService() {
-    }
+    public CriarTarefaManualExecucaoService(){}
 
     public void criarTarefaExecucao(Servico s, Ticket ticket) {
         AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();
@@ -34,9 +33,7 @@ public class CriarTarefaManualExecucaoService {
                 for (Equipa equipa : ar.equipasExecucao()) {
                     tme.adicionaEquipaExecucao(equipa);
                 }
-                TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tme);
-                ar.adicionarTarefaExecucao(tarManExec);
-
+                ar.adicionarTarefaExecucao(tarefaManualExecucaoRep.save(tme));
             } else if (ar.colabExec() != null) {
                 TarefaManualExecucao tarManExec = tarefaManualExecucaoRep.save(tiposDeTarefa().
                         novaTarefaManualExecucaoColaborador(ticket, ar.colabExec(), EstadoRealizacao.POR_EXECUTAR));

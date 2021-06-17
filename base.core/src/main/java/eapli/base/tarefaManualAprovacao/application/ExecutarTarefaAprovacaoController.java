@@ -67,13 +67,7 @@ public class ExecutarTarefaAprovacaoController {
     public TarefaManualAprovacao executarTarefaAprPendente(TarefaManualAprovacao tarefa) {
         //    tarefa.defineColaboradorExecutante(colabPedido);
 
-        try {
-            //TODO GUARDAR TAREFA MANUAL APROVACAO
-            return tarefaManualAprovacaoRepositorio.save(tarefa);
-        } catch (IntegrityViolationException violation) {
-            System.out.println("Erro na persistência da tarefa!");
-        }
-        return null;
+        return tarefaManualAprovacaoRepositorio.save(tarefa);
     }
 
 
@@ -105,6 +99,7 @@ public class ExecutarTarefaAprovacaoController {
 
     public void isDecisao(String resposta, TarefaManualAprovacao tarefaManualAprovacao) {
         if (resposta.equalsIgnoreCase("Deferido")) {
+            //TODO APROVAR NO MOTOR
             tarefaManualAprovacao.aprovado();
 
             if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.procurarTicket())) {
@@ -118,16 +113,13 @@ public class ExecutarTarefaAprovacaoController {
     }
 
     public Resposta adicionarResposta(String reposta, String nomeVar){
-        Resposta resposta= new Resposta(reposta,nomeVar);
-
-        return resposta;
+        return new Resposta(reposta,nomeVar);
     }
-    public void terminarExecucao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
 
+    public void terminarExecucao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
         FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualAprovacao.procurarTicket(), colabLogged());
         saveFormPreenchido(fp);
         saveTicket(tarefaManualAprovacao.procurarTicket());
         saveTarefaAprovacao(tarefaManualAprovacao);
     }
-
 }

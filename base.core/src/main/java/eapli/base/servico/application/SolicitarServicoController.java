@@ -97,9 +97,9 @@ public class SolicitarServicoController {
 
     public Ticket criarTicket(Servico s, String urgencia) {
         if (s.fluxoDoServico().ativAprovacaoDoFluxo() == null)
-            return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.POR_APROVAR));
+            return ticketRepositorio.save(new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR));
         else
-            return ticketRepositorio.save(new Ticket(colabPedido, s, s.nivelCriticidadeServico(), urgencia, EstadoTicket.EM_EXECUCAO));
+            return ticketRepositorio.save(new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO));
     }
 
 

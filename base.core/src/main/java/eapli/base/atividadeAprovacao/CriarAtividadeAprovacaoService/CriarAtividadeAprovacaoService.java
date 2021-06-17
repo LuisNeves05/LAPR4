@@ -17,5 +17,4 @@ public class CriarAtividadeAprovacaoService {
             atividadeAprovacao.adicionaColabAprov(ca);
         fluxoAtivBuilder.comAtividadeAprovacao(atividadeAprovacao);
     }
-
 }

@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario, Long, Formulario> implements FormularioRepositorio{
+public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario, Long, Long> implements FormularioRepositorio{
 
     public FormularioRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
@@ -32,13 +32,10 @@ public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario
 
     @Override
     public void removePeloID(final Formulario formulario) {
+        /*
         EntityManager em =  super.entityManager();
-
-        em.getTransaction().begin();
         em.remove(em.find(Formulario.class, formulario.identity()));
-        em.getTransaction().commit();
-        em.flush();
-        em.clear();
-        em.close();
+
+         */
     }
 }

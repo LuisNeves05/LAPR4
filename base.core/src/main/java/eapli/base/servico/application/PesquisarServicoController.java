@@ -36,6 +36,10 @@ public class PesquisarServicoController {
         }
     }
 
+    public Iterable<Servico> todosServicos(){
+        return repoServ.findAll();
+    }
+
     /**
      * Repositório do Serviço
      */
@@ -109,5 +113,9 @@ public class PesquisarServicoController {
         }
 
         return listaCatalogo;
+    }
+
+    public boolean servicoContiverDescBreve(Servico sv, String descBreve) {
+        return sv.descricaoBreveDoServico().toString().contains(descBreve);
     }
 }

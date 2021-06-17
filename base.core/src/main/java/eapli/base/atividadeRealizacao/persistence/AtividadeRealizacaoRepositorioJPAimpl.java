@@ -16,6 +16,7 @@ public class AtividadeRealizacaoRepositorioJPAimpl extends JpaAutoTxRepository<A
 
     @Override
     public void removePeloID(AtividadeRealizacao ativRealizacaoDoFluxo) {
+        /*
         EntityManager em = super.entityManager();
 
         em.getTransaction().begin();
@@ -24,5 +25,7 @@ public class AtividadeRealizacaoRepositorioJPAimpl extends JpaAutoTxRepository<A
         em.flush();
         em.clear();
         em.close();
+
+         */
     }
 }

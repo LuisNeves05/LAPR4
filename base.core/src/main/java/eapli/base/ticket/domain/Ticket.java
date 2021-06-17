@@ -32,9 +32,6 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
     @OneToOne
     private Servico servico;
 
-    @OneToOne
-    private NivelCriticidade nivelCriticidade;
-
     private String urgenciaTicket;
 
     @OneToMany
@@ -57,12 +54,11 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
     protected Ticket() {
     }
 
-    public Ticket(Colaborador colabRequisitou, Servico servico, NivelCriticidade nivelCriticidade, String urgenciaTicket,
+    public Ticket(Colaborador colabRequisitou, Servico servico, String urgenciaTicket,
                   EstadoTicket estadoTicket) {
         this.colabRequisitou = colabRequisitou;
         this.createdOn = Calendars.now();
         this.servico = servico;
-        this.nivelCriticidade = nivelCriticidade;
         this.urgenciaTicket = urgenciaTicket;
         this.formulariosPreenchidos = new HashSet<>();
         this.estadoTicket = estadoTicket;

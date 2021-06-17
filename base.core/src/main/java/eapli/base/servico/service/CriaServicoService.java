@@ -28,40 +28,35 @@ public class CriaServicoService {
 
         FluxoAtividade fluxoAtividade = fluxoAtividadeBuilder.build();
         Servico serv = serviceBuilder.build();
+
         if (serv.fluxoDoServico() != null) {
             FluxoAtividade fluxoExistente = serv.fluxoDoServico();
+
             if (fluxoAtividade.ativAprovacaoDoFluxo() == null) {
                 fluxoExistente.definirAtividadeAprovacao(null);
             } else {
-                guardaFormulario(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
+                Formulario f = guardaFormulario(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
+                fluxoAtividade.ativAprovacaoDoFluxo().adicionaFormulario(f);
                 fluxoExistente.definirAtividadeAprovacao(guardaAtividadeAprovacao(fluxoAtividade.ativAprovacaoDoFluxo()));
             }
             if (fluxoAtividade.ativRealizacaoDoFluxo() == null) {
                 fluxoExistente.definirAtividadeRealizacao(null);
             } else {
-                if (fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
-                    guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
+                if(fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
+                    Formulario f = guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
+                    fluxoAtividade.ativRealizacaoDoFluxo().adicionaFormulario(f);
                 }
                 fluxoExistente.definirAtividadeRealizacao(guardaAtividadeRealizacao(fluxoAtividade.ativRealizacaoDoFluxo()));
             }
 
             serviceBuilder.comFluxo(guardaFluxo(fluxoExistente));
-
-            if (fluxoAtividade.ativAprovacaoDoFluxo() == null && fluxoExistente.ativAprovacaoDoFluxo() != null) {
-                removeFormulario(fluxoExistente.ativAprovacaoDoFluxo().formularioAprovacao());
-                removerAtividadeAprovacao(fluxoExistente.ativAprovacaoDoFluxo());
-            }
-            if (fluxoAtividade.ativRealizacaoDoFluxo() == null && fluxoExistente.ativRealizacaoDoFluxo() != null) {
-                removeFormulario(fluxoExistente.ativRealizacaoDoFluxo().formularioRealizacao());
-                removerAtividadeRealizacao(fluxoExistente.ativRealizacaoDoFluxo());
-            }
         } else {
             AtividadeRealizacao atReal = null;
             AtividadeAprovacao atAprov = null;
             if (fluxoAtividade.ativRealizacaoDoFluxo() != null) {
                 atReal = fluxoAtividade.ativRealizacaoDoFluxo();
-                if (fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
-                    Formulario f = guardaFormulario(atReal.formularioRealizacao());
+                if(fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
+                    Formulario f = guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
                     atReal.adicionaFormulario(f);
                 }
                 atReal = guardaAtividadeRealizacao(atReal);
@@ -72,15 +67,15 @@ public class CriaServicoService {
                 atAprov.adicionaFormulario(f);
                 atAprov = guardaAtividadeAprovacao(atAprov);
             }
-            if (fluxoAtividade.ativRealizacaoDoFluxo() != null || fluxoAtividade.ativRealizacaoDoFluxo() != null)
+            if(fluxoAtividade.ativRealizacaoDoFluxo() != null || fluxoAtividade.ativRealizacaoDoFluxo() != null)
                 serviceBuilder.comFluxo(guardaFluxo(new FluxoAtividade(atAprov, atReal)));
         }
         Servico servv = serviceBuilder.build();
 
-        if (!formularios.isEmpty())
-            for (Formulario formulario : formularios) {
-                adicionaFormulario(servv, guardaFormulario(formulario));
-            }
+        if(!formularios.isEmpty())
+        for (Formulario formulario : formularios) {
+            adicionaFormulario(servv, guardaFormulario(formulario));
+        }
 
         return servv;
     }
@@ -109,11 +104,11 @@ public class CriaServicoService {
         ativAprovRep.removePeloID(atividadeAprovacao);
     }
 
-    public void removeFormulario(Formulario form) {
+    public void removeFormulario(Formulario form){
         formularioRepositorio.removePeloID(form);
     }
 
-    public void adicionaFormulario(Servico s, Formulario formulario) {
+    public void adicionaFormulario(Servico s, Formulario formulario){
         s.adicionaFormulario(formulario);
     }
 }

@@ -18,10 +18,10 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     private AtividadeAprovacao atividadeAprovacao;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     private AtividadeRealizacao atividadeRealizacao;
 
     @Enumerated(EnumType.STRING)

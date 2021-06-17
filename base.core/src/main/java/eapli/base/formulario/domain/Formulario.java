@@ -18,7 +18,7 @@ import java.util.*;
  */
 @Entity
 @Table
-public class Formulario implements Comparable<Formulario>, AggregateRoot<Formulario> {
+public class Formulario implements Comparable<Long>, AggregateRoot<Long> {
 
     /**
      * Identificador único do formulário
@@ -72,13 +72,13 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     }
 
     @Override
-    public int compareTo(Formulario other) {
+    public int compareTo(Long other) {
         return 0;
     }
 
     @Override
-    public Formulario identity() {
-        return null;
+    public Long identity() {
+        return id;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
     }
 
     @Override
-    public boolean hasIdentity(Formulario otherId) {
+    public boolean hasIdentity(Long otherId) {
         return false;
     }
 

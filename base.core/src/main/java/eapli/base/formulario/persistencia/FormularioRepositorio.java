@@ -8,7 +8,7 @@ import eapli.framework.domain.repositories.DomainRepository;
 import java.util.List;
 import java.util.Set;
 
-public interface FormularioRepositorio extends DomainRepository<Formulario, Formulario> {
+public interface FormularioRepositorio extends DomainRepository<Long, Formulario> {
 
     Iterable<Formulario> formularioPorServico(final Servico servico);
 
