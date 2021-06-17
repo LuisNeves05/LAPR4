@@ -14,6 +14,7 @@ import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ExecutarTarefaManualExecUI extends AbstractUI {
@@ -57,8 +58,8 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
         System.out.println("\nFormulario " + f.name() + "\n");
 
         Set<Resposta> respostas = new HashSet<>();
-        Set<Atributo> a = f.atributos();
-        for (Atributo atributo : a) {
+        Map<Atributo, Integer> a = f.atributos();
+        for (Atributo atributo : a.keySet()) {
             TipoDados td = atributo.tipoDados();
             String ajudaResposta = atributo.tipoDadosStr(td);
             boolean flag = true;

@@ -4,6 +4,7 @@ import eapli.base.formulario.application.EspecificarFormularioController;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
+import eapli.base.formulario.gramatica.Script;
 import eapli.framework.io.util.Console;
 
 public class FormularioHelper {
@@ -81,9 +82,15 @@ public class FormularioHelper {
             String expReg = Console.readLine("Expressão regular para validação do atributo: ");
 
             f.addAtributo(nomeVar, lable, descAjuda, td, expReg);
+
             if (repeatable) {
                 continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
                 if (continuar.equalsIgnoreCase("nao")) {
+                    String script;
+                    do {
+                        script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
+                    }while(!Script.validadeGrammarFromString(script));
+                    f.addScript(script);
                     flag = false;
                 }
             } else {

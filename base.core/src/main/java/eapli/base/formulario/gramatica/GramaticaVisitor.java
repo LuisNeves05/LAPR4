@@ -11,108 +11,61 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface GramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#parseEspecificao}.
+	 * Visit a parse tree produced by {@link GramaticaParser#prog}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParseEspecificao(GramaticaParser.ParseEspecificaoContext ctx);
+	T visitProg(GramaticaParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#parseValidacao}.
+	 * Visit a parse tree produced by the {@code defineNaoVazio}
+	 * labeled alternative in {@link GramaticaParser#valida}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParseValidacao(GramaticaParser.ParseValidacaoContext ctx);
+	T visitDefineNaoVazio(GramaticaParser.DefineNaoVazioContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#instructionEspecificacao}.
+	 * Visit a parse tree produced by the {@code comparaAtributos}
+	 * labeled alternative in {@link GramaticaParser#valida}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInstructionEspecificacao(GramaticaParser.InstructionEspecificacaoContext ctx);
+	T visitComparaAtributos(GramaticaParser.ComparaAtributosContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#instructionValidacao}.
+	 * Visit a parse tree produced by the {@code limitaNomeAtributo}
+	 * labeled alternative in {@link GramaticaParser#valida}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInstructionValidacao(GramaticaParser.InstructionValidacaoContext ctx);
+	T visitLimitaNomeAtributo(GramaticaParser.LimitaNomeAtributoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#servico1dataInicioFimEspecificacao}.
+	 * Visit a parse tree produced by the {@code atributoExpRegular}
+	 * labeled alternative in {@link GramaticaParser#valida}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitServico1dataInicioFimEspecificacao(GramaticaParser.Servico1dataInicioFimEspecificacaoContext ctx);
+	T visitAtributoExpRegular(GramaticaParser.AtributoExpRegularContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#servico1dataInicioFimValidacao}.
+	 * Visit a parse tree produced by {@link GramaticaParser#compara}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitServico1dataInicioFimValidacao(GramaticaParser.Servico1dataInicioFimValidacaoContext ctx);
+	T visitCompara(GramaticaParser.ComparaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#servico1Justificacao}.
+	 * Visit a parse tree produced by {@link GramaticaParser#decisao}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitServico1Justificacao(GramaticaParser.Servico1JustificacaoContext ctx);
+	T visitDecisao(GramaticaParser.DecisaoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#dataInicio}.
+	 * Visit a parse tree produced by {@link GramaticaParser#atributo}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDataInicio(GramaticaParser.DataInicioContext ctx);
+	T visitAtributo(GramaticaParser.AtributoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#dataFim}.
+	 * Visit a parse tree produced by {@link GramaticaParser#}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDataFim(GramaticaParser.DataFimContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#justificacao}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJustificacao(GramaticaParser.JustificacaoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#enviar_email}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEnviar_email(GramaticaParser.Enviar_emailContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCorpo_email(GramaticaParser.Corpo_emailContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code opExprMulDiv}
-	 * labeled alternative in {@link GramaticaParser#}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOpExprMulDiv(GramaticaParser.OpExprMulDivContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code opExprSumDif}
-	 * labeled alternative in {@link GramaticaParser#}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOpExprSumDif(GramaticaParser.OpExprSumDifContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code atomExpr}
-	 * labeled alternative in {@link GramaticaParser#}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAtomExpr(GramaticaParser.AtomExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#date}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDate(GramaticaParser.DateContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link GramaticaParser#month}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMonth(GramaticaParser.MonthContext ctx);
+	T visitNomes(GramaticaParser.NomesContext ctx);
 }

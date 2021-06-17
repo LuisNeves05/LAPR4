@@ -1,65 +1,42 @@
 grammar Gramatica;
 
-parseEspecificao
- : instructionEspecificacao* EOF
+prog : valida
  ;
 
-parseValidacao
- : instructionValidacao* EOF
+
+valida:
+        atributo NAOVAZIO                                           #defineNaoVazio
+        | left = atributo compara right = atributo decisao          #comparaAtributos
+        | atributo nomes                                            #limitaNomeAtributo
+        | atributo EXPREGULAR                                       #atributoExpRegular
 ;
 
-instructionEspecificacao
- : enviar_email
- | servico1dataInicioFimEspecificacao
- | servico1Justificacao
- ;
-
-instructionValidacao
- : servico1dataInicioFimValidacao
- ;
-
-servico1dataInicioFimEspecificacao: dataInicio MENORIGUAL dataFim
+compara: NAOVAZIO
+        | VAZIO
+        | NAME
+        | MENOR
+        | MENORIGUAL
+        | MAIOR
+        | MAIORIGUAL
+        | IGUAL
 ;
 
-servico1dataInicioFimValidacao: dataInicio dataFim
-;
+decisao:
+        | NAOVAZIO
+        | VAZIO
+        ;
 
-servico1Justificacao: SE tipoAusencia=NAME 'JUSTIFICADA' ENTAO justificacao NAOVAZIO
-;
+atributo: ATRIBUTO NUMERO;
 
-dataInicio: NAME;
+nomes: nomes NAME | NAME ;
 
-dataFim: NAME;
-
-justificacao: NAME
-;
-
-enviar_email : ENVIAR_EMAIL COLABORADOR_REQUERENTE corpo_email
- ;
-
- corpo_email:  |corpo_email NAME
-               | corpo_email calcula
-;
-
-calcula:  left=calcula op=('*'|'/') right=calcula # opExprMulDiv
-              | left=calcula op=('+'|'-') right=calcula # opExprSumDif
-              | atom=INT #atomExpr
-              ;
-
-date
-    : INT SEPARATOR month SEPARATOR INT
-    | INT SEPARATOR month SEPARATOR INT4
-    | INT SEPARATOR INT SEPARATOR INT4;
-
-month : JAN | FEB | MAR | APR | MAY | JUN | JUL | AUG | SEP | OCT | NOV | DEC ;
 
 
 COMMENT
  : '#' ~[\r\n]* -> skip
  ;
 
-
-TIPOAUSENCIA: ('FERIAS'|'JUSTIFICADA'|'NAO JUSTIFICADA');
+ATRIBUTO: 'ATRIBUTO';
 
 DEFINE: 'DEFINE';
 
@@ -67,7 +44,13 @@ SE : 'SE';
 
 MENOR: 'MENOR';
 
+IGUAL: 'IGUAL';
+
+MAIOR: 'MAIOR';
+
 MENORIGUAL: 'MENORIGUAL';
+
+MAIORIGUAL: 'MAIORIGUAL';
 
 ENTAO : 'ENTAO';
 
@@ -75,38 +58,20 @@ NAOVAZIO: 'NAOVAZIO';
 
 VAZIO : 'VAZIO';
 
-ENVIAR_EMAIL: 'ENVIAR EMAIL';
 
-COLABORADOR_REQUERENTE: 'COLABORADOR REQUERENTE';
-
-JAN : [Jj][Aa][Nn] ;
-FEB : [Ff][Ee][Bb] ;
-MAR : [Mm][Aa][Rr] ;
-APR : [Aa][Pp][Rr] ;
-MAY : [Mm][Aa][Yy] ;
-JUN : [Jj][Uu][Nn] ;
-JUL : [Jj][Uu][Ll] ;
-AUG : [Aa][Uu][Gg] ;
-SEP : [Ss][Ee][Pp] ;
-OCT : [Oo][Cc][Tt] ;
-NOV : [Nn][Oo][Vv] ;
-DEC : [Dd][Ee][Cc] ;
-
-INT4 : DIGIT DIGIT DIGIT DIGIT;
-
-DIGIT : [0-9];
 
 NUMERO: [0-9][0-9]*;
 
-INT
- : [0-9]+
- ;
 NAME
  : [a-zA-Z]+
  ;
 
+NEWLINE: [\r\n];
+
 SPACES
- : [ \t\r\n] -> skip
+ : [ \t] -> skip
  ;
 
 SEPARATOR : [/\\\-] ;
+
+EXPREGULAR: '@'.+?'@';

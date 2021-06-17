@@ -1,5 +1,6 @@
 package eapli.base.app.common.console.presentation.solicitarservicoUI;
 
+import eapli.base.Utils.SortValues;
 import eapli.base.app.common.console.presentation.utils.HelpMethodsForUIs;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.formulario.domain.Atributo;
@@ -14,9 +15,7 @@ import eapli.base.ticket.domain.Ticket;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SolicitarServicoUI extends AbstractUI {
 
@@ -98,28 +97,29 @@ public class SolicitarServicoUI extends AbstractUI {
 
         Set<FormularioPreenchido> fps = new HashSet<>();
         Ticket ticket = lcp.criarTicket(s, urgencia);
-        //TODO VALIDAR FORMULARIO LPROG
+
         for (Formulario f : formularioList) {
             System.out.println("\nFormulario " + f.name() + "\n");
 
-            Set<Resposta> respostas = new HashSet<>();
-            Set<Atributo> a = f.atributos();
+            Set<Resposta> respostas = new LinkedHashSet<>();
+            Map<Atributo, Integer> a = f.atributos();
+            Set<Atributo> atri = SortValues.sortByMaxPeriodTime(a).keySet();
 
-            for (Atributo atributo : a) {
-                TipoDados td = atributo.tipoDados();
-                String ajudaResposta = atributo.tipoDadosStr(td);
-                String resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
-                Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                respostas.add(rAtr);
-            }
-
-            Set<String> scriptsForm = f.scriptsValidacao();
-
-            if (!scriptsForm.isEmpty()) {
-                for (String scri : scriptsForm) {
-                    Script.executaScript(scri);
+            String resposta;
+            List<Resposta> lista = new ArrayList<>();
+            do {
+                respostas.clear();
+                lista.clear();
+                for (Atributo atributo : atri) {
+                    TipoDados td = atributo.tipoDados();
+                    String ajudaResposta = atributo.tipoDadosStr(td);
+                    resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
+                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+                    respostas.add(rAtr);
                 }
-            }
+                lista = new ArrayList<>(respostas);
+
+            }while (!Script.executa(lista, f.scriptsValidacao()));
 
             FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());
             fps.add(fp);

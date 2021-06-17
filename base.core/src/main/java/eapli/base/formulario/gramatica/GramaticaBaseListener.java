@@ -16,205 +16,109 @@ public class GramaticaBaseListener implements GramaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParseEspecificao(GramaticaParser.ParseEspecificaoContext ctx) { }
+	@Override public void enterProg(GramaticaParser.ProgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParseEspecificao(GramaticaParser.ParseEspecificaoContext ctx) { }
+	@Override public void exitProg(GramaticaParser.ProgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParseValidacao(GramaticaParser.ParseValidacaoContext ctx) { }
+	@Override public void enterDefineNaoVazio(GramaticaParser.DefineNaoVazioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParseValidacao(GramaticaParser.ParseValidacaoContext ctx) { }
+	@Override public void exitDefineNaoVazio(GramaticaParser.DefineNaoVazioContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstructionEspecificacao(GramaticaParser.InstructionEspecificacaoContext ctx) { }
+	@Override public void enterComparaAtributos(GramaticaParser.ComparaAtributosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstructionEspecificacao(GramaticaParser.InstructionEspecificacaoContext ctx) { }
+	@Override public void exitComparaAtributos(GramaticaParser.ComparaAtributosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstructionValidacao(GramaticaParser.InstructionValidacaoContext ctx) { }
+	@Override public void enterLimitaNomeAtributo(GramaticaParser.LimitaNomeAtributoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstructionValidacao(GramaticaParser.InstructionValidacaoContext ctx) { }
+	@Override public void exitLimitaNomeAtributo(GramaticaParser.LimitaNomeAtributoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterServico1dataInicioFimEspecificacao(GramaticaParser.Servico1dataInicioFimEspecificacaoContext ctx) { }
+	@Override public void enterAtributoExpRegular(GramaticaParser.AtributoExpRegularContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitServico1dataInicioFimEspecificacao(GramaticaParser.Servico1dataInicioFimEspecificacaoContext ctx) { }
+	@Override public void exitAtributoExpRegular(GramaticaParser.AtributoExpRegularContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterServico1dataInicioFimValidacao(GramaticaParser.Servico1dataInicioFimValidacaoContext ctx) { }
+	@Override public void enterCompara(GramaticaParser.ComparaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitServico1dataInicioFimValidacao(GramaticaParser.Servico1dataInicioFimValidacaoContext ctx) { }
+	@Override public void exitCompara(GramaticaParser.ComparaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterServico1Justificacao(GramaticaParser.Servico1JustificacaoContext ctx) { }
+	@Override public void enterDecisao(GramaticaParser.DecisaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitServico1Justificacao(GramaticaParser.Servico1JustificacaoContext ctx) { }
+	@Override public void exitDecisao(GramaticaParser.DecisaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDataInicio(GramaticaParser.DataInicioContext ctx) { }
+	@Override public void enterAtributo(GramaticaParser.AtributoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDataInicio(GramaticaParser.DataInicioContext ctx) { }
+	@Override public void exitAtributo(GramaticaParser.AtributoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDataFim(GramaticaParser.DataFimContext ctx) { }
+	@Override public void enterNomes(GramaticaParser.NomesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDataFim(GramaticaParser.DataFimContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterJustificacao(GramaticaParser.JustificacaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitJustificacao(GramaticaParser.JustificacaoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEnviar_email(GramaticaParser.Enviar_emailContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEnviar_email(GramaticaParser.Enviar_emailContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCorpo_email(GramaticaParser.Corpo_emailContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCorpo_email(GramaticaParser.Corpo_emailContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterOpExprMulDiv(GramaticaParser.OpExprMulDivContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitOpExprMulDiv(GramaticaParser.OpExprMulDivContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterOpExprSumDif(GramaticaParser.OpExprSumDifContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitOpExprSumDif(GramaticaParser.OpExprSumDifContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtomExpr(GramaticaParser.AtomExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtomExpr(GramaticaParser.AtomExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDate(GramaticaParser.DateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDate(GramaticaParser.DateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMonth(GramaticaParser.MonthContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMonth(GramaticaParser.MonthContext ctx) { }
+	@Override public void exitNomes(GramaticaParser.NomesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

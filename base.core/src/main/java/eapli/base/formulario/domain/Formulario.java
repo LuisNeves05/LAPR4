@@ -1,12 +1,17 @@
 package eapli.base.formulario.domain;
 
-import eapli.base.servico.domain.Servico;
+import eapli.base.formulario.gramatica.*;
+import eapli.base.formulario.gramatica.GramaticaLexer;
+import eapli.base.formulario.gramatica.GramaticaParser;
+import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.framework.domain.model.AggregateRoot;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Classe da Entidade Formulario
@@ -31,13 +36,12 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      * Nome do formulário
      */
     @ElementCollection
-    private Set<Atributo> conjuntoAtributos = new HashSet<>();
+    private Map<Atributo, Integer> conjuntoAtributos;
 
     /**
      * Conjunto de scripts de validação do formulario
      */
-    @ElementCollection
-    private Set<String> scriptsValidacao;
+    private String scriptValidacao;
 
     /**
      * Construtor da entidade Formulário
@@ -45,8 +49,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      */
     public Formulario(NomeFormulario nome){
         this.nome = nome;
-        conjuntoAtributos = new HashSet<>();
-        this.scriptsValidacao = new HashSet<>();
+        conjuntoAtributos = new LinkedHashMap<>();
     }
 
     /**
@@ -54,13 +57,13 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
      */
     public Formulario(){}
 
-    public boolean addAtributo(String nomeVar, String label, String descAjuda, TipoDados a , String expRegular){
+    public void addAtributo(String nomeVar, String label, String descAjuda, TipoDados a , String expRegular){
         Atributo atributo = new Atributo(nomeVar, label, descAjuda, a , expRegular);
-        return this.conjuntoAtributos.add(atributo);
+        this.conjuntoAtributos.put(atributo, conjuntoAtributos.size()+1);
     }
 
-    public void adicionaScripts(Set<String> scripts){
-        this.scriptsValidacao.addAll(scripts);
+    public void addScript(String scriptValidacao){
+        this.scriptValidacao = scriptValidacao;
     }
 
     @Override
@@ -88,7 +91,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
         return false;
     }
 
-    public Set<Atributo> atributos(){
+    public Map<Atributo, Integer> atributos(){
         return this.conjuntoAtributos;
     }
 
@@ -96,7 +99,7 @@ public class Formulario implements Comparable<Formulario>, AggregateRoot<Formula
         return nome;
     }
 
-    public Set<String> scriptsValidacao(){
-        return this.scriptsValidacao;
+    public String scriptsValidacao(){
+        return this.scriptValidacao;
     }
 }
