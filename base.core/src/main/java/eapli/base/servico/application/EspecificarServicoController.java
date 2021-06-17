@@ -1,6 +1,6 @@
 package eapli.base.servico.application;
 
-import eapli.base.atividadeAprovacao.CriarAtividadeAprovacaoService.CriarAtividadeAprovacaoService;
+import eapli.base.atividadeAprovacao.criarAtividadeAprovacaoService.CriarAtividadeAprovacaoService;
 import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
 import eapli.base.atividadeRealizacao.domain.TipoExecucao;
 import eapli.base.atividadeRealizacao.service.CriarAtividadeRealizacaoService;

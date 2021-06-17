@@ -56,11 +56,15 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
         this.statusFluxo = StatusFluxo.INATIVO;
     }
 
-    public void definirAtividadeRealizacao(AtividadeRealizacao atividadeRealizacao){
+    public StatusFluxo estadoFluxo(){
+        return this.statusFluxo;
+    }
+
+    public void comAtividadeRealizacao(AtividadeRealizacao atividadeRealizacao){
         this.atividadeRealizacao = atividadeRealizacao;
     }
 
-    public void definirAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao){
+    public void comAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao){
         this.atividadeAprovacao = atividadeAprovacao;
     }
 
@@ -75,27 +79,7 @@ public class FluxoAtividade implements AggregateRoot<Long>, Comparable<Long> {
     }
 
     public FluxoAtividadeDTO toDTO(){
-        List<TarefaManualAprovacao> tarAp = new ArrayList<>();
-        
-        if(this.atividadeAprovacao != null){
-         //   tarAp = new ArrayList<>(this.atividadeAprovacao.tarefasAprovList());
-        }
-        
-        //List<TarefaManualExecucao> tarEx = new ArrayList<>(this.atividadeRealizacao.tarefaManualExecucaoList());
-
-
-
-        /*
-        if(tarAp.isEmpty()){
-            return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarEx.get(0).estadoRealizacao().toString());
-        }
-
-        if(tarEx.isEmpty()){
-            return new FluxoAtividadeDTO(this.id, this.statusFluxo, tarAp.get(0).estadoAprov().toString());
-        }*/
-
         return new FluxoAtividadeDTO(this.id, this.statusFluxo, this.atividadeAprovacao, this.atividadeRealizacao.tipoExecucao().toString());
-
     }
 
     @Override

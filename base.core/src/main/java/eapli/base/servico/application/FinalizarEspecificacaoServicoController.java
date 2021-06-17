@@ -14,7 +14,12 @@ public class FinalizarEspecificacaoServicoController {
         return servRep.servicosIncompletos();
     }
 
-    public Servico guardarServico(Servico servico){
-        return servRep.save(servico);
+    public boolean completarServico(Servico servico){
+        if(servico.estaCompleto()) {
+            servico.completar();
+            servRep.save(servico);
+            return true;
+        }
+        return false;
     }
 }

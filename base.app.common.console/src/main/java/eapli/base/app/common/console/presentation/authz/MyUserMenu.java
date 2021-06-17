@@ -25,7 +25,7 @@ package eapli.base.app.common.console.presentation.authz;
 
 import eapli.base.app.common.console.presentation.EspecificarEquipa.EspecificarEquipaUI;
 import eapli.base.app.common.console.presentation.especificarServicoUI.EspecificarServicoUI;
-import eapli.base.app.common.console.presentation.especificarServicoUI.TerminarEspecificacaoServicoPendenteUI;
+import eapli.base.app.common.console.presentation.finalizarEspecificacaoServicoUI.TerminarEspecificacaoServicoPendenteUI;
 import eapli.base.app.common.console.presentation.adicionarNivelCriticidadeUI.AdicionarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTarefasUI;
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;

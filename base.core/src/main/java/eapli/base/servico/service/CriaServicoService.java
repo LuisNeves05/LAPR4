@@ -33,20 +33,20 @@ public class CriaServicoService {
             FluxoAtividade fluxoExistente = serv.fluxoDoServico();
 
             if (fluxoAtividade.ativAprovacaoDoFluxo() == null) {
-                fluxoExistente.definirAtividadeAprovacao(null);
+                fluxoExistente.comAtividadeAprovacao(null);
             } else {
                 Formulario f = guardaFormulario(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
                 fluxoAtividade.ativAprovacaoDoFluxo().adicionaFormulario(f);
-                fluxoExistente.definirAtividadeAprovacao(guardaAtividadeAprovacao(fluxoAtividade.ativAprovacaoDoFluxo()));
+                fluxoExistente.comAtividadeAprovacao(guardaAtividadeAprovacao(fluxoAtividade.ativAprovacaoDoFluxo()));
             }
             if (fluxoAtividade.ativRealizacaoDoFluxo() == null) {
-                fluxoExistente.definirAtividadeRealizacao(null);
+                fluxoExistente.comAtividadeRealizacao(null);
             } else {
                 if(fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
                     Formulario f = guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
                     fluxoAtividade.ativRealizacaoDoFluxo().adicionaFormulario(f);
                 }
-                fluxoExistente.definirAtividadeRealizacao(guardaAtividadeRealizacao(fluxoAtividade.ativRealizacaoDoFluxo()));
+                fluxoExistente.comAtividadeRealizacao(guardaAtividadeRealizacao(fluxoAtividade.ativRealizacaoDoFluxo()));
             }
 
             serviceBuilder.comFluxo(guardaFluxo(fluxoExistente));

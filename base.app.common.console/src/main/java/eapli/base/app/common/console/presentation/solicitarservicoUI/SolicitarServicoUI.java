@@ -24,7 +24,6 @@ public class SolicitarServicoUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-
         List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
 
         if (catalogoList.isEmpty()) {
@@ -93,7 +92,7 @@ public class SolicitarServicoUI extends AbstractUI {
             }
         }
 
-        List<Formulario> formularioList = lcp.formulariosServico(s);
+        Iterable<Formulario> formularioList = s.formulariosDoServico();
 
         Set<FormularioPreenchido> fps = new HashSet<>();
         Ticket ticket = lcp.criarTicket(s, urgencia);
@@ -121,20 +120,22 @@ public class SolicitarServicoUI extends AbstractUI {
 
             //}while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
 
-            FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());
-            fps.add(fp);
-
-            lcp.saveFormPreenchido(fp);
+            fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas, ticket));
         }
 
-        boolean result = lcp.solicitarServico(s, ticket);
+        try {
+            lcp.solicitarServico(s, ticket, fps);
+        }catch (Exception x){
+            System.out.println("Ocorreu algum erro ao solicitar o serviço");
+        }
+
 
         /**
          * Algoritmo de atribuicao automatica
          */
         HelpMethodsForUIs.sendToServer();
 
-        return result;
+        return true;
     }
 
     @Override

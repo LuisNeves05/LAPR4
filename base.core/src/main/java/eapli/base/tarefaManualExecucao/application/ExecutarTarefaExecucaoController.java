@@ -34,9 +34,7 @@ public class ExecutarTarefaExecucaoController {
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
 
-    public ExecutarTarefaExecucaoController() {
-        authorizationService.ensureAuthenticatedUserHasAnyOf(BaseRoles.COLABORADOR);
-    }
+    public ExecutarTarefaExecucaoController() {}
 
     public Colaborador colabPorUserName(Username username){
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();

@@ -1,18 +1,15 @@
 package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
 
 import eapli.base.Utils.HelpMethods;
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
-import eapli.framework.visitor.Visitor;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,13 +18,11 @@ import java.util.Set;
 
 public class ExecutarTarefaManualAprovUI extends AbstractUI {
     private final ExecutarTarefaAprovacaoController controller = new ExecutarTarefaAprovacaoController();
-    List<TarefaManualAprovacao> listaTarefaAprov;
 
     @Override
     protected boolean doShow() {
 
-
-        listaTarefaAprov = controller.tarefasManualAprovacao();
+        List<TarefaManualAprovacao> listaTarefaAprov = controller.tarefasManualAprovacao();
 
         if(listaTarefaAprov.isEmpty()){
             System.out.println("Ainda não existem tarefas de aprovação atribuidas a si.");
@@ -41,8 +36,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
         if(tarefaManualAprovacao == null)
             return true;
 
-        AtividadeAprovacao ap = tarefaManualAprovacao.atividadeAprovacaoDaTarefa();
-        Formulario f = ap.formularioAprovacao();
+        Formulario f = tarefaManualAprovacao.atividadeAprovacaoDaTarefa().formularioAprovacao();
 
                 System.out.println("\nFormulario " + f.name() + "\n");
 
@@ -57,7 +51,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                         resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                         if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
                             if (atributo.tipoDados() == TipoDados.DECISAO) {
-                              controller.isDecisao(resposta,tarefaManualAprovacao);
+                              controller.decisao(resposta,tarefaManualAprovacao);
                             }
                             flag = false;
                         }
@@ -68,7 +62,14 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                     respostas.add(controller.adicionarResposta(resposta,atributo.nomeVar()));
                 }
 
-            controller.terminarExecucao(f,respostas,tarefaManualAprovacao);
+            try {
+                TarefaManualAprovacao tarManAprov = controller.terminarAprovacao(f, respostas, tarefaManualAprovacao);
+                System.out.println(tarManAprov.toString());
+                System.out.println("Tarefa aprovada/rejeitada!");
+            }catch (Exception x){
+                System.out.println("Ocorreu algum erro ao terminar a execução");
+            }
+
 
         return true;
     }
