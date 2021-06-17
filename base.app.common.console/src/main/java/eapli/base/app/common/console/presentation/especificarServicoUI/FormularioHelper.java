@@ -87,9 +87,9 @@ public class FormularioHelper {
                 continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
                 if (continuar.equalsIgnoreCase("nao")) {
                     String script;
-                    do {
+                    //do {
                         script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
-                    }while(!ScriptFormularios.validadeGrammarFromString(script));
+                    //}while(!ScriptFormularios.validadeGrammarFromString(script));
                     f.addScript(script);
                     flag = false;
                 }

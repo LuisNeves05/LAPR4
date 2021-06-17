@@ -2,6 +2,7 @@ package Dashboard2.www;
 
 import Dashboard2.DashboardThread;
 import SSLWorkflow.ClientSSL;
+import eapli.base.Utils.HelpMethods;
 import eapli.base.fluxoAtividade.dto.FluxoAtividadeDTO;
 
 import java.io.IOException;
@@ -289,19 +290,22 @@ public class DashboardUtils {
 
     public static void openDashboard(int userRole) {
 
-        Thread t1 = new Thread(new DashboardThread(userRole));
-        t1.start();
+        if(HelpMethods.readFromProperties("systemUse").contains("server")){
 
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            Thread t1 = new Thread(new DashboardThread(userRole));
+            t1.start();
 
-        try {
-            java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:9992/"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                java.awt.Desktop.getDesktop().browse(URI.create("http://localhost:9992/"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

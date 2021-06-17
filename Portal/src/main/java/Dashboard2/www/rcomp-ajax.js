@@ -22,7 +22,7 @@ function refreshVotes() {
     request.onerror = function() {
         vBoard.innerHTML = "No server reply, still trying ...";
         vBoard.style.color="red";
-        setTimeout(refreshVotes, 15000);
+        setTimeout(refreshVotes, 10000);
     };
 
     request.open("GET", "/votes", true);

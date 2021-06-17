@@ -107,7 +107,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
             String resposta;
             List<Resposta> lista = new ArrayList<>();
-            do {
+            //do {
                 respostas.clear();
                 lista.clear();
                 for (Atributo atributo : atri) {
@@ -119,7 +119,7 @@ public class SolicitarServicoUI extends AbstractUI {
                 }
                 lista = new ArrayList<>(respostas);
 
-            }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
+            //}while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
 
             FormularioPreenchido fp = new FormularioPreenchido(f, urgencia, respostas, ticket, lcp.colaboradorLogado());
             fps.add(fp);
