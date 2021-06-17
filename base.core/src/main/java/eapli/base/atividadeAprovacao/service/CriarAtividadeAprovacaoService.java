@@ -1,4 +1,4 @@
-package eapli.base.atividadeAprovacao.CriarAtividadeAprovacaoService;
+package eapli.base.atividadeAprovacao.service;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.atividadeAprovacao.domain.ColaboradoresAprovacao;
