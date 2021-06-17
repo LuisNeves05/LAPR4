@@ -21,28 +21,31 @@ import java.util.List;
 public class AssignarTarefaController {
 
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
-    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
+    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
+
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
     private final UserSession userSession = authorizationService.session().get();
     private final SystemUser systemUser = userSession.authenticatedUser();
-    private final Colaborador colabPedido =colabPorUserName(systemUser.username());
+    private final Colaborador colabPedido = colabPorUserName(systemUser.username());
     private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
-    public Colaborador colabPorUserName(Username username){
+    public Colaborador colabPorUserName(Username username) {
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
     }
 
-    public Iterable<Equipa>equipasColab(){
-       return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+
+    public Iterable<Equipa> equipasColab() {
+        return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
     }
 
-    public List<TarefaManualExecucao> tarefasManualExecucao(){
-        return  tarefaManualExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
+    public List<TarefaManualExecucao> tarefasManualExecucao() {
+        return tarefaManualExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
     }
 
-    public Iterable<TarefaManualAprovacao> tarefasManualAprovacao( ){
+
+    public Iterable<TarefaManualAprovacao> tarefasManualAprovacao() {
         return tarefaManualAprovacaoRepositorio.tarefasManuaisAprovacaoNA(colabPedido);
     }
 
@@ -57,6 +60,7 @@ public class AssignarTarefaController {
         return null;
     }
 
+    /*
     public TarefaManualExecucao assignarTarefaExecutanteAUmColaborador(TarefaManualExecucao tarefa, Colaborador colab) {
         tarefa.retirarEquipa();
         tarefa.defineColaboradorExecutante(colab);
@@ -69,7 +73,9 @@ public class AssignarTarefaController {
         return null;
     }
 
-    public Colaborador responsavelTarefa(){
+     */
+
+    public Colaborador responsavelTarefa() {
         return this.colabPedido;
     }
 }

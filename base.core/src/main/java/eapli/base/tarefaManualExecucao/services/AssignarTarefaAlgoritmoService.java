@@ -5,7 +5,7 @@ import eapli.base.Utils.SortValues;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.infrastructure.persistence.PersistenceContext;
-import eapli.base.tarefaManualExecucao.application.AssignarTarefaController;
+import eapli.base.tarefaManualExecucao.application.AssignarTarefaAlgoritmoController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 
@@ -21,19 +21,19 @@ public class AssignarTarefaAlgoritmoService {
     }
 
     public boolean selecionarColabComMenosTarefas() {
-        final AssignarTarefaController controller = new AssignarTarefaController();
-        final List<TarefaManualExecucao> listaTarefasManualExecucao = controller.tarefasManualExecucao();
+        final AssignarTarefaAlgoritmoController controllerAlg = new AssignarTarefaAlgoritmoController();
+        final List<TarefaManualExecucao> listaTarefasManualExecucao = controllerAlg.tarefasPorExecutar();
         final TarefaManualExecucaoRepositorio repoTarefa = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
-
 
         Map<Colaborador, Integer> algoData = new HashMap<>();
         Set<Colaborador> setL = new LinkedHashSet<>();
 
-        System.out.println("LISTA :" + listaTarefasManualExecucao);
+        //System.out.println("LISTA :" + listaTarefasManualExecucao);
 
         if (!listaTarefasManualExecucao.isEmpty()) {
             TarefaManualExecucao tarefaManualExecucao = listaTarefasManualExecucao.get(0);
             Set<Equipa> equipasQueExecutam = tarefaManualExecucao.equipasQueExecutam();
+
 
 
             /**
@@ -71,9 +71,9 @@ public class AssignarTarefaAlgoritmoService {
              * Assignacao automaticamente a tarefa
              */
 
-            controller.assignarTarefaExecutanteAUmColaborador(tarefaManualExecucao, choosenColab);
+            controllerAlg.assignarTarefaExecutanteAUmColaborador(tarefaManualExecucao, choosenColab);
 
-            if (controller.assignarTarefaExecutanteAUmColaborador(tarefaManualExecucao, choosenColab) != null) {
+            if (controllerAlg.assignarTarefaExecutanteAUmColaborador(tarefaManualExecucao, choosenColab) != null) {
                 System.out.println("Tarefa com sucesso e atribuida ao " + choosenColab.nomeToString());
                 return true;
             }
