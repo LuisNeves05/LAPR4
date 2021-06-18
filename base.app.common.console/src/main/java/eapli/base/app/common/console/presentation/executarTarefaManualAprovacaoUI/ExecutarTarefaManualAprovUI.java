@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
+package eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI;
 
 import eapli.base.Utils.HelpMethods;
 import eapli.base.formulario.domain.Atributo;

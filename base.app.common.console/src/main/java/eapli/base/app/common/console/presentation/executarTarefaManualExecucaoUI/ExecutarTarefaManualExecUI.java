@@ -1,16 +1,18 @@
-package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
+package eapli.base.app.common.console.presentation.executarTarefaManualExecucaoUI;
 
 import eapli.base.Utils.HelpMethods;
+import eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI.TarefasAprovacaoPrinter;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.application.ExecutarTarefaExecucaoController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import eapli.framework.presentation.console.SelectWidget;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +25,6 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        TarefaManualExecucao tarefaManualExecucao = null;
         List<TarefaManualExecucao> listaTarefasManualExecucao = controller.tarefasManualExecucaoPendente();
 
         if(listaTarefasManualExecucao.isEmpty()){
@@ -31,26 +32,12 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
             return false;
         }
 
-        int index = 1;
-        for (TarefaManualExecucao t : listaTarefasManualExecucao) {
-            System.out.println(index + " " + t.toString());
-            index++;
-        }
-
-        boolean escolherTarefa = false;
-
-        while (!escolherTarefa) {
-            int opcao = Console.readInteger("Escolha a tarefa que pretende realizar : (prima 0 para sair)");
-
-            if (opcao == 0) {
-                return false;
-            } else if (opcao <= listaTarefasManualExecucao.size() && opcao > 0) {
-                escolherTarefa = true;
-                tarefaManualExecucao = listaTarefasManualExecucao.get(opcao - 1);
-            } else {
-                System.out.println("Coloque um index válido");
-            }
-        }
+        final SelectWidget<TarefaManualExecucao> selector = new SelectWidget<>("Tarefas a Realizar:", listaTarefasManualExecucao,
+                new TarefasExecucaoPrinter());
+        selector.show();
+        final TarefaManualExecucao tarefaManualExecucao = selector.selectedElement();
+        if(tarefaManualExecucao == null)
+            return true;
 
         AtividadeRealizacao ar = tarefaManualExecucao.atividadeRealizacaoDaTarefa();
         Formulario f = ar.formularioRealizacao();
@@ -69,9 +56,9 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
                     if (atributo.tipoDados() == TipoDados.CONCLUSAO) {
                         if (resposta.equalsIgnoreCase("Concluido")) {
-                            tarefaManualExecucao.procurarTicket().completarTicket();
+                            tarefaManualExecucao.ticketDaTarefa().completarTicket();
                         } else {
-                            tarefaManualExecucao.procurarTicket().inacabadoTicket();
+                            tarefaManualExecucao.ticketDaTarefa().inacabadoTicket();
                         }
                     }
                     flag = false;
@@ -81,15 +68,15 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 }
             } while (flag);
 
-            Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-            respostas.add(rAtr);
+            respostas.add(controller.adicionaResposta(resposta, atributo.nomeVar()));
         }
 
-        FormularioPreenchido fp = new FormularioPreenchido(f, respostas, tarefaManualExecucao.procurarTicket(), controller.colablogged());
+        try {
+            controller.terminaExecucao(f, respostas, tarefaManualExecucao);
+        }catch (Exception x){
+            System.out.println("Ocorreu um erro");
+        }
 
-        controller.saveFormPreenchido(fp);
-        controller.saveTicket(tarefaManualExecucao.procurarTicket());
-        controller.saveTarefaExecucao(tarefaManualExecucao);
 
         return true;
     }

@@ -10,7 +10,6 @@ import eapli.base.criticidade.domain.Objetivo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxoAtividade.builder.FluxoAtividadeBuilder;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.gramatica.ScriptFormularios;
 import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
 import eapli.base.servico.application.EspecificarServicoController;
 import eapli.base.servico.builder.ServiceBuilder;
@@ -139,7 +138,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
         if (inserirAtAprovacao(serviceBuilder, null, colabsAprov, formularios, fluxoAtivBuilder)) {
             if (!colabsAprov.isEmpty()) {
-                Formulario form = fh.form(false, true, false);
+                Formulario form = fh.form( true, false);
                 servicoController.fluxoComAtividadeAprovacao(fluxoAtivBuilder, colabsAprov, form);
             }
         } else {
@@ -148,12 +147,13 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder)) {
-            Formulario form = fh.form(false, false, true);
+            Formulario form = fh.form(false, true);
             if (colab != null) {
                 servicoController.fluxoComAtividadeRealizacaoColab(fluxoAtivBuilder, colab, tipoExec, form);
             } else if (!equipasExec.isEmpty()) {
                 servicoController.fluxoComAtividadeRealizacaoEquipas(fluxoAtivBuilder, equipasExec, form);
-            }
+            }else
+                servicoController.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder, scriptAutomatico);
         } else {
             servicoController.especificarServico(servicoController.criarServico(serviceBuilder, formularios, fluxoAtivBuilder));
             return false;
@@ -169,7 +169,7 @@ public class EspecificarServicoUI extends AbstractUI {
             return false;
         }
 
-        formularios = especificarFormulario();
+        formularios = especificarFormularios();
 
         associarNivelCrit(serviceBuilder);
 
@@ -291,7 +291,7 @@ public class EspecificarServicoUI extends AbstractUI {
         if (alterar().equalsIgnoreCase("sim")) {
             if (inserirAtAprovacao(serviceBuilder, serv, colabsAprov, formularios, fluxoAtivBuilder)) {
                 if (!colabsAprov.isEmpty()) {
-                    Formulario form = fh.form(false, true, false);
+                    Formulario form = fh.form(true, false);
                     servicoController.fluxoComAtividadeAprovacao(fluxoAtivBuilder, colabsAprov, form);
                 }
             } else {
@@ -339,7 +339,7 @@ public class EspecificarServicoUI extends AbstractUI {
             serviceBuilder.comRequerFeedback(serv.requerFeedbackDoServico());
         }
 
-        List<Formulario> formsServ = especificarFormulario();
+        List<Formulario> formsServ = especificarFormularios();
         if (!formsServ.isEmpty())
             formularios.addAll(formsServ);
         associarNivelCrit(serviceBuilder);
@@ -371,7 +371,7 @@ public class EspecificarServicoUI extends AbstractUI {
         }
     }
 
-    private List<Formulario> especificarFormulario() {
+    private List<Formulario> especificarFormularios() {
         List<Formulario> listaFormularios = new ArrayList<>();
         String strContinuar;
         do {
@@ -381,7 +381,7 @@ public class EspecificarServicoUI extends AbstractUI {
         if (strContinuar.equalsIgnoreCase("sim")) {
             String novoForm;
             do {
-                Formulario f = fh.form(true, false, false);
+                Formulario f = fh.form(false, false);
                 listaFormularios.add(f);
                 novoForm = Console.readLine("Deseja especificar outro formulario?  (sim|não)");
             } while (novoForm.contains("sim"));
@@ -403,10 +403,11 @@ public class EspecificarServicoUI extends AbstractUI {
     private boolean comAtividadeRealizacao(ServiceBuilder serviceBuilder, List<Equipa> equipasExec, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtivBuilder) {
 
         if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder)) {
-            Formulario form = fh.form(false, false, true);
             if (colab != null) {
+                Formulario form = fh.form(false, true);
                 servicoController.fluxoComAtividadeRealizacaoColab(fluxoAtivBuilder, colab, tipoExec, form);
             } else if (!equipasExec.isEmpty()) {
+                Formulario form = fh.form(false, true);
                 servicoController.fluxoComAtividadeRealizacaoEquipas(fluxoAtivBuilder, equipasExec, form);
             }
         } else {
@@ -443,9 +444,6 @@ public class EspecificarServicoUI extends AbstractUI {
                 servicoController.criarServico(serviceBuilder, formularios, fluxoAtivBuilder);
                 return false;
             } else if (atReal.equalsIgnoreCase("0")) {
-                fluxoAtivBuilder.comAtividadeRealizacao(null);
-                colab = null;
-                equipasExec.clear();
                 return true;
             } else if (atReal.equalsIgnoreCase("aut")) {
                 equipasExec.clear();
@@ -464,10 +462,10 @@ public class EspecificarServicoUI extends AbstractUI {
     }
 
     private boolean inserirScriptValidacaoTarefaAutomatica() {
-
         do {
             scriptAutomatico = Console.readLine("(0 para avançar) Insira o script de validação da Tarefa automática:");
             if (scriptAutomatico.equals("0")) {
+                scriptAutomatico = null;
                 break;
             }
         } while (!ScriptTarefasAutomaticas.validaTarefasAutomaticas(scriptAutomatico));

@@ -1,4 +1,4 @@
-package eapli.base.app.common.console.presentation.executarTarefaPendenteUI;
+package eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI;
 
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.framework.visitor.Visitor;

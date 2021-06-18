@@ -51,7 +51,7 @@ public class AssignarTarefaAlgoritmoService {
                 int perMax = 0;
 
                 for (TarefaManualExecucao tar : tarefasList) {
-                    perMax += tar.procurarTicket().periodoMaxRes();
+                    perMax += tar.ticketDaTarefa().periodoMaxRes();
                 }
 
                 algoData.put(elems, perMax);

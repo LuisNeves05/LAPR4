@@ -31,8 +31,8 @@ import eapli.base.app.common.console.presentation.assignarTarefaUI.AssignarTaref
 import eapli.base.app.common.console.presentation.especificarNivelCriticidadeUI.EspecificarNivelCriticidadeUI;
 import eapli.base.app.common.console.presentation.especificarcatalogoUI.EspecificarCatalogoUI;
 import eapli.base.app.common.console.presentation.especificarcolaboradorUI.EspecificarColaboradorUI;
-import eapli.base.app.common.console.presentation.executarTarefaPendenteUI.ExecutarTarefaManualAprovUI;
-import eapli.base.app.common.console.presentation.executarTarefaPendenteUI.ExecutarTarefaManualExecUI;
+import eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI.ExecutarTarefaManualAprovUI;
+import eapli.base.app.common.console.presentation.executarTarefaManualExecucaoUI.ExecutarTarefaManualExecUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;

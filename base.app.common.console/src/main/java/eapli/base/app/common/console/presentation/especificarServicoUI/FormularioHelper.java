@@ -12,7 +12,7 @@ public class FormularioHelper {
     private final EspecificarFormularioController fc = new EspecificarFormularioController();
 
 
-    public Formulario form(boolean repeatable, boolean decisaoAprovacao, boolean conclusaoRealizacao) {
+    public Formulario form(boolean decisaoAprovacao, boolean conclusaoRealizacao) {
         boolean flag = true;
         String continuar;
         String nomeForm;
@@ -83,22 +83,19 @@ public class FormularioHelper {
 
             f.addAtributo(nomeVar, lable, descAjuda, td, expReg);
 
-            if (repeatable) {
-                continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
-                if (continuar.equalsIgnoreCase("nao")) {
-                    String script;
-                    //do {
-                        script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
-                    //}while(!ScriptFormularios.validadeGrammarFromString(script));
-                    f.addScript(script);
-                    flag = false;
-                }
-            } else {
+            String script;
+            //do {
+            script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
+            //}while(!ScriptFormularios.validadeGrammarFromString(script));
+            f.addScript(script);
+
+
+            continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
+            if (continuar.equalsIgnoreCase("nao")) {
                 flag = false;
             }
         }
 
-        fc.saveForm(f);
         return f;
     }
 

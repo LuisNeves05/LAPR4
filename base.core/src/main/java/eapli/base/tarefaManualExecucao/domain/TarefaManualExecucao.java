@@ -63,7 +63,7 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return equipasExecuta;
     }
 
-    public Ticket procurarTicket(){
+    public Ticket ticketDaTarefa(){
         return ticket;
     }
 

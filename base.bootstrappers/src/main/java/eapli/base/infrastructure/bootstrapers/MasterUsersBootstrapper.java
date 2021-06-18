@@ -24,6 +24,7 @@ import eapli.base.equipa.application.EspecificarEquipaController;
 import eapli.base.equipa.domain.Acronimo;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.fluxoAtividade.domain.FluxoAtividade;
+import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -54,11 +55,11 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     private final EspecificarColaboradorController colaboradorController = new EspecificarColaboradorController();
     private final EspecificarServicoController especificarServicoController = new EspecificarServicoController();
     private final RegistarTipoEquipaController registarTipoEquipaController = new RegistarTipoEquipaController();
-    private final AddUserController acd = new AddUserController();
     private final EspecificarNivelCriticidadeController enc = new EspecificarNivelCriticidadeController();
     private final FormularioRepositorio formRep = PersistenceContext.repositories().formularioRepositorio();
     private final AtividadeAprovacaoRepositorio ativAprovRepo = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
     private final AtividadeRealizacaoRepositorio atividadeRealRepo = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
+    private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
 
     @Override
@@ -288,7 +289,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
                 "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
         f1Aprov.addAtributo("Fundamentação", "Comentário decisão", "Fundamente a sua decisão", TipoDados.STRING, "[a-zA-Z]+");
         atividadeAprovacao1.adicionaFormulario(formRep.save(f1Aprov));
-        atividadeAprovacao1 = criarServico1.guardaAtividadeAprovacao(atividadeAprovacao1);
+        atividadeAprovacao1 = ativAprovRepo.save(atividadeAprovacao1);
 
         /**
          *   Cria Atividade de realização de um Servico
@@ -308,12 +309,12 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         f1Exe.addAtributo("FaltasJustificadas", "Faltas", "Dias de faltas justificadas totais", TipoDados.INT, "[0-9]+");
         f1Exe.addAtributo("FaltasNJustificadas", "Faltas", "Dias de faltas não justificadas totais", TipoDados.INT, "[0-9]+");
         atividadeRealizacao1.adicionaFormulario(formRep.save(f1Exe));
-        atividadeRealizacao1 = criarServico1.guardaAtividadeRealizacao(atividadeRealizacao1);
+        atividadeRealizacao1 = atividadeRealRepo.save(atividadeRealizacao1);
 
         /**
          guarda Fluxo de Atividade
          */
-        FluxoAtividade fluxoAtividade1 = criarServico1.guardaFluxo(new FluxoAtividade(atividadeAprovacao1, atividadeRealizacao1));
+        FluxoAtividade fluxoAtividade1 = fluxoAtividadeRepositorio.save(new FluxoAtividade(atividadeAprovacao1, atividadeRealizacao1));
         Servico servico1 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAusencia"), new Titulo("Pedido de Ausência Futura"), new DescricaoBreve("Pedido de ausência para Férias, ou por um motivo justificado ou não justificado"),
                 new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywordsRRH, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, false, nc));
 
@@ -329,7 +330,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         f1pedido.addAtributo("Comentario", "Comentário de Ausência", "Se ausência for justificada, é obrigado a inserir um comentário", TipoDados.STRING, "[a-zA-Z]+");
 
         f1pedido = formRep.save(f1pedido);
-        criarServico1.adicionaFormulario(servico1, f1pedido);
+        servico1.adicionaFormulario(f1pedido);
         especificarServicoController.especificarServico(servico1);
 
 
@@ -372,19 +373,19 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
                 "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
         f2Aprov.addAtributo("Fundamentação", "Comentário decisão", "Fundamente a sua decisão, e confirmar a percentagem ou valor de desconto atribuído e a data limite", TipoDados.STRING, "[a-zA-Z]+");
         atividadeAprovacao2.adicionaFormulario(formRep.save(f2Aprov));
-        atividadeAprovacao2 = criarServico2.guardaAtividadeAprovacao(atividadeAprovacao2);
+        atividadeAprovacao2 =ativAprovRepo.save(atividadeAprovacao2);
 
 
         /**
          *   Cria Atividade de realização de um serviço
          */
         AtividadeRealizacao atividadeRealizacao2 = new AtividadeRealizacao("SCRIPT Teste");//todo desenvolver script para realizaÇão automática ???
-        atividadeRealizacao2 = criarServico2.guardaAtividadeRealizacao(atividadeRealizacao2);
+        atividadeRealizacao2 = atividadeRealRepo.save(atividadeRealizacao2);
 
         /**
          guarda Fluxo de Atividade
          */
-        FluxoAtividade fluxoAtividade2 = criarServico2.guardaFluxo(new FluxoAtividade(atividadeAprovacao2, atividadeRealizacao2));
+        FluxoAtividade fluxoAtividade2 = fluxoAtividadeRepositorio.save(new FluxoAtividade(atividadeAprovacao2, atividadeRealizacao2));
         Servico servico2 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAVenda"), new Titulo("Aplicação de Desconto"), new DescricaoBreve("Autorização para Aplicação de Desconto"),
                 new DescricaoCompleta("Autorização para Aplicação de Desconto, e especificação do mesmo."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade2, catalogoVendas, false, nc));
 
@@ -405,7 +406,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
 
         f2pedido = formRep.save(f2pedido);
-        criarServico2.adicionaFormulario(servico2, f2pedido);
+        servico2.adicionaFormulario(f2pedido);
         especificarServicoController.especificarServico(servico2);
         /**
          * Serviço 3
@@ -441,12 +442,12 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
 
         atividadeRealizacao3.adicionaFormulario(formRep.save(f3exe));
-        atividadeRealizacao3 = criarServico3.guardaAtividadeRealizacao(atividadeRealizacao3);
+        atividadeRealizacao3 = atividadeRealRepo.save(atividadeRealizacao3);
 
         /**
          Cria Fluxo de Atividade
          */
-        FluxoAtividade fluxoAtividade3 = criarServico2.guardaFluxo(new FluxoAtividade(atividadeRealizacao3));
+        FluxoAtividade fluxoAtividade3 = fluxoAtividadeRepositorio.save(new FluxoAtividade(atividadeRealizacao3));
         Servico servico3 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("124IDAVenda"), new Titulo("Alteração de Residência"), new DescricaoBreve("Alteração de Residência"),
                 new DescricaoCompleta("Requisitar a alteração de residência , fornecendo uma morada e um código postal."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade3, catalogoVendas, false, nc));
 
@@ -458,7 +459,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         f3pedido.addAtributo(" Morada Postal", "Morada", "Morada seguida de código postal", TipoDados.STRING, "^[A-Z a-z]+ ' ' [0-9]{4}-[0-9]{3}*$");
 
         f3pedido = formRep.save(f3pedido);
-        criarServico3.adicionaFormulario(servico3, f3pedido);
+        servico3.adicionaFormulario(f3pedido);
         especificarServicoController.especificarServico(servico3);
 
         /**
@@ -490,12 +491,12 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          */
 
         AtividadeRealizacao atividadeRealizacao4 = new AtividadeRealizacao("SCRIPTO");//todo desenvolver script para realizaÇão automática ???
-        atividadeRealizacao4 = criarServico4.guardaAtividadeRealizacao(atividadeRealizacao4);
+        atividadeRealizacao4 = atividadeRealRepo.save(atividadeRealizacao4);
 
         /**
          Cria Fluxo de Atividade
          */
-        FluxoAtividade fluxoAtividade4 = criarServico4.guardaFluxo(new FluxoAtividade(atividadeRealizacao4));
+        FluxoAtividade fluxoAtividade4 = fluxoAtividadeRepositorio.save(new FluxoAtividade(atividadeRealizacao4));
         Servico servico4 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("125IDAVenda"), new Titulo("Cotação para venda por grosso"), new DescricaoBreve("Venda por grosso"),
                 new DescricaoCompleta("Definir especificações de possíveis vendas a grosso a clientes."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade4, catalogoVendas, false, nc));
 
@@ -509,7 +510,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
 
         f4pedido = formRep.save(f4pedido);
-        criarServico4.adicionaFormulario(servico4, f4pedido);
+        servico4.adicionaFormulario(f4pedido);
         especificarServicoController.especificarServico(servico4);
 
 

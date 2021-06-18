@@ -22,7 +22,6 @@ public class CriaServicoService {
     private final FluxoAtividadeRepositorio fluxoAtivRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
     private final AtividadeAprovacaoRepositorio ativAprovRep = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
     private final AtividadeRealizacaoRepositorio ativRealRep = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
-    private final FormularioRepositorio formularioRepositorio = PersistenceContext.repositories().formularioRepositorio();
 
     public Servico especificarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtividadeBuilder) {
 
@@ -35,80 +34,48 @@ public class CriaServicoService {
             if (fluxoAtividade.ativAprovacaoDoFluxo() == null) {
                 fluxoExistente.comAtividadeAprovacao(null);
             } else {
-                Formulario f = guardaFormulario(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
+                Formulario f = formRep.save(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
                 fluxoAtividade.ativAprovacaoDoFluxo().adicionaFormulario(f);
-                fluxoExistente.comAtividadeAprovacao(guardaAtividadeAprovacao(fluxoAtividade.ativAprovacaoDoFluxo()));
+                fluxoExistente.comAtividadeAprovacao(ativAprovRep.save(fluxoAtividade.ativAprovacaoDoFluxo()));
             }
             if (fluxoAtividade.ativRealizacaoDoFluxo() == null) {
                 fluxoExistente.comAtividadeRealizacao(null);
             } else {
                 if(fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
-                    Formulario f = guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
+                    Formulario f = formRep.save(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
                     fluxoAtividade.ativRealizacaoDoFluxo().adicionaFormulario(f);
                 }
-                fluxoExistente.comAtividadeRealizacao(guardaAtividadeRealizacao(fluxoAtividade.ativRealizacaoDoFluxo()));
+                fluxoExistente.comAtividadeRealizacao(ativRealRep.save(fluxoAtividade.ativRealizacaoDoFluxo()));
             }
 
-            serviceBuilder.comFluxo(guardaFluxo(fluxoExistente));
+            serviceBuilder.comFluxo(fluxoAtivRepositorio.save(fluxoExistente));
         } else {
             AtividadeRealizacao atReal = null;
             AtividadeAprovacao atAprov = null;
             if (fluxoAtividade.ativRealizacaoDoFluxo() != null) {
                 atReal = fluxoAtividade.ativRealizacaoDoFluxo();
                 if(fluxoAtividade.ativRealizacaoDoFluxo().tipoExecucao().equals(TipoExecucao.MANUAL)) {
-                    Formulario f = guardaFormulario(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
+                    Formulario f = formRep.save(fluxoAtividade.ativRealizacaoDoFluxo().formularioRealizacao());
                     atReal.adicionaFormulario(f);
                 }
-                atReal = guardaAtividadeRealizacao(atReal);
+                atReal = ativRealRep.save(atReal);
             }
             if (fluxoAtividade.ativAprovacaoDoFluxo() != null) {
-                Formulario f = guardaFormulario(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
+                Formulario f = formRep.save(fluxoAtividade.ativAprovacaoDoFluxo().formularioAprovacao());
                 atAprov = fluxoAtividade.ativAprovacaoDoFluxo();
                 atAprov.adicionaFormulario(f);
-                atAprov = guardaAtividadeAprovacao(atAprov);
+                atAprov = ativAprovRep.save(atAprov);
             }
             if(fluxoAtividade.ativRealizacaoDoFluxo() != null || fluxoAtividade.ativRealizacaoDoFluxo() != null)
-                serviceBuilder.comFluxo(guardaFluxo(new FluxoAtividade(atAprov, atReal)));
+                serviceBuilder.comFluxo(fluxoAtivRepositorio.save(new FluxoAtividade(atAprov, atReal)));
         }
         Servico servv = serviceBuilder.build();
 
         if(!formularios.isEmpty())
         for (Formulario formulario : formularios) {
-            adicionaFormulario(servv, guardaFormulario(formulario));
+            serv.adicionaFormulario(formulario);
         }
 
         return servv;
-    }
-
-    public Formulario guardaFormulario(Formulario formulario) {
-        return formRep.save(formulario);
-    }
-
-    public FluxoAtividade guardaFluxo(FluxoAtividade fluxoAtividade) {
-        return fluxoAtivRepositorio.save(fluxoAtividade);
-    }
-
-    public AtividadeRealizacao guardaAtividadeRealizacao(AtividadeRealizacao atividadeRealizacao) {
-        return ativRealRep.save(atividadeRealizacao);
-    }
-
-    public AtividadeAprovacao guardaAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao) {
-        return ativAprovRep.save(atividadeAprovacao);
-    }
-
-    public void removerAtividadeRealizacao(AtividadeRealizacao ativRealizacaoDoFluxo) {
-        ativRealRep.removePeloID(ativRealizacaoDoFluxo);
-    }
-
-    public void removerAtividadeAprovacao(AtividadeAprovacao atividadeAprovacao) {
-        ativAprovRep.removePeloID(atividadeAprovacao);
-    }
-
-    public void removeFormulario(Formulario form){
-        formularioRepositorio.removePeloID(form);
-    }
-
-    public void adicionaFormulario(Servico s, Formulario formulario){
-        s.adicionaFormulario(formulario);
     }
 }
