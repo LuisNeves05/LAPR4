@@ -27,11 +27,6 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
         this.colabsAprov = new HashSet<>();
     }
 
-    @Override
-    public String toString() {
-        return colabsAprov.toString();
-    }
-
     public void adicionaColabAprov(ColaboradoresAprovacao colabAprov){
         colabsAprov.add(colabAprov);
     }
@@ -56,5 +51,9 @@ public class AtividadeAprovacao implements AggregateRoot<Long>, Comparable<Long>
 
     public Formulario formularioAprovacao() {
         return formulario;
+    }
+    @Override
+    public String toString() {
+        return colabsAprov.toString();
     }
 }

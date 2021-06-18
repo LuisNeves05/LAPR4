@@ -1,13 +1,11 @@
 package eapli.base.tarefaManualAprovacao.persistance;
 
 import eapli.base.Application;
-import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
-
 import javax.persistence.Query;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class TarefaManualAprovacaoRepositorioJPAimpl extends JpaAutoTxRepository
 
     @Override
     public List<TarefaManualAprovacao> tarefasManuaisAprovacaoNA(Colaborador colaborador) {
-        Query query = super.createQuery("SELECT t from TarefaManualAprovacao t where t.estadoAprovacao = :a and :colaborador MEMBER of colabsAprova", TarefaManualAprovacao.class);
+        Query query = super.createQuery("SELECT t from TarefaManualAprovacao t where t.estadoAprovacao = :a and :colaborador = colabAprov", TarefaManualAprovacao.class);
         query.setParameter("colaborador", colaborador);
         query.setParameter("a", EstadoAprovacao.POR_APROVAR);
         return query.getResultList();

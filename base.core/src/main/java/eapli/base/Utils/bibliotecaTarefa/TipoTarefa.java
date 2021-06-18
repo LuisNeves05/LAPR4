@@ -20,5 +20,5 @@ public interface TipoTarefa {
 
     TarefaManualExecucao novaTarefaManualExecucaoColaborador(Ticket ticket, Colaborador colabExecuta, EstadoRealizacao estadoRealizacao, AtividadeRealizacao ar);
 
-    TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket, AtividadeAprovacao aa);
+    TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket, AtividadeAprovacao aa, Colaborador colabAprov);
 }

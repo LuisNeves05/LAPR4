@@ -73,7 +73,7 @@ public class CriaServicoService {
 
         if(!formularios.isEmpty())
         for (Formulario formulario : formularios) {
-            serv.adicionaFormulario(formulario);
+            servv.adicionaFormulario(formRep.save(formulario));
         }
 
         return servv;

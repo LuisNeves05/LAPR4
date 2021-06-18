@@ -20,8 +20,8 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     @OneToOne
     private Ticket ticket;
 
-    @ManyToMany
-    private Set<Colaborador> colabsAprova;
+    @OneToOne
+    private Colaborador colabAprov;
 
     @Enumerated(EnumType.STRING)
     private EstadoAprovacao estadoAprovacao;
@@ -32,21 +32,17 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     @OneToOne
     private AtividadeAprovacao atividadeAprovacao;
 
-    public TarefaManualAprovacao(Ticket ticket, AtividadeAprovacao atividadeAprovacao){
+    public TarefaManualAprovacao(Ticket ticket, AtividadeAprovacao atividadeAprovacao, Colaborador colabAprov){
         this.ticket = ticket;
         this.estadoAprovacao = EstadoAprovacao.POR_APROVAR;
         this.atividadeAprovacao = atividadeAprovacao;
-        colabsAprova = new HashSet<>();
+        this.colabAprov = colabAprov;
     }
 
     protected TarefaManualAprovacao(){}
 
     public Ticket ticketDaTarefa(){
         return ticket;
-    }
-
-    public void assignaColabAprovacao(Colaborador colaborador){
-        colabsAprova.add(colaborador);
     }
 
     public Calendar dataDecisaoAprovacao(){

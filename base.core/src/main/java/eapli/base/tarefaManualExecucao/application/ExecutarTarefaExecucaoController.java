@@ -1,9 +1,12 @@
 package eapli.base.tarefaManualExecucao.application;
 
+import eapli.base.Utils.HelpMethods;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
+import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
@@ -32,14 +35,21 @@ public class ExecutarTarefaExecucaoController {
     private final SystemUser systemUser = userSession.authenticatedUser();
     private final Colaborador colabPedido =colabPorUserName(systemUser.username());
     private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
-    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
-    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
-    public void terminaExecucao(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao) {
-        fpr.save(new FormularioPreenchido(f, respostas, tarefaManualExecucao.ticketDaTarefa(), colabPedido));
-        ticketRepositorio.save(tarefaManualExecucao.ticketDaTarefa());
-        tarefaManualExecucao.definirMomentoRealizacao();
-        tarefaExecucaoRepositorio.save(tarefaManualExecucao);
+    private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService();
+
+    public void executaTarefa(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao) {
+        execTarManExecService.executarTarefa(f, respostas, tarefaManualExecucao, colabPedido);
+    }
+
+    public void conclusao(String resposta, TarefaManualExecucao tarefaManualExecucao, Atributo atributo){
+            if (atributo.tipoDados() == TipoDados.CONCLUSAO) {
+                if (resposta.equalsIgnoreCase("Concluido")) {
+                    tarefaManualExecucao.ticketDaTarefa().completarTicket();
+                } else {
+                    tarefaManualExecucao.ticketDaTarefa().inacabadoTicket();
+                }
+            }
     }
 
     public List<TarefaManualExecucao> tarefasManualExecucao(){
@@ -56,7 +66,6 @@ public class ExecutarTarefaExecucaoController {
 
     public TarefaManualExecucao executarTarefaExecPendente(TarefaManualExecucao tarefa ) {
         tarefa.defineColaboradorExecutante(colabPedido);
-
         try {
             return tarefaExecucaoRepositorio.save(tarefa);
         } catch (IntegrityViolationException violation) {
@@ -68,4 +77,6 @@ public class ExecutarTarefaExecucaoController {
     public Resposta adicionaResposta(String resposta, String nomeVar) {
         return new Resposta(resposta, nomeVar);
     }
+
+
 }

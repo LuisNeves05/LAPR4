@@ -30,7 +30,7 @@ public class TiposDeTarefa implements TipoTarefa{
     }
 
     @Override
-    public TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket, AtividadeAprovacao aa) {
-        return new TarefaManualAprovacao(ticket, aa);
+    public TarefaManualAprovacao novaTarefaManualAprovacao(Ticket ticket, AtividadeAprovacao aa, Colaborador colabAprov) {
+        return new TarefaManualAprovacao(ticket, aa, colabAprov);
     }
 }

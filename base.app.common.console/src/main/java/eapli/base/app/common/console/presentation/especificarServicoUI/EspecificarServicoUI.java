@@ -147,10 +147,12 @@ public class EspecificarServicoUI extends AbstractUI {
         }
 
         if (inserirAtRealizacao(serviceBuilder, equipasExec, catalogo, formularios, fluxoAtivBuilder)) {
-            Formulario form = fh.form(false, true);
+
             if (colab != null) {
+                Formulario form = fh.form(false, true);
                 servicoController.fluxoComAtividadeRealizacaoColab(fluxoAtivBuilder, colab, tipoExec, form);
             } else if (!equipasExec.isEmpty()) {
+                Formulario form = fh.form(false, true);
                 servicoController.fluxoComAtividadeRealizacaoEquipas(fluxoAtivBuilder, equipasExec, form);
             }else
                 servicoController.fluxoComAtividadeRealizacaoAutomatica(fluxoAtivBuilder, scriptAutomatico);

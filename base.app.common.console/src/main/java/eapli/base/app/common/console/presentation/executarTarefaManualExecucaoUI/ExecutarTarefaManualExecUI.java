@@ -1,13 +1,11 @@
 package eapli.base.app.common.console.presentation.executarTarefaManualExecucaoUI;
 
 import eapli.base.Utils.HelpMethods;
-import eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI.TarefasAprovacaoPrinter;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.Resposta;
-import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.application.ExecutarTarefaExecucaoController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.framework.io.util.Console;
@@ -18,6 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
+
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
 public class ExecutarTarefaManualExecUI extends AbstractUI {
     private final ExecutarTarefaExecucaoController controller = new ExecutarTarefaExecucaoController();
@@ -27,7 +28,7 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
     protected boolean doShow() {
         List<TarefaManualExecucao> listaTarefasManualExecucao = controller.tarefasManualExecucaoPendente();
 
-        if(listaTarefasManualExecucao.isEmpty()){
+        if (listaTarefasManualExecucao.isEmpty()) {
             System.out.println("Ainda não existem tarefas de execução atribuidas a si.");
             return false;
         }
@@ -36,7 +37,7 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 new TarefasExecucaoPrinter());
         selector.show();
         final TarefaManualExecucao tarefaManualExecucao = selector.selectedElement();
-        if(tarefaManualExecucao == null)
+        if (tarefaManualExecucao == null)
             return true;
 
         AtividadeRealizacao ar = tarefaManualExecucao.atividadeRealizacaoDaTarefa();
@@ -54,16 +55,10 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
             do {
                 resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                 if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
-                    if (atributo.tipoDados() == TipoDados.CONCLUSAO) {
-                        if (resposta.equalsIgnoreCase("Concluido")) {
-                            tarefaManualExecucao.ticketDaTarefa().completarTicket();
-                        } else {
-                            tarefaManualExecucao.ticketDaTarefa().inacabadoTicket();
-                        }
-                    }
+                    controller.conclusao(resposta, tarefaManualExecucao, atributo);
                     flag = false;
                 }
-                if(flag){
+                if (flag) {
                     System.out.println("Dado incorreto.");
                 }
             } while (flag);
@@ -72,8 +67,9 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
         }
 
         try {
-            controller.terminaExecucao(f, respostas, tarefaManualExecucao);
-        }catch (Exception x){
+            controller.executaTarefa(f, respostas, tarefaManualExecucao);
+            LOGGER.info(tarefaManualExecucao);
+        } catch (Exception x) {
             System.out.println("Ocorreu um erro");
         }
 

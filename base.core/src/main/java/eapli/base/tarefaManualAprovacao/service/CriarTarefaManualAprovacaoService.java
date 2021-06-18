@@ -16,7 +16,6 @@ import java.util.Set;
 public class CriarTarefaManualAprovacaoService {
 
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRep = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
-
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
 
     public boolean criarTarefaAprovacao(Servico s, Ticket ticket, Colaborador colabLogado) {
@@ -24,16 +23,17 @@ public class CriarTarefaManualAprovacaoService {
 
         if (at != null) {
             Set<ColaboradoresAprovacao> colabsApov = at.colabsDeAprovacao();
-            TarefaManualAprovacao tarefaManualAprovacao = tiposDeTarefa().novaTarefaManualAprovacao(ticket, at);
             if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO)) {
                 Colaborador respHierarquico = colabLogado.seuColabResponsavel();
-                tarefaManualAprovacao.assignaColabAprovacao(respHierarquico);
+                TarefaManualAprovacao tarefaManualAprovacao = tiposDeTarefa().novaTarefaManualAprovacao(ticket, at, respHierarquico);
+                tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
             }
             if (colabsApov.contains(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO)) {
                 Colaborador respServico = s.catalogo().colaboradorResponsavelDoCatalogo();
-                tarefaManualAprovacao.assignaColabAprovacao(respServico);
+                TarefaManualAprovacao tarefaManualAprovacao = tiposDeTarefa().novaTarefaManualAprovacao(ticket, at, respServico);
+                tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
             }
-            tarefaManualAprovacaoRep.save(tarefaManualAprovacao);
+
             return true;
         }else{
             return false;
