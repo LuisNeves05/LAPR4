@@ -1,7 +1,10 @@
 package eapli.base.ticket.persistence;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.colaborador.domain.Colaborador;
+
+import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 

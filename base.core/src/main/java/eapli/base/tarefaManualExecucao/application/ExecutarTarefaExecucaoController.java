@@ -17,6 +17,7 @@ import eapli.base.tarefaManualExecucao.services.ExecutarTarefaManualExecucaoServ
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -28,6 +29,7 @@ import java.util.Set;
 
 public class ExecutarTarefaExecucaoController {
     private final ExecutarTarefaManualExecucaoService execucaoService = new ExecutarTarefaManualExecucaoService();
+    private final TransactionalContext tcCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
     private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -39,7 +41,10 @@ public class ExecutarTarefaExecucaoController {
     private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService();
 
     public void executaTarefa(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao) {
+        tcCtx.beginTransaction();
         execTarManExecService.executarTarefa(f, respostas, tarefaManualExecucao, colabPedido);
+        tcCtx.commit();
+        tcCtx.close();
     }
 
     public void conclusao(String resposta, TarefaManualExecucao tarefaManualExecucao, Atributo atributo){

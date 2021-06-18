@@ -2,6 +2,7 @@ package eapli.base.ticket.persistence;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.fluxoAtividade.domain.FluxoAtividade;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.domain.ServicoIdentificador;
 import eapli.base.ticket.domain.Ticket;

@@ -9,15 +9,23 @@ public class AtivarDesativarFluxoService {
 
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
-    public FluxoAtividade ativarFluxo(FluxoAtividade fluxoAtividade){
-        if(fluxoAtividade.estadoFluxo() == StatusFluxo.INATIVO)
+    public boolean ativarFluxo(FluxoAtividade fluxoAtividade){
+        if(fluxoAtividade.estadoFluxo() == StatusFluxo.INATIVO) {
             fluxoAtividade.ativar();
-        return fluxoAtividadeRepositorio.save(fluxoAtividade);
+            fluxoAtividadeRepositorio.save(fluxoAtividade);
+            return true;
+        }
+        return false;
     }
 
-    public FluxoAtividade desativarFluxo(FluxoAtividade fluxoAtividade){
-        if(fluxoAtividade.estadoFluxo() == StatusFluxo.ATIVO)
+    public boolean desativarFluxo(FluxoAtividade fluxoAtividade){
+        if(fluxoAtividade.estadoFluxo() == StatusFluxo.ATIVO) {
             fluxoAtividade.desativar();
-        return fluxoAtividadeRepositorio.save(fluxoAtividade);
+            fluxoAtividadeRepositorio.save(fluxoAtividade);
+            return true;
+        }
+        return false;
     }
+
+
 }

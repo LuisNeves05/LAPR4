@@ -3,6 +3,7 @@ package eapli.base.tarefaManualExecucao.domain;
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualExecucao.dto.TarefaManualExecucaoDTO;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
@@ -91,9 +92,21 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
         return atividadeRealizacao;
     }
 
+    public void  concluir(){
+        estadoRealizacao = EstadoRealizacao.CONCLUIDA;
+    }
+
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TarefaManualExecucao)) {
+            return false;
+        }
+
+        final TarefaManualExecucao that = (TarefaManualExecucao) other;
+        return this.equals(that);
     }
 
     @Override

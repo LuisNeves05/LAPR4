@@ -47,8 +47,7 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         return createdOn;
     }
 
-    protected Ticket() {
-    }
+    protected Ticket() {}
 
     public Ticket(Colaborador colabRequisitou, Servico servico, String urgenciaTicket,
                   EstadoTicket estadoTicket) {

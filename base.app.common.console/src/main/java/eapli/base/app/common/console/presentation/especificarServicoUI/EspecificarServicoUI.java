@@ -758,6 +758,8 @@ public class EspecificarServicoUI extends AbstractUI {
         boolean flag = true;
         int aprovacaoMax = -1;
         int resolucaoMax = -1;
+        int resolucaoMed = -1;
+        int aprovacaoMed = -1;
 
         while (flag) {
             aprovacaoMax = Console.readInteger("Defina o período de aprovação máximo deste  nível de criticidade personalizado (em minutos)\n");
@@ -769,6 +771,19 @@ public class EspecificarServicoUI extends AbstractUI {
                 System.out.println("Insira um período de aprovação válido\n");
             }
         }
+
+        flag = true;
+        while (flag) {
+            aprovacaoMed = Console.readInteger("Defina o período de aprovação média deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (aprovacaoMed > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de resolução máximo válido\n");
+            }
+        }
+
         flag = true;
         while (flag) {
             resolucaoMax = Console.readInteger("Defina o período de resolução máximo deste  nível de criticidade personalizado (em minutos)\n");
@@ -780,7 +795,19 @@ public class EspecificarServicoUI extends AbstractUI {
                 System.out.println("Insira um período de resolução máximo válido\n");
             }
         }
-        return new Objetivo(aprovacaoMax, resolucaoMax, 0, 0);
+        flag = true;
+        while (flag) {
+            resolucaoMed = Console.readInteger("Defina o período de resolução média deste  nível de criticidade personalizado (em minutos)\n");
+
+            if (resolucaoMed > 0) {
+                flag = false;
+            }
+            if (flag) {
+                System.out.println("Insira um período de resolução máximo válido\n");
+            }
+        }
+
+        return new Objetivo(aprovacaoMax, resolucaoMax, aprovacaoMed, resolucaoMed);
     }
 
     private NivelCriticidade criarNivelCriticidade(NivelCriticidade nivelCriticidade, Objetivo objetivo) {

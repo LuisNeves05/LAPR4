@@ -1,6 +1,7 @@
 package eapli.base.tarefaAutomatica.domain;
 
 import eapli.base.atividadeRealizacao.domain.AtividadeRealizacao;
+import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 
@@ -29,9 +30,21 @@ public class TarefaAutomatica implements Comparable<Long>, AggregateRoot<Long> {
 
     protected TarefaAutomatica(){}
 
+    public Ticket ticketDaTarefa(){
+        return ticket;
+    }
+
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TarefaAutomatica)) {
+            return false;
+        }
+
+        final TarefaAutomatica that = (TarefaAutomatica) other;
+        return this.equals(that);
     }
 
     @Override

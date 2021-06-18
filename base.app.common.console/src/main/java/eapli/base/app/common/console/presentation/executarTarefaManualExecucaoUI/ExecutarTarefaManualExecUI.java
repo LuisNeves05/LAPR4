@@ -72,8 +72,6 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
         } catch (Exception x) {
             System.out.println("Ocorreu um erro");
         }
-
-
         return true;
     }
 

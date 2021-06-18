@@ -1,4 +1,4 @@
-/*
+
 package eapli.base.Utils;
 
 import eapli.base.servico.domain.Servico;
@@ -36,4 +36,3 @@ public class QueryMaker {
     }
 
 }
- */

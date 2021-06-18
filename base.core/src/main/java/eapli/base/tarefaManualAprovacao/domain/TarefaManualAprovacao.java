@@ -2,6 +2,7 @@ package eapli.base.tarefaManualAprovacao.domain;
 
 import eapli.base.atividadeAprovacao.domain.AtividadeAprovacao;
 import eapli.base.colaborador.domain.Colaborador;
+import eapli.base.servico.domain.Servico;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.time.util.Calendars;
@@ -68,7 +69,15 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
 
     @Override
     public boolean sameAs(Object other) {
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TarefaManualAprovacao)) {
+            return false;
+        }
+
+        final TarefaManualAprovacao that = (TarefaManualAprovacao) other;
+        return this.equals(that);
     }
 
     @Override
