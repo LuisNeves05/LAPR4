@@ -463,7 +463,7 @@ public class EspecificarServicoUI extends AbstractUI {
 
     private boolean inserirScriptValidacaoTarefaAutomatica() {
         do {
-            scriptAutomatico = Console.readLine("(0 para avançar) Insira o script de validação da Tarefa automática:");
+            scriptAutomatico = Console.readLine("(0 para avançar) Insira o script da Tarefa automática:");
             if (scriptAutomatico.equals("0")) {
                 scriptAutomatico = null;
                 break;

@@ -7,6 +7,7 @@ import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formulario.gramatica.ScriptFormularios;
+import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;

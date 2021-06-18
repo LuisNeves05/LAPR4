@@ -23,6 +23,12 @@ public interface TarefaAutomaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExecuta(TarefaAutomaticaParser.ExecutaContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#enviar_email}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -34,12 +40,6 @@ public interface TarefaAutomaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCorpo_email(TarefaAutomaticaParser.Corpo_emailContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#desconto}.
 	 * @param ctx the parse tree
@@ -53,6 +53,12 @@ public interface TarefaAutomaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDesconto_aplica(TarefaAutomaticaParser.Desconto_aplicaContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#se_categoria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSe_categoria(TarefaAutomaticaParser.Se_categoriaContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#compara}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -64,12 +70,6 @@ public interface TarefaAutomaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumero(TarefaAutomaticaParser.NumeroContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link TarefaAutomaticaParser#nome_ficheiro}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNome_ficheiro(TarefaAutomaticaParser.Nome_ficheiroContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code opExprMulDiv}
 	 * labeled alternative in .

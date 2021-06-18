@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ScriptFormularios {
 
-    private List<Resposta> list = new ArrayList<>();
+    private List<Resposta> list;
 
     public ScriptFormularios(List<Resposta> list){
         this.list = list;

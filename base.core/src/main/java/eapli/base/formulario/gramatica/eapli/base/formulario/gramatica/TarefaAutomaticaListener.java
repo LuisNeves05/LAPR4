@@ -28,6 +28,16 @@ public interface TarefaAutomaticaListener extends ParseTreeListener {
 	 */
 	void exitExecuta(TarefaAutomaticaParser.ExecutaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
+	 * @param ctx the parse tree
+	 */
+	void enterPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
+	 * @param ctx the parse tree
+	 */
+	void exitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#enviar_email}.
 	 * @param ctx the parse tree
 	 */
@@ -47,16 +57,6 @@ public interface TarefaAutomaticaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCorpo_email(TarefaAutomaticaParser.Corpo_emailContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
-	 * @param ctx the parse tree
-	 */
-	void enterPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TarefaAutomaticaParser#pesquisa_xml}.
-	 * @param ctx the parse tree
-	 */
-	void exitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#desconto}.
 	 * @param ctx the parse tree
@@ -78,6 +78,16 @@ public interface TarefaAutomaticaListener extends ParseTreeListener {
 	 */
 	void exitDesconto_aplica(TarefaAutomaticaParser.Desconto_aplicaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#se_categoria}.
+	 * @param ctx the parse tree
+	 */
+	void enterSe_categoria(TarefaAutomaticaParser.Se_categoriaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TarefaAutomaticaParser#se_categoria}.
+	 * @param ctx the parse tree
+	 */
+	void exitSe_categoria(TarefaAutomaticaParser.Se_categoriaContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#compara}.
 	 * @param ctx the parse tree
 	 */
@@ -97,16 +107,6 @@ public interface TarefaAutomaticaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumero(TarefaAutomaticaParser.NumeroContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TarefaAutomaticaParser#nome_ficheiro}.
-	 * @param ctx the parse tree
-	 */
-	void enterNome_ficheiro(TarefaAutomaticaParser.Nome_ficheiroContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TarefaAutomaticaParser#nome_ficheiro}.
-	 * @param ctx the parse tree
-	 */
-	void exitNome_ficheiro(TarefaAutomaticaParser.Nome_ficheiroContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code opExprMulDiv}
 	 * labeled alternative in .

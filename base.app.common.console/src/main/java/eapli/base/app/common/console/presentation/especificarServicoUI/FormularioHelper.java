@@ -5,6 +5,7 @@ import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.NomeFormulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formulario.gramatica.ScriptFormularios;
+import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
 import eapli.framework.io.util.Console;
 
 public class FormularioHelper {

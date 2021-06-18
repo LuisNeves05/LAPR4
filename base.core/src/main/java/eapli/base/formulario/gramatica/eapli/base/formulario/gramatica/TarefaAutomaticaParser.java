@@ -17,33 +17,32 @@ public class TarefaAutomaticaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, MENOR=8, IGUAL=9, 
-		MAIOR=10, MENORIGUAL=11, MAIORIGUAL=12, ATRIBUTO=13, ENVIAR_EMAIL=14, 
-		COLABORADOR_REQUERENTE=15, NUMERO=16, FICHEIRO=17, XML=18, NAME=19, COMMENT=20, 
-		SPACES=21;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, MENOR=7, IGUAL=8, MAIOR=9, 
+		MENORIGUAL=10, MAIORIGUAL=11, ATRIBUTO=12, ENVIAR_EMAIL=13, COLABORADOR_REQUERENTE=14, 
+		NUMERO=15, FICHEIRO=16, XML=17, NAME=18, COMMENT=19, SPACES=20;
 	public static final int
-		RULE_prog = 0, RULE_executa = 1, RULE_enviar_email = 2, RULE_corpo_email = 3, 
-		RULE_pesquisa_xml = 4, RULE_desconto = 5, RULE_desconto_aplica = 6, RULE_compara = 7, 
-		RULE_numero = 8, RULE_nome_ficheiro = 9, RULE_calcula = 10, RULE_atributo = 11;
+		RULE_prog = 0, RULE_executa = 1, RULE_pesquisa_xml = 2, RULE_enviar_email = 3, 
+		RULE_corpo_email = 4, RULE_desconto = 5, RULE_desconto_aplica = 6, RULE_se_categoria = 7, 
+		RULE_compara = 8, RULE_numero = 9, RULE_calcula = 10, RULE_atributo = 11;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "executa", "enviar_email", "corpo_email", "pesquisa_xml", "desconto", 
-			"desconto_aplica", "compara", "numero", "nome_ficheiro", "calcula", "atributo"
+			"prog", "executa", "pesquisa_xml", "enviar_email", "corpo_email", "desconto", 
+			"desconto_aplica", "se_categoria", "compara", "numero", "calcula", "atributo"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'SE'", "'ENTAO'", "'SENAO'", "'*'", "'/'", "'+'", "'-'", "'MENOR'", 
-			"'IGUAL'", "'MAIOR'", "'MENORIGUAL'", "'MAIORIGUAL'", "'ATRIBUTO'", "'ENVIAR EMAIL'", 
+			null, "'SE'", "'ENTAO'", "'*'", "'/'", "'+'", "'-'", "'MENOR'", "'IGUAL'", 
+			"'MAIOR'", "'MENORIGUAL'", "'MAIORIGUAL'", "'ATRIBUTO'", "'ENVIAR EMAIL'", 
 			"'COLABORADOR REQUERENTE'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, "MENOR", "IGUAL", "MAIOR", 
+			null, null, null, null, null, null, null, "MENOR", "IGUAL", "MAIOR", 
 			"MENORIGUAL", "MAIORIGUAL", "ATRIBUTO", "ENVIAR_EMAIL", "COLABORADOR_REQUERENTE", 
 			"NUMERO", "FICHEIRO", "XML", "NAME", "COMMENT", "SPACES"
 		};
@@ -147,9 +146,6 @@ public class TarefaAutomaticaParser extends Parser {
 		public Pesquisa_xmlContext pesquisa_xml() {
 			return getRuleContext(Pesquisa_xmlContext.class,0);
 		}
-		public Enviar_emailContext enviar_email() {
-			return getRuleContext(Enviar_emailContext.class,0);
-		}
 		public ExecutaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -173,21 +169,82 @@ public class TarefaAutomaticaParser extends Parser {
 		ExecutaContext _localctx = new ExecutaContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_executa);
 		try {
-			setState(28);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(26);
+			pesquisa_xml();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Pesquisa_xmlContext extends ParserRuleContext {
+		public AtributoContext nome_ficheiro;
+		public AtributoContext id_a_pesquisar;
+		public DescontoContext desconto() {
+			return getRuleContext(DescontoContext.class,0);
+		}
+		public Enviar_emailContext enviar_email() {
+			return getRuleContext(Enviar_emailContext.class,0);
+		}
+		public List<AtributoContext> atributo() {
+			return getRuleContexts(AtributoContext.class);
+		}
+		public AtributoContext atributo(int i) {
+			return getRuleContext(AtributoContext.class,i);
+		}
+		public Pesquisa_xmlContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_pesquisa_xml; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).enterPesquisa_xml(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).exitPesquisa_xml(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TarefaAutomaticaVisitor ) return ((TarefaAutomaticaVisitor<? extends T>)visitor).visitPesquisa_xml(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Pesquisa_xmlContext pesquisa_xml() throws RecognitionException {
+		Pesquisa_xmlContext _localctx = new Pesquisa_xmlContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_pesquisa_xml);
+		try {
+			setState(34);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case FICHEIRO:
+			case ATRIBUTO:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(26);
-				pesquisa_xml();
+				setState(28);
+				((Pesquisa_xmlContext)_localctx).nome_ficheiro = atributo();
+				setState(29);
+				((Pesquisa_xmlContext)_localctx).id_a_pesquisar = atributo();
+				setState(30);
+				desconto();
+				setState(31);
+				enviar_email();
 				}
 				break;
 			case EOF:
 			case ENVIAR_EMAIL:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(27);
+				setState(33);
 				enviar_email();
 				}
 				break;
@@ -233,9 +290,9 @@ public class TarefaAutomaticaParser extends Parser {
 
 	public final Enviar_emailContext enviar_email() throws RecognitionException {
 		Enviar_emailContext _localctx = new Enviar_emailContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_enviar_email);
+		enterRule(_localctx, 6, RULE_enviar_email);
 		try {
-			setState(34);
+			setState(40);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case EOF:
@@ -246,11 +303,11 @@ public class TarefaAutomaticaParser extends Parser {
 			case ENVIAR_EMAIL:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(31);
+				setState(37);
 				match(ENVIAR_EMAIL);
-				setState(32);
+				setState(38);
 				match(COLABORADOR_REQUERENTE);
-				setState(33);
+				setState(39);
 				corpo_email(0);
 				}
 				break;
@@ -305,8 +362,8 @@ public class TarefaAutomaticaParser extends Parser {
 		int _parentState = getState();
 		Corpo_emailContext _localctx = new Corpo_emailContext(_ctx, _parentState);
 		Corpo_emailContext _prevctx = _localctx;
-		int _startState = 6;
-		enterRecursionRule(_localctx, 6, RULE_corpo_email, _p);
+		int _startState = 8;
+		enterRecursionRule(_localctx, 8, RULE_corpo_email, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
@@ -314,7 +371,7 @@ public class TarefaAutomaticaParser extends Parser {
 			{
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(43);
+			setState(49);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -322,16 +379,16 @@ public class TarefaAutomaticaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(41);
+					setState(47);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
 						_localctx = new Corpo_emailContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_corpo_email);
-						setState(37);
+						setState(43);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(38);
+						setState(44);
 						match(NAME);
 						}
 						break;
@@ -339,16 +396,16 @@ public class TarefaAutomaticaParser extends Parser {
 						{
 						_localctx = new Corpo_emailContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_corpo_email);
-						setState(39);
+						setState(45);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(40);
+						setState(46);
 						calcula(0);
 						}
 						break;
 					}
 					} 
 				}
-				setState(45);
+				setState(51);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -365,98 +422,23 @@ public class TarefaAutomaticaParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Pesquisa_xmlContext extends ParserRuleContext {
-		public AtributoContext id_a_pesquisar;
-		public Nome_ficheiroContext nome_ficheiro() {
-			return getRuleContext(Nome_ficheiroContext.class,0);
-		}
-		public Enviar_emailContext enviar_email() {
-			return getRuleContext(Enviar_emailContext.class,0);
-		}
-		public AtributoContext atributo() {
-			return getRuleContext(AtributoContext.class,0);
-		}
-		public List<DescontoContext> desconto() {
-			return getRuleContexts(DescontoContext.class);
-		}
-		public DescontoContext desconto(int i) {
-			return getRuleContext(DescontoContext.class,i);
-		}
-		public Pesquisa_xmlContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_pesquisa_xml; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).enterPesquisa_xml(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).exitPesquisa_xml(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TarefaAutomaticaVisitor ) return ((TarefaAutomaticaVisitor<? extends T>)visitor).visitPesquisa_xml(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Pesquisa_xmlContext pesquisa_xml() throws RecognitionException {
-		Pesquisa_xmlContext _localctx = new Pesquisa_xmlContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_pesquisa_xml);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(46);
-			nome_ficheiro();
-			setState(47);
-			((Pesquisa_xmlContext)_localctx).id_a_pesquisar = atributo();
-			setState(49); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(48);
-				desconto();
-				}
-				}
-				setState(51); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==T__0 || _la==T__2 );
-			setState(53);
-			enviar_email();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static class DescontoContext extends ParserRuleContext {
+		public AtributoContext atribquanti;
 		public NumeroContext limite;
-		public AtributoContext atributo() {
-			return getRuleContext(AtributoContext.class,0);
-		}
 		public ComparaContext compara() {
 			return getRuleContext(ComparaContext.class,0);
 		}
 		public Desconto_aplicaContext desconto_aplica() {
 			return getRuleContext(Desconto_aplicaContext.class,0);
 		}
+		public Se_categoriaContext se_categoria() {
+			return getRuleContext(Se_categoriaContext.class,0);
+		}
+		public AtributoContext atributo() {
+			return getRuleContext(AtributoContext.class,0);
+		}
 		public NumeroContext numero() {
 			return getRuleContext(NumeroContext.class,0);
-		}
-		public DescontoContext desconto() {
-			return getRuleContext(DescontoContext.class,0);
 		}
 		public DescontoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -481,37 +463,22 @@ public class TarefaAutomaticaParser extends Parser {
 		DescontoContext _localctx = new DescontoContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_desconto);
 		try {
-			setState(64);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__0:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(55);
-				match(T__0);
-				setState(56);
-				atributo();
-				setState(57);
-				compara();
-				setState(58);
-				((DescontoContext)_localctx).limite = numero();
-				setState(59);
-				match(T__1);
-				setState(60);
-				desconto_aplica();
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(62);
-				match(T__2);
-				setState(63);
-				desconto();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(52);
+			match(T__0);
+			setState(53);
+			((DescontoContext)_localctx).atribquanti = atributo();
+			setState(54);
+			compara();
+			setState(55);
+			((DescontoContext)_localctx).limite = numero();
+			setState(56);
+			match(T__1);
+			setState(57);
+			desconto_aplica();
+			setState(58);
+			se_categoria();
 			}
 		}
 		catch (RecognitionException re) {
@@ -552,8 +519,59 @@ public class TarefaAutomaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(60);
 			match(NUMERO);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Se_categoriaContext extends ParserRuleContext {
+		public TerminalNode NAME() { return getToken(TarefaAutomaticaParser.NAME, 0); }
+		public Desconto_aplicaContext desconto_aplica() {
+			return getRuleContext(Desconto_aplicaContext.class,0);
+		}
+		public Se_categoriaContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_se_categoria; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).enterSe_categoria(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).exitSe_categoria(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof TarefaAutomaticaVisitor ) return ((TarefaAutomaticaVisitor<? extends T>)visitor).visitSe_categoria(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Se_categoriaContext se_categoria() throws RecognitionException {
+		Se_categoriaContext _localctx = new Se_categoriaContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_se_categoria);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(62);
+			match(T__0);
+			setState(63);
+			match(NAME);
+			setState(64);
+			match(T__1);
+			setState(65);
+			desconto_aplica();
 			}
 		}
 		catch (RecognitionException re) {
@@ -594,12 +612,12 @@ public class TarefaAutomaticaParser extends Parser {
 
 	public final ComparaContext compara() throws RecognitionException {
 		ComparaContext _localctx = new ComparaContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_compara);
+		enterRule(_localctx, 16, RULE_compara);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68);
+			setState(67);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MENOR) | (1L << IGUAL) | (1L << MAIOR) | (1L << MENORIGUAL) | (1L << MAIORIGUAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -645,54 +663,12 @@ public class TarefaAutomaticaParser extends Parser {
 
 	public final NumeroContext numero() throws RecognitionException {
 		NumeroContext _localctx = new NumeroContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_numero);
+		enterRule(_localctx, 18, RULE_numero);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(70);
+			setState(69);
 			match(NUMERO);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Nome_ficheiroContext extends ParserRuleContext {
-		public TerminalNode FICHEIRO() { return getToken(TarefaAutomaticaParser.FICHEIRO, 0); }
-		public Nome_ficheiroContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_nome_ficheiro; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).enterNome_ficheiro(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TarefaAutomaticaListener ) ((TarefaAutomaticaListener)listener).exitNome_ficheiro(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof TarefaAutomaticaVisitor ) return ((TarefaAutomaticaVisitor<? extends T>)visitor).visitNome_ficheiro(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Nome_ficheiroContext nome_ficheiro() throws RecognitionException {
-		Nome_ficheiroContext _localctx = new Nome_ficheiroContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_nome_ficheiro);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(72);
-			match(FICHEIRO);
 			}
 		}
 		catch (RecognitionException re) {
@@ -807,32 +783,32 @@ public class TarefaAutomaticaParser extends Parser {
 			_ctx = _localctx;
 			_prevctx = _localctx;
 
-			setState(75);
+			setState(72);
 			((AtomExprContext)_localctx).atom = match(NUMERO);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(85);
+			setState(82);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(83);
+					setState(80);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 					case 1:
 						{
 						_localctx = new OpExprMulDivContext(new CalculaContext(_parentctx, _parentState));
 						((OpExprMulDivContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_calcula);
-						setState(77);
+						setState(74);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(78);
+						setState(75);
 						((OpExprMulDivContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__3 || _la==T__4) ) {
+						if ( !(_la==T__2 || _la==T__3) ) {
 							((OpExprMulDivContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -840,7 +816,7 @@ public class TarefaAutomaticaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(79);
+						setState(76);
 						((OpExprMulDivContext)_localctx).right = calcula(4);
 						}
 						break;
@@ -849,12 +825,12 @@ public class TarefaAutomaticaParser extends Parser {
 						_localctx = new OpExprSumDifContext(new CalculaContext(_parentctx, _parentState));
 						((OpExprSumDifContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_calcula);
-						setState(80);
+						setState(77);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(81);
+						setState(78);
 						((OpExprSumDifContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__5 || _la==T__6) ) {
+						if ( !(_la==T__4 || _la==T__5) ) {
 							((OpExprSumDifContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -862,16 +838,16 @@ public class TarefaAutomaticaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(82);
+						setState(79);
 						((OpExprSumDifContext)_localctx).right = calcula(3);
 						}
 						break;
 					}
 					} 
 				}
-				setState(87);
+				setState(84);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
 			}
 		}
@@ -914,9 +890,9 @@ public class TarefaAutomaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88);
+			setState(85);
 			match(ATRIBUTO);
-			setState(89);
+			setState(86);
 			match(NUMERO);
 			}
 		}
@@ -933,7 +909,7 @@ public class TarefaAutomaticaParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 3:
+		case 4:
 			return corpo_email_sempred((Corpo_emailContext)_localctx, predIndex);
 		case 10:
 			return calcula_sempred((CalculaContext)_localctx, predIndex);
@@ -960,28 +936,27 @@ public class TarefaAutomaticaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27^\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26[\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
-		"\f\t\f\4\r\t\r\3\2\3\2\3\3\3\3\5\3\37\n\3\3\4\3\4\3\4\3\4\5\4%\n\4\3\5"+
-		"\3\5\3\5\3\5\3\5\7\5,\n\5\f\5\16\5/\13\5\3\6\3\6\3\6\6\6\64\n\6\r\6\16"+
-		"\6\65\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7C\n\7\3\b\3\b\3\t"+
-		"\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\7\fV\n\f\f"+
-		"\f\16\fY\13\f\3\r\3\r\3\r\3\r\2\4\b\26\16\2\4\6\b\n\f\16\20\22\24\26\30"+
-		"\2\5\3\2\n\16\3\2\6\7\3\2\b\t\2Y\2\32\3\2\2\2\4\36\3\2\2\2\6$\3\2\2\2"+
-		"\b&\3\2\2\2\n\60\3\2\2\2\fB\3\2\2\2\16D\3\2\2\2\20F\3\2\2\2\22H\3\2\2"+
-		"\2\24J\3\2\2\2\26L\3\2\2\2\30Z\3\2\2\2\32\33\5\4\3\2\33\3\3\2\2\2\34\37"+
-		"\5\n\6\2\35\37\5\6\4\2\36\34\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 %\3\2"+
-		"\2\2!\"\7\20\2\2\"#\7\21\2\2#%\5\b\5\2$ \3\2\2\2$!\3\2\2\2%\7\3\2\2\2"+
-		"&-\b\5\1\2\'(\f\4\2\2(,\7\25\2\2)*\f\3\2\2*,\5\26\f\2+\'\3\2\2\2+)\3\2"+
-		"\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2\2.\t\3\2\2\2/-\3\2\2\2\60\61\5\24\13"+
-		"\2\61\63\5\30\r\2\62\64\5\f\7\2\63\62\3\2\2\2\64\65\3\2\2\2\65\63\3\2"+
-		"\2\2\65\66\3\2\2\2\66\67\3\2\2\2\678\5\6\4\28\13\3\2\2\29:\7\3\2\2:;\5"+
-		"\30\r\2;<\5\20\t\2<=\5\22\n\2=>\7\4\2\2>?\5\16\b\2?C\3\2\2\2@A\7\5\2\2"+
-		"AC\5\f\7\2B9\3\2\2\2B@\3\2\2\2C\r\3\2\2\2DE\7\22\2\2E\17\3\2\2\2FG\t\2"+
-		"\2\2G\21\3\2\2\2HI\7\22\2\2I\23\3\2\2\2JK\7\23\2\2K\25\3\2\2\2LM\b\f\1"+
-		"\2MN\7\22\2\2NW\3\2\2\2OP\f\5\2\2PQ\t\3\2\2QV\5\26\f\6RS\f\4\2\2ST\t\4"+
-		"\2\2TV\5\26\f\5UO\3\2\2\2UR\3\2\2\2VY\3\2\2\2WU\3\2\2\2WX\3\2\2\2X\27"+
-		"\3\2\2\2YW\3\2\2\2Z[\7\17\2\2[\\\7\22\2\2\\\31\3\2\2\2\n\36$+-\65BUW";
+		"\f\t\f\4\r\t\r\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\5\4%\n\4\3\5\3"+
+		"\5\3\5\3\5\5\5+\n\5\3\6\3\6\3\6\3\6\3\6\7\6\62\n\6\f\6\16\6\65\13\6\3"+
+		"\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\13"+
+		"\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\7\fS\n\f\f\f\16\fV\13\f\3\r"+
+		"\3\r\3\r\3\r\2\4\n\26\16\2\4\6\b\n\f\16\20\22\24\26\30\2\5\3\2\t\r\3\2"+
+		"\5\6\3\2\7\b\2T\2\32\3\2\2\2\4\34\3\2\2\2\6$\3\2\2\2\b*\3\2\2\2\n,\3\2"+
+		"\2\2\f\66\3\2\2\2\16>\3\2\2\2\20@\3\2\2\2\22E\3\2\2\2\24G\3\2\2\2\26I"+
+		"\3\2\2\2\30W\3\2\2\2\32\33\5\4\3\2\33\3\3\2\2\2\34\35\5\6\4\2\35\5\3\2"+
+		"\2\2\36\37\5\30\r\2\37 \5\30\r\2 !\5\f\7\2!\"\5\b\5\2\"%\3\2\2\2#%\5\b"+
+		"\5\2$\36\3\2\2\2$#\3\2\2\2%\7\3\2\2\2&+\3\2\2\2\'(\7\17\2\2()\7\20\2\2"+
+		")+\5\n\6\2*&\3\2\2\2*\'\3\2\2\2+\t\3\2\2\2,\63\b\6\1\2-.\f\4\2\2.\62\7"+
+		"\24\2\2/\60\f\3\2\2\60\62\5\26\f\2\61-\3\2\2\2\61/\3\2\2\2\62\65\3\2\2"+
+		"\2\63\61\3\2\2\2\63\64\3\2\2\2\64\13\3\2\2\2\65\63\3\2\2\2\66\67\7\3\2"+
+		"\2\678\5\30\r\289\5\22\n\29:\5\24\13\2:;\7\4\2\2;<\5\16\b\2<=\5\20\t\2"+
+		"=\r\3\2\2\2>?\7\21\2\2?\17\3\2\2\2@A\7\3\2\2AB\7\24\2\2BC\7\4\2\2CD\5"+
+		"\16\b\2D\21\3\2\2\2EF\t\2\2\2F\23\3\2\2\2GH\7\21\2\2H\25\3\2\2\2IJ\b\f"+
+		"\1\2JK\7\21\2\2KT\3\2\2\2LM\f\5\2\2MN\t\3\2\2NS\5\26\f\6OP\f\4\2\2PQ\t"+
+		"\4\2\2QS\5\26\f\5RL\3\2\2\2RO\3\2\2\2SV\3\2\2\2TR\3\2\2\2TU\3\2\2\2U\27"+
+		"\3\2\2\2VT\3\2\2\2WX\7\16\2\2XY\7\21\2\2Y\31\3\2\2\2\b$*\61\63RT";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

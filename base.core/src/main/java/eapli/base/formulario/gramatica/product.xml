@@ -1,0 +1,32 @@
+<grupo4_2DL>
+    <produto>
+        <produtoid>1</produtoid>
+        <nome>Caneta</nome>
+        <preco>30</preco>
+        <categoria>Papelaria</categoria>
+    </produto>
+    <produto>
+        <produtoid>2</produtoid>
+        <nome>Diagramas</nome>
+        <preco>400</preco>
+        <categoria>Software</categoria>
+    </produto>
+    <produto>
+        <produtoid>3</produtoid>
+        <nome>Implementacao</nome>
+        <preco>500</preco>
+        <categoria>Software</categoria>
+    </produto>
+    <produto>
+        <produtoid>4</produtoid>
+        <nome>Testes Unitarios</nome>
+        <preco>5</preco>
+        <categoria>Software</categoria>
+    </produto>
+    <produto>
+        <produtoid>5</produtoid>
+        <nome>Martelos</nome>
+        <preco>20</preco>
+        <categoria>Grupo4_2DL</categoria>
+    </produto>
+</grupo4_2DL>

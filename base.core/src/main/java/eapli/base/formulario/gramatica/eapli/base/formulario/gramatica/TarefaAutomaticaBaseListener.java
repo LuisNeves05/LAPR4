@@ -40,6 +40,18 @@ public class TarefaAutomaticaBaseListener implements TarefaAutomaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEnviar_email(TarefaAutomaticaParser.Enviar_emailContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -59,18 +71,6 @@ public class TarefaAutomaticaBaseListener implements TarefaAutomaticaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCorpo_email(TarefaAutomaticaParser.Corpo_emailContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPesquisa_xml(TarefaAutomaticaParser.Pesquisa_xmlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,6 +100,18 @@ public class TarefaAutomaticaBaseListener implements TarefaAutomaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSe_categoria(TarefaAutomaticaParser.Se_categoriaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSe_categoria(TarefaAutomaticaParser.Se_categoriaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCompara(TarefaAutomaticaParser.ComparaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,18 +131,6 @@ public class TarefaAutomaticaBaseListener implements TarefaAutomaticaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumero(TarefaAutomaticaParser.NumeroContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNome_ficheiro(TarefaAutomaticaParser.Nome_ficheiroContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNome_ficheiro(TarefaAutomaticaParser.Nome_ficheiroContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
