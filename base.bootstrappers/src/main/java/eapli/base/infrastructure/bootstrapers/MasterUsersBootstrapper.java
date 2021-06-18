@@ -80,6 +80,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
         TipoEquipa tipoEquipaRRH = registarTipoEquipaController.tipoEquipaServico("Id123RH", "Equipa de RRH", 5);
         TipoEquipa tipoEquipaAvariaTecnica = registarTipoEquipaController.tipoEquipaServico("Id123AT", "Equipa de Avarias técnicas", 6);
+        TipoEquipa tipoEquipaVendas = registarTipoEquipaController.tipoEquipaServico("Id123VD", "Equipa de Vendas", 7);
 
 
         String pattern = "05-12-2000";
@@ -136,7 +137,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
                 new NrContacto(927206841), date, admin, rolessGSH, "Joao", "Password1", "joao@gmail.com");
 
         /**
-         * Colaborador Sergio pertence à equipa de rrh
+         * Colaborador Sergio pertence à equipa de RRH
          */
         Set<Colaborador> colaboradoresRRHTeam = new HashSet<>();
         colaboradoresRRHTeam.add(sergio);
@@ -151,16 +152,26 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         //////////////////////////////////////////////////////////////////////////////////
 
         /**
+         * Colaborador Sergio pertence à equipa de vendas
+         */
+        Set<Colaborador> colaboradoresVDTeam = new HashSet<>();
+        colaboradoresVDTeam.add(sergio);
+
+        /**
          * Colaboradores são adicionados às respetivas equipas
          */
         Acronimo acrRRH = new Acronimo("RRH");
         Acronimo acrTCN = new Acronimo("TCN");
+        Acronimo acrVD = new Acronimo("VD");
+
         Equipa equipa_RRH = controllerEquipa.especificarEquipa("123SFT", acrRRH, "Equipa Software", colaboradoresRRHTeam, tipoEquipaRRH);
         Equipa equipa_Tecnica = controllerEquipa.especificarEquipa("123TCN", acrTCN, "Equipa Avaria Tecnica", colaboradoresTecnicaTeam, tipoEquipaAvariaTecnica);
+        Equipa equipa_vendas = controllerEquipa.especificarEquipa("123VD", acrVD, "Equipa Vendas", colaboradoresVDTeam, tipoEquipaVendas);
 
         Set<Equipa> equipasSet = new HashSet<>();
         equipasSet.add(equipa_RRH);
         equipasSet.add(equipa_Tecnica);
+        equipasSet.add(equipa_vendas);
 
         //////////////////////////////////////////////////////////////////////////////////
 
@@ -177,6 +188,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
         Catalogo catalogoAvariaTecnicas = catalogoController.especificarCatalogo("Avarias", "Avarias de equipamentos/comunicação", "Contem tipos de avarias possiveis que possam ocorrer no edificio da empresa", 13, admin, equipasSet);
 
+        Catalogo catalogoVendas = catalogoController.especificarCatalogo("Vendas", "Gestão de assuntos relacionados com vendas", "Gestão de promoções, problemas de vendas", 14, admin, equipasSet);
 
         //////////////////////////////////////////////////////////////////////////////////
 
@@ -212,6 +224,21 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         keywordsAvariaTecnica.add(k9);
         keywordsAvariaTecnica.add(k10);
 
+        /**
+         * Keywords para serviço relacionado com vendas
+         */
+        Set<Keyword> keywordsVendas = new HashSet<>();
+
+        Keyword k11 = new Keyword("Percentagem");
+        Keyword k12 = new Keyword("Lucro");
+        Keyword k13 = new Keyword("Desconto");
+        Keyword k14 = new Keyword("Fatura");
+        keywordsVendas.add(k11);
+        keywordsVendas.add(k12);
+        keywordsVendas.add(k13);
+        keywordsVendas.add(k14);
+
+
         //////////////////////////////////////////////////////////////////////////////////
 
         Objetivo obj = new Objetivo(20, 250, 0, 0);
@@ -220,6 +247,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         /////////////////////////////////////////////////////////////////////////////////
 
         /**
+         * Serviço 1
          Objetivo: Pedido de Ausência Futura
 
          Disponibilidade: Todos os colaboradores da organização
@@ -244,85 +272,245 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          */
 
         CriaServicoService criarServico1 = new CriaServicoService();
-        //Cria Atividade de aprovacação de 1 serviço
+        /**
+         *         Cria Atividade de aprovacação de um serviço
+         */
         AtividadeAprovacao atividadeAprovacao1 = new AtividadeAprovacao();
         atividadeAprovacao1.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
 
 
-        //Criar e guardar formulário de Atividade de Aprovação
+        /**
+         * Criar e guardar formulário de Atividade de Aprovação
+         */
 
-        Formulario f1Aprov= new Formulario(new NomeFormulario("Aprovação"));
-        f1Aprov.addAtributo("Decisão", "Decisão da Atividade de Aprovação",
+        Formulario f1Aprov = new Formulario(new NomeFormulario("Aprovação"));
+        f1Aprov.addAtributo("Decisao", "Decisão da Atividade de Aprovação",
                 "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
-        f1Aprov.addAtributo("Fundamentação","Comentário decisão","Fundamente a sua decisão",TipoDados.STRING,"[a-zA-Z]+");
+        f1Aprov.addAtributo("Fundamentação", "Comentário decisão", "Fundamente a sua decisão", TipoDados.STRING, "[a-zA-Z]+");
         atividadeAprovacao1.adicionaFormulario(formRep.save(f1Aprov));
-        atividadeAprovacao1= criarServico1.guardaAtividadeAprovacao(atividadeAprovacao1);
+        atividadeAprovacao1 = criarServico1.guardaAtividadeAprovacao(atividadeAprovacao1);
 
-        //Cria Atividade de realização de 1 serviço
+        /**
+         *   Cria Atividade de realização de um Servico
+         */
         AtividadeRealizacao atividadeRealizacao1 = new AtividadeRealizacao();
         atividadeRealizacao1.adicionarEquipaExecucao(equipa_RRH);
         atividadeRealizacao1.adicionarEquipaExecucao(equipa_Tecnica);
-        //Criar e guardar formulário de Atividade de Realização
-        Formulario f1Exe= new Formulario(new NomeFormulario("Execução"));
-        f1Exe.addAtributo("Conclusão", "Conclusão da resolução de uma tarefa", "Conclusão (Concluido/Inacabado)", TipoDados.CONCLUSAO, "(Concluido|Inacabado)");        f1Exe.addAtributo("Fundamentação","Comentário decisão","Fundamente a sua decisão",TipoDados.STRING,"[a-zA-Z]+");
-        f1Exe.addAtributo("Dias Gozados","Férias","Dias de Férias já gozados no ano",TipoDados.INT,"[0-9]+");
-        f1Exe.addAtributo("Dias Gozados Período","Férias período","Dias de Férias já gozados no período pedido",TipoDados.INT,"[0-9]+");
-        f1Exe.addAtributo("Dias Totais","Férias","Dias de Férias totais no ano",TipoDados.INT,"[0-9]+");
-        f1Exe.addAtributo("Faltas Justificadas","Faltas","Dias de faltas justificadas totais",TipoDados.INT,"[0-9]+");
-        f1Exe.addAtributo("Faltas Não Justificadas","Faltas","Dias de faltas não justificadas totais",TipoDados.INT,"[0-9]+");
-        atividadeRealizacao1.adicionaFormulario( formRep.save(f1Exe));
-         atividadeRealizacao1 = criarServico1.guardaAtividadeRealizacao(atividadeRealizacao1);
+        /**
+         *         //Criar formulário de Atividade de Realização
+         */
+        Formulario f1Exe = new Formulario(new NomeFormulario("Execução"));
+        f1Exe.addAtributo("Conclusao", "Conclusão da resolução de uma tarefa", "Conclusão (Concluido/Inacabado)", TipoDados.CONCLUSAO, "(Concluido|Inacabado)");
+        f1Exe.addAtributo("Fundamentação", "Comentário decisão", "Fundamente a sua decisão", TipoDados.STRING, "[a-zA-Z]+");
+        f1Exe.addAtributo("DiasGozados", "Férias", "Dias de Férias já gozados no ano", TipoDados.INT, "[0-9]+");
+        f1Exe.addAtributo("DiasGozadosPeriodo", "Férias período", "Dias de Férias já gozados no período pedido", TipoDados.INT, "[0-9]+");
+        f1Exe.addAtributo("DiasTotais", "Férias", "Dias de Férias totais no ano", TipoDados.INT, "[0-9]+");
+        f1Exe.addAtributo("FaltasJustificadas", "Faltas", "Dias de faltas justificadas totais", TipoDados.INT, "[0-9]+");
+        f1Exe.addAtributo("FaltasNJustificadas", "Faltas", "Dias de faltas não justificadas totais", TipoDados.INT, "[0-9]+");
+        atividadeRealizacao1.adicionaFormulario(formRep.save(f1Exe));
+        atividadeRealizacao1 = criarServico1.guardaAtividadeRealizacao(atividadeRealizacao1);
 
-        //guarda Fluxo de Atividade
-        FluxoAtividade fluxoAtividade1 = criarServico1.guardaFluxo(new FluxoAtividade(atividadeAprovacao1,atividadeRealizacao1));
-        Set<Keyword> keywords = new HashSet();
-        keywords.add(k5);
-        keywords.add(k);
+        /**
+         guarda Fluxo de Atividade
+         */
+        FluxoAtividade fluxoAtividade1 = criarServico1.guardaFluxo(new FluxoAtividade(atividadeAprovacao1, atividadeRealizacao1));
         Servico servico1 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAusencia"), new Titulo("Pedido de Ausência Futura"), new DescricaoBreve("Pedido de ausência para Férias, ou por um motivo justificado ou não justificado"),
-                new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywords, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, false, nc));
+                new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywordsRRH, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, false, nc));
 
 
-        //Criar e guardar formulário para pedido de Servico
-        Formulario f1pedido= new Formulario(new NomeFormulario("Ausência"));
-        f1pedido.addAtributo("Data Inicio Ausencia","Data","Data de inicio da ausência ",TipoDados.DATA,"^\\d{4}-\\d{2}-\\d{2}$");
-        f1pedido.addAtributo("Data Fim Ausencia","Data","Data de inicio da ausência ",TipoDados.DATA,"^\\d{4}-\\d{2}-\\d{2}$");
-        f1pedido.addAtributo("TipoAusencia","Tipo de Ausência","Que tipo de ausência deseja reportar",TipoDados.STRING,"[a-zA-Z]+");
-        f1pedido.addAtributo("Comentario","Comentário de Ausência","Se ausência for justificada, é obrigado a inserir um comentário",TipoDados.STRING,"[a-zA-Z]+");
+        /**
+         * Criar e guardar formulário para pedido de Servico
+         */
 
-       f1pedido =  formRep.save(f1pedido);
-        criarServico1.adicionaFormulario(servico1,f1pedido);
+        Formulario f1pedido = new Formulario(new NomeFormulario("Ausência"));
+        f1pedido.addAtributo("DataInicioAusencia", "Data", "Data de inicio da ausência ", TipoDados.DATA, "^\\d{4}-\\d{2}-\\d{2}$");
+        f1pedido.addAtributo("DataFimAusencia", "Data", "Data de inicio da ausência ", TipoDados.DATA, "^\\d{4}-\\d{2}-\\d{2}$");
+        f1pedido.addAtributo("TipoAusencia", "Tipo de Ausência", "Que tipo de ausência deseja reportar", TipoDados.STRING, "[a-zA-Z]+");
+        f1pedido.addAtributo("Comentario", "Comentário de Ausência", "Se ausência for justificada, é obrigado a inserir um comentário", TipoDados.STRING, "[a-zA-Z]+");
+
+        f1pedido = formRep.save(f1pedido);
+        criarServico1.adicionaFormulario(servico1, f1pedido);
         especificarServicoController.especificarServico(servico1);
 
 
         /**
-         * Serviço tem atividade de aprovação, neste caso, é aprovado pelo responsavel hierarquico do colaborador requerente
-         *
-         * É assignado a uma equipa, logo é de resolução manual
+         * Serviço 2
+         Objetivo: Autorização para Aplicação de Desconto
+
+         Disponibilidade: Colaboradores do departamento de vendas
+
+         Formulário Pedido:
+
+         Dados: Código Interno Cliente, Nome, Tipo de Desconto, Recorrência, Percentagem de Desconto, Valor de Desconto, Identificação da Fatura, Data Limite, Fundamentação do pedido
+         Validação 1: Código cliente obedece a uma expressão regular (3 consoantes + 3 dígitos)
+         Validação 2: Código cliente, nome, tipo de desconto, recorrência e fundamentação são obrigatórios
+         Validação 3: Apenas um dos campos entre percentagem de desconto e valor de desconto tem obrigatoriamente que estar preenchido (valor superior a zero). O outro campo deve ficar a zero.
+         Validação 4: A recorrência apenas assume 2 valores possíveis: Única ou Até Data Limite. Em caso de ser única é obrigatório identificar a fatura em causa. Caso contrário é obrigatório indicar a data limite de aplicação do desconto.
+         Formulário Aprovação:
+
+         Quem: pelo responsável pelo serviço
+         Dados: Para além da decisão é necessário indicar: um texto fundamentando a decisão e confirmar a percentagem ou valor de desconto atribuído e a data limite (caso faça sentido)
+         Validação 1: A fundamentação é obrigatória.
+         Validação 2: Apenas um dos campos entre percentagem de desconto e valor de desconto tem obrigatoriamente que estar preenchido (valor superior a zero). O outro campo deve ficar a zero.
+         Realização (Automática): Consiste no envio de um email ao colaborador que efetuou o pedido com um texto pré-definido onde é inserida alguma da informação recolhida anteriormente pelo preenchimento dos formulários (e.g. a decisão e o desconto a aplicar).
+         */
+
+        CriaServicoService criarServico2 = new CriaServicoService();
+        /**
+         * Cria Atividade de aprovacação de 1 serviço
+         */
+        AtividadeAprovacao atividadeAprovacao2 = new AtividadeAprovacao();
+        atividadeAprovacao2.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_PELO_SERVICO);
+
+
+        /**
+         * Criar e guardar formulário de Atividade de Aprovação
+         */
+
+        Formulario f2Aprov = new Formulario(new NomeFormulario("Aprovação"));
+        f2Aprov.addAtributo("Decisao", "Decisão da Atividade de Aprovação",
+                "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
+        f2Aprov.addAtributo("Fundamentação", "Comentário decisão", "Fundamente a sua decisão, e confirmar a percentagem ou valor de desconto atribuído e a data limite", TipoDados.STRING, "[a-zA-Z]+");
+        atividadeAprovacao2.adicionaFormulario(formRep.save(f2Aprov));
+        atividadeAprovacao2 = criarServico2.guardaAtividadeAprovacao(atividadeAprovacao2);
+
+
+        /**
+         *   Cria Atividade de realização de um serviço
+         */
+        AtividadeRealizacao atividadeRealizacao2 = new AtividadeRealizacao("SCRIPT Teste");//todo desenvolver script para realizaÇão automática ???
+        atividadeRealizacao2 = criarServico2.guardaAtividadeRealizacao(atividadeRealizacao2);
+
+        /**
+         guarda Fluxo de Atividade
+         */
+        FluxoAtividade fluxoAtividade2 = criarServico2.guardaFluxo(new FluxoAtividade(atividadeAprovacao2, atividadeRealizacao2));
+        Servico servico2 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAVenda"), new Titulo("Aplicação de Desconto"), new DescricaoBreve("Autorização para Aplicação de Desconto"),
+                new DescricaoCompleta("Autorização para Aplicação de Desconto, e especificação do mesmo."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade2, catalogoVendas, false, nc));
+
+
+        /**
+         * Criar e guardar formulário para pedido de Servico
+         */
+        Formulario f2pedido = new Formulario(new NomeFormulario("Autorização para Aplicação de Desconto "));
+        f2pedido.addAtributo(" CodigoInternoCliente", "Código", "Código representativo do cliente no sistema", TipoDados.INT, "^[0-9]+");
+        f2pedido.addAtributo("Nome", "Nome", "Nome do cliente ", TipoDados.STRING, "[a-zA-Z]+");
+        f2pedido.addAtributo("TipoDesconto", "Desconto", "Tipo de Desconto a aplicar", TipoDados.STRING, "[a-zA-Z]+");
+        f2pedido.addAtributo("Recorrencia", "Recorrência", "Recorrência do desconto aplicado", TipoDados.STRING, "[a-zA-Z]+"); // data se unica, ou ATE data limite se por periodo
+        f2pedido.addAtributo("PercentagemDesconto", "PDesconto", "Percentagem de Desconto a aplicar", TipoDados.FRACIONAL, "^([0-9]{1,2}){1}(\\.[0-9]{1,2})?$"); // data se unica, ou ATE data limite se por periodo
+        f2pedido.addAtributo("ValorDesconto", "VDesconto", "Valor de Desconto a aplicar", TipoDados.FRACIONAL, "^([0-9]{1,2}){1}(\\.[0-9]{1,2})?$ "); // data se unica, ou ATE data limite se por periodo
+        f2pedido.addAtributo("IdentificacaoFatura", "FaturaID", "Identificador unívoco da fatura em questão", TipoDados.STRING, "^[a-zA-Z0-9_]*$"); // data se unica, ou ATE data limite se por periodo
+        f2pedido.addAtributo("DataLimite", "Data", "Data Limite Desconto", TipoDados.DATA, "^\\d{4}-\\d{2}-\\d{2}$"); // data se unica, ou ATE data limite se por periodo
+        f2pedido.addAtributo("FundamentacaoPedido", "Fundamentação", "Fundamentação do pedido de desconto a aplicar", TipoDados.STRING, "^[a-zA-Z0-9_]*$"); // data se unica, ou ATE data limite se por periodo
+
+
+        f2pedido = formRep.save(f2pedido);
+        criarServico2.adicionaFormulario(servico2, f2pedido);
+        especificarServicoController.especificarServico(servico2);
+        /**
+         * Serviço 3
+         Objetivo: Comunicação de Alteração de Residência
+
+         Disponibilidade: Colaboradores do departamento de vendas
+
+         Formulário Pedido:
+
+         Dados: Os correspondentes à estrutura de uma morada postal em Portugal
+         Validação: Garantir que a informação introduzida é válida (e.g. Código postal com 4+3 digitos).
+         (Sem Aprovação)
+
+         Formulário Realização:
+
+         Quem: um colaborador da equipa da secção de Recursos Humanos
+         Dados: Apenas um texto de observações.
+         Validação: O texto de observações é obrigatório.
          *
          */
-        CriaServicoService criarServicoService = new CriaServicoService();
-        AtividadeAprovacao atividadeAprovacao = new AtividadeAprovacao();
-        atividadeAprovacao.adicionaColabAprov(ColaboradoresAprovacao.RESPONSAVEL_HIERARQUICO);
-        AtividadeAprovacao at = criarServicoService.guardaAtividadeAprovacao(atividadeAprovacao);
+        CriaServicoService criarServico3 = new CriaServicoService();
 
-        AtividadeRealizacao ativReal = new AtividadeRealizacao();
-        ativReal.adicionarEquipaExecucao(equipa_Tecnica);
-        AtividadeRealizacao atividadeRealizacao = criarServicoService.guardaAtividadeRealizacao(ativReal);
+        /**
+         *   Cria Atividade de realização de 1 serviço
+         */
+        AtividadeRealizacao atividadeRealizacao3 = new AtividadeRealizacao();
+        atividadeRealizacao3.adicionarEquipaExecucao(equipa_RRH);
+        /**
+         *         Criar  formulário para atividade de realizacao
+         */
+        Formulario f3exe = new Formulario(new NomeFormulario("Alteração de Residência  "));
+        f3exe.addAtributo(" Comentario", "Morada", "Comentário sobre pedido de mudança", TipoDados.STRING, "^[A-Z a-z 0-9]+ *$");
 
-        FluxoAtividade fluxoAtividade = criarServicoService.guardaFluxo(new FluxoAtividade(at,atividadeRealizacao));
 
-        Servico servico = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAvaria"), new Titulo("Reportar anomalia de Comunicação"), new DescricaoBreve("Anomalia em comunicação da rede da empresa"),
-                new DescricaoCompleta("Reportar anomalias/avarias em serviços de comunicação da empresa"), new byte[2], new HashSet<>(), EstadoServico.INCOMPLETO, fluxoAtividade, catalogoAvariaTecnicas, false, nc));
+        atividadeRealizacao3.adicionaFormulario(formRep.save(f3exe));
+        atividadeRealizacao3 = criarServico3.guardaAtividadeRealizacao(atividadeRealizacao3);
+
+        /**
+         Cria Fluxo de Atividade
+         */
+        FluxoAtividade fluxoAtividade3 = criarServico2.guardaFluxo(new FluxoAtividade(atividadeRealizacao3));
+        Servico servico3 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("124IDAVenda"), new Titulo("Alteração de Residência"), new DescricaoBreve("Alteração de Residência"),
+                new DescricaoCompleta("Requisitar a alteração de residência , fornecendo uma morada e um código postal."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade3, catalogoVendas, false, nc));
+
+        /**
+         * Criar  formulário para pedido de Servico
+         */
+
+        Formulario f3pedido = new Formulario(new NomeFormulario("Pedido Alteração de Residência  "));
+        f3pedido.addAtributo(" Morada Postal", "Morada", "Morada seguida de código postal", TipoDados.STRING, "^[A-Z a-z]+ ' ' [0-9]{4}-[0-9]{3}*$");
+
+        f3pedido = formRep.save(f3pedido);
+        criarServico3.adicionaFormulario(servico3, f3pedido);
+        especificarServicoController.especificarServico(servico3);
+
+        /**
+         * Serviço 4
+         Objetivo: Requerer cotação para venda por grosso
+
+         Disponibilidade: Colaboradores do departamento de vendas
+
+         Formulário Pedido:
+
+         Dados: Código do Produto, Quantidade pretendida, Tipo de Cliente
+         Validação 1: Tipo de cliente aceita apenas 3 valores: Nacional, Europeu, Resto do Mundo
+         Validação 2: Todos os dados são obrigatórios
+         Validação 3: A quantidade só pode ter parte decimal significativa (diferente de zero) caso o código do produto comece por "20" ou "21".
+         (Sem Aprovação)
+         Quem: um colaborador da equipa da secção de Recursos Humanos
+         Dados: Apenas um texto de observações.
+         Validação: O texto de observações é obrigatório.
+         *Realização (Automática): Consiste em: (1) consultar um ficheiro XML de produtos e com base no código do produto obter o preço de venda unitário
+         *  e a categoria do produto; (2) calcular o valor total (preço unitário X quantidade); (3) com base no valor total calculado determinar a percentagem
+         *  base de desconto a aplicar (e.g. se valor > Z o desconto é 3% caso contrário é 1%); (4) para produtos com a categoria "ABC" atualizar a percentagem
+         *  base de desconto em mais 0.5%; (5) calcular o valor de desconto e o valor total após descontos; (5) enviar um email ao colaborador que efetuou o pedido
+         *  cujo texto pré-definido varia consoante o tipo de cliente e onde se apresentam alguns dos valores calculados.
+         */
+        CriaServicoService criarServico4 = new CriaServicoService();
+
+        /**
+         *   Cria Atividade de realização de um serviço
+         */
+
+        AtividadeRealizacao atividadeRealizacao4 = new AtividadeRealizacao("SCRIPTO");//todo desenvolver script para realizaÇão automática ???
+        atividadeRealizacao4 = criarServico4.guardaAtividadeRealizacao(atividadeRealizacao4);
+
+        /**
+         Cria Fluxo de Atividade
+         */
+        FluxoAtividade fluxoAtividade4 = criarServico4.guardaFluxo(new FluxoAtividade(atividadeRealizacao4));
+        Servico servico4 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("125IDAVenda"), new Titulo("Cotação para venda por grosso"), new DescricaoBreve("Venda por grosso"),
+                new DescricaoCompleta("Definir especificações de possíveis vendas a grosso a clientes."), new byte[3], keywordsVendas, EstadoServico.COMPLETO, fluxoAtividade4, catalogoVendas, false, nc));
+
+        /**
+         * Criar  formulário para pedido de Servico
+          */
+        Formulario f4pedido = new Formulario(new NomeFormulario("Requerer cotação para venda por grosso"));
+        f4pedido.addAtributo(" CodigoProduto", "Codigo", "Código do Produto", TipoDados.STRING, "^[A-Z a-z 0-9]+");
+        f4pedido.addAtributo(" QuantidadePretendida", "Quantidade pretendida", "Quantidade de unidades para venda em grosso", TipoDados.INT, "^([0-9]{1,3}){1}");
+        f4pedido.addAtributo("TipoCliente", "Tipo de Cliente", "Tipo de Cliente(Nacional, Europeu, Resto do Mundo) ", TipoDados.STRING, "Nacional|Europeu|Resto do Mundo");
 
 
-        Formulario f = new Formulario(new NomeFormulario("Avaria"));
-        f.addAtributo("Equipamento que avariou: ","Código do equipamento","Código na lateral do equipamento", TipoDados.INT,"[0-9]+");
-        f.addAtributo("Edifício do equipamento: ","Nome do edificio do equipamento","Nome afixado na entrada do edificio",TipoDados.STRING,"[a-zA-Z]+");
-        f.addAtributo("Comentário: ","Avaria concreta do equipamento","Avaliação empírica da avaria",TipoDados.STRING,"[a-zA-Z]+");
-        Formulario fSav = formRep.save(f);
-
-        criarServicoService.adicionaFormulario(servico,fSav);
-        especificarServicoController.especificarServico(servico);
+        f4pedido = formRep.save(f4pedido);
+        criarServico4.adicionaFormulario(servico4, f4pedido);
+        especificarServicoController.especificarServico(servico4);
 
 
         System.out.println("\n\n#############################################  BOOTSTRAP GRUPO 4 2DL FEITO  #############################################");
