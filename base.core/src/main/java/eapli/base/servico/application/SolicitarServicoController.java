@@ -6,12 +6,8 @@ import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
-import eapli.base.fluxoAtividade.domain.FluxoAtividade;
-import eapli.base.fluxoAtividade.domain.StatusFluxo;
-import eapli.base.fluxoAtividade.persistence.FluxoAtividadeRepositorio;
 import eapli.base.fluxoAtividade.service.AtivarDesativarFluxoService;
 import eapli.base.formulario.domain.Formulario;
-import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
@@ -23,8 +19,6 @@ import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.persistence.TicketRepositorio;
-import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
@@ -41,7 +35,7 @@ public class SolicitarServicoController {
 
     private Colaborador colabPedido;
 
-    private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
+    //private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final CatalogoRepositorio catRep = PersistenceContext.repositories().catalogoRepositorio();
@@ -61,7 +55,7 @@ public class SolicitarServicoController {
     }
 
     public Ticket criarTicket(Servico s, String urgencia) {
-        txCtx.beginTransaction();
+        //txCtx.beginTransaction();
         if (s.fluxoDoServico().ativAprovacaoDoFluxo() != null)
             return ticketRepositorio.save(new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR));
         else
@@ -77,8 +71,8 @@ public class SolicitarServicoController {
             fpr.save(fp);
         }
         ativarDesativarFluxoService.ativarFluxo(s.fluxoDoServico());
-        txCtx.commit();
-        txCtx.close();
+        //txCtx.commit();
+        //txCtx.close();
     }
 
     public List<Catalogo> listarCatalogosPorUser() {

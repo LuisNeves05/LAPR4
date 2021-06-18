@@ -9,7 +9,6 @@ import eapli.base.servico.domain.Servico;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.TarefasAprovadasService;
-import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
 import eapli.base.tarefaManualExecucao.services.TerminarExecucaoService;
 import eapli.base.ticket.domain.Ticket;
@@ -26,7 +25,7 @@ import java.util.Set;
 
 public class ExecutarTarefaAprovacaoController {
     private Colaborador colabPedido;
-    private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
+    //private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
@@ -45,10 +44,10 @@ public class ExecutarTarefaAprovacaoController {
 
     // Manter a transação aberta durante o terminio da execução
     public TarefaManualAprovacao terminarAprovacao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
-        txCtx.beginTransaction();
+        //txCtx.beginTransaction();
         TarefaManualAprovacao tarManAprov = terminarExecucaoService.terminaAprovacao(f, respostas, tarefaManualAprovacao, colabPedido);
-        txCtx.commit();
-        txCtx.close();
+        //txCtx.commit();
+        //txCtx.close();
         return tarManAprov;
     }
 
