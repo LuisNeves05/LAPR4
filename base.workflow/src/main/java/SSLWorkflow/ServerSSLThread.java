@@ -46,22 +46,23 @@ class ServerSSLThread implements Runnable {
 
             switch (protocolo) {
                 case 4:
-                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
+                    //LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     tarefasPendentesServer(s, sOut, sIn, serviceTarefas);
                     break;
 
                 case 5:
-                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
+                    //LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     fluxosAtivosServer(s, sOut, serviceFluxo);
                     break;
 
                 case 6:
-                    LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
+                    //LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
                     atribuicaoAutomaticaAlg(s, sOut, serviceAlg);
                     break;
 
                 default:
-                    LOGGER.log(Level.WARNING, "Protocol Nao Defenido", protocolo);
+                    //LOGGER.log(Level.WARNING, "Protocol Nao Defenido", protocolo);
+                    System.out.println("Protocol Nao Defenido");
                     break;
 
             }

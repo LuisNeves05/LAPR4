@@ -5,9 +5,9 @@ import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ServerExecutorSSL {
+public class ServerExecutorSSLP {
 
-    static final String BASEFOLDER = "base.workflow/src/main/java/SSLWorkflow/SSLCert/";
+    static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
     static final int SERVER_PORT = 6665;
     static final String TRUSTED_STORE = BASEFOLDER + "server_J.jks";
     static final String KEYSTORE_PASS = "forgotten";
@@ -41,7 +41,7 @@ public class ServerExecutorSSL {
 
         while (true) {
             cliSock = sock.accept();
-            new Thread(new ServerExecutorSSLThread(cliSock)).start();
+            new Thread(new ServerExecutorSSLThread(cliSock, "P")).start();
         }
     }
 }

@@ -1,18 +1,14 @@
-package SSLWorkflow;
-
-import java.io.*;
-
-import java.net.Socket;
+package ExecutorServer;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
+import java.io.IOException;
+import java.net.Socket;
 
-import static org.apache.commons.lang3.math.NumberUtils.toInt;
+public class ServerExecutorSSLI {
 
-public class ServerSSL {
-
-    static final String BASEFOLDER = "base.workflow/src/main/java/SSLWorkflow/SSLCert/";
-    static final int SERVER_PORT = 6565;
+    static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
+    static final int SERVER_PORT = 6665;
     static final String TRUSTED_STORE = BASEFOLDER + "server_J.jks";
     static final String KEYSTORE_PASS = "forgotten";
 
@@ -34,7 +30,7 @@ public class ServerSSL {
         try {
             sock = (SSLServerSocket) sslF.createServerSocket(SERVER_PORT);
             sock.setNeedClientAuth(true);
-            System.out.println("Server Started !");
+            System.out.println("Liguei me");
         } catch (IOException ex) {
             System.out.println("Server failed to open local port " + SERVER_PORT);
             System.exit(1);
@@ -43,7 +39,7 @@ public class ServerSSL {
 
         while (true) {
             cliSock = sock.accept();
-            new Thread(new ServerSSLThread(cliSock)).start();
+            new Thread(new ServerExecutorSSLThread(cliSock, "I")).start();
         }
     }
 }
