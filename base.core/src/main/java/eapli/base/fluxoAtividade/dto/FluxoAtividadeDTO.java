@@ -32,7 +32,7 @@ public class FluxoAtividadeDTO {
         this.id = id.toString();
         this.estado = estado.toString();
         if(estaApr == null){
-            this.estaApr = "Nao tem";
+            this.estaApr = "[NAO TEM APROVACAO]";
         }else{
             this.estaApr = estaApr.toString();
         }

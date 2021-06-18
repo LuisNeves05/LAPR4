@@ -39,9 +39,10 @@ class ServerSSLThread implements Runnable {
             sIn = new DataInputStream(s.getInputStream());
 
 
-            //TODO DIVISAO DE BITES
             String received = sIn.readUTF();
             int protocolo = Integer.parseInt(received.trim());
+
+            System.out.println("Threads Ativas " + Thread.activeCount());
 
             switch (protocolo) {
                 case 4:

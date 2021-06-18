@@ -12,10 +12,10 @@ public class FluxoAtividadeService {
         FluxoAtividadeRepositorio repoFluxosRepo = PersistenceContext.repositories().fluxoAtividadeRepositorio();
 
         StringBuilder stringData = new StringBuilder();
-        List<FluxoAtividade> repoFluxos = (List<FluxoAtividade>) repoFluxosRepo.fluxosTotal();
+        //List<FluxoAtividade> repoFluxos = (List<FluxoAtividade>) repoFluxosRepo.fluxosTotal();
 
 
-        for (FluxoAtividade elems : repoFluxos) {
+        for (FluxoAtividade elems : repoFluxosRepo.fluxosTotal()) {
             stringData.append(elems.toDTO().toString());
         }
 
