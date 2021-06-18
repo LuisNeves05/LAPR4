@@ -1,6 +1,7 @@
 package eapli.base.tarefaAutomatica.persistance;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.ticket.domain.EstadoTicket;
@@ -20,9 +21,9 @@ public class TarefaAutomaticaRepositorioJPAimpl extends JpaAutoTxRepository<Tare
 
     @Override
     public List<TarefaAutomatica> tarefasAutomaticasPendentes(){
-        Query query = super.createQuery("Select tar from TarefaAutomatica tar inner join Ticket t where tar.ticket = t and (t.estadoTicket = :aprovado or t.estadoTicket = :emExec)\"", Ticket.class);
-        query.setParameter("aprovado", EstadoTicket.APROVADO);
+        Query query = super.createQuery("select t from TarefaAutomatica t inner join Ticket tic on t.ticket=tic where tic.estadoTicket=:emExec", TarefaAutomatica.class);
         query.setParameter("emExec", EstadoTicket.EM_EXECUCAO);
         return query.getResultList();
     }
+
 }

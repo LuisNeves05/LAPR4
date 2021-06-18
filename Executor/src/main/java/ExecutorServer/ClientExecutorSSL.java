@@ -20,35 +20,37 @@ public class ClientExecutorSSL {
     static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
     static final int SERVER_PORT = 6665;
     static final String KEYSTORE_PASS = "forgotten";
+    List<String> listaIpsAvailable = getAvailableIps();
 
     static InetAddress serverIP;
     static SSLSocket sock;
 
 
-    public String executarTarefaAutomatica() throws IOException {
+    public void executarTarefaAutomatica() throws IOException {
 
-        preparingSSLClient("");
-
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
-        DataInputStream sIn = new DataInputStream(sock.getInputStream());
+        for(String elems : listaIpsAvailable){
+            preparingSSLClient(elems);
 
 
-        String protocol = "8";
-        sOut.writeUTF(protocol);
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
+            DataInputStream sIn = new DataInputStream(sock.getInputStream());
 
-        //WAITING FOR RESPONSE
-        String response = sIn.readUTF();
 
-        return response;
+            String protocol = "7";
+            sOut.writeUTF(protocol);
+
+            //WAITING FOR RESPONSE
+            String response = sIn.readUTF();
+        }
+
+
+
+        //return response;
     }
 
 
     public String verificarCarga() throws IOException {
-
-
-        List<String> listaIpsAvailable = getAvailableIps();
 
         for (String elems : listaIpsAvailable) {
             preparingSSLClient(elems);

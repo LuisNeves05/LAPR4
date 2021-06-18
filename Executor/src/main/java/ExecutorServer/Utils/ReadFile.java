@@ -12,7 +12,7 @@ public class ReadFile {
         List<String> ips = new ArrayList<>();
 
         try {
-            File myObj = new File("Executor/src/main/java/ExecutorServer/ConfigFile/ipList.txt");
+            File myObj = new File("Executor/src/main/java/ExecutorServer/ListaIps/ipList.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

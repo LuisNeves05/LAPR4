@@ -8,4 +8,5 @@ import java.util.List;
 public interface TarefaAutomaticaRepositorio extends DomainRepository<Long, TarefaAutomatica> {
 
     List<TarefaAutomatica> tarefasAutomaticasPendentes();
+
 }

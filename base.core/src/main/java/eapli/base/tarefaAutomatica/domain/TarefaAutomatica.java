@@ -48,6 +48,16 @@ public class TarefaAutomatica implements Comparable<Long>, AggregateRoot<Long> {
     }
 
     @Override
+    public String toString() {
+        return "TarefaAutomatica{" +
+                "id=" + id +
+                ", ticket=" + ticket +
+                ", atividadeRealizacao=" + atividadeRealizacao +
+                ", scriptExecucao='" + scriptExecucao + '\'' +
+                '}';
+    }
+
+    @Override
     public Long identity() {
         return id;
     }

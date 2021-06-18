@@ -57,7 +57,7 @@ public class ExecutarTarefaAprovacaoController {
             tarefaManualAprovacao.aprovado();
             if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.ticketDaTarefa())) {
                 criarTarefaManualExecucao(tarefaManualAprovacao.ticketDaTarefa().servicoDoTicket(), tarefaManualAprovacao.ticketDaTarefa());
-                tarefaManualAprovacao.ticketDaTarefa().aprovarTicket();
+                tarefaManualAprovacao.ticketDaTarefa().emExecucao();
             }
         } else {
             tarefaManualAprovacao.rejeitado();

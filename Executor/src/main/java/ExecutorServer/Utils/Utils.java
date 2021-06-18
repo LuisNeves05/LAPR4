@@ -18,7 +18,9 @@ public class Utils {
 
         // Asks DB for the data
         TarefaAutomaticaService tarefaAutServ = new TarefaAutomaticaService();
-        tarefaAutServ.buscarTarefasAutomaticas(state);
+        var x = tarefaAutServ.buscarTarefasAutomaticas(state);
+
+        System.out.println(x);
 
         // TODO executar validacao
 
