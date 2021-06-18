@@ -23,7 +23,7 @@ public class FormularioHelper {
             nomeForm = "Formulário de Aprovação";
         } else if (conclusaoRealizacao) {
             nomeForm = "Formulario de Realização";
-        }else{
+        } else {
             nomeForm = Console.readLine("Nome do Formulario: ");
         }
         nomeFormulario = new NomeFormulario(nomeForm);
@@ -84,18 +84,16 @@ public class FormularioHelper {
 
             f.addAtributo(nomeVar, lable, descAjuda, td, expReg);
 
-            String script;
-            //do {
-            script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
-            //}while(!ScriptFormularios.validadeGrammarFromString(script));
-            f.addScript(script);
-
-
             continuar = Console.readLine("Deseja especificar mais atributos para o formulario? (sim|nao)");
             if (continuar.equalsIgnoreCase("nao")) {
                 flag = false;
             }
         }
+        String script;
+        do {
+            script = Console.readLine("Introduza um script de validação para o formulario por favor: ");
+        } while (!ScriptFormularios.validadeGrammarFromString(script));
+        f.addScript(script);
 
         return f;
     }

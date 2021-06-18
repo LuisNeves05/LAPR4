@@ -1,4 +1,4 @@
-package eapli.base.formulario.gramatica;
+package eapli.base.formulario.gramatica.listener;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

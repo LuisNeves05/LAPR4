@@ -108,7 +108,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
             String resposta;
             List<Resposta> lista = new ArrayList<>();
-            //do {
+            do {
                 respostas.clear();
                 lista.clear();
                 for (Atributo atributo : atri) {
@@ -120,7 +120,9 @@ public class SolicitarServicoUI extends AbstractUI {
                 }
                 lista = new ArrayList<>(respostas);
 
-            //}while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
+            }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
+
+            //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
 
             fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas, ticket));
         }
@@ -129,7 +131,6 @@ public class SolicitarServicoUI extends AbstractUI {
         }catch (Exception x){
             System.out.println("Ocorreu algum erro ao solicitar o serviço");
         }
-
 
         /**
          * Algoritmo de atribuicao automatica

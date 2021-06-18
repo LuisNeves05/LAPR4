@@ -2,13 +2,14 @@ package eapli.base.formulario.gramatica;
 
 import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaLexer;
 import eapli.base.formulario.gramatica.gramaticaformulario.GramaticaParser;
+import eapli.base.formulario.gramatica.listener.ErrorListener;
+import eapli.base.formulario.gramatica.listener.EvalGramaticaListener;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

@@ -1,5 +1,7 @@
 package eapli.base.formulario.gramatica;
 
+import eapli.base.formulario.gramatica.listener.ErrorListener;
+import eapli.base.formulario.gramatica.visitor.EvalTarefasAutomaticasVisitor;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import org.antlr.v4.runtime.tree.ParseTree;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaLexer;
@@ -8,7 +10,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -35,7 +36,7 @@ public class ScriptTarefasAutomaticas {
         }
     }
 
-    public static boolean executaTarefaAutomatica(String script, List<Resposta> list) {
+    public static void executaTarefaAutomatica(String script, List<Resposta> list) {
 
         EvalTarefasAutomaticasVisitor tarefasAutomaticasVisitor = new EvalTarefasAutomaticasVisitor(list);
 
@@ -50,10 +51,8 @@ public class ScriptTarefasAutomaticas {
         try {
             ParseTree pt = parser.executa();
             tarefasAutomaticasVisitor.visit(pt);
-            return true;
         } catch (ParseCancellationException pce) {
             System.out.println("A gramática do script está incorretaa");
-            return false;
         }
     }
 }

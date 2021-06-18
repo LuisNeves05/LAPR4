@@ -1,24 +1,19 @@
-package eapli.base.formulario.gramatica;
+package eapli.base.formulario.gramatica.visitor;
 
+import eapli.base.Utils.Email;
+import eapli.base.Utils.XMLUtils;
+import eapli.base.formulario.application.ObterCurrentColabController;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaBaseVisitor;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaParser;
 import eapli.base.formularioPreenchido.domain.Resposta;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.swing.text.Document;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<String> {
 
     private final List<Resposta> respostaList;
     private final XMLUtils xmlUtils = new XMLUtils();
+    private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
     public EvalTarefasAutomaticasVisitor(List<Resposta> list) {
         this.respostaList = list;
@@ -125,8 +120,8 @@ public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<S
                 System.out.println("Ocorreu um erro muito inesperado");
         }
 
-        if(categoriaDescontoNome.equals(categoria)){
-            descontoAplicar = descontoAplicar - descontoAplicar * (categoriaDesconto/100);
+        if (categoriaDescontoNome.equals(categoria)) {
+            descontoAplicar = descontoAplicar - descontoAplicar * (categoriaDesconto / 100);
         }
 
         /**
@@ -134,7 +129,14 @@ public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<S
          */
         precoFinal = valorTotal - descontoAplicar;
 
+        //if (!ctx.enviar_email().isEmpty()) {
+        System.out.println("ANTES DO EMAIL");
+            String emailColaborador = obt.obterEmailColaboradorAtual();
 
+            String textfinal = "Saudações camarada, \n\n A seu pedido, aqui estão os valores de desconto aplicados: \n Valor Total: "
+                    + valorTotal + " Desconto a aplicar: " + descontoAplicar + " \n\n Preço final: " + precoFinal;
+            Email.sendEmail(emailColaborador, textfinal);
+        //}
         //TODO ENVIAR EMAIL AO COLABORADOR E METER ISTO A SER EXECUTADO NO EXECUTOR
 
         return "";

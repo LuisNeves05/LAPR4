@@ -1,4 +1,4 @@
-package eapli.base.formulario.gramatica;
+package eapli.base.Utils;
 
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;

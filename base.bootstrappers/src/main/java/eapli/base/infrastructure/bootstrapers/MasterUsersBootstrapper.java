@@ -283,7 +283,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         /**
          * Criar e guardar formulário de Atividade de Aprovação
          */
-
         Formulario f1Aprov = new Formulario(new NomeFormulario("Aprovação"));
         f1Aprov.addAtributo("Decisao", "Decisão da Atividade de Aprovação",
                 "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
