@@ -58,6 +58,10 @@ public final class BaseRoles {
      */
     public static final Role GSH = Role.valueOf("GSH");
 
+    /**
+     *  Responsável de Vendas
+     */
+public static final Role RVD= Role.valueOf("RVD");
 
     /**
      * get available role types for adding new users
