@@ -27,7 +27,12 @@ public class Utils {
 
         for(String elems : getNumberOfTarefasAut(response)){
             String[] split = elems.split("!");
-            stateC = split[3].trim();
+
+            try{
+                stateC = split[3].trim();
+            }catch (ArrayIndexOutOfBoundsException e){
+            }
+
 
             System.out.println("Debug 1: " + stateC);
 
