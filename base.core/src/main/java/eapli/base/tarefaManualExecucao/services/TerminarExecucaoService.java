@@ -19,7 +19,8 @@ public class TerminarExecucaoService {
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
 
     public TarefaManualAprovacao terminaAprovacao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao, Colaborador colabPedido){
-        fpr.save(new FormularioPreenchido(f, respostas, tarefaManualAprovacao.ticketDaTarefa(), colabPedido));
+        FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
+        tarefaManualAprovacao.ticketDaTarefa().adicionaFormularioResposta(fp);
         ticketRepo.save(tarefaManualAprovacao.ticketDaTarefa());
         tarefaManualAprovacao.definirMomentoAprovacao();
         return tarefaManualAprovacaoRepositorio.save(tarefaManualAprovacao);

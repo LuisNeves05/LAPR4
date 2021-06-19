@@ -21,7 +21,6 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @OneToOne
     private Formulario formulario;
 
-
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
@@ -33,25 +32,20 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @ElementCollection
     private Set<Resposta> respostas;
 
-    @OneToOne
-    private Ticket ticket;
-
     public FormularioPreenchido(){}
 
-    public FormularioPreenchido(Formulario formulario, String urgencia, Set<Resposta> respostaSet, Ticket ticket, Colaborador colaborador){
+    public FormularioPreenchido(Formulario formulario, String urgencia, Set<Resposta> respostaSet,  Colaborador colaborador){
         this.formulario = formulario;
         this.createdOn = Calendars.now();
         this.urgencia = urgencia;
         this.respostas = respostaSet;
-        this.ticket = ticket;
         this.colaboradorPedido = colaborador;
     }
 
-    public FormularioPreenchido(Formulario formulario, Set<Resposta> respostaSet, Ticket ticket, Colaborador colaborador){
+    public FormularioPreenchido(Formulario formulario, Set<Resposta> respostaSet,  Colaborador colaborador){
         this.formulario = formulario;
         this.createdOn = Calendars.now();
         this.respostas = respostaSet;
-        this.ticket = ticket;
         this.colaboradorPedido = colaborador;
     }
 

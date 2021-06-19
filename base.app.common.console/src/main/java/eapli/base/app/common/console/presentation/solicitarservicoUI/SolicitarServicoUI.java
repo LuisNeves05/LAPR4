@@ -124,7 +124,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
             //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
 
-            fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas, ticket));
+            fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
         }
 
         lcp.solicitarServico(s, ticket, fps);

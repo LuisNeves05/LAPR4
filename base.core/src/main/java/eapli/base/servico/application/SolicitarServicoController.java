@@ -69,7 +69,7 @@ public class SolicitarServicoController {
             criarTarefaManualExecucaoService.criarTarefaExecucao(s, ticket);
 
         for(FormularioPreenchido fp : fps){
-            fpr.save(fp);
+            ticket.adicionaFormularioResposta(fpr.save(fp));
         }
         ativarDesativarFluxoService.ativarFluxo(s.fluxoDoServico());
         txCtx.commit();
@@ -100,7 +100,7 @@ public class SolicitarServicoController {
         return urgencia.equalsIgnoreCase("baixa") || urgencia.equalsIgnoreCase("moderada") || urgencia.equalsIgnoreCase("alta");
     }
 
-    public FormularioPreenchido adicionaFormularioPreenchido(Formulario f, String urgencia, Set<Resposta> respostas, Ticket ticket) {
-        return new FormularioPreenchido(f, urgencia, respostas, ticket, colabPedido);
+    public FormularioPreenchido adicionaFormularioPreenchido(Formulario f, String urgencia, Set<Resposta> respostas) {
+        return new FormularioPreenchido(f, urgencia, respostas, colabPedido);
     }
 }

@@ -20,7 +20,8 @@ public class ExecutarTarefaManualExecucaoService {
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
 
     public void executarTarefa(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao, Colaborador colabPedido) {
-        fpr.save(new FormularioPreenchido(f, respostas, tarefaManualExecucao.ticketDaTarefa(), colabPedido));
+        FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
+        tarefaManualExecucao.ticketDaTarefa().adicionaFormularioResposta(fp);
         ticketRepositorio.save(tarefaManualExecucao.ticketDaTarefa());
         tarefaManualExecucao.definirMomentoRealizacao();
         tarefaExecucaoRepositorio.save(tarefaManualExecucao);
