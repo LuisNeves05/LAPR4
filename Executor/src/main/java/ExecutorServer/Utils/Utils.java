@@ -26,9 +26,7 @@ public class Utils {
         List<String> responseToClient = new ArrayList<>();
 
 
-        System.out.println("Erro : " + getNumberOfTarefasAut(response));
         for (String elems : getNumberOfTarefasAut(response)) {
-            System.out.println("Elemento do diabo : " + elems + " " + elems.length());
             if (!(elems.length() == 0)) {
                 flag = true;
                 String[] split = elems.split("!");

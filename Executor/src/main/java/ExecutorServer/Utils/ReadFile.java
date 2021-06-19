@@ -24,8 +24,6 @@ public class ReadFile {
             e.printStackTrace();
         }
 
-        System.out.println(ips);
-
         return ips;
     }
 }

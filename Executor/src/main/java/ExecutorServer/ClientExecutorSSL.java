@@ -71,7 +71,7 @@ public class ClientExecutorSSL {
                 }
             }
 
-            System.out.println("DEBUG: " + sendToServer.toString());
+            //System.out.println("DEBUG: " + sendToServer.toString());
             sOut.writeUTF(sendToServer.toString());
 
 
@@ -79,11 +79,11 @@ public class ClientExecutorSSL {
 
             if(!result.equals("0")){
                 List<String> myList = new ArrayList<>(Arrays.asList(result.split("&")));
-                System.out.println("DEBUG1 : " + myList);
+                //System.out.println("DEBUG1 : " + myList);
 
                 for (TarefaAutomatica elems : tarefasIteration) {
                     int conter = 0;
-                    System.out.println("DEBUG2 : " + myList.get(conter));
+                    //System.out.println("DEBUG2 : " + myList.get(conter));
                     if (myList.get(conter).contains("tru")) {
                         elems.ticketDaTarefa().completarTicket();
                         repoTick.save(elems.ticketDaTarefa());
@@ -91,8 +91,11 @@ public class ClientExecutorSSL {
                 }
 
 
-                System.out.println(result);
-                System.out.println("RESPONSE: " + result);
+                if(result.contains("True")){
+                    System.out.println("Tarefa Automatica Concluida com Sucesso");
+                }
+                //System.out.println(result);
+                //System.out.println("RESPONSE: " + result);
             }
 
         }

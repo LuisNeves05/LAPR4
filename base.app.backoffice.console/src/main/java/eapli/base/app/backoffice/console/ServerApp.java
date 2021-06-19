@@ -71,12 +71,12 @@ public final class ServerApp extends BaseApplication {
 
     @Override
     protected String appTitle() {
-        return "Server";
+        return "Motor Fluxos";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Server";
+        return "Motor Fluxos";
     }
 
     @SuppressWarnings("unchecked")
