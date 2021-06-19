@@ -27,7 +27,8 @@ public class Utils {
 
         System.out.println("Erro : " + getNumberOfTarefasAut(response));
         for (String elems : getNumberOfTarefasAut(response)) {
-            if (!getNumberOfTarefasAut(response).isEmpty()) {
+            System.out.println("Elemento do diabo : " + elems);
+            if (elems.isEmpty()) {
                 String[] split = elems.split("!");
                 stateC = split[3].trim();
 
