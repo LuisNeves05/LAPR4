@@ -57,6 +57,8 @@ public class Utils {
             String sendToCli = StringUtils.join(responseToClient, "&");
             System.out.println(sendToCli);
             sOut.writeUTF(sendToCli);
+        }else {
+            sOut.writeUTF("0");
         }
 
         s = null;

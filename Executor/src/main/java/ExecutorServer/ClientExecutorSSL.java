@@ -77,22 +77,24 @@ public class ClientExecutorSSL {
 
             String result = sIn.readUTF();
 
+            if(!result.equals("0")){
+                List<String> myList = new ArrayList<>(Arrays.asList(result.split("&")));
+                System.out.println("DEBUG1 : " + myList);
 
-            List<String> myList = new ArrayList<>(Arrays.asList(result.split("&")));
-            System.out.println("DEBUG1 : " + myList);
-
-            for (TarefaAutomatica elems : tarefasIteration) {
-                int conter = 0;
-                System.out.println("DEBUG2 : " + myList.get(conter));
-                if (myList.get(conter).contains("tru")) {
-                    elems.ticketDaTarefa().completarTicket();
-                    repoTick.save(elems.ticketDaTarefa());
+                for (TarefaAutomatica elems : tarefasIteration) {
+                    int conter = 0;
+                    System.out.println("DEBUG2 : " + myList.get(conter));
+                    if (myList.get(conter).contains("tru")) {
+                        elems.ticketDaTarefa().completarTicket();
+                        repoTick.save(elems.ticketDaTarefa());
+                    }
                 }
+
+
+                System.out.println(result);
+                System.out.println("RESPONSE: " + result);
             }
 
-
-            System.out.println(result);
-            System.out.println("RESPONSE: " + result);
         }
 
     }
