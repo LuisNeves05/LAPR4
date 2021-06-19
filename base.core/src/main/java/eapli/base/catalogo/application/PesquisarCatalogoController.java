@@ -2,8 +2,10 @@ package eapli.base.catalogo.application;
 
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.catalogo.persistencia.CatalogoRepositorio;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -20,13 +22,17 @@ public class PesquisarCatalogoController {
 
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
 
+    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
+
     private SystemUser systemUser;
+    private Colaborador colaborador;
 
     public PesquisarCatalogoController(){
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
         if(authorizationService.hasSession() && authorizationService.session().isPresent()) {
             UserSession userSession = authorizationService.session().get();
             this.systemUser = userSession.authenticatedUser();
+            this.colaborador = colaboradorRepositorio.colabPorUsername(systemUser.username()).iterator().next();
         }
     }
 
@@ -69,6 +75,6 @@ public class PesquisarCatalogoController {
     }
 
     public Iterable<Equipa> equipasDoColaborador(){
-        return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
+        return equipaRepositorio.equipasDoColaborador(colaborador);
     }
 }

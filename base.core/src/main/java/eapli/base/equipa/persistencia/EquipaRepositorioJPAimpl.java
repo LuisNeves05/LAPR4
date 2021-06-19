@@ -2,6 +2,7 @@ package eapli.base.equipa.persistencia;
 
 import eapli.base.Application;
 import eapli.base.catalogo.domain.Catalogo;
+import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.equipa.domain.CodigoEquipa;
 import eapli.base.equipa.domain.Equipa;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -38,6 +39,13 @@ public class EquipaRepositorioJPAimpl extends JpaAutoTxRepository<Equipa, Long, 
         Query query = super.createQuery("SELECT c.equipas FROM Catalogo c where c = :catalogo",
                 Iterable.class);
         query.setParameter("catalogo", catalogo);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Equipa> equipasDoColaborador(Colaborador colaborador) {
+        Query query = super.createQuery("SELECT e FROM Equipa e where :colaborador member of e.listaColabs",Equipa.class);
+        query.setParameter("colaborador", colaborador);
         return query.getResultList();
     }
 }

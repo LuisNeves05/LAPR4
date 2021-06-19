@@ -1,8 +1,6 @@
 package eapli.base.formularioPreenchido.persistencia;
 
 import eapli.base.Application;
-import eapli.base.Utils.QueryMaker;
-import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.framework.domain.repositories.TransactionalContext;

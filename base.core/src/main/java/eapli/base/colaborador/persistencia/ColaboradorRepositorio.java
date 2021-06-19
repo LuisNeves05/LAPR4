@@ -11,8 +11,6 @@ import java.util.List;
 
 public interface ColaboradorRepositorio extends DomainRepository<MecanographicNumber, Colaborador> {
 
-    Iterable<Equipa> equipasColaboradorPorUsername(Username username);
-
     Iterable<Colaborador> colabPorUsername(Username username);
 
     Iterable<Colaborador> colabsDoCatalogo(Equipa eq);

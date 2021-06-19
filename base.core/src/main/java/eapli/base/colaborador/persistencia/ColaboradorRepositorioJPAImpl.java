@@ -15,12 +15,6 @@ public class ColaboradorRepositorioJPAImpl extends JpaAutoTxRepository<Colaborad
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
     }
 
-    public Iterable<Equipa> equipasColaboradorPorUsername(Username username){
-        Query query = super.createQuery("SELECT c.equipas FROM Colaborador c where c.systemUser.username = :username",
-                Iterable.class);
-        query.setParameter("username", username);
-        return query.getResultList();
-    }
 
     public Iterable<Colaborador> colabPorUsername(Username username){
         Query query = super.createQuery("SELECT c FROM Colaborador c where c.systemUser.username = :username",
