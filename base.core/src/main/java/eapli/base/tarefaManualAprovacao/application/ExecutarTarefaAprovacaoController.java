@@ -20,6 +20,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -43,7 +44,7 @@ public class ExecutarTarefaAprovacaoController {
     }
 
     // Manter a transação aberta durante o terminio da execução
-    public TarefaManualAprovacao terminarAprovacao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao){
+    public TarefaManualAprovacao terminarAprovacao(Formulario f, Map<Resposta, Integer> respostas, TarefaManualAprovacao tarefaManualAprovacao){
         txCtx.beginTransaction();
         TarefaManualAprovacao tarManAprov = terminarExecucaoService.terminaAprovacao(f, respostas, tarefaManualAprovacao, colabPedido);
         txCtx.commit();

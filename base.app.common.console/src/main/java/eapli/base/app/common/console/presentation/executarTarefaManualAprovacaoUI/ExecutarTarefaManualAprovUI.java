@@ -11,10 +11,7 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ExecutarTarefaManualAprovUI extends AbstractUI {
     private final ExecutarTarefaAprovacaoController controller = new ExecutarTarefaAprovacaoController();
@@ -40,7 +37,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
 
                 System.out.println("\nFormulario " + f.name() + "\n");
 
-                Set<Resposta> respostas = new HashSet<>();
+                Map<Resposta, Integer> respostas = new HashMap<>();
                 Map<Atributo, Integer> a = f.atributos();
                 for (Atributo atributo : a.keySet()) {
                     TipoDados td = atributo.tipoDados();
@@ -59,7 +56,7 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                             System.out.println("Dado incorreto.");
                         }
                     } while (flag);
-                    respostas.add(controller.adicionarResposta(resposta,atributo.nomeVar()));
+                    respostas.put(controller.adicionarResposta(resposta,atributo.nomeVar()), respostas.size()+1);
                 }
 
             try {

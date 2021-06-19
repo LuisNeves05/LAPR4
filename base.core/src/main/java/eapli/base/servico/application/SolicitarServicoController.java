@@ -28,6 +28,7 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class SolicitarServicoController {
@@ -56,21 +57,25 @@ public class SolicitarServicoController {
     }
 
     public Ticket criarTicket(Servico s, String urgencia) {
-        txCtx.beginTransaction();
         if (s.fluxoDoServico().ativAprovacaoDoFluxo() != null)
-            return ticketRepositorio.save(new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR));
+            return new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR);
         else
-            return ticketRepositorio.save(new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO));
+            return new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO);
     }
 
 
     public void solicitarServico(Servico s, Ticket ticket, Set<FormularioPreenchido> fps) {
-        if (!criarTarefaManualAprovacaoService.criarTarefaAprovacao(s, ticket, colabPedido))
-            criarTarefaManualExecucaoService.criarTarefaExecucao(s, ticket);
+        txCtx.beginTransaction();
 
-        for(FormularioPreenchido fp : fps){
+        for (FormularioPreenchido fp : fps) {
             ticket.adicionaFormularioResposta(fpr.save(fp));
         }
+
+        Ticket tic = ticketRepositorio.save(ticket);
+
+        if (!criarTarefaManualAprovacaoService.criarTarefaAprovacao(s, tic, colabPedido))
+            criarTarefaManualExecucaoService.criarTarefaExecucao(s, tic);
+
         ativarDesativarFluxoService.ativarFluxo(s.fluxoDoServico());
         txCtx.commit();
         txCtx.close();
@@ -100,7 +105,7 @@ public class SolicitarServicoController {
         return urgencia.equalsIgnoreCase("baixa") || urgencia.equalsIgnoreCase("moderada") || urgencia.equalsIgnoreCase("alta");
     }
 
-    public FormularioPreenchido adicionaFormularioPreenchido(Formulario f, String urgencia, Set<Resposta> respostas) {
+    public FormularioPreenchido adicionaFormularioPreenchido(Formulario f, String urgencia, Map<Resposta, Integer> respostas) {
         return new FormularioPreenchido(f, urgencia, respostas, colabPedido);
     }
 }

@@ -9,7 +9,6 @@ import eapli.framework.time.util.Calendars;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -66,6 +65,10 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         formulariosPreenchidos.add(fp);
     }
 
+    public Set<FormularioPreenchido> formulariosPreenchidosDoTicket() {
+        return formulariosPreenchidos;
+    }
+
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -73,18 +76,9 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public Long identity() {
-        return null;
+        return id;
     }
 
-
-    @Override
-    public String toString() {
-        return "Ticket " + id + " : \n" +
-                "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + createdOn.getTime().toString() +
-                "       Serviço : " + servico.descricaoBreveDoServico() +
-                "       Urgência : " + urgenciaTicket;
-    }
 
     public Servico servicoDoTicket() {
         return servico;
@@ -96,6 +90,10 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     public int periodoMaxRes() {
         return periodoMaxRes;
+    }
+
+    public Colaborador colabQueRequisita() {
+        return colabRequisitou;
     }
 
     public EstadoTicket estadoTicket() {
@@ -120,5 +118,14 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     public void feedbackDoColaborador(String respostaFeedback) {
         this.feedback = respostaFeedback;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket " + id + " : \n" +
+                "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
+                "       Criado em : " + createdOn.getTime().toString() +
+                "       Serviço : " + servico.descricaoBreveDoServico() +
+                "       Urgência : " + urgenciaTicket;
     }
 }

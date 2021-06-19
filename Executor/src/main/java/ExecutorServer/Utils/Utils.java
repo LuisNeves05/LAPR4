@@ -1,45 +1,67 @@
 package ExecutorServer.Utils;
 
-import eapli.base.colaborador.domain.Colaborador;
-import eapli.base.tarefaAutomatica.service.TarefaAutomaticaService;
-import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
+import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
+import eapli.base.formularioPreenchido.domain.Resposta;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
-import static org.apache.commons.lang3.math.NumberUtils.toInt;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Utils {
 
-    //public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
-    public static void tarefasAutomaticasServer(String state) throws IOException {
+    public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
 
-        // Asks DB for the data
-        TarefaAutomaticaService tarefaAutServ = new TarefaAutomaticaService();
-        var x = tarefaAutServ.buscarTarefasAutomaticas(state);
+        //WAITING FOR RESPONSE
+        byte[] responseInBytes = sIn.readAllBytes();
 
-        System.out.println(x);
+        String response = new String((responseInBytes), StandardCharsets.UTF_8);
+        System.out.println("Executor : " + response);
+
+        String[] split = response.split("!");
+
+        /**
+         * Variaveis para a componente de LPROG
+         */
+        String scriptTar = split[1];
+        List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
+        String email = split[2];
 
         // TODO executar validacao
+        boolean result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
 
-        // String t = service.dashboardData(colabServer);
-        // String[] splittedData = t.split(",");
 
-        //String returnFromServer = String.format("%s,%s,%s", toInt(splittedData[0]), toInt(splittedData[1]), toInt(splittedData[2]));
+        sOut.writeUTF(Boolean.toString(result));
+        s = null;
+        Thread.currentThread().interrupt();
 
-        //System.out.printf("Sending to Client : %s Thread Active: %s\n", returnFromServer, Thread.getAllStackTraces().size());
-        //System.out.println("-------------------");
-        //Utils.threadInfo();
-        //System.out.println("-------------------");
+    }
 
-        // Send To Client
-        //sOut.writeUTF("Tarefa Automatica executada com sucesso");
-        //s.close();
 
-        //s = null;
-        //Thread.currentThread().interrupt();
+    public static List<String> stringsToList(String data){
 
+        List<String> toStringList = new LinkedList<>();
+
+        String[] res = data.split(",");
+        List<String> resList = Arrays.asList(res);
+
+        return resList;
+    }
+
+
+    public static List<Resposta> stringListToStringRespostas(List<String> data){
+
+        List<Resposta> returnList = new ArrayList<>();
+
+        for(String elems : data){
+            returnList.add(new Resposta(elems, "pergunta"));
+        }
+
+        return returnList;
     }
 }

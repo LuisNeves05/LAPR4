@@ -23,4 +23,9 @@ public class Resposta {
     public String pergunta(){
         return this.pergunta;
     }
+
+    @Override
+    public String toString() {
+        return resposta;
+    }
 }

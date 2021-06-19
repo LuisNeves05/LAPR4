@@ -30,6 +30,10 @@ public class TarefaAutomatica implements Comparable<Long>, AggregateRoot<Long> {
 
     protected TarefaAutomatica(){}
 
+    public String scriptExecucao() {
+        return scriptExecucao;
+    }
+
     public Ticket ticketDaTarefa(){
         return ticket;
     }

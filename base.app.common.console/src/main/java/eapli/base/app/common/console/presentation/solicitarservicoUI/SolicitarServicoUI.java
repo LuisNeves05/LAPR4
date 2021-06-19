@@ -97,37 +97,38 @@ public class SolicitarServicoUI extends AbstractUI {
 
         Set<FormularioPreenchido> fps = new HashSet<>();
         try {
-        Ticket ticket = lcp.criarTicket(s, urgencia);
+            Ticket ticket = lcp.criarTicket(s, urgencia);
 
-        for (Formulario f : formularioList) {
-            System.out.println("\nFormulario " + f.name() + "\n");
+            for (Formulario f : formularioList) {
+                System.out.println("\nFormulario " + f.name() + "\n");
 
-            Set<Resposta> respostas = new LinkedHashSet<>();
-            Map<Atributo, Integer> a = f.atributos();
-            Set<Atributo> atri = SortValues.sortByMaxPeriodTime(a).keySet();
+                Map<Resposta, Integer> respostas = new HashMap<>();
+                Map<Atributo, Integer> a = f.atributos();
+                Set<Atributo> atri = SortValues.sortByMaxPeriodTime(a).keySet();
 
-            String resposta;
-            List<Resposta> lista = new ArrayList<>();
-            do {
-                respostas.clear();
-                lista.clear();
-                for (Atributo atributo : atri) {
-                    TipoDados td = atributo.tipoDados();
-                    String ajudaResposta = atributo.tipoDadosStr(td);
-                    resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
-                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                    respostas.add(rAtr);
-                }
-                lista = new ArrayList<>(respostas);
+                String resposta;
+                List<Resposta> lista = new ArrayList<>();
+                do {
+                    respostas.clear();
+                    lista.clear();
+                    for (Atributo atributo : atri) {
+                        TipoDados td = atributo.tipoDados();
+                        String ajudaResposta = atributo.tipoDadosStr(td);
+                        resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
+                        Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+                        //respostas.add(rAtr);
+                        respostas.put(rAtr, respostas.size()+1);
+                    }
+                    lista = new ArrayList<>(respostas.keySet());
 
-            }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
+                }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
 
-            //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
+                //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
 
-            fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
-        }
+                fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
+            }
 
-        lcp.solicitarServico(s, ticket, fps);
+            lcp.solicitarServico(s, ticket, fps);
         }catch (Exception x){
             System.out.println("Ocorreu algum erro ao solicitar o serviço");
         }

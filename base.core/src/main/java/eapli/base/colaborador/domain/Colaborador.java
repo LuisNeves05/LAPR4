@@ -117,4 +117,8 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     public void setNumMecanografico(MecanographicNumber numMecanografico) {
         this.numMecanografico = numMecanografico;
     }
+
+    public SystemUser systemUserDoColab() {
+        return systemUser;
+    }
 }

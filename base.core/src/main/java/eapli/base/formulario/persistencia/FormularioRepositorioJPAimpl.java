@@ -1,14 +1,18 @@
 package eapli.base.formulario.persistencia;
 
 import eapli.base.Application;
+import eapli.base.Utils.QueryMaker;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.domain.Servico;
+import eapli.base.ticket.domain.EstadoTicket;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario, Long, Long> implements FormularioRepositorio{
 
@@ -29,6 +33,8 @@ public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario
         query.setParameter("formulario", formulario);
         return query.getResultList();
     }
+
+
 
     @Override
     public void removePeloID(final Formulario formulario) {

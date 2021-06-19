@@ -1,0 +1,6 @@
+Saudações camarada, 
+
+ A seu pedido, aqui estão os valores de desconto aplicados: 
+ Valor Total: 1600 Desconto a aplicar: 0.0 
+
+ Preço final: 1600.0

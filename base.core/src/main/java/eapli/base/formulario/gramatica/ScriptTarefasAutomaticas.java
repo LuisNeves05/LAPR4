@@ -36,9 +36,9 @@ public class ScriptTarefasAutomaticas {
         }
     }
 
-    public static void executaTarefaAutomatica(String script, List<Resposta> list) {
+    public static boolean executaTarefaAutomatica(String script, List<Resposta> list, String email) {
 
-        EvalTarefasAutomaticasVisitor tarefasAutomaticasVisitor = new EvalTarefasAutomaticasVisitor(list);
+        EvalTarefasAutomaticasVisitor tarefasAutomaticasVisitor = new EvalTarefasAutomaticasVisitor(list, email);
 
         TarefaAutomaticaLexer lexer = new TarefaAutomaticaLexer(new ANTLRInputStream(script));
         lexer.removeErrorListeners();
@@ -51,8 +51,10 @@ public class ScriptTarefasAutomaticas {
         try {
             ParseTree pt = parser.executa();
             tarefasAutomaticasVisitor.visit(pt);
+            return true;
         } catch (ParseCancellationException pce) {
             System.out.println("A gramática do script está incorretaa");
+            return false;
         }
     }
 }

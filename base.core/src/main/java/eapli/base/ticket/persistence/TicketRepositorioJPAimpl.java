@@ -40,4 +40,12 @@ public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, 
         query.setParameter("feedback", true);
         return query.getResultList();
     }
+
+    @Override
+    public List<Ticket> ticketPelaTarefaAutomatica(){
+        Query query = super.createQuery("select t from Ticket t inner join TarefaAutomatica taut on t=taut.ticket", Ticket.class);
+        return query.getResultList();
+    }
+
+
 }

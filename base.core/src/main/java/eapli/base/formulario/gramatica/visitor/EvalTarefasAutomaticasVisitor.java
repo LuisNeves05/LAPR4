@@ -1,8 +1,8 @@
 package eapli.base.formulario.gramatica.visitor;
 
 import eapli.base.Utils.Email;
+import eapli.base.Utils.ObterCurrentColabController;
 import eapli.base.Utils.XMLUtils;
-import eapli.base.formulario.application.ObterCurrentColabController;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaBaseVisitor;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaParser;
 import eapli.base.formularioPreenchido.domain.Resposta;
@@ -12,11 +12,13 @@ import java.util.List;
 public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<String> {
 
     private final List<Resposta> respostaList;
+    private final String email;
     private final XMLUtils xmlUtils = new XMLUtils();
     private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
-    public EvalTarefasAutomaticasVisitor(List<Resposta> list) {
+    public EvalTarefasAutomaticasVisitor(List<Resposta> list, String email) {
         this.respostaList = list;
+        this.email = email;
     }
 
     @Override
@@ -129,13 +131,10 @@ public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<S
          */
         precoFinal = valorTotal - descontoAplicar;
 
-        //if (!ctx.enviar_email().isEmpty()) {
-        System.out.println("ANTES DO EMAIL");
-            String emailColaborador = obt.obterEmailColaboradorAtual();
 
-            String textfinal = "Saudações camarada, \n\n A seu pedido, aqui estão os valores de desconto aplicados: \n Valor Total: "
-                    + valorTotal + " Desconto a aplicar: " + descontoAplicar + " \n\n Preço final: " + precoFinal;
-            Email.sendEmail(emailColaborador, textfinal);
+        String textfinal = "Saudações camarada, \n\n A seu pedido, aqui estão os valores de desconto aplicados: \n Valor Total: "
+                + valorTotal + " Desconto a aplicar: " + descontoAplicar + " \n\n Preço final: " + precoFinal;
+        Email.sendEmail(this.email, textfinal);
         //}
         //TODO ENVIAR EMAIL AO COLABORADOR E METER ISTO A SER EXECUTADO NO EXECUTOR
 

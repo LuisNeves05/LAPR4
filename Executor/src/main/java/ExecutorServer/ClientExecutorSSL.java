@@ -1,21 +1,29 @@
 package ExecutorServer;
 
+import com.google.common.collect.Lists;
+import eapli.base.Utils.ObterCurrentColabController;
+import eapli.base.Utils.SortValues;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.domain.Resposta;
+import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
+import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
+
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 import static ExecutorServer.Utils.ReadFile.getAvailableIps;
 
 
-/**
- * @author asc@isep.ipp.pt
- */
-
 public class ClientExecutorSSL {
+    private final TarefaAutomaticaRepositorio repoT = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
 
     static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
     static final int SERVER_PORT = 6665;
@@ -24,12 +32,13 @@ public class ClientExecutorSSL {
 
     static InetAddress serverIP;
     static SSLSocket sock;
-
+    private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
     public void executarTarefaAutomatica() throws IOException {
+        int i = 0;
 
-        for(String elems : listaIpsAvailable){
-            preparingSSLClient(elems);
+        for (String ips : listaIpsAvailable) {
+            preparingSSLClient(ips);
 
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -40,10 +49,45 @@ public class ClientExecutorSSL {
             String protocol = "7";
             sOut.writeUTF(protocol);
 
+
+            List<TarefaAutomatica> tar = Lists.newArrayList(repoT.findAll());
+
+            for (TarefaAutomatica elems : tar) {
+                for (FormularioPreenchido form : elems.ticketDaTarefa().formulariosPreenchidosDoTicket()) {
+                    Map<Resposta, Integer> respotasDoForm = SortValues.sortByMaxPeriodTime(form.respostasDoFormulario());
+                    String scriptTar = elems.scriptExecucao();
+                    String email = elems.ticketDaTarefa().colabQueRequisita().systemUserDoColab().email().toString();
+
+
+                    // TODO DIVISAO DE BYTES
+                    String stringFormat = respotasDoForm.toString().trim() + "!" +
+                            scriptTar.trim() + "!" +
+                            email.trim();
+                    sOut.write(stringFormat.getBytes(StandardCharsets.UTF_8));
+
+
+                    boolean result = Boolean.parseBoolean(sIn.readUTF());
+
+                    // TODO LER DO CLIENTE A RESPOSTA
+                    if (result) {
+                        elems.ticketDaTarefa().completarTicket();
+                    }
+                }
+
+
+            }
+
+            // Asks DB for the data
+
+
+            //sOut.writeUTF(email);
+
             //WAITING FOR RESPONSE
             String response = sIn.readUTF();
-        }
 
+            System.out.println("RESPONSE: " + response);
+            i++;
+        }
 
 
         //return response;
@@ -122,6 +166,7 @@ public class ClientExecutorSSL {
             Thread.currentThread().interrupt();
         }
     }
+
 
 }
 

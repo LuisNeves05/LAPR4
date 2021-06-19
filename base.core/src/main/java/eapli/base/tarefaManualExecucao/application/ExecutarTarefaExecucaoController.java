@@ -25,6 +25,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ExecutarTarefaExecucaoController {
@@ -40,7 +41,7 @@ public class ExecutarTarefaExecucaoController {
 
     private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService();
 
-    public void executaTarefa(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao) {
+    public void executaTarefa(Formulario f, Map<Resposta, Integer> respostas, TarefaManualExecucao tarefaManualExecucao) {
         tcCtx.beginTransaction();
         execTarManExecService.executarTarefa(f, respostas, tarefaManualExecucao, colabPedido);
         tcCtx.commit();

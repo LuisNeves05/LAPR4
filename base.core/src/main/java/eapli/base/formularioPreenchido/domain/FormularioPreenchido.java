@@ -8,6 +8,7 @@ import eapli.framework.time.util.Calendars;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,7 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @OneToOne
     private Formulario formulario;
 
+
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
 
@@ -30,22 +32,23 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     private String urgencia;
 
     @ElementCollection
-    private Set<Resposta> respostas;
+    private Map<Resposta, Integer> respostas;
 
     public FormularioPreenchido(){}
 
-    public FormularioPreenchido(Formulario formulario, String urgencia, Set<Resposta> respostaSet,  Colaborador colaborador){
+
+    public FormularioPreenchido(Formulario formulario, String urgencia, Map<Resposta, Integer> respostasMap, Colaborador colaborador){
         this.formulario = formulario;
         this.createdOn = Calendars.now();
         this.urgencia = urgencia;
-        this.respostas = respostaSet;
+        this.respostas = respostasMap;
         this.colaboradorPedido = colaborador;
     }
 
-    public FormularioPreenchido(Formulario formulario, Set<Resposta> respostaSet,  Colaborador colaborador){
+    public FormularioPreenchido(Formulario formulario, Map<Resposta, Integer> respostasMap, Colaborador colaborador){
         this.formulario = formulario;
         this.createdOn = Calendars.now();
-        this.respostas = respostaSet;
+        this.respostas = respostasMap;
         this.colaboradorPedido = colaborador;
     }
 
@@ -67,5 +70,21 @@ public class FormularioPreenchido implements AggregateRoot<Long>, Comparable<Lon
     @Override
     public Long identity() {
         return null;
+    }
+
+    public Map<Resposta, Integer> respostasDoFormulario() {
+        return respostas;
+    }
+
+    @Override
+    public String toString() {
+        return "FormularioPreenchido{" +
+                "id=" + id +
+                ", formulario=" + formulario +
+                ", createdOn=" + createdOn +
+                ", colaboradorPedido=" + colaboradorPedido +
+                ", urgencia='" + urgencia + '\'' +
+                ", respostas=" + respostas +
+                '}';
     }
 }

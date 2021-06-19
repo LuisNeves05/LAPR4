@@ -1,14 +1,28 @@
 package eapli.base.app.common.console.presentation.assignarTarefaUI;
 
+import com.google.common.collect.Lists;
+import eapli.base.Utils.SortValues;
+import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
+import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
+import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
 import eapli.base.tarefaManualExecucao.application.AssignarTarefaController;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
+import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.presentation.console.AbstractUI;
+
+import java.util.ArrayList;
+
+import static eapli.base.Utils.HelpMethods.setToList;
 
 public class AssignarTarefasUI extends AbstractUI {
 
     private final AssignarTarefaController controller = new AssignarTarefaController();
+    private final FormularioPreenchidoRepositorio repo = PersistenceContext.repositories().formularioPreenchidoRepositorio();
+    private final TarefaAutomaticaRepositorio repoT = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
+    private final TicketRepositorio repoTick = PersistenceContext.repositories().ticketRepositorio();
 
     @Override
     protected boolean doShow() {
@@ -56,13 +70,8 @@ public class AssignarTarefasUI extends AbstractUI {
 
          */
 
-        TarefaAutomaticaRepositorio tarefaRepo = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
-        var x = tarefaRepo.tarefasAutomaticasPendentes();
-
-        x.forEach(System.out::println);
-
-
         /*
+
         ClientExecutorSSL executorSSL = new ClientExecutorSSL();
         try {
             executorSSL.executarTarefaAutomatica();
@@ -71,6 +80,74 @@ public class AssignarTarefasUI extends AbstractUI {
         }
 
          */
+
+        /**
+         * Todos as tarefas Automaticas
+         */
+        var tar = Lists.newArrayList(repoT.tarefasAutomaticasPendentes());
+
+        System.out.println("SIZE DESTA MERDA : " + tar.size());
+
+        for (TarefaAutomatica elems : tar) {
+            for (FormularioPreenchido form : elems.ticketDaTarefa().formulariosPreenchidosDoTicket()) {
+                var respotasDoForm = SortValues.sortByMaxPeriodTime(form.respostasDoFormulario()).keySet();
+                var scriptTar = elems.scriptExecucao();
+                var email = elems.ticketDaTarefa().colabQueRequisita().systemUserDoColab().email().toString();
+
+                System.out.println("Resposta : " + respotasDoForm.toString());
+                System.out.println("ScriptT : " + scriptTar);
+                System.out.println("Email : " + email);
+
+                // TODO MANDAR RESPOSTA + SCRIPT + EMAIL PARA O EXECUTOR
+
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(respotasDoForm.toString().trim() + "!");
+                stringBuilder.append(scriptTar.trim() + "!");
+                stringBuilder.append(email.trim());
+
+
+                System.out.println(stringBuilder);
+                var result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, new ArrayList<>(respotasDoForm), email);
+
+
+                // TODO LER DO CLIENTE A RESPOSTA
+                if(result){
+                    elems.ticketDaTarefa().completarTicket();
+                    repoTick.save(elems.ticketDaTarefa());
+                }
+            }
+
+
+        }
+
+        /*
+
+        var x = setToList(repo.formularioRespostas());
+
+
+
+
+        var formulario = x.get(0);
+
+        var respostas = SortValues.sortByMaxPeriodTime(formulario.respostasDoFormulario());
+        var script = tar.get(0).scriptExecucao();
+        //var email = HelpMethods.getEmailWithColab(repoTick, formulario);
+
+        System.out.println("Respostas: " + respostas);
+        System.out.println("ScriptExec: " + script);
+
+
+
+        //System.out.println("Email: " + email);
+
+
+        //ScriptTarefasAutomaticas.executaTarefaAutomatica(script, new ArrayList<>(respostas.keySet()), email);
+
+
+        // CLIENT
+
+        */
+
 
         return true;
     }

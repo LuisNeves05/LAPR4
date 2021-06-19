@@ -12,10 +12,7 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.SelectWidget;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
@@ -45,7 +42,7 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
 
         System.out.println("\nFormulario " + f.name() + "\n");
 
-        Set<Resposta> respostas = new HashSet<>();
+        Map<Resposta, Integer> respostas = new HashMap<>();
         Map<Atributo, Integer> a = f.atributos();
         for (Atributo atributo : a.keySet()) {
             TipoDados td = atributo.tipoDados();
@@ -63,7 +60,7 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
                 }
             } while (flag);
 
-            respostas.add(controller.adicionaResposta(resposta, atributo.nomeVar()));
+            respostas.put(controller.adicionaResposta(resposta, atributo.nomeVar()), respostas.size()+1);
         }
 
         try {

@@ -11,6 +11,7 @@ import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
 
+import java.util.Map;
 import java.util.Set;
 
 public class ExecutarTarefaManualExecucaoService {
@@ -19,7 +20,7 @@ public class ExecutarTarefaManualExecucaoService {
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
 
-    public void executarTarefa(Formulario f, Set<Resposta> respostas, TarefaManualExecucao tarefaManualExecucao, Colaborador colabPedido) {
+    public void executarTarefa(Formulario f, Map<Resposta, Integer> respostas, TarefaManualExecucao tarefaManualExecucao, Colaborador colabPedido) {
         FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
         tarefaManualExecucao.ticketDaTarefa().adicionaFormularioResposta(fp);
         ticketRepositorio.save(tarefaManualExecucao.ticketDaTarefa());

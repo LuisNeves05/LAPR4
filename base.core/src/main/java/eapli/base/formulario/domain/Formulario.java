@@ -94,4 +94,14 @@ public class Formulario implements Comparable<Long>, AggregateRoot<Long> {
     public String scriptsValidacao(){
         return this.scriptValidacao;
     }
+
+    @Override
+    public String toString() {
+        return "Formulario{" +
+                "id=" + id +
+                ", nome=" + nome +
+                ", conjuntoAtributos=" + conjuntoAtributos +
+                ", scriptValidacao='" + scriptValidacao + '\'' +
+                '}';
+    }
 }

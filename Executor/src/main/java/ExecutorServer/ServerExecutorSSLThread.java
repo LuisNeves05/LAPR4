@@ -44,13 +44,12 @@ class ServerExecutorSSLThread implements Runnable {
             switch (protocolo) {
                 case 7:
                     LOGGER.log(Level.INFO, "Protocol {0} Requested", protocolo);
-                    tarefasAutomaticasServer(this.state);
+                    tarefasAutomaticasServer(s, sOut, sIn, this.state);
                     break;
 
 
                 default:
                     LOGGER.log(Level.WARNING, "Protocol Nao Defenido", protocolo);
-                    System.out.println("Protocol Nao Defenido");
                     break;
 
             }

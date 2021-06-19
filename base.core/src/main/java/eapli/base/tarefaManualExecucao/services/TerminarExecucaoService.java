@@ -10,6 +10,8 @@ import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.persistence.TicketRepositorio;
+
+import java.util.Map;
 import java.util.Set;
 
 public class TerminarExecucaoService {
@@ -18,7 +20,7 @@ public class TerminarExecucaoService {
     private final TicketRepositorio ticketRepo = PersistenceContext.repositories().ticketRepositorio();
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
 
-    public TarefaManualAprovacao terminaAprovacao(Formulario f, Set<Resposta> respostas, TarefaManualAprovacao tarefaManualAprovacao, Colaborador colabPedido){
+    public TarefaManualAprovacao terminaAprovacao(Formulario f, Map<Resposta, Integer> respostas, TarefaManualAprovacao tarefaManualAprovacao, Colaborador colabPedido){
         FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
         tarefaManualAprovacao.ticketDaTarefa().adicionaFormularioResposta(fp);
         ticketRepo.save(tarefaManualAprovacao.ticketDaTarefa());
