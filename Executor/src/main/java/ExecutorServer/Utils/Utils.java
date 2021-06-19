@@ -29,6 +29,8 @@ public class Utils {
             String[] split = elems.split("!");
             stateC = split[3].trim();
 
+            System.out.println("Debug 1: " + stateC);
+
             if((intToState(Integer.parseInt(stateC)).equals(state))){
                 /**
                  * Variaveis para a componente de LPROG
@@ -50,6 +52,7 @@ public class Utils {
 
         }
 
+        System.out.println("Debug 2: " + stateC);
         if((intToState(Integer.parseInt(stateC)).equals(state))){
             String sendToCli = StringUtils.join(responseToClient, "&");
             System.out.println(sendToCli);
