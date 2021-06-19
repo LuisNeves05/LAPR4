@@ -37,8 +37,8 @@ class ServerSSLThread implements Runnable {
         //System.out.println("New request incomming from " + clientIP.getHostAddress());
 
 
-        ClientExecutorSSL executorSSL = new ClientExecutorSSL();
         try {
+            ClientExecutorSSL executorSSL = new ClientExecutorSSL();
             executorSSL.executarTarefaAutomatica();
         } catch (IOException | NoSuchElementException e ) {
             //e.printStackTrace();
