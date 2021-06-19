@@ -71,7 +71,7 @@ public class Catalogo implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public String toString(){
-        return id+ ": "+titulo;
+        return titulo.toString();
     }
 
     public  boolean adicionarNivelCriticidade(NivelCriticidade nivelCriticidade){

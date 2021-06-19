@@ -19,13 +19,17 @@ public class Objetivo implements ValueObject, Comparable<Objetivo>{
         this.resolucaoMedia = resolucaoMedia;
     }
 
-    public int aprovacaoMax() {
+    public int tempoMaximoAprovacao() {
         return aprovacaoMax;
     }
 
-    public int resolucaoMax() {
+    public int tempoMaximoResolucao() {
         return resolucaoMax;
     }
+
+    public int tempoMedioAprovacao() { return aprovacaoMedia; }
+
+    public int tempoMedioResolucao() { return resolucaoMedia; }
 
     public Objetivo(){}
 

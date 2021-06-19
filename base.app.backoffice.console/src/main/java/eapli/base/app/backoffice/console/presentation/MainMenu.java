@@ -25,6 +25,7 @@ package eapli.base.app.backoffice.console.presentation;
 
 import eapli.base.app.common.console.presentation.PesquisarCatalogo.PesquisarCatalogoUI;
 import eapli.base.app.common.console.presentation.PesquisarServico.PesquisarServicoUI;
+import eapli.base.app.common.console.presentation.SLA_UI.SLA_UI;
 import eapli.base.app.common.console.presentation.authz.MyUserMenu;
 import eapli.base.Application;
 import eapli.base.app.backoffice.console.presentation.authz.AddUserUI;
@@ -102,6 +103,8 @@ public class MainMenu extends AbstractUI {
     private static final int SETTINGS_OPTION = 4;
     private static final int PESQUISA_SERVICO = 5;
     private static final int PESQUISA_CATALOGO = 6;
+    private static final int CONSULTAR_SLA = 7;
+
     private static final int DISH_OPTION = 5;
     private static final int TRACEABILITY_OPTION = 6;
     private static final int MEALS_OPTION = 7;
@@ -144,6 +147,7 @@ public class MainMenu extends AbstractUI {
         final Menu myUserMenu = new MyUserMenu();
         final Menu pesquisaServico = new PesquisarServicoUI();
         final Menu pesquisaCatalogo = new PesquisarCatalogoUI();
+        final Menu consultarSLA = new SLA_UI();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -159,6 +163,7 @@ public class MainMenu extends AbstractUI {
 
         mainMenu.addSubMenu(PESQUISA_SERVICO, pesquisaServico);
         mainMenu.addSubMenu(PESQUISA_CATALOGO, pesquisaCatalogo);
+        mainMenu.addSubMenu(CONSULTAR_SLA,consultarSLA);
         
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));

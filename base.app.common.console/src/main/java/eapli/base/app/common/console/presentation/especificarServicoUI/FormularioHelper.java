@@ -33,14 +33,12 @@ public class FormularioHelper {
         if (decisaoAprovacao) {
             f.addAtributo("Decisão", "Decisão da Atividade de Aprovação",
                     "Decisão (deferido/indeferido) sobre a aprovação", TipoDados.DECISAO, "(Deferido|Indeferido)");
-            continuar = Console.readLine("Deseja especificar mais atributos para o Formulário de Aprovação? (sim|nao)");
+            continuar = Console.readLine("Deseja especificar atributos para o Formulário de Aprovação? (sim|nao)");
             if (continuar.equalsIgnoreCase("nao")) {
                 return f;
             }
         } else if (conclusaoRealizacao) {
-            f.addAtributo("Conclusão", "Conclusão da resolução de uma tarefa",
-                    "Conclusão (Concluido/Inacabado)", TipoDados.CONCLUSAO, "(Concluido|Inacabado)");
-            continuar = Console.readLine("Deseja especificar mais atributos para o Formulário de Realização? (sim|nao)");
+            continuar = Console.readLine("Deseja especificar atributos para o Formulário de Realização? (sim|nao)");
             if (continuar.equalsIgnoreCase("nao")) {
                 return f;
             }

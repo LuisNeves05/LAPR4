@@ -44,8 +44,7 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
     @OneToOne
     private SystemUser systemUser;
 
-    @ManyToMany(mappedBy = "listaColabs",cascade = CascadeType.ALL)
-    private List<Equipa> equipas;
+
 
 
     public Colaborador(NomeCurto nomeCurto,NomeCompleto nomeCompleto, MecanographicNumber numMecanografico,
@@ -57,7 +56,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         this.nrContacto = nrContacto;
         this.dataNascimento = dataNascimento;
         this.colaboradorResponsavel = colaboradorResponsavel;
-        this.equipas = new ArrayList<>();
     }
 
 
@@ -71,15 +69,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
         return this.colaboradorResponsavel;
     }
 
-    public boolean pertenceTipoEquipa(TipoEquipa tipoEquipa) {
-        if(!this.equipas.isEmpty()){
-            for(Equipa equipa : equipas){
-                if (equipa.temTipoEquipa(tipoEquipa))
-                    return true;
-            }
-        }
-        return false;
-    }
 
 
     @Override
@@ -102,9 +91,6 @@ public class Colaborador implements Comparable<MecanographicNumber>, AggregateRo
                 '}';
     }
 
-    public List<Equipa> obterEquipasColaborador() {
-        return equipas;
-    }
 
     public String nomeToString(){
         return nomeCurto.toString();
