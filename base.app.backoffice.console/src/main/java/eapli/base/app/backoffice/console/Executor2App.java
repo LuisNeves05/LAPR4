@@ -23,6 +23,7 @@ package eapli.base.app.backoffice.console;/*
  */
 
 import ExecutorServer.ServerExecutorSSLI;
+import ExecutorServer.ServerExecutorSSLP;
 import eapli.base.app.common.console.BaseApplication;
 import eapli.base.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
@@ -58,9 +59,9 @@ public final class Executor2App extends BaseApplication {
 
     @Override
     protected void doMain(final String[] args) {
-        ServerExecutorSSLI serverExecutorSSLI = new ServerExecutorSSLI();
+        ServerExecutorSSLP serverExecutorSSLP = new ServerExecutorSSLP();
         try {
-            serverExecutorSSLI.startServer();
+            serverExecutorSSLP.startServer();
         } catch (IOException e) {
             e.printStackTrace();
         }
