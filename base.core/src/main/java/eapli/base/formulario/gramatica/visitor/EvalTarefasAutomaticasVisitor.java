@@ -14,7 +14,6 @@ public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<S
     private final List<Resposta> respostaList;
     private final String email;
     private final XMLUtils xmlUtils = new XMLUtils();
-    private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
     public EvalTarefasAutomaticasVisitor(List<Resposta> list, String email) {
         this.respostaList = list;

@@ -8,6 +8,7 @@ import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaAutomatica.domain.TarefaAutomatica;
 import eapli.base.tarefaAutomatica.persistance.TarefaAutomaticaRepositorio;
+import eapli.base.ticket.persistence.TicketRepositorio;
 
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
@@ -15,15 +16,14 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ExecutorServer.Utils.ReadFile.getAvailableIps;
 
 
 public class ClientExecutorSSL {
     private final TarefaAutomaticaRepositorio repoT = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
+    private final TicketRepositorio repoTick = PersistenceContext.repositories().ticketRepositorio();
 
     static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
     static final int SERVER_PORT = 6665;
@@ -35,9 +35,10 @@ public class ClientExecutorSSL {
     private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
     public void executarTarefaAutomatica() throws IOException {
-        int i = 0;
+        StringBuilder sendToServer = new StringBuilder();
 
         for (String ips : listaIpsAvailable) {
+            Set<TarefaAutomatica> tarefasIteration = new LinkedHashSet<>();
             preparingSSLClient(ips);
 
 
@@ -50,7 +51,7 @@ public class ClientExecutorSSL {
             sOut.writeUTF(protocol);
 
 
-            List<TarefaAutomatica> tar = Lists.newArrayList(repoT.findAll());
+            List<TarefaAutomatica> tar = Lists.newArrayList(repoT.tarefasAutomaticasPendentes());
 
             for (TarefaAutomatica elems : tar) {
                 for (FormularioPreenchido form : elems.ticketDaTarefa().formulariosPreenchidosDoTicket()) {
@@ -60,37 +61,38 @@ public class ClientExecutorSSL {
 
 
                     // TODO DIVISAO DE BYTES
-                    String stringFormat = respotasDoForm.toString().trim() + "!" +
+                    String stringFormat = respotasDoForm.keySet().toString().trim() + "!" +
                             scriptTar.trim() + "!" +
-                            email.trim();
-                    sOut.write(stringFormat.getBytes(StandardCharsets.UTF_8));
+                            email.trim() + "/";
+                    sendToServer.append(stringFormat);
+                    tarefasIteration.add(elems);
 
-
-                    boolean result = Boolean.parseBoolean(sIn.readUTF());
-
-                    // TODO LER DO CLIENTE A RESPOSTA
-                    if (result) {
-                        elems.ticketDaTarefa().completarTicket();
-                    }
                 }
-
-
             }
 
-            // Asks DB for the data
+            sOut.writeUTF(sendToServer.toString());
 
 
-            //sOut.writeUTF(email);
+            String result = sIn.readUTF();
 
-            //WAITING FOR RESPONSE
-            String response = sIn.readUTF();
 
-            System.out.println("RESPONSE: " + response);
-            i++;
+            List<String> myList = new ArrayList<>(Arrays.asList(result.split("&")));
+            System.out.println("DEBUG1 : " + myList);
+
+            for (TarefaAutomatica elems : tarefasIteration) {
+                int conter = 0;
+                System.out.println("DEBUG2 : " + myList.get(conter));
+                if (myList.get(conter).contains("tru")) {
+                    elems.ticketDaTarefa().completarTicket();
+                    repoTick.save(elems.ticketDaTarefa());
+                }
+            }
+
+
+            System.out.println(result);
+            System.out.println("RESPONSE: " + result);
         }
 
-
-        //return response;
     }
 
 

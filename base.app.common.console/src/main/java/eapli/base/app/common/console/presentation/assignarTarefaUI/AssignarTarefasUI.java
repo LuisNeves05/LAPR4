@@ -1,5 +1,6 @@
 package eapli.base.app.common.console.presentation.assignarTarefaUI;
 
+import ExecutorServer.ClientExecutorSSL;
 import com.google.common.collect.Lists;
 import eapli.base.Utils.SortValues;
 import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
@@ -13,6 +14,7 @@ import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static eapli.base.Utils.HelpMethods.setToList;
@@ -70,7 +72,7 @@ public class AssignarTarefasUI extends AbstractUI {
 
          */
 
-        /*
+
 
         ClientExecutorSSL executorSSL = new ClientExecutorSSL();
         try {
@@ -79,11 +81,9 @@ public class AssignarTarefasUI extends AbstractUI {
             e.printStackTrace();
         }
 
-         */
 
-        /**
-         * Todos as tarefas Automaticas
-         */
+        /*
+
         var tar = Lists.newArrayList(repoT.tarefasAutomaticasPendentes());
 
         System.out.println("SIZE DESTA MERDA : " + tar.size());
@@ -119,6 +119,7 @@ public class AssignarTarefasUI extends AbstractUI {
 
 
         }
+        */
 
         /*
 
