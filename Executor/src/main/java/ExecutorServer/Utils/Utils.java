@@ -16,6 +16,7 @@ import java.util.List;
 public class Utils {
 
     public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
+        boolean flag = false;
         String stateC = null;
         //WAITING FOR RESPONSE
 
@@ -29,6 +30,7 @@ public class Utils {
         for (String elems : getNumberOfTarefasAut(response)) {
             System.out.println("Elemento do diabo : " + elems + " " + elems.length());
             if (!(elems.length() == 0)) {
+                flag = true;
                 String[] split = elems.split("!");
                 stateC = split[3].trim();
 
@@ -57,14 +59,17 @@ public class Utils {
 
         }
 
-        System.out.println("Debug 2: " + stateC);
-        if ((intToState(Integer.parseInt(stateC)).equals(state))) {
-            String sendToCli = StringUtils.join(responseToClient, "&");
-            System.out.println(sendToCli);
-            sOut.writeUTF(sendToCli);
-        } else {
-            sOut.writeUTF("0");
+        if(flag){
+            System.out.println("Debug 2: " + stateC);
+            if ((intToState(Integer.parseInt(stateC)).equals(state))) {
+                String sendToCli = StringUtils.join(responseToClient, "&");
+                System.out.println(sendToCli);
+                sOut.writeUTF(sendToCli);
+            } else {
+                sOut.writeUTF("0");
+            }
         }
+
 
         s = null;
         Thread.currentThread().interrupt();
