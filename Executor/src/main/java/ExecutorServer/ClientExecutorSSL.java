@@ -22,9 +22,6 @@ import static ExecutorServer.Utils.ReadFile.getAvailableIps;
 
 
 public class ClientExecutorSSL {
-    private final TarefaAutomaticaRepositorio repoT = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
-    private final TicketRepositorio repoTick = PersistenceContext.repositories().ticketRepositorio();
-
     static final String BASEFOLDER = "Executor/src/main/java/ExecutorServer/SSLCert/";
     static final int SERVER_PORT = 6665;
     static final String KEYSTORE_PASS = "forgotten";
@@ -32,9 +29,12 @@ public class ClientExecutorSSL {
 
     static InetAddress serverIP;
     static SSLSocket sock;
-    private final ObterCurrentColabController obt = new ObterCurrentColabController();
 
     public void executarTarefaAutomatica() throws IOException {
+        TarefaAutomaticaRepositorio repoT = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
+        TicketRepositorio repoTick = PersistenceContext.repositories().ticketRepositorio();
+
+
         StringBuilder sendToServer = new StringBuilder();
 
         for (String ips : listaIpsAvailable) {
