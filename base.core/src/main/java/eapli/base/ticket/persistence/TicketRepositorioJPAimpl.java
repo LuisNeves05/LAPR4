@@ -1,10 +1,10 @@
 package eapli.base.ticket.persistence;
 
 import eapli.base.Application;
-import eapli.base.Utils.QueryMaker;
 import eapli.base.colaborador.domain.Colaborador;
 
 import eapli.base.ticket.domain.EstadoTicket;
+import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -45,6 +45,18 @@ public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, 
         query.setParameter("feedback", true);
         return query.getResultList();
     }
+
+    @Override
+    public List<Ticket> ticketsConcluidos() {
+        Query query = super.createQuery("SELECT t from Ticket t where t.estadoTicket='CONCLUIDO'", Ticket.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public Long totalTickets(){
+        Query query = super.createQuery("SELECT COUNT(t) from Ticket t",Long.class);
+        return (Long) query.getSingleResult();}
+
 
     @Override
     public List<Ticket> ticketPelaTarefaAutomatica(){

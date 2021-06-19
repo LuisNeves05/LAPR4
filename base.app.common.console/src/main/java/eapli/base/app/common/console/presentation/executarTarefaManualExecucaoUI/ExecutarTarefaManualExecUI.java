@@ -52,7 +52,6 @@ public class ExecutarTarefaManualExecUI extends AbstractUI {
             do {
                 resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                 if (HelpMethods.validaResposta(resposta, atributo.obterExpRegular())) {
-                    controller.conclusao(resposta, tarefaManualExecucao, atributo);
                     flag = false;
                 }
                 if (flag) {

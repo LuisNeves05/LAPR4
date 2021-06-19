@@ -27,9 +27,6 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
     @Enumerated(EnumType.STRING)
     private EstadoAprovacao estadoAprovacao;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dataAprovado;
-
     @OneToOne
     private AtividadeAprovacao atividadeAprovacao;
 
@@ -44,14 +41,6 @@ public class TarefaManualAprovacao implements AggregateRoot<Long>, Comparable<Lo
 
     public Ticket ticketDaTarefa(){
         return ticket;
-    }
-
-    public Calendar dataDecisaoAprovacao(){
-        return dataAprovado;
-    }
-
-    public void definirMomentoAprovacao(){
-        dataAprovado = Calendars.now();
     }
 
     public EstadoAprovacao estadoAprov() { return estadoAprovacao; }

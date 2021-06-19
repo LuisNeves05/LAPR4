@@ -23,7 +23,13 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
     private Colaborador colabRequisitou;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar createdOn;
+    private Calendar dataInicioTicket;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dataFimExecucaoTicket;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dataFimAprovacaoTicket;
 
     @OneToOne
     private Servico servico;
@@ -41,10 +47,16 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     private int periodoMaxRes;
 
+    private int periodoMedioApr;
+
+    private int periodoMedioRes;
+
     private String feedback;
 
+    private String slaDecisao;
+
     public Calendar criacaoTicket() {
-        return createdOn;
+        return dataInicioTicket;
     }
 
     protected Ticket() {}
@@ -52,13 +64,15 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
     public Ticket(Colaborador colabRequisitou, Servico servico, String urgenciaTicket,
                   EstadoTicket estadoTicket) {
         this.colabRequisitou = colabRequisitou;
-        this.createdOn = Calendars.now();
+        this.dataInicioTicket = Calendars.now();
         this.servico = servico;
         this.urgenciaTicket = urgenciaTicket;
         this.formulariosPreenchidos = new HashSet<>();
         this.estadoTicket = estadoTicket;
-        this.periodoMaxApr = servico.nivelCriticidadeServico().objetivos().aprovacaoMax();
-        this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().resolucaoMax();
+        this.periodoMaxApr = servico.nivelCriticidadeServico().objetivos().tempoMaximoAprovacao();
+        this.periodoMaxRes = servico.nivelCriticidadeServico().objetivos().tempoMaximoResolucao();
+        this.periodoMedioApr = servico.nivelCriticidadeServico().objetivos().tempoMedioAprovacao();
+        this.periodoMedioRes = servico.nivelCriticidadeServico().objetivos().tempoMedioResolucao();
     }
 
     public void adicionaFormularioResposta(FormularioPreenchido fp) {
@@ -76,9 +90,18 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
 
     @Override
     public Long identity() {
-        return id;
+        return this.id;
     }
 
+
+    @Override
+    public String toString() {
+        return "Ticket " + id + " : \n" +
+                "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
+                "       Criado em : " + dataInicioTicket.getTime() +
+                "       Serviço : " + servico.descricaoBreveDoServico() +
+                "       Urgência : " + urgenciaTicket;
+    }
 
     public Servico servicoDoTicket() {
         return servico;
@@ -104,12 +127,12 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.estadoTicket = EstadoTicket.CONCLUIDO;
     }
 
-    public void inacabadoTicket() {
-        this.estadoTicket = EstadoTicket.INACABADO;
-    }
-
     public void emExecucao() {
         this.estadoTicket = EstadoTicket.EM_EXECUCAO;
+    }
+
+    public void aprovarTicket() {
+        this.estadoTicket = EstadoTicket.APROVADO;
     }
 
     public void rejeitarTicket() {
@@ -120,12 +143,13 @@ public class Ticket implements AggregateRoot<Long>, Comparable<Long> {
         this.feedback = respostaFeedback;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket " + id + " : \n" +
-                "       Colaborador Requisitante : " + colabRequisitou.nomeToString() +
-                "       Criado em : " + createdOn.getTime().toString() +
-                "       Serviço : " + servico.descricaoBreveDoServico() +
-                "       Urgência : " + urgenciaTicket;
-    }
+    public Calendar datafinalizacaoTicket() { return this.dataFimExecucaoTicket; }
+
+    public void definirFinalTicket() { this.dataFimExecucaoTicket = Calendars.now(); }
+
+    public Calendar dataAprovacaoTicket() { return this.dataFimAprovacaoTicket; }
+
+    public void definirFinalAprovacaoTicket() { this.dataFimAprovacaoTicket = Calendars.now(); }
+
+    public void definirComentarioSLA(String comentario){this.slaDecisao= comentario;}
 }

@@ -7,7 +7,6 @@ import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formulario.gramatica.ScriptFormularios;
-import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.servico.application.SolicitarServicoController;
@@ -25,7 +24,8 @@ public class SolicitarServicoUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        List<Catalogo> catalogoList = lcp.listarCatalogosPorUser();
+        Set<Catalogo> catalogoSet = lcp.listarCatalogosPorUser();
+        List<Catalogo> catalogoList = new ArrayList<>(catalogoSet);
 
         if (catalogoList.isEmpty()) {
             System.out.println("Ainda não existem catálogos");
@@ -97,46 +97,48 @@ public class SolicitarServicoUI extends AbstractUI {
 
         Set<FormularioPreenchido> fps = new HashSet<>();
 
-            Ticket ticket = lcp.criarTicket(s, urgencia);
+        Ticket ticket = lcp.criarTicket(s, urgencia);
 
-            for (Formulario f : formularioList) {
-                System.out.println("\nFormulario " + f.name() + "\n");
+        for (Formulario f : formularioList) {
+            System.out.println("\nFormulario " + f.name() + "\n");
 
-                Map<Resposta, Integer> respostas = new HashMap<>();
-                Map<Atributo, Integer> a = f.atributos();
-                Set<Atributo> atri = SortValues.sortByMaxPeriodTime(a).keySet();
+            Map<Resposta, Integer> respostas = new HashMap<>();
+            Map<Atributo, Integer> a = f.atributos();
+            Set<Atributo> atri = SortValues.sortByMaxPeriodTime(a).keySet();
 
-                String resposta;
-                List<Resposta> lista = new ArrayList<>();
-                do {
-                    respostas.clear();
-                    lista.clear();
-                    for (Atributo atributo : atri) {
-                        TipoDados td = atributo.tipoDados();
-                        String ajudaResposta = atributo.tipoDadosStr(td);
-                        resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
-                        Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                        //respostas.add(rAtr);
-                        respostas.put(rAtr, respostas.size()+1);
-                    }
-                    lista = new ArrayList<>(respostas.keySet());
+            String resposta;
+            List<Resposta> lista = new ArrayList<>();
+            do {
+                respostas.clear();
+                lista.clear();
+                for (Atributo atributo : atri) {
+                    TipoDados td = atributo.tipoDados();
+                    String ajudaResposta = atributo.tipoDadosStr(td);
+                    resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
+                    Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
+                    //respostas.add(rAtr);
+                    respostas.put(rAtr, respostas.size() + 1);
+                }
+                lista = new ArrayList<>(respostas.keySet());
 
-                }while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
+            } while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
 
-                //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
+            //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
 
-                fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
-            }
+            fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
+        }
         try {
             lcp.solicitarServico(s, ticket, fps);
-        }catch (Exception x){
+        } catch (Exception x) {
             System.out.println("Ocorreu algum erro ao solicitar o serviço");
         }
 
         /**
          * Algoritmo de atribuicao automatica
          */
-        HelpMethodsForUIs.sendToServer();
+        if (s.fluxoDoServico().ativAprovacaoDoFluxo() == null) {
+            HelpMethodsForUIs.sendToServer();
+        }
 
         return true;
     }

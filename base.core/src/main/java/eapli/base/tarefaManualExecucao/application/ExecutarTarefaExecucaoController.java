@@ -3,6 +3,7 @@ package eapli.base.tarefaManualExecucao.application;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
@@ -28,6 +29,7 @@ public class ExecutarTarefaExecucaoController {
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
     private Colaborador colabPedido;
     private List<Equipa> equipasColab;
+    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
     private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService(tcCtx);
 
     public ExecutarTarefaExecucaoController() {
@@ -36,7 +38,7 @@ public class ExecutarTarefaExecucaoController {
             UserSession userSession = authorizationService.session().get();
             SystemUser systemUser = userSession.authenticatedUser();
             this.colabPedido = colabPorUserName(systemUser.username());
-            equipasColab = colabPedido.obterEquipasColaborador();
+            equipasColab = equipaRepositorio.equipasDoColaborador(colabPedido);
         }
     }
 
@@ -47,22 +49,14 @@ public class ExecutarTarefaExecucaoController {
         tcCtx.close();
     }
 
-    public void conclusao(String resposta, TarefaManualExecucao tarefaManualExecucao, Atributo atributo){
-            if (atributo.tipoDados() == TipoDados.CONCLUSAO) {
-                if (resposta.equalsIgnoreCase("Concluido")) {
-                    tarefaManualExecucao.ticketDaTarefa().completarTicket();
-                } else {
-                    tarefaManualExecucao.ticketDaTarefa().inacabadoTicket();
-                }
-            }
-    }
 
     public List<TarefaManualExecucao> tarefasManualExecucao(){
         return tarefaExecucaoRepositorio.tarefasManuaisExecucaoNA(equipasColab);
     }
 
     public List<TarefaManualExecucao> tarefasManualExecucaoPendente(){
-        return tarefaExecucaoRepositorio.tarefasManuaisExecEmExecucao(colabPedido);
+
+        return tarefaExecucaoRepositorio.tarefasDeCadaColaborador(colabPedido);
     }
 
     public Colaborador colabPorUserName(Username username){

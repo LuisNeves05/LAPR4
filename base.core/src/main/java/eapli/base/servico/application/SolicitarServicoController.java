@@ -6,6 +6,7 @@ import eapli.base.catalogo.persistencia.CatalogoRepositorio;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.fluxoAtividade.service.AtivarDesativarFluxoService;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
@@ -27,6 +28,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +48,7 @@ public class SolicitarServicoController {
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService(txCtx);
     private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService(txCtx);
     private final AtivarDesativarFluxoService ativarDesativarFluxoService = new AtivarDesativarFluxoService(txCtx);
+    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
 
     public SolicitarServicoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -81,7 +84,17 @@ public class SolicitarServicoController {
             return new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO);
     }
 
+    public Set<Catalogo> listarCatalogosPorUser() {
 
+        Iterable<Equipa> equipasColaborador = equipaRepositorio.equipasDoColaborador(colabPedido);
+        Set<Catalogo> catalogosColab = new HashSet<>();
+
+        for (Equipa eq : equipasColaborador) {
+            catalogosColab.addAll((List<Catalogo>) catRep.catalogosPorEquipa(eq));
+        }
+
+        return catalogosColab;
+    }
 
     public List<Servico> listarServicosPorCat(Catalogo catalogo) {
         return repoServ.servicoPorCatalogo(catalogo);
@@ -89,18 +102,6 @@ public class SolicitarServicoController {
 
     public Colaborador colabPorUserName(Username username) {
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
-    }
-
-    public List<Catalogo> listarCatalogosPorUser() {
-
-        Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
-        List<Catalogo> catalogosColab = new ArrayList<>();
-
-        for (Equipa eq : equipasColaborador) {
-            catalogosColab.addAll((List<Catalogo>) catRep.catalogosPorEquipa(eq));
-        }
-
-        return catalogosColab;
     }
 
     public boolean validaUrgencia(String urgencia) {

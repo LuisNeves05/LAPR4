@@ -36,9 +36,6 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     @OneToOne
     private AtividadeRealizacao atividadeRealizacao;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dataRealizacao;
-
 
     public TarefaManualExecucao(Ticket ticket, Set<Equipa> equipasExecuta, AtividadeRealizacao atividadeRealizacao){
         this.ticket = ticket;
@@ -79,14 +76,7 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     public void defineColaboradorExecutante(Colaborador colaborador){
         this.colabExecuta= colaborador;
     }
-
-    public Calendar dataDecisaoRealizacao(){
-        return dataRealizacao;
-    }
-
-    public void definirMomentoRealizacao(){
-        dataRealizacao = Calendars.now();
-    }
+    
 
     public AtividadeRealizacao atividadeRealizacaoDaTarefa(){
         return atividadeRealizacao;
@@ -118,6 +108,10 @@ public class TarefaManualExecucao implements AggregateRoot<Long>, Comparable<Lon
     @Override
     public String toString() {
         return ticket.toString();
+    }
+
+    public void concluirTarefa(){
+         this.estadoRealizacao = EstadoRealizacao.CONCLUIDA;
     }
 
 

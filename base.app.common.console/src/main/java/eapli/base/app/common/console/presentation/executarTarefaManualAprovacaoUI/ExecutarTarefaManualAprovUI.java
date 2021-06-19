@@ -1,11 +1,13 @@
 package eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI;
 
 import eapli.base.Utils.HelpMethods;
+import eapli.base.app.common.console.presentation.utils.HelpMethodsForUIs;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
 import eapli.base.formularioPreenchido.domain.Resposta;
 import eapli.base.tarefaManualAprovacao.application.ExecutarTarefaAprovacaoController;
+import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -59,13 +61,19 @@ public class ExecutarTarefaManualAprovUI extends AbstractUI {
                     respostas.put(controller.adicionarResposta(resposta,atributo.nomeVar()), respostas.size()+1);
                 }
 
-            try {
-                TarefaManualAprovacao tarManAprov = controller.terminarAprovacao(f, respostas, tarefaManualAprovacao);
-                System.out.println(tarManAprov.toString());
-                System.out.println("Tarefa aprovada/rejeitada!");
-            }catch (Exception x){
-                System.out.println("Ocorreu algum erro ao terminar a execução");
-            }
+        try {
+            TarefaManualAprovacao tarManAprov = controller.terminarAprovacao(f, respostas, tarefaManualAprovacao);
+            System.out.println(tarManAprov.toString());
+            if (tarManAprov.estadoAprov().equals(EstadoAprovacao.APROVADO)) {
+                System.out.println("Tarefa aprovada !");
+                HelpMethodsForUIs.sendToServer();
+            } else
+                System.out.println("Tarefa rejeitada!");
+
+        } catch (Exception x) {
+            System.out.println("Ocorreu algum erro ao terminar a execução" );
+            x.printStackTrace();
+        }
 
 
         return true;

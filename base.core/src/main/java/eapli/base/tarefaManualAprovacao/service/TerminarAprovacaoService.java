@@ -1,4 +1,4 @@
-package eapli.base.tarefaManualExecucao.services;
+package eapli.base.tarefaManualAprovacao.service;
 
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.formulario.domain.Formulario;
@@ -15,14 +15,14 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import java.util.Map;
 import java.util.Set;
 
-public class TerminarExecucaoService {
+public class TerminarAprovacaoService {
 
-    private final FormularioPreenchidoRepositorio fpr;
+    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
+
     private final TicketRepositorio ticketRepo;
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio;
 
-    public TerminarExecucaoService(final TransactionalContext autoTx){
-        fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio(autoTx);
+    public TerminarAprovacaoService(final TransactionalContext autoTx){
         ticketRepo = PersistenceContext.repositories().ticketRepositorio(autoTx);
         tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio(autoTx);
     }
@@ -30,8 +30,8 @@ public class TerminarExecucaoService {
     public TarefaManualAprovacao terminaAprovacao(Formulario f, Map<Resposta, Integer> respostas, TarefaManualAprovacao tarefaManualAprovacao, Colaborador colabPedido){
         FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
         tarefaManualAprovacao.ticketDaTarefa().adicionaFormularioResposta(fp);
+        tarefaManualAprovacao.ticketDaTarefa().definirFinalAprovacaoTicket();
         ticketRepo.save(tarefaManualAprovacao.ticketDaTarefa());
-        tarefaManualAprovacao.definirMomentoAprovacao();
         return tarefaManualAprovacaoRepositorio.save(tarefaManualAprovacao);
     }
 }
