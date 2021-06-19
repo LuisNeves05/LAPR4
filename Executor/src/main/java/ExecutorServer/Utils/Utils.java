@@ -34,10 +34,12 @@ public class Utils {
             String scriptTar = split[1];
             List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
             String email = split[2];
+            String stateC = split[3];
 
             System.out.println("SCRIPT : " + scriptTar);
             System.out.println("RESPOSTAS : " + respotasDoForm);
             System.out.println("EMAIL : " + email);
+            System.out.println("State : " + stateC);
 
             // TODO executar validacao
             result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);

@@ -63,7 +63,8 @@ public class ClientExecutorSSL {
                     // TODO DIVISAO DE BYTES
                     String stringFormat = respotasDoForm.keySet().toString().trim() + "!" +
                             scriptTar.trim() + "!" +
-                            email.trim() + "/";
+                            email.trim() + "!" +
+                            elems.identity() + "/";
                     sendToServer.append(stringFormat);
                     tarefasIteration.add(elems);
 
