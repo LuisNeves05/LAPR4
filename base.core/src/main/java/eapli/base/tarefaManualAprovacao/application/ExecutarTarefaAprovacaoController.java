@@ -10,7 +10,7 @@ import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.tarefaManualAprovacao.service.TarefasAprovadasService;
 import eapli.base.tarefaManualExecucao.services.CriarTarefaManualExecucaoService;
-import eapli.base.tarefaManualExecucao.services.TerminarExecucaoService;
+import eapli.base.tarefaManualAprovacao.service.TerminarAprovacaoService;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -18,10 +18,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public class ExecutarTarefaAprovacaoController {
@@ -31,7 +29,7 @@ public class ExecutarTarefaAprovacaoController {
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
     private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService(txCtx);
     private final TarefasAprovadasService aprovarTicketService = new TarefasAprovadasService();
-    private final TerminarExecucaoService terminarExecucaoService = new TerminarExecucaoService(txCtx);
+    private final TerminarAprovacaoService terminarAprovacaoService = new TerminarAprovacaoService(txCtx);
 
     public ExecutarTarefaAprovacaoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -45,7 +43,7 @@ public class ExecutarTarefaAprovacaoController {
     // Manter a transação aberta durante o terminio da execução
     public TarefaManualAprovacao terminarAprovacao(Formulario f, Map<Resposta, Integer> respostas, TarefaManualAprovacao tarefaManualAprovacao){
         txCtx.beginTransaction();
-        TarefaManualAprovacao tarManAprov = terminarExecucaoService.terminaAprovacao(f, respostas, tarefaManualAprovacao, colabPedido);
+        TarefaManualAprovacao tarManAprov = terminarAprovacaoService.terminaAprovacao(f, respostas, tarefaManualAprovacao, colabPedido);
         txCtx.commit();
         txCtx.close();
         return tarManAprov;

@@ -34,12 +34,12 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
      */
     private String designacao;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="EQUIPA_RESPONSAVEL")
     private Set<Colaborador> listaColabsResponsaveis = new HashSet<>();
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="EQUIPA_COLABORADOR")
     private Set<Colaborador> listaColabs;
 
@@ -66,8 +66,7 @@ public class Equipa implements AggregateRoot<CodigoEquipa> {
     }
 
     public boolean adicionarColaborador(Colaborador colab) {
-        if(colab.pertenceTipoEquipa(tipoEquipa))
-            throw new IntegrityViolationException("ERRO! Colaborador ja pertence a uma equipa deste tipo!");
+
         if (temColab(colab))
             throw new IntegrityViolationException("ERRO! Colaborador já pertence a esta equipa!!");
         return listaColabs.add(colab);

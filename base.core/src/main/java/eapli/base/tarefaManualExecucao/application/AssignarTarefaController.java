@@ -3,6 +3,7 @@ package eapli.base.tarefaManualExecucao.application;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
+import eapli.base.equipa.persistencia.EquipaRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
@@ -28,16 +29,12 @@ public class AssignarTarefaController {
     private final UserSession userSession = authorizationService.session().get();
     private final SystemUser systemUser = userSession.authenticatedUser();
     private final Colaborador colabPedido = colabPorUserName(systemUser.username());
-    private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
+    private final EquipaRepositorio equipaRepositorio = PersistenceContext.repositories().equipaRepositorio();
+    private final List<Equipa> equipasColab = equipaRepositorio.equipasDoColaborador(colabPedido);
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
     public Colaborador colabPorUserName(Username username) {
         return colaboradorRepositorio.colabPorUsername(username).iterator().next();
-    }
-
-
-    public Iterable<Equipa> equipasColab() {
-        return colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
     }
 
     public List<TarefaManualExecucao> tarefasManualExecucao() {
