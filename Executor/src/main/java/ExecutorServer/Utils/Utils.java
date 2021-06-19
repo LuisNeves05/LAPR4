@@ -2,6 +2,7 @@ package ExecutorServer.Utils;
 
 import eapli.base.formulario.gramatica.ScriptTarefasAutomaticas;
 import eapli.base.formularioPreenchido.domain.Resposta;
+import javassist.bytecode.stackmap.TypeData;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.DataInputStream;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Utils {
+    private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName());
 
     public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
         boolean flag = false;
@@ -32,7 +36,7 @@ public class Utils {
                 String[] split = elems.split("!");
                 stateC = split[3].trim();
 
-                System.out.println("Debug 1: " + stateC);
+                //System.out.println("Debug 1: " + stateC);
 
                 if ((intToState(Integer.parseInt(stateC)).equals(state))) {
                     /**
@@ -42,13 +46,17 @@ public class Utils {
                     List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
                     String email = split[2];
 
-                    System.out.println("SCRIPT : " + scriptTar);
-                    System.out.println("RESPOSTAS : " + respotasDoForm);
-                    System.out.println("EMAIL : " + email);
-                    System.out.println("State : " + stateC);
+                    //System.out.println("SCRIPT : " + scriptTar);
+                    //System.out.println("RESPOSTAS : " + respotasDoForm);
+                    //System.out.println("EMAIL : " + email);
+                    //System.out.println("State : " + stateC);
 
                     // TODO executar validacao
                     result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
+
+                    if(result){
+                        LOGGER.log(Level.INFO, "Tarefa Automatica Resolvida com Sucesso");
+                    }
 
                     responseToClient.add(String.valueOf(result));
                 }
@@ -58,10 +66,10 @@ public class Utils {
         }
 
         if(flag){
-            System.out.println("Debug 2: " + stateC);
+            //System.out.println("Debug 2: " + stateC);
             if ((intToState(Integer.parseInt(stateC)).equals(state))) {
                 String sendToCli = StringUtils.join(responseToClient, "&");
-                System.out.println(sendToCli);
+                //System.out.println(sendToCli);
                 sOut.writeUTF(sendToCli);
             } else {
                 sOut.writeUTF("0");
