@@ -29,10 +29,9 @@ public class ExecutarTarefaAprovacaoController {
     private final TransactionalContext txCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
-    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
+    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService(txCtx);
     private final TarefasAprovadasService aprovarTicketService = new TarefasAprovadasService();
-    private final TerminarExecucaoService terminarExecucaoService = new TerminarExecucaoService();
-
+    private final TerminarExecucaoService terminarExecucaoService = new TerminarExecucaoService(txCtx);
 
     public ExecutarTarefaAprovacaoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();

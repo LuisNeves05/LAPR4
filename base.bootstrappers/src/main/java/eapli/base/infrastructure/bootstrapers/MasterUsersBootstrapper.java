@@ -38,6 +38,7 @@ import eapli.base.tipoEquipa.domain.TipoEquipa;
 import eapli.base.usermanagement.application.AddUserController;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
 import java.awt.*;
@@ -60,7 +61,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
     private final AtividadeAprovacaoRepositorio ativAprovRepo = PersistenceContext.repositories().atividadeAprovacaoRepositorio();
     private final AtividadeRealizacaoRepositorio atividadeRealRepo = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
     private final FluxoAtividadeRepositorio fluxoAtividadeRepositorio = PersistenceContext.repositories().fluxoAtividadeRepositorio();
-
 
     @Override
     public boolean execute() {
@@ -272,7 +272,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          Validação 2: Os dias totais (e.g. férias totais) devem corresponder à soma dos dias já gozados/ocorridos e dos dias a gozar/ocorrer no período solicitado.
          */
 
+
         CriaServicoService criarServico1 = new CriaServicoService();
+
         /**
          *         Cria Atividade de aprovacação de um serviço
          */
@@ -317,7 +319,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         Servico servico1 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAusencia"), new Titulo("Pedido de Ausência Futura"), new DescricaoBreve("Pedido de ausência para Férias, ou por um motivo justificado ou não justificado"),
                 new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywordsRRH, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, false, nc));
 
-
         /**
          * Criar e guardar formulário para pedido de Servico
          */
@@ -356,6 +357,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          */
 
         CriaServicoService criarServico2 = new CriaServicoService();
+
         /**
          * Cria Atividade de aprovacação de 1 serviço
          */
@@ -428,6 +430,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          */
         CriaServicoService criarServico3 = new CriaServicoService();
 
+
         /**
          *   Cria Atividade de realização de 1 serviço
          */
@@ -483,7 +486,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          *  base de desconto em mais 0.5%; (5) calcular o valor de desconto e o valor total após descontos; (5) enviar um email ao colaborador que efetuou o pedido
          *  cujo texto pré-definido varia consoante o tipo de cliente e onde se apresentam alguns dos valores calculados.
          */
+
         CriaServicoService criarServico4 = new CriaServicoService();
+
 
         /**
          *   Cria Atividade de realização de um serviço

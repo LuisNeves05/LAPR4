@@ -13,6 +13,7 @@ import eapli.base.formulario.persistencia.FormularioRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
+import eapli.framework.domain.repositories.TransactionalContext;
 
 import java.util.List;
 

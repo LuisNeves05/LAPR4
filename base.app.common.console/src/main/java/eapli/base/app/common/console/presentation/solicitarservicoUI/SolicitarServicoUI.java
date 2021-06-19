@@ -96,7 +96,7 @@ public class SolicitarServicoUI extends AbstractUI {
         Iterable<Formulario> formularioList = s.formulariosDoServico();
 
         Set<FormularioPreenchido> fps = new HashSet<>();
-        try {
+
             Ticket ticket = lcp.criarTicket(s, urgencia);
 
             for (Formulario f : formularioList) {
@@ -127,7 +127,7 @@ public class SolicitarServicoUI extends AbstractUI {
 
                 fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
             }
-
+        try {
             lcp.solicitarServico(s, ticket, fps);
         }catch (Exception x){
             System.out.println("Ocorreu algum erro ao solicitar o serviço");

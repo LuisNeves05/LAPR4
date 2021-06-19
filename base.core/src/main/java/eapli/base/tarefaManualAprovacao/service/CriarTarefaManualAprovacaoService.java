@@ -10,13 +10,18 @@ import eapli.base.servico.domain.Servico;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.tarefaManualAprovacao.persistance.TarefaManualAprovacaoRepositorio;
 import eapli.base.ticket.domain.Ticket;
+import eapli.framework.domain.repositories.TransactionalContext;
 
 import java.util.Set;
 
 public class CriarTarefaManualAprovacaoService {
 
-    private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRep = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio();
+    private final TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRep;
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
+
+    public CriarTarefaManualAprovacaoService(final TransactionalContext autoTx){
+        tarefaManualAprovacaoRep = PersistenceContext.repositories().tarefaManualAprovacaoRepositorio(autoTx);
+    }
 
     public boolean criarTarefaAprovacao(Servico s, Ticket ticket, Colaborador colabLogado) {
         AtividadeAprovacao at = s.fluxoDoServico().ativAprovacaoDoFluxo();

@@ -41,11 +41,11 @@ public class SolicitarServicoController {
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final CatalogoRepositorio catRep = PersistenceContext.repositories().catalogoRepositorio();
-    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
-    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
-    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService();
-    private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService();
-    private final AtivarDesativarFluxoService ativarDesativarFluxoService = new AtivarDesativarFluxoService();
+    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio(txCtx);
+    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio(txCtx);
+    private final CriarTarefaManualExecucaoService criarTarefaManualExecucaoService = new CriarTarefaManualExecucaoService(txCtx);
+    private final CriarTarefaManualAprovacaoService criarTarefaManualAprovacaoService = new CriarTarefaManualAprovacaoService(txCtx);
+    private final AtivarDesativarFluxoService ativarDesativarFluxoService = new AtivarDesativarFluxoService(txCtx);
 
     public SolicitarServicoController() {
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
@@ -54,13 +54,6 @@ public class SolicitarServicoController {
             this.systemUser = userSession.authenticatedUser();
             this.colabPedido = colabPorUserName(systemUser.username());
         }
-    }
-
-    public Ticket criarTicket(Servico s, String urgencia) {
-        if (s.fluxoDoServico().ativAprovacaoDoFluxo() != null)
-            return new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR);
-        else
-            return new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO);
     }
 
 
@@ -81,6 +74,23 @@ public class SolicitarServicoController {
         txCtx.close();
     }
 
+    public Ticket criarTicket(Servico s, String urgencia) {
+        if (s.fluxoDoServico().ativAprovacaoDoFluxo() != null)
+            return new Ticket(colabPedido, s, urgencia, EstadoTicket.POR_APROVAR);
+        else
+            return new Ticket(colabPedido, s, urgencia, EstadoTicket.EM_EXECUCAO);
+    }
+
+
+
+    public List<Servico> listarServicosPorCat(Catalogo catalogo) {
+        return repoServ.servicoPorCatalogo(catalogo);
+    }
+
+    public Colaborador colabPorUserName(Username username) {
+        return colaboradorRepositorio.colabPorUsername(username).iterator().next();
+    }
+
     public List<Catalogo> listarCatalogosPorUser() {
 
         Iterable<Equipa> equipasColaborador = colaboradorRepositorio.equipasColaboradorPorUsername(systemUser.username());
@@ -91,14 +101,6 @@ public class SolicitarServicoController {
         }
 
         return catalogosColab;
-    }
-
-    public List<Servico> listarServicosPorCat(Catalogo catalogo) {
-        return repoServ.servicoPorCatalogo(catalogo);
-    }
-
-    public Colaborador colabPorUserName(Username username) {
-        return colaboradorRepositorio.colabPorUsername(username).iterator().next();
     }
 
     public boolean validaUrgencia(String urgencia) {

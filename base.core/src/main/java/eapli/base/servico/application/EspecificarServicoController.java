@@ -18,6 +18,9 @@ import eapli.base.servico.builder.ServiceBuilder;
 import eapli.base.servico.domain.Servico;
 import eapli.base.servico.persistencia.ServicoRepositorio;
 import eapli.base.servico.service.CriaServicoService;
+import eapli.framework.domain.repositories.TransactionalContext;
+import eapli.framework.validations.Invariants;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,9 +31,6 @@ import java.util.Set;
  */
 public class EspecificarServicoController {
 
-    /**
-     * Repositório do Serviço
-     */
     private final ServicoRepositorio repoServ = PersistenceContext.repositories().servicoRepositorio();
     private final CatalogoRepositorio repoCat = PersistenceContext.repositories().catalogoRepositorio();
     private final ColaboradorRepositorio colabRep = PersistenceContext.repositories().colaboradorRepositorio();
@@ -84,7 +84,7 @@ public class EspecificarServicoController {
 
 
     public Servico criarServico(ServiceBuilder serviceBuilder, List<Formulario> formularios, FluxoAtividadeBuilder fluxoAtividadeBuilder) {
-        return criarServicoService.especificarServico(serviceBuilder,formularios,fluxoAtividadeBuilder);
+        return criarServicoService.especificarServico(serviceBuilder, formularios, fluxoAtividadeBuilder);
     }
 
     public Iterable<Servico> servicoPeloIdentificador(String identificador) {

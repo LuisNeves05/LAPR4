@@ -5,6 +5,7 @@ import eapli.base.Utils.QueryMaker;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.ticket.domain.EstadoTicket;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
@@ -12,6 +13,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class FormularioPreenchidoRepositorioJPAimpl extends JpaAutoTxRepository<FormularioPreenchido, Long, Long> implements FormularioPreenchidoRepositorio {
+
+    public FormularioPreenchidoRepositorioJPAimpl(final TransactionalContext autoTx) {
+        super(autoTx, "eapli.base");
+    }
 
     public FormularioPreenchidoRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");

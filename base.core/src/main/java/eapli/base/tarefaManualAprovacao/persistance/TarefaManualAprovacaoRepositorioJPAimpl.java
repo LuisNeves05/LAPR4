@@ -5,6 +5,7 @@ import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.tarefaManualAprovacao.domain.EstadoAprovacao;
 import eapli.base.tarefaManualAprovacao.domain.TarefaManualAprovacao;
 import eapli.base.ticket.domain.Ticket;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 import javax.persistence.Query;
 import java.util.List;
@@ -12,6 +13,10 @@ import java.util.List;
 
 public class TarefaManualAprovacaoRepositorioJPAimpl extends JpaAutoTxRepository<TarefaManualAprovacao, Long, Long>
         implements TarefaManualAprovacaoRepositorio {
+
+    public TarefaManualAprovacaoRepositorioJPAimpl(final TransactionalContext autoTx) {
+        super(autoTx, "eapli.base");
+    }
 
     public TarefaManualAprovacaoRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");

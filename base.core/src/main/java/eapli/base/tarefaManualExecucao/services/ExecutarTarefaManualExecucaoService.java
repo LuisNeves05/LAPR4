@@ -10,15 +10,20 @@ import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.persistence.TicketRepositorio;
-
+import eapli.framework.domain.repositories.TransactionalContext;
 import java.util.Map;
-import java.util.Set;
 
 public class ExecutarTarefaManualExecucaoService {
 
-    private final FormularioPreenchidoRepositorio fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio();
-    private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
-    private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
+    private final FormularioPreenchidoRepositorio fpr;
+    private final TicketRepositorio ticketRepositorio;
+    private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio;
+
+    public ExecutarTarefaManualExecucaoService(final TransactionalContext autoTx){
+        fpr = PersistenceContext.repositories().formularioPreenchidoRepositorio(autoTx);
+        ticketRepositorio = PersistenceContext.repositories().ticketRepositorio(autoTx);
+        tarefaExecucaoRepositorio = PersistenceContext.repositories().tarefaManualExecucaoRepositorio(autoTx);
+    }
 
     public void executarTarefa(Formulario f, Map<Resposta, Integer> respostas, TarefaManualExecucao tarefaManualExecucao, Colaborador colabPedido) {
         FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
@@ -27,12 +32,5 @@ public class ExecutarTarefaManualExecucaoService {
         tarefaManualExecucao.definirMomentoRealizacao();
         tarefaExecucaoRepositorio.save(tarefaManualExecucao);
     }
-
-    public void comecarTarefaManualExec(TarefaManualExecucao tarefa) {
-        // todo fazer execucacao da tarefa manual
-        tarefa.definirMomentoRealizacao();
-    }
-
-
 }
 

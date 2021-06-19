@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:h2:tcp://vsgate-s2.dei.isep.ipp.pt:10258/lei20_21_s4_2dl_4</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="lei20_21_s4_2dl_4" uuid="52668687-cb46-4f40-b97f-3873edfcffbf">
+    <data-source source="LOCAL" name="lei20_21_s4_2dl" uuid="07a20ea4-d3cc-442d-8828-abb527029a6b">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:~/db/lei20_21_s4_2dl_4;create=true</jdbc-url>
+      <jdbc-url>jdbc:h2:~/db/lei20_21_s4_2dl;create=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

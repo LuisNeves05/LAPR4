@@ -64,12 +64,22 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public ServicoRepositorio servicoRepositorio(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
 	public CatalogoRepositorio catalogoRepositorio() {
 		return null;
 	}
 
 	@Override
 	public FormularioRepositorio formularioRepositorio() {
+		return null;
+	}
+
+	@Override
+	public FormularioRepositorio formularioRepositorio(TransactionalContext autoTx) {
 		return null;
 	}
 
@@ -97,7 +107,17 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
 	public TicketRepositorio ticketRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TicketRepositorio ticketRepositorio(TransactionalContext autoTx) {
 		return null;
 	}
 
@@ -107,12 +127,27 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
 	public TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio() {
 		return null;
 	}
 
 	@Override
+	public TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
 	public TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio() {
+		return null;
+	}
+
+	@Override
+	public TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio(TransactionalContext autoTx) {
 		return null;
 	}
 
@@ -123,12 +158,27 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio(TransactionalContext txCtx) {
+		return null;
+	}
+
+	@Override
 	public AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio() {
 		return null;
 	}
 
 	@Override
+	public AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio(TransactionalContext autoTx) {
+		return null;
+	}
+
+	@Override
 	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio() {
+		return null;
+	}
+
+	@Override
+	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio(TransactionalContext autoTx) {
 		return null;
 	}
 

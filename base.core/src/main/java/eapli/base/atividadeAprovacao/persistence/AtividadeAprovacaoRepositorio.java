@@ -6,5 +6,4 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 public interface AtividadeAprovacaoRepositorio extends DomainRepository<Long, AtividadeAprovacao> {
 
-    void removePeloID(AtividadeAprovacao atividadeAprovacao);
 }

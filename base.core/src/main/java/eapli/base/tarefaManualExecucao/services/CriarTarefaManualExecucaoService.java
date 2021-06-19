@@ -13,16 +13,19 @@ import eapli.base.tarefaManualExecucao.domain.EstadoRealizacao;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.ticket.domain.Ticket;
+import eapli.framework.domain.repositories.TransactionalContext;
 
 
 public class CriarTarefaManualExecucaoService {
 
-    private final AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio = PersistenceContext.repositories().atividadeRealizacaoRepositorio();
-    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRep = PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
-    private final TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio = PersistenceContext.repositories().tarefaAutomaticaRepositorio();
+    private final TarefaManualExecucaoRepositorio tarefaManualExecucaoRep;
+    private final TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio;
     private final TiposDeTarefa tiposDeTarefa = new TiposDeTarefa();
 
-    public CriarTarefaManualExecucaoService(){}
+    public CriarTarefaManualExecucaoService(final TransactionalContext autoTx){
+        tarefaManualExecucaoRep = PersistenceContext.repositories().tarefaManualExecucaoRepositorio(autoTx);
+        tarefaAutomaticaRepositorio  = PersistenceContext.repositories().tarefaAutomaticaRepositorio(autoTx);
+    }
 
     public void criarTarefaExecucao(Servico s, Ticket ticket) {
         AtividadeRealizacao ar = s.fluxoDoServico().ativRealizacaoDoFluxo();

@@ -32,7 +32,12 @@ public class DarFeedbackUI extends AbstractUI {
                 int opcao = Console.readInteger("Indique o index do ticket que pretende dar feedback");
                 if(opcao > 0 && opcao < ticketsComFeedbackDoColab.size()) {
                     String respostaFeedback = Console.readLine("Dê o seu feedback");
-                    controller.feedbackDoColaborador(respostaFeedback, ticketsComFeedbackDoColab.get(opcao -1));
+                    try {
+                        controller.feedbackDoColaborador(respostaFeedback, ticketsComFeedbackDoColab.get(opcao -1));
+                    }catch (Exception x){
+                        System.out.println("Erro ao atribuir feedback ao ticket");
+                        return true;
+                    }
                     flag = false;
                 }
                 else{

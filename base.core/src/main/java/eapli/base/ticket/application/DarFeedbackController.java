@@ -19,7 +19,6 @@ public class DarFeedbackController {
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
-
     public DarFeedbackController(){
         AuthorizationService authorizationService = AuthzRegistry.authorizationService();
         if(authorizationService.hasSession() && authorizationService.session().isPresent()) {

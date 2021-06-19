@@ -6,6 +6,7 @@ import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.servico.domain.Servico;
 import eapli.base.ticket.domain.EstadoTicket;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,10 @@ import java.util.List;
 import java.util.Set;
 
 public class FormularioRepositorioJPAimpl extends JpaAutoTxRepository<Formulario, Long, Long> implements FormularioRepositorio{
+
+    public FormularioRepositorioJPAimpl(final TransactionalContext autoTX) {
+        super(autoTX, "eapli.base");
+    }
 
     public FormularioRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");

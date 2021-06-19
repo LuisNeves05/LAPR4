@@ -357,19 +357,24 @@ public class EspecificarServicoUI extends AbstractUI {
         do {
             completar = Console.readLine("Deseja dar este Serviço como completo? (sim/nao)");
         } while (validaSimNao(completar));
-        Servico serv = servicoController.criarServico(serviceBuilder, formularios, fluxoAtivBuilder);
-        if (completar.equalsIgnoreCase("sim")) {
-            if (serv.estaCompleto()) {
-                serv.completar();
-                servicoController.especificarServico(serv);
-                System.out.println("Serviço Completo especificado\n");
+
+        try {
+            Servico serv = servicoController.criarServico(serviceBuilder, formularios, fluxoAtivBuilder);
+            if (completar.equalsIgnoreCase("sim")) {
+                if (serv.estaCompleto()) {
+                    serv.completar();
+                    servicoController.especificarServico(serv);
+                    System.out.println("Serviço Completo especificado\n");
+                } else {
+                    System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
+                    servicoController.especificarServico(serv);
+                }
             } else {
-                System.out.println("O serviço não ficou completo pois não tem todos os campos obrigatórios preenchidos");
+                System.out.println("O Serviço Incompleto ficou registado\n");
                 servicoController.especificarServico(serv);
             }
-        } else {
-            System.out.println("O Serviço Incompleto ficou registado\n");
-            servicoController.especificarServico(serv);
+        }catch (Exception x){
+            System.out.println("Ocorreu um erro ao gravar o serviço");
         }
     }
 

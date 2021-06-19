@@ -1,21 +1,16 @@
 package eapli.base.tarefaManualExecucao.application;
 
-import eapli.base.Utils.HelpMethods;
 import eapli.base.colaborador.domain.Colaborador;
 import eapli.base.colaborador.persistencia.ColaboradorRepositorio;
 import eapli.base.equipa.domain.Equipa;
 import eapli.base.formulario.domain.Atributo;
 import eapli.base.formulario.domain.Formulario;
 import eapli.base.formulario.domain.TipoDados;
-import eapli.base.formularioPreenchido.domain.FormularioPreenchido;
 import eapli.base.formularioPreenchido.domain.Resposta;
-import eapli.base.formularioPreenchido.persistencia.FormularioPreenchidoRepositorio;
 import eapli.base.infrastructure.persistence.PersistenceContext;
 import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.tarefaManualExecucao.persistance.TarefaManualExecucaoRepositorio;
 import eapli.base.tarefaManualExecucao.services.ExecutarTarefaManualExecucaoService;
-import eapli.base.ticket.domain.Ticket;
-import eapli.base.ticket.persistence.TicketRepositorio;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -26,20 +21,24 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ExecutarTarefaExecucaoController {
-    private final ExecutarTarefaManualExecucaoService execucaoService = new ExecutarTarefaManualExecucaoService();
     private final TransactionalContext tcCtx = PersistenceContext.repositories().newTransactionalContext();
     private final ColaboradorRepositorio colaboradorRepositorio = PersistenceContext.repositories().colaboradorRepositorio();
     private final TarefaManualExecucaoRepositorio tarefaExecucaoRepositorio =  PersistenceContext.repositories().tarefaManualExecucaoRepositorio();
-    private final AuthorizationService authorizationService = AuthzRegistry.authorizationService();
-    private final UserSession userSession = authorizationService.session().get();
-    private final SystemUser systemUser = userSession.authenticatedUser();
-    private final Colaborador colabPedido =colabPorUserName(systemUser.username());
-    private final List<Equipa> equipasColab = colabPedido.obterEquipasColaborador();
+    private Colaborador colabPedido;
+    private List<Equipa> equipasColab;
+    private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService(tcCtx);
 
-    private final ExecutarTarefaManualExecucaoService execTarManExecService = new ExecutarTarefaManualExecucaoService();
+    public ExecutarTarefaExecucaoController() {
+        AuthorizationService authorizationService = AuthzRegistry.authorizationService();
+        if (authorizationService.hasSession() && authorizationService.session().isPresent()) {
+            UserSession userSession = authorizationService.session().get();
+            SystemUser systemUser = userSession.authenticatedUser();
+            this.colabPedido = colabPorUserName(systemUser.username());
+            equipasColab = colabPedido.obterEquipasColaborador();
+        }
+    }
 
     public void executaTarefa(Formulario f, Map<Resposta, Integer> respostas, TarefaManualExecucao tarefaManualExecucao) {
         tcCtx.beginTransaction();

@@ -3,6 +3,7 @@ package eapli.base.servico.persistencia;
 import eapli.base.Application;
 import eapli.base.catalogo.domain.Catalogo;
 import eapli.base.servico.domain.*;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
@@ -11,6 +12,10 @@ import java.util.List;
 
 public class ServicoRepositorioJPAimpl extends JpaAutoTxRepository<Servico, Long, ServicoIdentificador>
         implements ServicoRepositorio {
+
+    public ServicoRepositorioJPAimpl(final TransactionalContext autoTx) {
+        super(autoTx,"eapli.base");
+    }
 
     public ServicoRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");

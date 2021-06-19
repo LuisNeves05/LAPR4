@@ -81,6 +81,8 @@ public interface RepositoryFactory {
 	 */
 	ServicoRepositorio servicoRepositorio();
 
+	ServicoRepositorio servicoRepositorio(final TransactionalContext autoTx);
+
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
 	 *
@@ -93,6 +95,7 @@ public interface RepositoryFactory {
 	 */
 	FormularioRepositorio formularioRepositorio();
 
+	FormularioRepositorio formularioRepositorio(final TransactionalContext autoTx);
 	/**
 	 * Repositorio vai ser criado em modo auto transacional
 	 * @return TipoEquipaRepositorio
@@ -107,17 +110,34 @@ public interface RepositoryFactory {
 
 	FormularioPreenchidoRepositorio formularioPreenchidoRepositorio();
 
+	FormularioPreenchidoRepositorio formularioPreenchidoRepositorio(final TransactionalContext autoTx);
+
 	TicketRepositorio ticketRepositorio();
+
+	TicketRepositorio ticketRepositorio(final TransactionalContext autoTx);
 
 	TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio();
 
+	TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio(final TransactionalContext autoTx);
+
 	TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio();
+
+	TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio(final TransactionalContext autoTx);
 
 	TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio();
 
+	TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio(final TransactionalContext autoTx);
+
 	FluxoAtividadeRepositorio fluxoAtividadeRepositorio();
+
+	FluxoAtividadeRepositorio fluxoAtividadeRepositorio(final TransactionalContext txCtx);
 
 	AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio();
 
+	AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio(final TransactionalContext autoTx);
+
 	AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio();
+
+	AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio(final TransactionalContext autoTx);
+
 }

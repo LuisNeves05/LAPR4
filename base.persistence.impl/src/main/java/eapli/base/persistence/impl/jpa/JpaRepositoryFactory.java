@@ -82,6 +82,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public ServicoRepositorio servicoRepositorio(final TransactionalContext autoTx) {
+		return new ServicoRepositorioJPAimpl(autoTx);
+	}
+
+	@Override
 	public CatalogoRepositorio catalogoRepositorio() {
 		return new CatalogoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
@@ -89,6 +94,11 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public FormularioRepositorio formularioRepositorio(){
 		return new FormularioRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FormularioRepositorio formularioRepositorio(final TransactionalContext autoTx){
+		return new FormularioRepositorioJPAimpl(autoTx);
 	}
 
 	@Override
@@ -117,14 +127,28 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public FormularioPreenchidoRepositorio formularioPreenchidoRepositorio(final TransactionalContext autoTx){
+		return new FormularioPreenchidoRepositorioJPAimpl(autoTx);
+	}
+
+	@Override
 	public TicketRepositorio ticketRepositorio(){
 		return new TicketRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
+	@Override
+	public TicketRepositorio ticketRepositorio(final TransactionalContext autoTx){
+		return new TicketRepositorioJPAimpl(autoTx);
+	}
 
 	@Override
 	public TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio(){
 		return new TarefaManualExecucaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public TarefaManualExecucaoRepositorio tarefaManualExecucaoRepositorio(final TransactionalContext autoTx){
+		return new TarefaManualExecucaoRepositorioJPAimpl(autoTx);
 	}
 
 	@Override
@@ -133,13 +157,29 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public TarefaManualAprovacaoRepositorio tarefaManualAprovacaoRepositorio(final TransactionalContext autoTx){
+		return new TarefaManualAprovacaoRepositorioJPAimpl(autoTx);
+	}
+
+	@Override
 	public TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio(){
 		return new TarefaAutomaticaRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
 	}
 
 	@Override
+	public TarefaAutomaticaRepositorio tarefaAutomaticaRepositorio(final TransactionalContext autoTx){
+		return new TarefaAutomaticaRepositorioJPAimpl(autoTx);
+	}
+
+
+	@Override
 	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio(){
 		return new FluxoAtividadeRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public FluxoAtividadeRepositorio fluxoAtividadeRepositorio(final TransactionalContext autoTx){
+		return new FluxoAtividadeRepositorioJPAimpl(autoTx);
 	}
 
 	@Override
@@ -148,8 +188,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	}
 
 	@Override
+	public AtividadeRealizacaoRepositorio atividadeRealizacaoRepositorio(final TransactionalContext autoTx){
+		return new AtividadeRealizacaoRepositorioJPAimpl(autoTx);
+	}
+
+	@Override
 	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio(){
 		return new AtividadeAprovacaoRepositorioJPAimpl(Application.settings().getPersistenceUnitName());
+	}
+
+	@Override
+	public AtividadeAprovacaoRepositorio atividadeAprovacaoRepositorio(final TransactionalContext autoTx){
+		return new AtividadeAprovacaoRepositorioJPAimpl(autoTx);
 	}
 
 	@Override

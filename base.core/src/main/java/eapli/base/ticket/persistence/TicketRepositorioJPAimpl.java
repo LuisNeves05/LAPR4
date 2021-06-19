@@ -6,6 +6,7 @@ import eapli.base.colaborador.domain.Colaborador;
 
 import eapli.base.ticket.domain.EstadoTicket;
 import eapli.base.ticket.domain.Ticket;
+import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
@@ -14,6 +15,10 @@ import java.util.List;
 
 public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, Long>
         implements TicketRepositorio {
+
+    public TicketRepositorioJPAimpl(final TransactionalContext autoTx) {
+        super(autoTx, "eapli.base");
+    }
 
     public TicketRepositorioJPAimpl(String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(), "eapli.base");
