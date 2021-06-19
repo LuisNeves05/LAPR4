@@ -1,5 +1,6 @@
 package SSLWorkflow;
 
+import ExecutorServer.ClientExecutorSSL;
 import eapli.base.fluxoAtividade.service.FluxoAtividadeService;
 import eapli.base.tarefaManualExecucao.services.AssignarTarefaAlgoritmoService;
 import eapli.base.tarefaManualExecucao.services.TarefasPendentesService;
@@ -33,6 +34,13 @@ class ServerSSLThread implements Runnable {
 
         clientIP = s.getInetAddress();
         //System.out.println("New request incomming from " + clientIP.getHostAddress());
+
+        ClientExecutorSSL executorSSL = new ClientExecutorSSL();
+        try {
+            executorSSL.executarTarefaAutomatica();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             sOut = new DataOutputStream(s.getOutputStream());
