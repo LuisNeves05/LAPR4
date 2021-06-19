@@ -11,6 +11,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,11 +36,12 @@ class ServerSSLThread implements Runnable {
         clientIP = s.getInetAddress();
         //System.out.println("New request incomming from " + clientIP.getHostAddress());
 
+
         ClientExecutorSSL executorSSL = new ClientExecutorSSL();
         try {
             executorSSL.executarTarefaAutomatica();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NoSuchElementException e ) {
+            //e.printStackTrace();
         }
 
         try {
