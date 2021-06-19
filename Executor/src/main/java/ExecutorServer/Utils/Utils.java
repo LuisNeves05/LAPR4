@@ -26,39 +26,42 @@ public class Utils {
 
 
         System.out.println("Erro : " + getNumberOfTarefasAut(response));
-        for(String elems : getNumberOfTarefasAut(response)){
-            String[] split = elems.split("!");
-            stateC = split[3].trim();
+        for (String elems : getNumberOfTarefasAut(response)) {
+            if (!getNumberOfTarefasAut(response).isEmpty()) {
+                String[] split = elems.split("!");
+                stateC = split[3].trim();
 
-            System.out.println("Debug 1: " + stateC);
+                System.out.println("Debug 1: " + stateC);
 
-            if((intToState(Integer.parseInt(stateC)).equals(state))){
-                /**
-                 * Variaveis para a componente de LPROG
-                 */
-                String scriptTar = split[1];
-                List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
-                String email = split[2];
+                if ((intToState(Integer.parseInt(stateC)).equals(state))) {
+                    /**
+                     * Variaveis para a componente de LPROG
+                     */
+                    String scriptTar = split[1];
+                    List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
+                    String email = split[2];
 
-                System.out.println("SCRIPT : " + scriptTar);
-                System.out.println("RESPOSTAS : " + respotasDoForm);
-                System.out.println("EMAIL : " + email);
-                System.out.println("State : " + stateC);
+                    System.out.println("SCRIPT : " + scriptTar);
+                    System.out.println("RESPOSTAS : " + respotasDoForm);
+                    System.out.println("EMAIL : " + email);
+                    System.out.println("State : " + stateC);
 
-                // TODO executar validacao
-                result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
+                    // TODO executar validacao
+                    result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
 
-                responseToClient.add(String.valueOf(result));
+                    responseToClient.add(String.valueOf(result));
+                }
             }
+
 
         }
 
         System.out.println("Debug 2: " + stateC);
-        if((intToState(Integer.parseInt(stateC)).equals(state))){
+        if ((intToState(Integer.parseInt(stateC)).equals(state))) {
             String sendToCli = StringUtils.join(responseToClient, "&");
             System.out.println(sendToCli);
             sOut.writeUTF(sendToCli);
-        }else {
+        } else {
             sOut.writeUTF("0");
         }
 
@@ -68,7 +71,7 @@ public class Utils {
     }
 
 
-    public static List<String> stringsToList(String data){
+    public static List<String> stringsToList(String data) {
 
         List<String> toStringList = new LinkedList<>();
 
@@ -79,31 +82,30 @@ public class Utils {
     }
 
 
-    public static List<Resposta> stringListToStringRespostas(List<String> data){
+    public static List<Resposta> stringListToStringRespostas(List<String> data) {
 
         List<Resposta> returnList = new ArrayList<>();
 
-        for(String elems : data){
+        for (String elems : data) {
             returnList.add(new Resposta(elems.trim(), "pergunta"));
         }
 
         return returnList;
     }
 
-    public static List<String> getNumberOfTarefasAut(String response){
+    public static List<String> getNumberOfTarefasAut(String response) {
         List<String> tarefasList = Arrays.asList(response.split("/"));
-        for(String elems : tarefasList){
+        for (String elems : tarefasList) {
             System.out.println(elems);
         }
         return tarefasList;
     }
 
 
-    public static String intToState(int num){
-        if(num % 2 == 0){
+    public static String intToState(int num) {
+        if (num % 2 == 0) {
             return "P";
-        }
-        else{
+        } else {
             return "I";
         }
     }
