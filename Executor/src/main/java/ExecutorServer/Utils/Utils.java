@@ -31,6 +31,7 @@ public class Utils {
             try{
                 stateC = split[3].trim();
             }catch (ArrayIndexOutOfBoundsException e){
+                stateC = "W";
             }
 
 
