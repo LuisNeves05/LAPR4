@@ -21,6 +21,8 @@ public class Utils {
 
     public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
         boolean flag = false;
+        boolean maisQueUma = true;
+
         String stateC = null;
         //WAITING FOR RESPONSE
 
@@ -55,7 +57,10 @@ public class Utils {
                     result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
 
                     if(result){
-                        LOGGER.log(Level.INFO, "Tarefa Automatica Resolvida com Sucesso");
+                        if(maisQueUma){
+                            LOGGER.log(Level.INFO, "Tarefa Automatica Resolvida com Sucesso");
+                            maisQueUma = false;
+                        }
                     }
 
                     responseToClient.add(String.valueOf(result));
@@ -69,7 +74,6 @@ public class Utils {
             //System.out.println("Debug 2: " + stateC);
             if ((intToState(Integer.parseInt(stateC)).equals(state))) {
                 String sendToCli = StringUtils.join(responseToClient, "&");
-                //System.out.println(sendToCli);
                 sOut.writeUTF(sendToCli);
             } else {
                 sOut.writeUTF("0");
