@@ -71,6 +71,7 @@ public class ClientExecutorSSL {
                 }
             }
 
+            System.out.println("DEBUG: " + sendToServer.toString());
             sOut.writeUTF(sendToServer.toString());
 
 

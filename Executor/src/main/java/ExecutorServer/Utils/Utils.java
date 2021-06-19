@@ -16,7 +16,7 @@ import java.util.List;
 public class Utils {
 
     public static void tarefasAutomaticasServer(Socket s, DataOutputStream sOut, DataInputStream sIn, String state) throws IOException {
-
+        String stateC = null;
         //WAITING FOR RESPONSE
 
         String response = sIn.readUTF();
@@ -27,30 +27,34 @@ public class Utils {
 
         for(String elems : getNumberOfTarefasAut(response)){
             String[] split = elems.split("!");
+            stateC = split[3].trim();
 
-            /**
-             * Variaveis para a componente de LPROG
-             */
-            String scriptTar = split[1];
-            List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
-            String email = split[2];
-            String stateC = split[3];
+            if((intToState(Integer.parseInt(stateC)).equals(state))){
+                /**
+                 * Variaveis para a componente de LPROG
+                 */
+                String scriptTar = split[1];
+                List<Resposta> respotasDoForm = stringListToStringRespostas(stringsToList(split[0]));
+                String email = split[2];
 
-            System.out.println("SCRIPT : " + scriptTar);
-            System.out.println("RESPOSTAS : " + respotasDoForm);
-            System.out.println("EMAIL : " + email);
-            System.out.println("State : " + stateC);
+                System.out.println("SCRIPT : " + scriptTar);
+                System.out.println("RESPOSTAS : " + respotasDoForm);
+                System.out.println("EMAIL : " + email);
+                System.out.println("State : " + stateC);
 
-            // TODO executar validacao
-            result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
+                // TODO executar validacao
+                result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
 
-            responseToClient.add(String.valueOf(result));
+                responseToClient.add(String.valueOf(result));
+            }
+
         }
 
-        
-        var sendToCli = StringUtils.join(responseToClient, "&");
-        System.out.println(sendToCli);
-        sOut.writeUTF(sendToCli);
+        if((intToState(Integer.parseInt(stateC)).equals(state))){
+            String sendToCli = StringUtils.join(responseToClient, "&");
+            System.out.println(sendToCli);
+            sOut.writeUTF(sendToCli);
+        }
 
         s = null;
         Thread.currentThread().interrupt();
@@ -86,5 +90,15 @@ public class Utils {
             System.out.println(elems);
         }
         return tarefasList;
+    }
+
+
+    public static String intToState(int num){
+        if(num % 2 == 0){
+            return "P";
+        }
+        else{
+            return "I";
+        }
     }
 }
