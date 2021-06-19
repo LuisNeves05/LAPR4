@@ -107,9 +107,6 @@ public class Utils {
 
     public static List<String> getNumberOfTarefasAut(String response) {
         List<String> tarefasList = Arrays.asList(response.split("/"));
-        for (String elems : tarefasList) {
-            System.out.println(elems);
-        }
         return tarefasList;
     }
 
