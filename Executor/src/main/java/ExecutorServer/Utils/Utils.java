@@ -25,15 +25,10 @@ public class Utils {
         List<String> responseToClient = new ArrayList<>();
 
 
+        System.out.println("Erro : " + getNumberOfTarefasAut(response));
         for(String elems : getNumberOfTarefasAut(response)){
             String[] split = elems.split("!");
-
-            try{
-                stateC = split[3].trim();
-            }catch (ArrayIndexOutOfBoundsException e){
-                stateC = "W";
-            }
-
+            stateC = split[3].trim();
 
             System.out.println("Debug 1: " + stateC);
 
