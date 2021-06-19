@@ -121,11 +121,13 @@ public class EvalGramaticaListener extends GramaticaBaseListener {
                         switch (decisao) {
                             case "NAOVAZIO":
                                 if (resposta2.isEmpty()) {
+                                    System.out.println("O atributo "+ indice2 + " não pode ser vazio.");
                                     throww();
                                 }
                                 break;
                             case "VAZIO":
                                 if (!resposta2.isEmpty()) {
+                                    System.out.println("O atributo "+ indice2 + " têm que estar vazio.");
                                     throww();
                                 }
                                 break;

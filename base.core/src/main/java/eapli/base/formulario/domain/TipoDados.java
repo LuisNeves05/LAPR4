@@ -9,5 +9,6 @@ public enum TipoDados{
     BOOLEANO,
     DECISAO,
     CONCLUSAO,
+    FICHEIROXML
 }
 
