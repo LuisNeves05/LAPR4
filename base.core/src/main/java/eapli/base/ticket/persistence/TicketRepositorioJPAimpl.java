@@ -10,6 +10,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import javax.persistence.Query;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -47,8 +48,9 @@ public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, 
     }
 
     @Override
-    public List<Ticket> ticketsConcluidos() {
-        Query query = super.createQuery("SELECT t from Ticket t where t.estadoTicket='CONCLUIDO'", Ticket.class);
+    public List<Ticket> ticketsConcluidos(Calendar date) {
+        Query query = super.createQuery("SELECT t from Ticket t where t.estadoTicket='CONCLUIDO' and t.dataFimExecucaoTicket > :date", Ticket.class);
+        query.setParameter("date",date);
         return query.getResultList();
     }
 

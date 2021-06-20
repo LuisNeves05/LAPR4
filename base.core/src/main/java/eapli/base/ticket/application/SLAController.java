@@ -11,6 +11,7 @@ import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class SLAController {
@@ -35,9 +36,8 @@ public class SLAController {
 
     }
 
-    public List<Ticket> ticketsConcluidos() {
-
-        return ticketRepositorio.ticketsConcluidos();
+    public List<Ticket> ticketsConcluidos(Calendar date) {
+        return ticketRepositorio.ticketsConcluidos(date);
     }
 
 

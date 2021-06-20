@@ -8,6 +8,7 @@ import eapli.base.tarefaManualExecucao.domain.TarefaManualExecucao;
 import eapli.base.ticket.domain.Ticket;
 import eapli.framework.domain.repositories.DomainRepository;
 
+import java.util.Calendar;
 import java.util.List;
 
 public interface TicketRepositorio extends DomainRepository<Long, Ticket> {
@@ -18,7 +19,7 @@ public interface TicketRepositorio extends DomainRepository<Long, Ticket> {
 
     List<Ticket> ticketsComFeedbackDoColab(Colaborador colabLogado);
 
-    List<Ticket> ticketsConcluidos();
+    List<Ticket> ticketsConcluidos(Calendar date);
 
     Long totalTickets();
 

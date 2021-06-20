@@ -4,8 +4,12 @@ import eapli.base.ticket.application.SLAController;
 import eapli.base.ticket.domain.SLA_ENUM;
 import eapli.base.ticket.domain.Ticket;
 import eapli.base.ticket.service.SLATable;
+import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-
+import eapli.framework.time.util.Calendars;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,11 +24,15 @@ public class ConsultaSLA_UI extends AbstractUI {
     @Override
     protected boolean doShow() {
         long minutes = 0;
-        final List<Ticket> ticketsConcluidos = slaController.ticketsConcluidos();
+        int meses = Console.readInteger("Escolha o período que pretende incluir no SLA(em meses)");
+        Calendar date = Calendars.now();
+        date.add(Calendar.MONTH, -meses);
+        final List<Ticket> ticketsConcluidos = slaController.ticketsConcluidos(date);
         String[] tickets = new String[ticketsConcluidos.size() + 1];
         tickets[0] = "Pedido,Servico,Criticidade,Tempo Max. Aprov ,Média Aprov ,Tempo Decorrido Aprov, Tempo Max. Res, Média Res, Tempo Decorrido Res,Comentário/Conclusão";
         int i = 1;
         for (Ticket t : ticketsConcluidos) {
+
             Calendar dataAprovacaoC = t.dataAprovacaoTicket();
             long dataResolucao = t.datafinalizacaoTicket().getTimeInMillis();
             long dataCriacao = t.criacaoTicket().getTimeInMillis();
@@ -56,8 +64,6 @@ public class ConsultaSLA_UI extends AbstractUI {
                 comentario = SLA_ENUM.FALHA_TUDO.toString();
             }
 
-// todo MUDAR NIVEIS DE CRITICIDADE PARA SEREM DE ACORDO COM O TIPO DE SERVICIOS
-
             tickets[i] = String.valueOf("Ticket : " + t.identity() + "," + t.servicoDoTicket().tituloDoServico() + "," + t.servicoDoTicket().nivelCriticidadeServico().getValorDeEscala() + "," + t.servicoDoTicket().nivelCriticidadeServico().objetivos().tempoMaximoAprovacao() + "," + t.servicoDoTicket().nivelCriticidadeServico().objetivos().tempoMedioAprovacao() + "," + tempoAprov + "," + t.servicoDoTicket().nivelCriticidadeServico().objetivos().tempoMaximoResolucao() + "," + t.servicoDoTicket().nivelCriticidadeServico().objetivos().tempoMedioResolucao() + "," + tempoRes + "," + comentario);
 
 
@@ -71,18 +77,20 @@ public class ConsultaSLA_UI extends AbstractUI {
         System.out.println("Número total de tickets : " + totalTickets);
         System.out.println("\n########################################################\n");
 
-
+        DateTimeFormatter dateTimeFormatter  =DateTimeFormatter.ofPattern(("MM/dd/yyyy"));
+        LocalDateTime dataAnterior = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        LocalDateTime data= LocalDateTime.now();
         final int ticketsConclu = ticketsConcluidos.size();
-        System.out.println(" Número tickets concluídos : " + ticketsConclu );
+        System.out.println(" Número tickets concluídos desde " +dataAnterior.format(dateTimeFormatter)+" até "+ data.format(dateTimeFormatter)+" : " + ticketsConclu);
 
         System.out.println("\n########################################################\n");
-        System.out.println("Tempo de execução médio : " + minutes/i);
 
-        System.out.println("\n########################################################\n");
         SLATable.printResult(tickets);
 
         System.out.println("########################################################\n");
+        System.out.println("Tempo de execução médio : " + minutes / i);
 
+        System.out.println("\n########################################################\n");
         return true;
     }
 
