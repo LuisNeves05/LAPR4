@@ -53,7 +53,6 @@ public class Utils {
                     //System.out.println("EMAIL : " + email);
                     //System.out.println("State : " + stateC);
 
-                    // TODO executar validacao
                     result = ScriptTarefasAutomaticas.executaTarefaAutomatica(scriptTar, respotasDoForm, email);
 
                     if(result){

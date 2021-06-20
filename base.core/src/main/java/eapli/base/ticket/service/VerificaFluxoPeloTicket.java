@@ -9,7 +9,6 @@ public class VerificaFluxoPeloTicket {
     private final TicketRepositorio ticketRepositorio = PersistenceContext.repositories().ticketRepositorio();
 
     public boolean verificaFluxosPeloTicket(FluxoAtividade fluxoAtividade){
-        //FIXME VERIFICAR SE O FLUXO TEM TICKETS POR CONCLUIR/INACABADO, E SE NÃO, DESATIVAR O FLUXO
         //return ticketRepositorio.ticketsPorConcluirDoFluxo(fluxoAtividade);
         return false;
     }

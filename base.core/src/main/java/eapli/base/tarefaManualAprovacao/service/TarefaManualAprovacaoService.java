@@ -9,8 +9,6 @@ public class TarefaManualAprovacaoService {
 
     public boolean validaDescricaoBreve(final String descBreve) {
         String regex = "(.|[ \\n\\t]){1,40}";
-        //todo fazer expressao para todos os tipos de dados
-
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(descBreve);
 

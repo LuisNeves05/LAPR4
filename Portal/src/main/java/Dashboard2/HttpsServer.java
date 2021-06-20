@@ -94,25 +94,8 @@ public class HttpsServer {
             textHtml.append(DashboardUtils.getFluxosFromServer());
         }
 
-        doTime(4);
+        doTime(15);
         return String.valueOf(textHtml);
     }
-
-    public static synchronized void castVote(String i) {
-        //TODO CHAMAR CONTROLADORES ???
-
-        int cN;
-        try {
-            cN = Integer.parseInt(i);
-        } catch (NumberFormatException ne) {
-            return;
-        }
-        cN--;
-        if (cN >= 0 && cN < candidatesNumber) {
-            candidateVotes[cN] += 1;
-        }
-    }
-
-
 
 }

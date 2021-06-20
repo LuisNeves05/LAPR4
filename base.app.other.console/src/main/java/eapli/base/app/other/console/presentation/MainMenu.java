@@ -39,7 +39,7 @@ import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * TODO split this class in more specialized classes for each menu
+ *
  *
  * @author Paulo Gandra Sousa
  */
@@ -98,7 +98,7 @@ public class MainMenu extends AbstractUI {
 
         /*final Menu myUserMenu = new MyUserMenu(BaseRoles.CASHIER);
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-        */ //TODO ALTERAR AQUI AS CENAS PARA OS NOSSOS ROLES
+        */
         if (!Application.settings().isMenuLayoutHorizontal()) {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }

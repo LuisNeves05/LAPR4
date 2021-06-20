@@ -40,7 +40,6 @@ public class ClientSSL {
         //WAITING FOR RESPONSE
         String response = sIn.readUTF();
 
-        //TODO IF CONSTANT
         //System.out.println("Client Response from server: " + response);
         //sock.close();
         return response;
@@ -83,7 +82,6 @@ public class ClientSSL {
         //WAITING FOR RESPONSE
         String response = sIn.readUTF();
 
-        //TODO IF CONSTANT
         //System.out.println("Client Response from server: " + response);
         //sock.close();
         return response;

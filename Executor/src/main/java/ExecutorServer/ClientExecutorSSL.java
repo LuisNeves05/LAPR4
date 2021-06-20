@@ -59,8 +59,6 @@ public class ClientExecutorSSL {
                     String scriptTar = elems.scriptExecucao();
                     String email = elems.ticketDaTarefa().colabQueRequisita().systemUserDoColab().email().toString();
 
-
-                    // TODO DIVISAO DE BYTES
                     String stringFormat = respotasDoForm.keySet().toString().trim() + "!" +
                             scriptTar.trim() + "!" +
                             email.trim() + "!" +
@@ -121,7 +119,6 @@ public class ClientExecutorSSL {
             String response = sIn.readUTF();
 
             if (response.contains("0")) {
-                //TODO send tarefa Automatica
                 System.out.println("tes");
                 break;
             }

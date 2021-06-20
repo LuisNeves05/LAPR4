@@ -25,12 +25,11 @@ public class EspecificarEquipaUI extends AbstractUI {
         final String acr = Console.readLine("Escreva o acrónimo para a equipa:");
         final String designacao = Console.readLine("Escreva a designação para a equipa");
 
-        //TODO LISTAR COLABS
         List<Colaborador> colabList = colabCntrl.listaColaboradores();
         Set<Colaborador> colabListReponsaveis = new HashSet<>();
 
         int option;
-        do { //TODO alterar de forma a que possa adicionar mais que um
+        do {
             System.out.println("COLABORADORES:");
             for(int i = 0; i < colabList.size(); i++){
                 System.out.printf("%s - %s\n", i+1, colabList.get(i));

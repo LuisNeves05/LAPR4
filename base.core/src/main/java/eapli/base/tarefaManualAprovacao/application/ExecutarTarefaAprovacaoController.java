@@ -40,7 +40,6 @@ public class ExecutarTarefaAprovacaoController {
         }
     }
 
-    // Manter a transação aberta durante o terminio da execução
     public TarefaManualAprovacao terminarAprovacao(Formulario f, Map<Resposta, Integer> respostas, TarefaManualAprovacao tarefaManualAprovacao){
         txCtx.beginTransaction();
         TarefaManualAprovacao tarManAprov = terminarAprovacaoService.terminaAprovacao(f, respostas, tarefaManualAprovacao, colabPedido);
@@ -48,11 +47,10 @@ public class ExecutarTarefaAprovacaoController {
         txCtx.close();
         return tarManAprov;
     }
-
     public void decisao(String resposta, TarefaManualAprovacao tarefaManualAprovacao) {
         if (resposta.equalsIgnoreCase("deferido")) {
-            //TODO APROVAR NO MOTOR
             tarefaManualAprovacao.aprovado();
+            tarefaManualAprovacao.ticketDaTarefa().aprovarTicket();
             if (tarefasAprovacaoAprovadas(tarefaManualAprovacao.ticketDaTarefa())) {
                 criarTarefaManualExecucao(tarefaManualAprovacao.ticketDaTarefa().servicoDoTicket(), tarefaManualAprovacao.ticketDaTarefa());
                 tarefaManualAprovacao.ticketDaTarefa().emExecucao();

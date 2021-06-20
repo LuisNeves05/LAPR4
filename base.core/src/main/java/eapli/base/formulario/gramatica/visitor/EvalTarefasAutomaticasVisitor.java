@@ -133,9 +133,6 @@ public class EvalTarefasAutomaticasVisitor extends TarefaAutomaticaBaseVisitor<S
         String textfinal = "Saudações camarada, \n\n A seu pedido, aqui estão os valores de desconto aplicados: \n Valor Total: "
                 + valorTotal + " Desconto a aplicar: " + descontoAplicar + " \n\n Preço final: " + precoFinal;
         Email.sendEmail(this.email, textfinal);
-        //}
-        //TODO ENVIAR EMAIL AO COLABORADOR E METER ISTO A SER EXECUTADO NO EXECUTOR
-
         return "";
     }
 

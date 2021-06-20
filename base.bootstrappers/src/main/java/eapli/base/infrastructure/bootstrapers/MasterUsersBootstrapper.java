@@ -406,7 +406,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
         /**
          *   Cria Atividade de realização de um serviço
          */
-        AtividadeRealizacao atividadeRealizacao2 = new AtividadeRealizacao("ENVIAR EMAIL COLABORADOR REQUERENTE teste");//todo verificar script para realizaÇão automática ???
+        AtividadeRealizacao atividadeRealizacao2 = new AtividadeRealizacao("ENVIAR EMAIL COLABORADOR REQUERENTE teste");
         atividadeRealizacao2 = atividadeRealRepo.save(atividadeRealizacao2);
 
         /**
