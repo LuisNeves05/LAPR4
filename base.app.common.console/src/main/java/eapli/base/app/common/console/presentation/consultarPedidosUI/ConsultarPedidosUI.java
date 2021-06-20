@@ -12,7 +12,6 @@ public class ConsultarPedidosUI extends AbstractUI {
     private final ConsultarTicketsController controller = new ConsultarTicketsController();
 
 
-
     @Override
     protected boolean doShow() {
 
@@ -21,26 +20,26 @@ public class ConsultarPedidosUI extends AbstractUI {
 
         int choice;
 
-        do{
+        do {
             choice = Console.readInteger("Escolha uma opcao");
-        }while (choice != 0 && choice != 1);
+        } while (choice != 0 && choice != 1);
 
-        if(choice == 0){
+        if (choice == 0) {
             List<Ticket> ticketsPorConcluir = controller.returnAllTicketsPorConcluir();
 
-            if(ticketsPorConcluir.isEmpty()){
+            if (ticketsPorConcluir.isEmpty()) {
                 System.out.println("Nao existem de momento Pedidos Por Concluir!");
-            }else{
+            } else {
                 ticketsPorConcluir.forEach(System.out::println);
             }
         }
 
-        if(choice == 1){
+        if (choice == 1) {
             List<Ticket> ticketsConcluidos = controller.returnAllTicketsConcluidos();
 
-            if(ticketsConcluidos.isEmpty()){
+            if (ticketsConcluidos.isEmpty()) {
                 System.out.println("Nao existem de momento Pedidos Concluidos!");
-            }else{
+            } else {
                 ticketsConcluidos.forEach(System.out::println);
             }
         }
