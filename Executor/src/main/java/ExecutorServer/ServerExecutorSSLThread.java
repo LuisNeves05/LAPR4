@@ -8,6 +8,7 @@ import javassist.bytecode.stackmap.TypeData;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -47,7 +48,6 @@ class ServerExecutorSSLThread implements Runnable {
                     tarefasAutomaticasServer(s, sOut, sIn, this.state);
                     break;
 
-
                 default:
                     LOGGER.log(Level.WARNING, "Protocol Nao Defenido", protocolo);
                     break;
@@ -55,7 +55,6 @@ class ServerExecutorSSLThread implements Runnable {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             Thread.currentThread().interrupt();
         }finally {
             try {
@@ -64,10 +63,7 @@ class ServerExecutorSSLThread implements Runnable {
                 Thread.currentThread().interrupt();
             } catch (IOException e) {
                 Thread.currentThread().interrupt();
-                e.printStackTrace();
             }
         }
     }
-
-
 }
