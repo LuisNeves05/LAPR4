@@ -24,13 +24,14 @@ public class DarFeedbackUI extends AbstractUI {
 
             int index = 0;
             for (Ticket t : ticketsComFeedbackDoColab) {
-                System.out.println(index++ + ") " + t.toString());
+                index++;
+                System.out.println(index + ") " + t.toString());
             }
 
             boolean flag = true;
             while (flag) {
                 int opcao = Console.readInteger("Indique o index do ticket que pretende dar feedback");
-                if(opcao > 0 && opcao < ticketsComFeedbackDoColab.size()) {
+                if(opcao > 0 && opcao <= ticketsComFeedbackDoColab.size()) {
                     String respostaFeedback = Console.readLine("Dê o seu feedback");
                     try {
                         controller.feedbackDoColaborador(respostaFeedback, ticketsComFeedbackDoColab.get(opcao -1));

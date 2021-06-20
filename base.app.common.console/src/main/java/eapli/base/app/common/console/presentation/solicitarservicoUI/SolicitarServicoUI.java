@@ -116,14 +116,11 @@ public class SolicitarServicoUI extends AbstractUI {
                     String ajudaResposta = atributo.tipoDadosStr(td);
                     resposta = Console.readLine(atributo.nomeVar() + " " + "    Responda conforme -> " + ajudaResposta);
                     Resposta rAtr = new Resposta(resposta, atributo.nomeVar());
-                    //respostas.add(rAtr);
                     respostas.put(rAtr, respostas.size() + 1);
                 }
-                lista = new ArrayList<>(respostas.keySet());
+                lista = new ArrayList<>(SortValues.sortByMaxPeriodTime(respostas).keySet());
 
             } while (!ScriptFormularios.executa(lista, f.scriptsValidacao()));
-
-            //ScriptTarefasAutomaticas.executaTarefaAutomatica(s.fluxoDoServico().ativRealizacaoDoFluxo().scriptAutomatico(),lista);
 
             fps.add(lcp.adicionaFormularioPreenchido(f, urgencia, respostas));
         }

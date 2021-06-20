@@ -1,7 +1,6 @@
 package eapli.base.formulario.gramatica.visitor;
 
 import eapli.base.Utils.Email;
-import eapli.base.Utils.ObterCurrentColabController;
 import eapli.base.Utils.XMLUtils;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaBaseVisitor;
 import eapli.base.formulario.gramatica.eapli.base.formulario.gramatica.TarefaAutomaticaParser;

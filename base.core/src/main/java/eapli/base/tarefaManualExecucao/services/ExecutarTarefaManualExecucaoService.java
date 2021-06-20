@@ -30,8 +30,9 @@ public class ExecutarTarefaManualExecucaoService {
         FormularioPreenchido fp = fpr.save(new FormularioPreenchido(f, respostas, colabPedido));
         tarefaManualExecucao.ticketDaTarefa().adicionaFormularioResposta(fp);
         tarefaManualExecucao.ticketDaTarefa().completarTicket();
-        ticketRepositorio.save(tarefaManualExecucao.ticketDaTarefa());
         tarefaManualExecucao.concluirTarefa();
+        tarefaManualExecucao.ticketDaTarefa().definirFinalTicket();
+        ticketRepositorio.save(tarefaManualExecucao.ticketDaTarefa());
         tarefaExecucaoRepositorio.save(tarefaManualExecucao);
 
     }

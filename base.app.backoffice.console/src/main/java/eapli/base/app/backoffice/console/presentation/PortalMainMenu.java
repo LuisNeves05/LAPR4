@@ -33,6 +33,8 @@ import eapli.base.app.backoffice.console.presentation.authz.ListUsersAction;
 import eapli.base.app.backoffice.console.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import eapli.base.app.common.console.presentation.consultarPedidosUI.ConsultarPedidosUI;
 import eapli.base.app.common.console.presentation.darFeedbackUI.DarFeedbackUI;
+import eapli.base.app.common.console.presentation.executarTarefaManualAprovacaoUI.ExecutarTarefaManualAprovUI;
+import eapli.base.app.common.console.presentation.executarTarefaManualExecucaoUI.ExecutarTarefaManualExecUI;
 import eapli.base.app.common.console.presentation.solicitarservicoUI.SolicitarServicoUI;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Actions;
@@ -79,9 +81,12 @@ public class PortalMainMenu extends AbstractUI {
     //PORTAL
 
     private static final int SOLICITAR_SERVICO_OPTION = 1;
-    private static final int REIVINDICAR_TAREFA = 2;
-    private static final int CONSULTAR_TAREFAS = 3;
-    private static final int DAR_FEEDBACK = 7;
+    //private static final int REIVINDICAR_TAREFA = 2;
+    private static final int APROVAR_TAREFA = 2;
+    private static final int EXECUTAR_TAREFA = 3;
+    private static final int CONSULTAR_TAREFAS = 4;
+    private static final int DAR_FEEDBACK = 5;
+    private static final int CONSULTAR_HISTORICO = 6;
 
 
     private static final String SEPARATOR_LABEL = "--------------";
@@ -174,9 +179,12 @@ public class PortalMainMenu extends AbstractUI {
 
 
         menu.addItem(MenuItem.of(SOLICITAR_SERVICO_OPTION, "Solicitar Serviço", new SolicitarServicoUI()::show));
-        menu.addItem(MenuItem.of(REIVINDICAR_TAREFA, "Reivindicar Tarefa", new AssignarTarefasUI()::show));
+        //menu.addItem(MenuItem.of(REIVINDICAR_TAREFA, "Reivindicar Tarefa", new AssignarTarefasUI()::show));
+        menu.addItem(MenuItem.of(APROVAR_TAREFA, "Aprovar Tarefa", new ExecutarTarefaManualAprovUI()::show));
+        menu.addItem(MenuItem.of(EXECUTAR_TAREFA, "Executar Tarefa", new ExecutarTarefaManualExecUI()::show));
         menu.addItem(MenuItem.of(CONSULTAR_TAREFAS, "Consultar Tarefa", new ConsultarPedidosUI()::show));
         menu.addItem(MenuItem.of(DAR_FEEDBACK, "Dar Feedback", new DarFeedbackUI()::show));
+        menu.addItem(MenuItem.of(CONSULTAR_HISTORICO, "Ver historico de tickets", new ConsultarPedidosUI()::show));
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

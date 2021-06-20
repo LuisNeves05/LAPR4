@@ -72,7 +72,6 @@ public class ClientSSL {
 
         preparingSSLClient();
 
-
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         DataOutputStream sOut = new DataOutputStream(sock.getOutputStream());
         DataInputStream sIn = new DataInputStream(sock.getInputStream());
@@ -120,8 +119,6 @@ public class ClientSSL {
             System.out.println("Application aborted.");
             System.exit(1);
         }
-        //TODO IF CONSTANT
-        //System.out.println("Connected to: " + serverIp + ":" + SERVER_PORT);
 
         try {
             sock.startHandshake();

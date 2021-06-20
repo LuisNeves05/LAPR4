@@ -26,7 +26,7 @@ public class TicketRepositorioJPAimpl extends JpaAutoTxRepository<Ticket, Long, 
 
     @Override
     public Iterable<Ticket> ticketPorColabEmExecucao(Colaborador colab){
-        Query query = super.createQuery("SELECT t from Ticket t where t.colabRequisitou = :colabReq and t.estadoTicket='EM_EXECUCAO'", Ticket.class);
+        Query query = super.createQuery("SELECT t from Ticket t where t.colabRequisitou = :colabReq and t.estadoTicket='EM_EXECUCAO' or t.estadoTicket='POR_APROVAR'", Ticket.class);
         query.setParameter("colabReq", colab);
         return query.getResultList();
     }

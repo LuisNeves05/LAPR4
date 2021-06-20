@@ -33,14 +33,12 @@ public class ConsultarTicketsController {
     }
 
     public List<Ticket> returnAllTicketsPorConcluir() {
-        List<Ticket> allTickets = Lists.newArrayList(ticketRepositorio.ticketPorColabEmExecucao(colabPedido));
-        return allTickets;
+        return Lists.newArrayList(ticketRepositorio.ticketPorColabEmExecucao(colabPedido));
     }
 
 
     public List<Ticket> returnAllTicketsConcluidos() {
-        List<Ticket> allTickets = Lists.newArrayList(ticketRepositorio.ticketPorColabConcluido(colabPedido));
-        return allTickets;
+        return Lists.newArrayList(ticketRepositorio.ticketPorColabConcluido(colabPedido));
     }
 
 

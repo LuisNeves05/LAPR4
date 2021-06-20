@@ -256,16 +256,16 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
 
         //////////////////////////////////////////////////////////////////////////////////
         Objetivo objNC5 = new Objetivo(2, 2, 1, 1);
-        NivelCriticidade nc5 = enc.especificarNivelCriticidade("elevada", 5, Color.red, objNC5, true);
+        NivelCriticidade nc5 = enc.especificarNivelCriticidade("elevada", 4, Color.red, objNC5, true);
 
-        Objetivo objNC4 = new Objetivo(0, 240, 0, 150);
-        NivelCriticidade nc4 = enc.especificarNivelCriticidade("elevada", 4, Color.orange, objNC4, true);
+        Objetivo objNC4 = new Objetivo(30, 240, 18, 150);
+        NivelCriticidade nc4 = enc.especificarNivelCriticidade("elevada", 3, Color.orange, objNC4, true);
 
-        Objetivo objNC3 = new Objetivo(90,360,60,240);
-        NivelCriticidade nc3 = enc.especificarNivelCriticidade("média",3,Color.yellow,objNC3,true);
+        Objetivo objNC3 = new Objetivo(0,360,0,240);
+        NivelCriticidade nc3 = enc.especificarNivelCriticidade("média",2,Color.yellow,objNC3,true);
 
         Objetivo objNC2 = new Objetivo(120,500,80,320);
-        NivelCriticidade nc2 = enc.especificarNivelCriticidade("baixa",2,Color.green,objNC2,true);
+        NivelCriticidade nc2 = enc.especificarNivelCriticidade("baixa",1,Color.green,objNC2,true);
 
 
         /////////////////////////////////////////////////////////////////////////////////
@@ -342,7 +342,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Ac
          */
         FluxoAtividade fluxoAtividade1 = fluxoAtividadeRepositorio.save(new FluxoAtividade(atividadeAprovacao1, atividadeRealizacao1));
         Servico servico1 = especificarServicoController.especificarServico(new Servico(new ServicoIdentificador("123IDAusencia"), new Titulo("Pedido de Ausência Futura"), new DescricaoBreve("Pedido de ausência para Férias, ou por um motivo justificado ou não justificado"),
-                new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywordsRRH, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, false, nc4));
+                new DescricaoCompleta("Requisitar uma ausência , elaborando a sua razão"), new byte[3], keywordsRRH, EstadoServico.COMPLETO, fluxoAtividade1, catalogoRRH, true, nc4));
 
         /**
          * Criar e guardar formulário para pedido de Servico

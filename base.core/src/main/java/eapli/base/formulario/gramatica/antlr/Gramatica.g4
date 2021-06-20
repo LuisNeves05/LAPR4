@@ -3,7 +3,6 @@ grammar Gramatica;
 prog : valida
  ;
 
-
 valida:
         atributo NAOVAZIO                                           #defineNaoVazio
         | left = atributo compara right = atributo decisao          #comparaAtributos
@@ -29,8 +28,6 @@ decisao:
 atributo: ATRIBUTO NUMERO;
 
 nomes: nomes NAME | NAME ;
-
-
 
 COMMENT
  : '#' ~[\r\n]* -> skip
