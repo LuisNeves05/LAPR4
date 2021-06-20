@@ -86,6 +86,7 @@ public class ClientExecutorSSL {
                     //System.out.println("DEBUG2 : " + myList.get(conter));
                     if (myList.get(conter).contains("tru")) {
                         elems.ticketDaTarefa().completarTicket();
+                        elems.ticketDaTarefa().definirFinalTicket();
                         repoTick.save(elems.ticketDaTarefa());
                     }
                 }

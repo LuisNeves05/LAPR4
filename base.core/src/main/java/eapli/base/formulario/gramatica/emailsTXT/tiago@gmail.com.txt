@@ -1,6 +1,0 @@
-Saudações camarada, 
-
- A seu pedido, aqui estão os valores de desconto aplicados: 
- Valor Total: 10500 Desconto a aplicar: 8.0 
-
- Preço final: 10492.0

@@ -69,12 +69,12 @@ public final class Executor2App extends BaseApplication {
 
     @Override
     protected String appTitle() {
-        return "Executor 2@ Estancia";
+        return "Executor 2ª Instancia";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Executor 2@ Estancia";
+        return "Executor 2ª Instancia";
     }
 
     @SuppressWarnings("unchecked")
